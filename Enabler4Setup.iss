@@ -1,8 +1,12 @@
 [Setup]
 AppName=Enabler4
 AppVersion=1.0
+AppId={{95EC957B-DB36-4EDD-9C7C-B19F896CC37D}
+AppPublisher=Integration Technologies Limited
+AppPublisherURL=https://integration.co.nz/
 DefaultDirName={pf}\Enabler4
 OutputBaseFilename=Enabler4Setup
+SetupLogging=yes
 
 
 ;===================================
@@ -46,3 +50,54 @@ OutputBaseFilename=Enabler4Setup
 ; C - Documents (This includes all SDK documents)
 ; D - Sample Apps (All sample apps are copied across)
 ; F - ITLMPPSim.dll
+
+[Code]
+var appName: string;
+
+function InitializeSetup(): Boolean;
+begin
+  appName := '{#SetupSetting("AppName")}';
+
+  Result := MsgBox('Do you want to install ' + appName + '?', mbConfirmation, MB_YESNO) = idYes;
+  if Result = False then
+    MsgBox('Install aborted.', mbInformation, MB_OK);
+
+  //===================================
+  // Initialise variables.
+  //===================================
+
+  Log('Initialising variables.');
+
+end;
+
+
+procedure MoveLogFile();
+// Current log file location is the user's temp folder. eg. C:\Users\Jamie\AppData\Local\Temp\Setup Log 2019-08-05 #001.txt
+// The location or file name is not configurable so copy it to a new location with a new name and delete the old file.
+var
+  copyResult, deleteResult: boolean;
+  logFilePathName, logFileName, newFilePathName: string;
+begin
+  logFilePathName := ExpandConstant('{log}');
+  logFileName := appName + ' ' + ExtractFileName(logFilePathName);
+
+  // Set the new location as the directory where the installer .exe is being run from.
+  newFilePathName := ExpandConstant('{src}\') + logFileName;
+
+  // Can't move log file, so copying file to new location and deleting old one.
+  copyResult := FileCopy(logFilePathName, newFilePathName, false);
+  if copyResult = False then
+    Log('Unable to copy log file ' + logFilePathName)
+  else
+    deleteResult := DeleteFile(logFilePathName);
+    if deleteResult = False then
+      Log('Unable to delete log file ' + logFilePathName);
+      FileCopy(logFilePathName, newFilePathName, false);  // Copy log file again to include the 'unable to delete log file' entry.
+end;
+
+
+// Called just before Setup terminates. 
+procedure DeinitializeSetup();
+begin
+  MoveLogFile();
+end;
