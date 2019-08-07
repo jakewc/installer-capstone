@@ -10,6 +10,13 @@ SetupLogging=yes
 DisableWelcomePage=no
 
 
+[Files]
+; The following two lines are for testing purposes only. They're kept as a reference for now.
+; They were used to make sure the installer installs the right files depending on the type of install the user selected in the wizard.
+;Source: "Documentation\Installation Instructions.pdf"; DestDir: "{src}"; Check: IsInstallType('A');
+;Source: "Documentation\EnablerV4InstallScript.txt"; DestDir: "{src}"; Check: IsInstallType('B');
+
+
 ;===================================
 ; EnablerSetup return codes:
 ;===================================
@@ -53,7 +60,17 @@ DisableWelcomePage=no
 ; F - ITLMPPSim.dll
 
 [Code]
-var appName: string;
+var
+  // Installer variables. 
+  appName: string;
+  components: string;
+
+  // Installation Type page variables.
+  pageInstallType: TwizardPage;
+  radioClient,radioServer: TRadioButton;
+  lblClient, lblServer: TLabel;
+
+
 
 function InitializeSetup(): Boolean;
 begin
@@ -69,6 +86,75 @@ begin
 
   Log('Initialising variables.');
 
+end;
+
+
+// Handle client radio button click on Installation Type page.
+procedure RadioClientClicked(Sender: TObject);
+begin
+  components := 'A';  // Client install.
+end;
+
+
+// Handle server radio button click on Installation Type page.
+procedure RadioServerClicked(Sender: TObject);
+begin
+  components := 'B';  // Server install.
+end;
+
+
+// Create the wizard page that asks the user for the type of install they want.
+procedure CreateInstallationTypePage();
+begin
+  pageInstallType := CreateCustomPage(wpWelcome, 'Select Installation Type', 'Select the type of install you would like from the radio buttons.');
+
+  radioClient := TRadioButton.Create(pageInstallType);
+  radioClient.Parent := pageInstallType.Surface;
+  radioClient.Caption := 'Client Install';
+  radioClient.Checked := True;  // Set the default to a client install.
+  components := 'A'; // 'A' components are client install components.
+  radioClient.OnClick := @RadioClientClicked;
+
+  lblClient := TLabel.Create(pageInstallType);
+  lblClient.Parent := pageInstallType.Surface;
+  lblClient.Caption := 'Install the Enabler Client components to connect to connect to an Enabler Server, Enabler Server Desktop or Enabler Embedded.';
+  lblClient.Top := radioClient.Top+20;
+  lblClient.Left := 20;
+  lblClient.Height := 40;
+  lblClient.Width := 500;
+  lblClient.WordWrap := True;
+
+  radioServer := TRadioButton.Create(pageInstallType);
+  radioServer.Parent := pageInstallType.Surface;
+  radioServer.Caption := 'Server Install';
+  radioServer.Top := lblClient.Top+50;
+  radioServer.OnClick := @RadioServerClicked;
+
+  lblServer := TLabel.Create(pageInstallType);
+  lblServer.Parent := pageInstallType.Surface;
+  lblServer.Caption := 'Install the Enabler Server Desktop - Enabler Card REQUIRED. SQL Server will be installed if none found.';
+  lblServer.Top := radioServer.Top+20;
+  lblServer.Left := 20;
+  lblServer.Height := 40;
+  lblServer.Width := 500;
+  lblServer.WordWrap := True;
+
+end;
+
+
+procedure InitializeWizard();
+begin
+  CreateInstallationTypePage;
+end;
+
+
+// Returns true if the installation type is the type passed to the function.
+function IsInstallType(installType: String): Boolean;
+begin
+  if components = installType then 
+    Result := True
+  else
+    Result := False; 
 end;
 
 
