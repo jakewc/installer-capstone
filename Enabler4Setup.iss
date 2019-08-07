@@ -7,6 +7,7 @@ AppPublisherURL=https://integration.co.nz/
 DefaultDirName={pf}\Enabler4
 OutputBaseFilename=Enabler4Setup
 SetupLogging=yes
+DisableWelcomePage=no
 
 
 ;===================================
