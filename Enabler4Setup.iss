@@ -76,16 +76,13 @@ function InitializeSetup(): Boolean;
 begin
   appName := '{#SetupSetting("AppName")}';
 
-  Result := MsgBox('Do you want to install ' + appName + '?', mbConfirmation, MB_YESNO) = idYes;
-  if Result = False then
-    MsgBox('Install aborted.', mbInformation, MB_OK);
-
   //===================================
   // Initialise variables.
   //===================================
 
   Log('Initialising variables.');
-
+  
+  Result := True;
 end;
 
 
