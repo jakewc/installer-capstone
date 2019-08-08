@@ -1,0 +1,108 @@
+﻿body	
+{	
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #C2C2C2;
+	border:0;
+}
+/* all tables start with 0 border, cell borders joined */
+table
+{	
+	border-style: none;
+	border-collapse: collapse;
+	width:570px;
+}
+
+.CellHeader
+{
+	width:570px;
+}
+
+.CellMain
+{
+	border:none;
+	width:570px;
+}
+
+.menuTD
+{
+	display:none;
+}
+
+.CellFooter
+{
+	display:none;
+}
+
+/* class for standard visual gridded table */
+
+.std_table td
+{
+	padding: 0.3em;
+	vertical-align: top;
+	border-style: solid;
+	border-width: thin;
+	border-color: black;
+}
+
+/* class for header cells */
+.std_table th
+{
+	padding: 0.3em;
+	vertical-align: top;
+	border-style: solid;
+	border-width: thin;
+	border-color: black;
+	background-color: #B4E1F5;
+	color: black;
+	text-align: left;
+	font-weight: bold;
+}
+
+.evenRow 
+{
+	background-color: #F5F5F5;
+	color:black;
+}
+
+.oddRow 
+{
+	background-color: #E7E7E7;
+	color:black;
+}
+
+.OuterFilter
+{
+	display:none;
+}
+
+.DateSelect
+{
+	display:none;
+}
+
+.FilterSettings
+{
+	display:none;
+}
+
+#navigation
+{
+	display:none;
+}
+
+#EventTBL
+{
+	width:570px;
+}
+
+.RowFooter
+{
+	display:none;
+}
+
+.Icon
+{
+	background-color:white;
+	text-align:center;
+	vertical-align:middle;
+}
