@@ -12,7 +12,7 @@ DisableWelcomePage=no
 
 [Files]
 ; The following two lines are for testing the installer adds the files applicable for the installation type (client or server).
-Source: "Input\*"; DestDir: "{app}"; Flags: ignoreversion createallsubdirs recursesubdirs; Check: IsInstallType('A');
+Source: "InputClientInstall\*"; DestDir: "{app}"; Flags: ignoreversion createallsubdirs recursesubdirs; Check: IsInstallType('A');
 Source: "ForTestPurposesOnly\SqlServerMockInstall.exe"; DestDir: "{app}\ForTestPurposesOnly"; Check: IsInstallType('B');
 
 [Run]
@@ -188,3 +188,5 @@ procedure DeinitializeSetup();
 begin
   MoveLogFile();
 end;
+
+//SQL SETUP

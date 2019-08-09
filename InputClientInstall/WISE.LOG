@@ -1,0 +1,189 @@
+***  Installation Started 08/11/2019 19:40  ***
+Title: Installation
+Source: C:\Users\14400\Documents\enableroutput\Enabler v4.6.3\Enabler4Setup.exe | 07-31-2019 | 15:51:50 | 46660872
+Running on Windows 10 / Windows Server 2016, set OPERATING SYSTEM = 10
+os = 10  ir=0
+Installing Enabler V4.6.3.6087 on Windows V6.2.9200 64bit (Version 10)
+CMD 
+Made Dir: C:\Enabler
+File Copy: C:\Enabler\AutoSupport.exe | 03-11-2019 | 07:00:44 | 2.9.1.0 | 1128448 | b9c6b588
+IE location C:\Program Files\Internet Explorer\IEXPLORE.EXE
+IE Ver 11.0.17134.1
+Installing from C: drive
+Windows Product Type: 1
+File Copy: C:\Enabler\Instances.bat | 07-27-2018 | 15:40:44 | | 2037 | 34dc5527
+Location of OSQL.EXE is C:\Program Files\Microsoft SQL Server\120\Tools\Binn (Initial Checks)
+SQL Instance Names found 
+MSSQLSERVER
+MSSQLSERVER
+
+File system is 2
+Client was chosen
+Found .NET v3.5 runtime
+Check Net 4 install slqexpressname = , net 4 installed = 1
+File Copy: C:\Enabler\MsiQueryProduct.exe | 08-27-2014 | 21:14:14 | | 54272 | 3eaaf592
+Installing VS C++ 2008 SP1 Redistributables
+File Copy: C:\Enabler\vcredist_x86.exe | 04-19-2017 | 19:31:22 | 9.0.30729.17 | 4216840 | e91499f9
+File Copy: C:\Enabler\UNWISE.EXE | 07-26-2002 | 18:02:06 | | 153088 | 5be5019b
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\The Enabler
+RegDB Val: The Enabler
+RegDB Name: DisplayName
+RegDB Root: 2
+RegDB Old: The Enabler
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\The Enabler
+RegDB Val: C:\Enabler\UNWISE.EXE C:\Enabler\WISE.LOG
+RegDB Name: UninstallString
+RegDB Root: 2
+RegDB Old: C:\Enabler\UNWISE.EXE C:\Enabler\WISE.LOG
+Removing ATL.DLL hook MSDN KB:889289
+Made Dir: C:\Enabler\Log
+Check for V4 Beta License 
+File Copy: C:\Enabler\ConvertV4BetaLicense.exe | 04-19-2017 | 19:31:20 | 1.0.1.0 | 41472 | 421a5dde
+Made Dir: C:\Enabler\bin
+File Copy: C:\Enabler\bin\setx64.exe | 04-19-2017 | 19:31:22 | 6.0.6000.16386 | 46080 | a9057778
+RegDB Key: Software
+RegDB Val: 
+RegDB Root: 2
+RegDB Key: Software\ITL
+RegDB Val: 
+RegDB Root: 2
+RegDB Key: Software\ITL\Enabler
+RegDB Val: 
+RegDB Root: 2
+RegDB Key: Software\ITL\Enabler
+RegDB Val: C:\Enabler
+RegDB Name: Root
+RegDB Root: 2
+RegDB Old: C:\Enabler
+RegDB Key: Software\ITL\Enabler
+RegDB Val: C:\Enabler\Log
+RegDB Name: Enabler_Log
+RegDB Root: 2
+RegDB Old: C:\Enabler\Log
+RegDB Key: Software\ITL\Enabler
+RegDB Val: 
+RegDB Name: DatabaseInstanceName
+RegDB Root: 2
+File Copy: C:\Enabler\atutil.exe | 02-06-2019 | 07:01:36 | 1.6.0.0 | 2923008 | c5d45046
+File Copy: C:\Enabler\bin\odbcnfg.exe | 10-30-2017 | 13:33:30 | 1.0.4.0 | 204800 | 3f01fcdb
+File Copy: C:\Enabler\bin\odbcnfg64.exe | 10-30-2017 | 13:33:30 | 1.0.4.0 | 273408 | 1de96668
+File Copy: C:\Enabler\EnbKick.exe | 03-28-2019 | 11:22:14 | 2.2.0.0 | 17408 | debe09c6
+File Copy: C:\Enabler\EnbPumpX2.ocx | 03-28-2019 | 11:25:44 | 3.41.0.0 | 4346880 | 317e1143
+File Copy: C:\Enabler\EnbSessionX2.ocx | 03-28-2019 | 11:25:20 | 4.9.0.0 | 2503168 | 57b6dc4f
+File Copy: C:\Enabler\EnbAttendantX2.ocx | 03-28-2019 | 11:26:20 | 4.2.0.0 | 3301376 | 1931611c
+File Copy: C:\Enabler\EnablerSoundEvents.reg | 04-19-2017 | 19:31:20 | | 1320 | ef00b360
+File Copy: C:\Enabler\enabler-api-1.0.jar | 03-28-2019 | 12:04:56 | | 237876 | fe0d8f55
+File Copy: C:\Enabler\joda-time-2.0.jar | 03-28-2019 | 12:04:56 | | 569231 | b1d0522c
+File Copy: C:\Enabler\joda-time-NOTICE.txt | 03-28-2019 | 12:04:56 | | 316 | a53b7b74
+File Copy: C:\Enabler\joda-time-LICENSE.txt | 03-28-2019 | 12:04:56 | | 11560 | 495fc599
+File Copy: C:\Enabler\InstallEnablerAPI.msi | 03-28-2019 | 11:24:22 | | 889344 | 652799d8
+File Copy: C:\Enabler\ITL.Enabler.WPFControls.dll | 03-28-2019 | 09:31:40 | 1.2.0.0 | 97792 | 44afeb9
+File Copy: C:\Enabler\System.Windows.Controls.DataVisualization.Toolkit.dll | 02-13-2019 | 11:55:34 | 3.5.0.0 | 398336 | 82599bc1
+File Copy: C:\Enabler\WPFToolkit.dll | 02-13-2019 | 11:55:34 | 3.5.50211.1 | 467288 | 56c0bb79
+File Copy: C:\Enabler\EnbSecurityController.exe | 04-19-2017 | 19:31:20 | 1.1.4.0 | 102400 | edf5c5f8
+File Copy: C:\Enabler\SecurityModule.dll | 04-19-2017 | 19:31:22 | 1.0.7.0 | 106496 | d817f7e5
+File Copy: C:\Enabler\itl.ico | 04-19-2017 | 19:31:24 | | 198 | 46a963ef
+File Copy: C:\Enabler\Mscomm32.ocx | 04-19-2017 | 19:31:22 | 6.0.81.69 | 103744 | 69520cfa
+File Copy: C:\Enabler\Comdlg32.ocx | 04-19-2017 | 19:31:22 | 6.0.84.18 | 140488 | 5badb463
+File Copy: C:\Enabler\Comctl32.ocx | 04-19-2017 | 19:31:20 | 6.0.81.5 | 608448 | b80d4b6a
+File Copy: C:\Enabler\Comct232.ocx | 04-19-2017 | 19:31:20 | 6.0.80.22 | 164144 | edc66dbc
+File Copy: C:\Enabler\Msflxgrd.ocx | 04-19-2017 | 19:31:22 | 6.0.84.18 | 244416 | 91011418
+File Copy: C:\Enabler\Msvcp60.dll | 04-19-2017 | 19:31:22 | 6.0.8972.0 | 401462 | 7f386569
+File Copy: C:\Enabler\Msrdo20.dll | 04-19-2017 | 19:31:22 | 6.0.88.62 | 397312 | 94624304
+File Copy: C:\Enabler\Msrdc20.ocx | 04-19-2017 | 19:31:22 | 6.0.84.18 | 176832 | 9727e3fe
+RegDB Key: Software
+RegDB Val: 
+RegDB Root: 2
+RegDB Key: Software\ITL
+RegDB Val: 
+RegDB Root: 2
+RegDB Key: Software\ITL\Enabler
+RegDB Val: 
+RegDB Root: 2
+RegDB Key: Software\ITL\Enabler
+RegDB Val: 
+RegDB Name: ServerName
+RegDB Root: 2
+File Copy: C:\Enabler\bin\EnablerEvent.dll | 08-15-2014 | 15:58:38 | | 12288 | 1cb837f5
+File Copy: C:\Enabler\bin\subinacl.exe | 04-19-2017 | 19:31:22 | 5.2.3790.1180 | 290304 | 90b58a75
+File Copy: C:\Enabler\CreateRegKeyEvent.bat | 04-19-2017 | 19:31:20 | | 841 | 51f4b145
+Group Path C:\ProgramData\Microsoft\Windows\Start Menu\Programs\The Enabler
+Group Directory C:\Users\14400\AppData\Roaming\Microsoft\Windows\Start Menu\Programs
+Desktop Path C:\Users\Public\Desktop
+Start Menu Path C:\Users\14400\AppData\Roaming\Microsoft\Windows\Start Menu
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\The Enabler\Enabler Web.lnk
+Link Info:  |  | C:\Enabler\itl.ico | 0 | 1 | 0 | 
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\The Enabler\Wet Stock Management.lnk
+Link Info:  |  | C:\Enabler\itl.ico | 0 | 1 | 0 | 
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\The Enabler\Grade Pricing.lnk
+Link Info:  |  | C:\Enabler\itl.ico | 0 | 1 | 0 | 
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\The Enabler\Site Monitor.lnk
+Link Info:  |  | C:\Enabler\itl.ico | 0 | 1 | 0 | 
+File Copy: C:\Enabler\bin\PDFViewer.exe | 04-19-2017 | 19:31:22 | | 2967552 | f93e76dd
+Documentation folder not found
+File Copy: C:\Enabler\enbclient.exe | 01-28-2019 | 09:33:30 | 1.2.0.0 | 82432 | d7c1834
+File Copy: C:\Enabler\Interop.IWshRuntimeLibrary.dll | 03-30-2015 | 16:06:56 | 1.0.0.0 | 49152 | 8bb36791
+Self-Register: C:\Enabler\EnbPumpX2.ocx
+Self-Register: C:\Enabler\EnbSessionX2.ocx
+Self-Register: C:\Enabler\EnbAttendantX2.ocx
+Self-Register: C:\Enabler\ENBSEC~1.EXE
+Self-Register: C:\Enabler\SecurityModule.dll
+Self-Register: C:\Enabler\Mscomm32.ocx
+Self-Register: C:\Enabler\Comdlg32.ocx
+Self-Register: C:\Enabler\Comctl32.ocx
+Self-Register: C:\Enabler\Comct232.ocx
+Self-Register: C:\Enabler\Msflxgrd.ocx
+Self-Register: C:\Enabler\Msrdo20.dll
+Self-Register: C:\Enabler\Msrdc20.ocx
+RegDB Key: SOFTWARE\ITL\Enabler\Client
+RegDB Val: Default
+RegDB Name: Password
+RegDB Root: 2
+RegDB Old: Default
+RegDB Key: SOFTWARE\ITL\Enabler\Client
+RegDB Val: 
+RegDB Name: Hostname
+RegDB Root: 2
+Start of setting permissions 08/11/19 19:42:26
+End of setting permissions 08/11/19 19:42:51
+Registering Enabler objects
+Configuring DCOM
+WARNING: no server name given - setting to default value 'SERVER'
+Execute path: C:\WINDOWS\system32\msiexec.exe /quiet /L+* C:\Enabler\log\APIInstall.log /uninstall C:\Enabler\InstallEnablerAPI.msi
+EnablerVersion: 4.6.3.6087
+Execute path: C:\WINDOWS\system32\msiexec.exe /quiet /L+* C:\Enabler\log\APIInstall.log /X C:\Enabler\InstallEnablerAPI.msi
+RegDB Key: Software\ITL\Enabler
+RegDB Val: A
+RegDB Name: Components
+RegDB Root: 2
+RegDB Key: Software\ITL\Enabler
+RegDB Val: ABCDE
+RegDB Name: Applications
+RegDB Root: 2
+RegDB Key: Software\ITL\Enabler
+RegDB Val: 
+RegDB Name: SDK
+RegDB Root: 2
+Silent setting is 0
+Install is Finished
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\The Enabler
+RegDB Val: Integration Technologies Limited
+RegDB Name: Publisher
+RegDB Root: 2
+RegDB Old: Integration Technologies Limited
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\The Enabler
+RegDB Val: http://www.integration.co.nz/support.htm
+RegDB Name: URLInfoAbout
+RegDB Root: 2
+RegDB Old: http://www.integration.co.nz/support.htm
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\The Enabler
+RegDB Val: Windows-based Forecourt Control by Integration Technologies Limited.
+RegDB Name: Comments
+RegDB Root: 2
+RegDB Old: Windows-based Forecourt Control by Integration Technologies Limited.
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\The Enabler
+RegDB Val: C:\Enabler\itl.ico,-0
+RegDB Name: DisplayIcon
+RegDB Root: 2
+RegDB Old: C:\Enabler\itl.ico,-0
+User Rights: Admin

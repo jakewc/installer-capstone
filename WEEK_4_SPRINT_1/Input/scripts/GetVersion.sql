@@ -1,0 +1,1 @@
+EXIT(SELECT Version from enablerdb..DBVersion)
