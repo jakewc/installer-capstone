@@ -1,0 +1,147 @@
+/* Dropdown menus CSS */
+
+#menu
+{
+	background: #005370; 
+	border: none;
+	border-image-width: 0;
+	padding: 0;
+	line-height: 100%;
+}
+
+#nav 
+{
+	padding: 0;
+	margin: 0;
+	background: #005370; 
+	line-height: 100%;
+	/* width: 67.5em; */
+}
+
+#nav li 
+{
+	margin: 0;
+	padding: 0 4px 0 0;
+	float: left;
+	position: relative;
+	list-style: none;
+	position: relative;
+	z-index: 50;
+}
+
+/* page menu - inside the menu div */
+#nav a 
+{
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 14px;
+	color: #ffffff;
+	text-decoration: none;
+	display: block;
+	padding:  8px 10px 10px 10px;
+	margin: 0;
+}
+
+#nav a:hover 
+{
+	background: #000;
+	color: #F5F5F5;
+}
+
+/* main level current */
+#nav .current a 
+{
+	background: #B4E1F5; 
+	color: #44484C;
+	text-shadow: 0 1px 0 rgba(255,255,255, 1);
+}
+
+/* link hover */
+#nav li:hover > a
+{
+	background: #29AAE2 0 -100px; 
+	left: 0px;
+	color: #FFFFFF;
+}
+
+/* sub levels link hover */
+#nav ul li:hover a, #nav li:hover li a 
+{
+	background: none;
+	border: none;
+	color: #003046;
+}
+
+#nav ul a:hover
+{
+	background: #29AAE2 0 -100px!important;
+	color: #FFFFFF !important;
+	left: 0px;
+	margin: 0;
+}
+
+/* dropdown */
+#nav li:hover > ul
+{
+	left: 0px;
+}
+
+/* level 2 list */
+#nav ul 
+{
+	margin: 0;
+	padding: 0;
+	width: auto;
+	position: absolute;
+	top: 32px;
+	left: -999em;
+	background: #F5F5F5;
+	border: solid 1px #C2C2C2;
+	white-space: nowrap;
+	z-index: 99;
+}
+
+#nav ul li 
+{
+	float: none;
+	margin: 0;
+	padding: 0;
+}
+
+#nav ul a 
+{
+}
+
+/* level 3+ list */
+#nav ul ul 
+{
+	left: 181px;
+	top: 0px;
+}
+
+
+/* clearfix */
+#nav:after 
+{
+	content: ".";
+	left: 0px;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+#nav 
+{
+	display: inline-block;
+} 
+
+/*html[xmlns] #nav 
+{
+	display: block;
+} */
+ 
+html #nav 
+{
+	/* height: 1%; */
+}
