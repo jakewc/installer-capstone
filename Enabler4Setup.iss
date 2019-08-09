@@ -11,11 +11,13 @@ DisableWelcomePage=no
 
 
 [Files]
-; The following two lines are for testing purposes only. They're kept as a reference for now.
-; They were used to make sure the installer installs the right files depending on the type of install the user selected in the wizard.
-;Source: "Documentation\Installation Instructions.pdf"; DestDir: "{src}"; Check: IsInstallType('A');
-;Source: "Documentation\EnablerV4InstallScript.txt"; DestDir: "{src}"; Check: IsInstallType('B');
+; The following two lines are for testing the installer adds the files applicable for the installation type (client or server).
 Source: "Input\*"; DestDir: "{app}"; Flags: ignoreversion createallsubdirs recursesubdirs; Check: IsInstallType('A');
+Source: "ForTestPurposesOnly\SqlServerMockInstall.exe"; DestDir: "{app}\ForTestPurposesOnly"; Check: IsInstallType('B');
+
+[Run]
+; Test the running of an executable file if a server installation is selected in the wizard.
+Filename: "{app}\ForTestPurposesOnly\SqlServerMockInstall.exe"; Check: IsInstallType('B');
 
 
 ;===================================
