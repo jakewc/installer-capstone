@@ -1,0 +1,42 @@
+[Version]
+Signature="$Windows NT$"
+Class=Ports
+ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318}
+Provider=%ProviderName%
+DriverVer=26/03/2012,1.0.1.0
+
+[MANUFACTURER]
+%ProviderName%=DeviceList, NTx86, NTamd64
+
+[DeviceList.NTx86]
+%EnablerEic0%=DriverInstall,USB\VID_045E&PID_8120
+%EnablerEic1%=DriverInstall,USB\VID_045E&PID_8121
+%EnablerEic2%=DriverInstall,USB\VID_045E&PID_8122
+%EnablerEic3%=DriverInstall,USB\VID_045E&PID_8123
+
+[DeviceList.NTamd64]
+%EnablerEic0%=DriverInstall,USB\VID_045E&PID_8120
+%EnablerEic1%=DriverInstall,USB\VID_045E&PID_8121
+%EnablerEic2%=DriverInstall,USB\VID_045E&PID_8122
+%EnablerEic3%=DriverInstall,USB\VID_045E&PID_8123
+
+[DriverInstall]
+include=mdmcpq.inf
+CopyFiles=FakeModemCopyFileSection
+AddReg=LowerFilterAddReg,SerialPropPageAddReg
+
+[DriverInstall.Services]
+include = mdmcpq.inf
+AddService = usbser, 0x00000002, LowerFilter_Service_Inst
+
+; This adds the serial port property tab to the device properties dialog
+[SerialPropPageAddReg]
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
+
+[Strings]
+ProviderName = "Integration Technologies Limited" 
+EnablerEic0 = "Enabler Interface Card 0" 
+EnablerEic1 = "Enabler Interface Card 1" 
+EnablerEic2 = "Enabler Interface Card 2" 
+EnablerEic3 = "Enabler Interface Card 3" 
+
