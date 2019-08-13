@@ -105,8 +105,8 @@ begin
   GROUP:='The Enabler';
   DISABLED:='!';
   MAINDIR:='Enabler';
-  MAINDIR:='C:\%MAINDIR';       
-  BACKUP:='%MAINDIR%\BACKUP';
+  MAINDIR:='C:\'+ ExpandConstant('{app}');       
+  BACKUP:=ExpandConstant('{app}')+'\BACKUP';
   DOBACKUP:='B';
   DBDIR:=' C:\EnablerDB';
   INSTANCE_NAME_NEEDED:=True;
