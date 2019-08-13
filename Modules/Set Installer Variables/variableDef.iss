@@ -1,4 +1,5 @@
 [Code]
+
 {define variables}
 var
 {The default is for none of the apps to be installed without the SDKoption selected}
@@ -108,20 +109,20 @@ begin
   BACKUP:='%MAINDIR%\BACKUP';
   DOBACKUP:='B';
   DBDIR:=' C:\EnablerDB';
-  INSTANCE_NAME_NEEDED:=1;
-  INSTANCE_NAME_LIST:=0;
-  PRE_BACKUP:=0;
+  INSTANCE_NAME_NEEDED:=True;
+  INSTANCE_NAME_LIST:=False;
+  PRE_BACKUP:=False;
   CHECKED:='A';
-  SDK_APPS:=0;
+  SDK_APPS:=False;
   ICONS:='B';
-  NOSTART:=0;
-  UNATTENDED:=0;
-  SLIENT:=0;
-  PHASE2:=0;
-  FAST_STARTUP:=0;
+  NOSTART:=False;
+  UNATTENDED:=False;
+  SLIENT:=False;
+  PHASE2:=False;
+  FAST_STARTUP:=False;
   BUILTIN_USERS_GROUP:='S-1-5-32-545';
   BUILTIN_ADMINISTRATORS_GROUP:='S-1-5-32-544';
-  USAGE:=0;
+  SHOW_USAGE:=False;
 end;
 
 {Variable COMPONENTS}
@@ -202,6 +203,20 @@ begin
   Result:=ENBWEB_PORT;
 end;
 
+{Variable ENV_COMPUTERNAME}
+function GetENV_COMPUTERNAME():String;
+var 
+  ENV_COMPUTERNAME:String;  
+begin
+  ENV_COMPUTERNAME:='';
+  if RegValueExists(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Services/EventLog/State', 'LastComputerName')then
+  begin
+    RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Services/EventLog/State', 'LastComputerName',ENV_COMPUTERNAME)
+  end;
+  Result:=ENV_COMPUTERNAME;
+end;
+
+
 {Variable OS,OS_ARCHITECTURE,OS_ARCHITEW6432}
 {Variable OS_ARCHITECTURE,OS_ARCHITEW6432}
 function GetOS_ARCHITECTURE():String;
@@ -228,43 +243,29 @@ begin
   Result:=OS_ARCHITEW6432;
 end;
 
-
+function GetOS():Integer;
 var
 OS:Integer;
-if OS_ARCHITECTURE='AMD64' then
+begin
+OS:=0;
+if GetOS_ARCHITECTURE()='AMD64' then
   begin
     os:=64;
   end;
-if OS_ARCHITECTURE='IA64' then
+if GetOS_ARCHITECTURE()='IA64' then
   begin
     OS:=64;
   end;
-if OS_ARCHITECTURE='x86' then
+if GetOS_ARCHITECTURE()='x86' then
   begin
-    if OS_ARCHITEW6432 = 'AMD64' then
+    if GetOS_ARCHITEW6432() = 'AMD64' then
       begin
         OS:=64;
-      end;
+      end
       else
       begin
         OS:=32
-      end
+      end;
   end;
-
-{Variable ENV_COMPUTERNAME}
-function GetENV_COMPUTERNAME():String;
-var 
-  ENV_COMPUTERNAME:String;  
-begin
-  ENV_COMPUTERNAME:='';
-  if RegValueExists(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Services/EventLog/State', 'LastComputerName')then
-  begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Services/EventLog/State', 'LastComputerName',ENV_COMPUTERNAME)
-  end;
-  Result:=ENV_COMPUTERNAME;
+  Result:=OS
 end;
-
-
-
-
-
