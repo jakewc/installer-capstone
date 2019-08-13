@@ -1,0 +1,172 @@
+Scripts for the Install Wizard screens
+
+Dialog: Welcome
+
+	Hide Control LogoITL
+	Hide Control LogoGeneric
+	If LOGO_TYPE Equals "ITL" then
+		Enable Control LogoITL
+	Else
+		Enable Control LogoGeneric
+	End
+
+
+
+Dialog: Readme
+
+	Hide Control ViewReleaseNotesButton
+	If File or Directory exists %IEXPLORE_PATH% then
+		If IEXPLORE_VERSION Greater Than or Equal "5" then
+			if HTML_RELEASE_NOTES Equals "1' then
+				Enable Control ViewReleaseNotesButton
+			End
+		End
+	End
+	
+	
+Dialog: SelectComponents (Client/Server)
+
+	Set Variable CHECKED to A
+	if SDK_APPS Equals "1" then
+		Enable Control SDK_Check
+		Enable Control SDK_Check_Text
+	Else
+		Hide Control SDK_Check
+		Hide Control SDK_Check_Text
+	End
+	If DLG_EVENT_TYPE Equals "VERIFY" then	
+		If APPLICATIONS Equals "" then
+			Rem set default applications (components)
+			If COMPONENTS Contains Any Letters in "A" then
+				Set Variable APPLICATIONS to B
+			Else
+				Set Variable APPLICATIONS to ABCDE
+			End
+		End
+	End
+	
+	
+Dialog: Install Default SQL Server 
+
+	If SQLEXPRESSNAME Equals "SQL2008R2" then
+		Enable Control RebootWarning
+	Else
+		Hide Control RebootWarning
+	End
+	
+	
+Dialog: SA Password
+
+	If DLG_EVENT_TYPE Equals "VERIFY" Then
+		If PASSWORD_1 Not Equal "%PASSWORD_2%" Then
+			Display Message "Password mismatch"
+			Set Variable DLG_EVENT_TYPE to   /* (Nothing) */
+		Else
+			Set Variable SA_PASSWORD to %PASSWORD1%
+		End
+	End
+	
+	
+Dialog: SQL Instance Name
+
+	If DLG_EVENT_TYPE Equals "INIT" Then
+		If Expression True "CMD_INSTANCE=0" then
+			Set Control Instance_Name to ""
+		Else
+			Set Variable CLIENT_SQL_INSTANCE to %SQL_INSTANCE%
+			Set Control Instance_Name text to "%CLIENT_SQL_INSTANCE%"
+		End
+	End
+	
+	
+Dialog: Start Installation 
+
+	If SQL_NEEDED Equals "1" Then
+		If COMPONENTS Contains Any Letters In "B" Then
+			If SQLEXPRESSNAME Equals "SQL2005" then	
+				Set Variable SQLTITLE to " and SQL Server 2005 Express"
+			End
+			If SQLEXPRESSNAME Equals "SQL2008R2" then
+				Set Variable SQLTITLE to " and SQL Server 2008 Express"
+			End
+		End
+	End
+	If Expression True "Instr(COMPONENTS,"B")" And PRE_BACKUP=1" Then
+		Enable Control PreUpgradeBackupCheckBox
+	Else
+		Hide Control PreUpgradeBackupCheckBox
+	End
+	
+	
+Dialog: Installation Finished
+
+	Disable Control BACK
+	Disable Control CANCEL
+	Disable Control startmpp
+	Disable Control startpump
+	Hide Control restartMessage
+	Hide Control driverMessage2
+	Hide Control driverMessage3
+	Hide Control poweroptionsMessag4
+	Hide Control startmpp
+	Hide Control startpump
+	Hide Control openweb
+	
+	Rem Check for NOSTART - no point offering this option the web server will not be running!
+	If NOSTART Equals "0" Then
+		If File or Directory exists %IEXPLORE_PATH% then
+			If IEXPLORE_VERSION Greater Than or Equal "5" then
+				Enable Control openweb
+			End
+		End
+	End
+	
+	Rem Server install
+	If COMPONENTS Contains Any letters In "B" Then
+	
+		Rem Check for NOSTART
+		If NOSTART Equals "0" Then
+		
+			Rem Pump Server is running
+			if RUNNING Contains "Running" then
+			
+				Rem Check Driver install status
+				If DRIVERCODE Less Than or Equal "1" then
+					Rem Return code 1 means requires reboot but we are ignoring this
+					
+					Rem MPPSim was installed
+					If SDK_OPTIONS Contains "A" Then
+						Enable Control startmpp
+					End
+					
+					Rem Pump demo was installed
+					If SDK_OPTIONS Contains "B" Then
+						Enable Control startpump
+					End
+					
+				ElseIf DRIVERCODE Equals "2" Then
+					Rem Failed device driver install
+					Enable Control driverMessage2
+				
+				ElseIf DRIVERCODE Equals "3' Then
+					Rem No Enabler Card device present
+					Enable Control driverMessage3
+				End
+				
+				Enable Control poweroptionsMessage4
+			End
+			
+		Else
+			Rem Pump Server is NOT running
+			Enable Control restartMessage
+		End
+	End
+	
+
+	
+	
+	
+	
+	
+
+	
