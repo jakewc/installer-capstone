@@ -1,0 +1,28 @@
+﻿2019-08-14 15:38:04.382   Log opened. (Time zone: UTC+12:00)
+2019-08-14 15:38:04.390   Setup version: Inno Setup version 6.0.2 (u)
+2019-08-14 15:38:04.393   Original Setup EXE: C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe
+2019-08-14 15:38:04.396   Setup command line: /SL5="$4F09B6,721652,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$600924 /NOTIFYWND=$2F09DA /DEBUGWND=$40958 
+2019-08-14 15:38:04.401   Windows version: 10.0.17763  (NT platform: Yes)
+2019-08-14 15:38:04.404   64-bit Windows: Yes
+2019-08-14 15:38:04.414   Processor architecture: x64
+2019-08-14 15:38:04.418   User privileges: Administrative
+2019-08-14 15:38:04.425   Administrative install mode: Yes
+2019-08-14 15:38:04.430   Install mode root key: HKEY_LOCAL_MACHINE
+2019-08-14 15:38:04.439   64-bit install mode: No
+2019-08-14 15:38:04.461   Created temporary directory: C:\Users\JACOBC~1\AppData\Local\Temp\is-N6E05.tmp
+2019-08-14 15:38:04.488   Initialising variables.
+2019-08-14 15:38:26.156   Message box (OK):
+                          The password field is empty. Please enter a password.
+2019-08-14 15:38:27.440   User chose OK.
+2019-08-14 15:38:27.483   Message box (OK):
+                          The re-enter password field is empty. Please re-enter the password to confirm.
+2019-08-14 15:38:28.100   User chose OK.
+2019-08-14 15:38:34.339   Message box (Yes/No):
+                          Setup is not complete. If you exit now, the program will not be installed.
+                          
+                          You may run Setup again at another time to complete the installation.
+                          
+                          Exit Setup?
+2019-08-14 15:38:35.320   User chose Yes.
+2019-08-14 15:38:35.332   Deinitializing Setup.
+2019-08-14 15:38:35.500   Unable to delete log file C:\Users\JACOBC~1\AppData\Local\Temp\Setup Log 2019-08-14 #103.txt
