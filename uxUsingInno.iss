@@ -144,23 +144,33 @@ begin
   Result:=False;
 
   //pages exclusive to Client install
-  if PageID = noServerInstalledPage.ID then
-    if IsInstallType('A') then
+  if PageID = noServerInstalledPage.ID then begin
+    if IsInstallType('A') then begin
       Result:=True;
-  if PageID = SAPasswordPage.ID then
-    if isInstallType('A') then
+    end;
+  end;
+  if PageID = SAPasswordPage.ID then begin
+    if isInstallType('A') then begin
       Result:=True;
-  if PageID = portPage.ID then
-    if isInstallType('A') then
+    end;
+  end;
+  if PageID = portPage.ID then begin
+    if isInstallType('A') then begin
       Result:=true;
+    end;
+  end;
 
   //pages exclusive to Server install
-  if PageID = serverNameEntryPage.ID then
-    if IsInstallType('B') then
+  if PageID = serverNameEntryPage.ID then begin
+    if IsInstallType('B') then begin
       Result:= True;
-  if PageID = instanceNamePage.ID then
-    if IsInstallType('B') then
+    end;
+  end;
+  if PageID = instanceNamePage.ID then begin
+    if IsInstallType('B') then begin
       Result:= True;
+    end;
+  end;
   
 end;
 
@@ -250,11 +260,13 @@ end;
 procedure RadioClientClicked(Sender: TObject);
 begin
   components := 'A';  // Client install.
+  Log(components);
 end; 
 
 procedure RadioServerClicked(Sender: TObject);
 begin
   components := 'B';  // Server install.
+  Log(components);
 end;
 
 procedure SDKOptionClicked(Sender: TObject);
@@ -271,6 +283,7 @@ begin
   radioClient.Parent := pageInstallType.Surface;
   radioClient.Caption := 'Client Install';
   radioClient.Checked := True;  // Set the default to a client install
+  components:='A';
   radioClient.OnClick := @RadioClientClicked;
 
   lblClient := TLabel.Create(pageInstallType);
@@ -392,7 +405,6 @@ end;
 //========================================
 
 procedure createNetworkPortPage();
-var
    
 begin
   portPage:= CreateInputQueryPage(SAPasswordPage.ID, 'Confirm the Network Port and Domain for Enabler Web Server.', '', '');

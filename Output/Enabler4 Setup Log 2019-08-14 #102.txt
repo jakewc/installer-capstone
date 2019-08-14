@@ -1,0 +1,34 @@
+﻿2019-08-14 15:33:49.283   Log opened. (Time zone: UTC+12:00)
+2019-08-14 15:33:49.285   Setup version: Inno Setup version 6.0.2 (u)
+2019-08-14 15:33:49.286   Original Setup EXE: C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe
+2019-08-14 15:33:49.287   Setup command line: /SL5="$1F09F8,721652,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$100A22 /NOTIFYWND=$70088E /DEBUGWND=$40958 
+2019-08-14 15:33:49.288   Windows version: 10.0.17763  (NT platform: Yes)
+2019-08-14 15:33:49.289   64-bit Windows: Yes
+2019-08-14 15:33:49.290   Processor architecture: x64
+2019-08-14 15:33:49.293   User privileges: Administrative
+2019-08-14 15:33:49.295   Administrative install mode: Yes
+2019-08-14 15:33:49.296   Install mode root key: HKEY_LOCAL_MACHINE
+2019-08-14 15:33:49.297   64-bit install mode: No
+2019-08-14 15:33:49.304   Created temporary directory: C:\Users\JACOBC~1\AppData\Local\Temp\is-8GR5E.tmp
+2019-08-14 15:33:49.313   Initialising variables.
+2019-08-14 15:34:17.582   Message box (OK):
+                          The password field is empty. Please enter a password.
+2019-08-14 15:34:19.467   User chose OK.
+2019-08-14 15:34:19.475   Message box (OK):
+                          The re-enter password field is empty. Please re-enter the password to confirm.
+2019-08-14 15:34:20.587   User chose OK.
+2019-08-14 15:34:21.479   Message box (OK):
+                          The password field is empty. Please enter a password.
+2019-08-14 15:34:22.537   User chose OK.
+2019-08-14 15:34:22.540   Message box (OK):
+                          The re-enter password field is empty. Please re-enter the password to confirm.
+2019-08-14 15:34:23.333   User chose OK.
+2019-08-14 15:34:35.999   Message box (Yes/No):
+                          Setup is not complete. If you exit now, the program will not be installed.
+                          
+                          You may run Setup again at another time to complete the installation.
+                          
+                          Exit Setup?
+2019-08-14 15:34:37.283   User chose Yes.
+2019-08-14 15:34:37.287   Deinitializing Setup.
+2019-08-14 15:34:37.387   Unable to delete log file C:\Users\JACOBC~1\AppData\Local\Temp\Setup Log 2019-08-14 #102.txt
