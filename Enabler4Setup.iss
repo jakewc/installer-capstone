@@ -12,9 +12,9 @@ DisableWelcomePage=no
 
 [Files]
 ; The following two lines are for testing the installer adds the files applicable for the installation type (client or server).
-Source: "InputClientInstall\*"; DestDir: "{app}"; Flags: ignoreversion createallsubdirs recursesubdirs; Check: IsInstallType('A');
+;Source: "InputClientInstall\*"; DestDir: "{app}"; Flags: ignoreversion createallsubdirs recursesubdirs; Check: IsInstallType('A');
 Source: "ForTestPurposesOnly\SqlServerMockInstall.exe"; DestDir: "{app}\ForTestPurposesOnly"; Check: IsInstallType('B');
-Source: "InputServerInstall\scripts\Instances.bat"; DestDir: "{app}"; Check: IsInstallType('B');
+Source: "InputServerInstallFiles\Instances.bat"; DestDir: "{app}"; Check: IsInstallType('B');
 
 [Run]
 ; Test the running of an executable file if a server installation is selected in the wizard.
@@ -76,7 +76,7 @@ var
   OS: integer;
   OS_ARCHITECTURE: string;
   OS_ARCHITEW6432: string;
-  OPERATING_SYSTEM: double;
+  OPERATING_SYSTEM: Longint;
   //Initialise unattended variables
 
   UNATTENDED: integer;
@@ -94,6 +94,8 @@ var
   SQL_NEEDED: integer;
 
   SQLEXPRESSNAME: string;
+
+  SQLEXPRESSFULLNAME: string;
 
 //This will store the value of the OS 
 procedure SetArchictureVariables();
@@ -130,17 +132,22 @@ begin
   Result := (GetWindowsVersion >= $06020000);
 end;
 
+function CheckWindowsVersion: Longint;
+  var versionString: string;
+  var versionInt: Longint;
+  begin
+     versionString := GetWindowsVersionString;
+     versionInt:= StrToInt(versionString); 
+     Result:= versionInt;
+  end;
+
 //sets the operating system variable
 procedure setOperatingSystemVariable();
    begin
       (* We will set this variable according to the 'Windows Current Version'Registry Key 87 
          NOTE: The Registry Key is: \\HKLM\Software\Microsoft\Windows NT\CurrentVersion\(CurrentVersion) - it contains a number.
          NOTE: Windows 10 returns a value of 6.3 for backwards compatibility. Indicates its Windows 8.1 *)
-
-     if IsWindows8OrLater() then
-        begin
-            OPERATING_SYSTEM:= 6.2;
-        end
+            OPERATING_SYSTEM:= CheckWindowsVersion;
    end;
     
 //SQL SERVER SETUP
@@ -153,13 +160,56 @@ procedure CheckIfSQL2016CanBeInstalled();
              //If SQL2016 available and 64bit and not Windows 7 then use it instead
              if DirExists('SQL2016') then
                 if OS = 64 then
-                   if OPERATING_SYSTEM>=6.2 then
+                   if IsWindows8OrLater then
                       begin
                           SQLEXPRESSNAME:= 'SQL2016';
                           Log('Folder SQL2016 found, so this will be installed.');
                       end    
           end
     end;
+
+
+procedure UpdateSystem();
+  var
+    ResultCode: Integer;
+    KB_FIND1: Integer;
+    KB_FIND2: Integer;
+begin
+             if SQLEXPRESSNAME = 'SQL2016' then
+                begin
+                  Log('Checking SQL2016 requirements for Windows 8.1 or Server 2012 64 bit'); 
+                  //Execute C:\WINDOWS\Sysnative\CMD.EXE /C wmic qfe get HotFixId | find "KB2919355" (Wait);
+                  Exec('CMD.EXE', '/C wmic qfe get HotFixId | find "KB2919355"', 'C:\WINDOWS\Sysnative\', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+                  KB_FIND1:= ResultCode;
+                  //570 /* Execute C:\WINDOWS\Sysnative\CMD.EXE /C wmic qfe get HotFixId | find "KB2919442" (Wait)
+                  Exec('CMD.EXE', '/C wmic qfe get HotFixId | find "KB2919442"', 'C:\WINDOWS\Sysnative\', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+                  KB_FIND2:= ResultCode;
+                  Log('Result of Windows update finds %KB_FIND1%');
+                  if KB_FIND1 = 1 then
+                     begin
+                       MsgBox('Requirements for SQL2016 not met', mbError, MB_OK);
+                       Log('Windows 8.1 or Server 2012 requires system updates to install SQL2016 (KB2919355)"');
+                       Exit;
+                     end;
+           end;
+end;
+
+procedure DoesSystemNeedWindowsUpdates();
+(* - Check if the system needs Windows updates before runing Enabler
+install
+   - Windows 8.1 64 bit & Windows Server 2012 require updates before
+SQL2016 installed*)
+
+  begin
+     if IntToStr(OPERATING_SYSTEM)='6.3.9200' then
+        begin
+         if OS = 64 then
+           begin
+            UpdateSystem();
+           end;
+        end;
+  end;
+
 
 procedure SqlServerSetup();
     begin
@@ -209,10 +259,19 @@ procedure SqlServerSetup();
                 end;   
           //If SQL2014 already detected, then no more additional checks. Otherwise, check if we can use SQL Server 2016 
           CheckIfSQL2016CanBeInstalled();
+          Log ('SQL server folders parsed SQL server to install ' + SQLEXPRESSNAME  + ' Architecture=' + IntToStr(OS) +  ' Windows version= ' + GetWindowsVersionString ); 
+          SQLEXPRESSFULLNAME := SQLEXPRESSNAME;
+          if SQLEXPRESSNAME<> 'MSDE2000' then
+             begin
+                  SQLEXPRESSFULLNAME:= SQLEXPRESSNAME;
+             end;
+          Log ('SQLEXPRESSNAME ' + SQLEXPRESSNAME);
+          DoesSystemNeedWindowsUpdates(); 
           end
         else
            begin       
               Log('SQL SERVER ALREADY INSTALLED');
+              Exit; 
            end 
     end;
 
