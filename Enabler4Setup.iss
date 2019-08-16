@@ -181,6 +181,9 @@ var
    installer command-line usage}
   SHOW_USAGE:Boolean;
 
+  WINDOWS_VERSION: String;
+  MIN_WINDOWS_VERSION: Integer;
+
   //Read Me Page  
   readMePage: TOutputMsgMemoWizardPage;
   releaseNotesButton: TNewButton;
@@ -316,6 +319,19 @@ begin
 end;
 
 
+function HasMinimumWindowsVersion(): Boolean;
+begin
+  if StrToInt(Copy(WINDOWS_VERSION, 1, Pos('.', WINDOWS_VERSION)-1)) < MIN_WINDOWS_VERSION then
+  begin
+    Result := False;
+  end
+  else
+  begin
+    Result := True;
+  end;
+end;
+
+
 procedure variableInitialisation ();
 begin
   DRIVERCODE:=0;
@@ -342,6 +358,9 @@ begin
   BUILTIN_USERS_GROUP:='S-1-5-32-545';
   BUILTIN_ADMINISTRATORS_GROUP:='S-1-5-32-544';
   SHOW_USAGE:=False;
+  WINDOWS_VERSION:=GetWindowsVersionString
+  MIN_WINDOWS_VERSION:=3; // Version 3 = Windows NT.
+
 end;
 
 
@@ -732,12 +751,24 @@ end;
 
 //runs first
 function InitializeSetup(): Boolean;
+var message: String;
 begin
   appName := '{#SetupSetting("AppName")}';
   Log('Initialising variables.');
   variableInitialisation();
-    
-  Result := True; // Inno setup doesn't proceed to next step if true is not returned.
+
+  // Check that the minimum Windows version is installed.
+  if not HasMinimumWindowsVersion then
+  begin 
+    message := 'The minimum Windows version was not found. Aborting installation.';
+    Log(message);
+    MsgBox(message, mbCriticalError, MB_OK);
+    Result := False;
+  end
+  else
+  begin
+    Result := True; // Inno setup doesn't proceed to next step if true is not returned.
+  end;
 end;
 
 //runs wizard
