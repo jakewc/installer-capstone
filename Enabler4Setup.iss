@@ -42,7 +42,7 @@
 
 [Setup]
 AppName=Enabler4
-AppVersion=1.0
+AppVersion=4.6.3.6087
 WizardStyle=modern
 AppId={{95EC957B-DB36-4EDD-9C7C-B19F896CC37D}
 AppPublisher=Integration Technologies Limited
@@ -182,7 +182,11 @@ var
   SHOW_USAGE:Boolean;
 
   WINDOWS_VERSION: String;
+  WINDOWS_BASE_VERSION: Integer;
   MIN_WINDOWS_VERSION: Integer;
+  OPERATING_SYSTEM: String;
+  ENB_VERSION: String;
+
 
   //Read Me Page  
   readMePage: TOutputMsgMemoWizardPage;
@@ -316,51 +320,6 @@ begin
       Result := False;
     end;
   end;
-end;
-
-
-function HasMinimumWindowsVersion(): Boolean;
-begin
-  if StrToInt(Copy(WINDOWS_VERSION, 1, Pos('.', WINDOWS_VERSION)-1)) < MIN_WINDOWS_VERSION then
-  begin
-    Result := False;
-  end
-  else
-  begin
-    Result := True;
-  end;
-end;
-
-
-procedure variableInitialisation ();
-begin
-  DRIVERCODE:=0;
-  APPNAME := '{#SetupSetting("AppName")}';
-  APPTITLE:='The Enabler';
-  GROUP:='The Enabler';
-  DISABLED:='!';
-  MAINDIR:='Enabler';
-  MAINDIR:='C:\'+ MAINDIR;       
-  BACKUP:=MAINDIR+'\BACKUP';
-  DOBACKUP:='B';
-  DBDIR:=' C:\EnablerDB';
-  INSTANCE_NAME_NEEDED:=True;
-  INSTANCE_NAME_LIST:=False;
-  PRE_BACKUP:=False;
-  CHECKED:='A';
-  SDK_APPS:=False;
-  ICONS:='B';
-  NOSTART:=False;
-  UNATTENDED:=False;
-  SILENT:=False;
-  PHASE2:=False;
-  FAST_STARTUP:=False;
-  BUILTIN_USERS_GROUP:='S-1-5-32-545';
-  BUILTIN_ADMINISTRATORS_GROUP:='S-1-5-32-544';
-  SHOW_USAGE:=False;
-  WINDOWS_VERSION:=GetWindowsVersionString
-  MIN_WINDOWS_VERSION:=3; // Version 3 = Windows NT.
-
 end;
 
 
@@ -507,6 +466,48 @@ if GetOS_ARCHITECTURE()='x86' then
       end;
   end;
   Result:=OS
+end;
+
+
+procedure variableInitialisation ();
+var 
+  osResultCode: Integer;
+begin
+  DRIVERCODE:=0;
+  APPNAME := '{#SetupSetting("AppName")}';
+  APPTITLE:='The Enabler';
+  GROUP:='The Enabler';
+  DISABLED:='!';
+  MAINDIR:='Enabler';
+  MAINDIR:='C:\'+ MAINDIR;       
+  BACKUP:=MAINDIR+'\BACKUP';
+  DOBACKUP:='B';
+  DBDIR:=' C:\EnablerDB';
+  INSTANCE_NAME_NEEDED:=True;
+  INSTANCE_NAME_LIST:=False;
+  PRE_BACKUP:=False;
+  CHECKED:='A';
+  SDK_APPS:=False;
+  ICONS:='B';
+  NOSTART:=False;
+  UNATTENDED:=False;
+  SILENT:=False;
+  PHASE2:=False;
+  FAST_STARTUP:=False;
+  BUILTIN_USERS_GROUP:='S-1-5-32-545';
+  BUILTIN_ADMINISTRATORS_GROUP:='S-1-5-32-544';
+  SHOW_USAGE:=False;
+  MIN_WINDOWS_VERSION:=3; // Version 3 = Windows NT.
+  WINDOWS_VERSION:=GetWindowsVersionString;
+  WINDOWS_BASE_VERSION:=StrToInt(Copy(WINDOWS_VERSION, 1, Pos('.', WINDOWS_VERSION)-1));
+  ENB_VERSION:='{#SetupSetting("AppVersion")}'; // This variable was never initialised in the wise script. Initialised with a value here to enable compiler to run.
+  
+  if Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C ver | find /i "Version 10."', '', SW_SHOW, ewWaitUntilTerminated, osResultCode) then begin
+    OPERATING_SYSTEM:='10';
+    Log('Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10');
+  end;
+  
+  Log('Installing Enabler V' + ENB_VERSION + ' on Windows V' + WINDOWS_VERSION + ' ' + IntToStr(GetOS()) + 'bit (Version ' + OPERATING_SYSTEM + ')');                     
 end;
 
 
@@ -758,9 +759,9 @@ begin
   variableInitialisation();
 
   // Check that the minimum Windows version is installed.
-  if not HasMinimumWindowsVersion then
+  if WINDOWS_BASE_VERSION < MIN_WINDOWS_VERSION then
   begin 
-    message := 'The minimum Windows version was not found. Aborting installation.';
+    message := 'The base Windows version found was V' + IntToStr(WINDOWS_BASE_VERSION) + ' but the minimum Windows version required is V' + IntToStr(MIN_WINDOWS_VERSION) + '. Aborting installation.';
     Log(message);
     MsgBox(message, mbCriticalError, MB_OK);
     Result := False;
