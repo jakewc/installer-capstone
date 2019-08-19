@@ -56,12 +56,74 @@ DisableWelcomePage=no
 Name: "Client"; Description: "Client"
 Name: "Server"; Description: "Server"
 
+;I'M NOT SURE WHERE THESE FILES CAME FROM:
+;ITL.Enabler.API.dll
+;ITL.Enabler.API.TLB
 
 [Files]
-;compresses the readme file into the intaller if client selected for testing purposes
-Source: "{#SourcePath}\readme.md"; DestDir: "{app}"; Flags: ignoreversion createallsubdirs recursesubdirs; Check: IsInstallType('A');
+
+//=========================
+//install Third-Party DLLs
+//=========================
+Source: "{#SourcePath}\ClientInstallInput\Extra\comdlg32.ocx"; DestDir: "{app}";
+Source: "{#SourcePath}\ClientInstallInput\Extra\comct232.ocx"; DestDir: "{app}";
+Source: "{#SourcePath}\ClientInstallInput\Extra\comctl32.ocx"; DestDir: "{app}";
+Source: "{#SourcePath}\ClientInstallInput\Extra\Mscomm32.ocx"; DestDir: "{app}";
+Source: "{#SourcePath}\ClientInstallInput\Extra\Msflxgrd.ocx"; DestDir: "{app}";
+Source: "{#SourcePath}\ClientInstallInput\Extra\Msrdc20.ocx"; DestDir: "{app}";
+Source: "{#SourcePath}\ClientInstallInput\Extra\Msrdo20.dll"; DestDir: "{app}";
+Source: "{#SourcePath}\ClientInstallInput\Extra\Msvcp60.dll"; DestDir: "{app}";  
 
 
+//==================
+//Security components
+//==================
+Source: "{#SourcePath}\ClientInstallInput\EnbSecurityController.exe"; DestDir: "{app}"; Flags: skipifsourcedoesntexist;
+Source: "{#SourcePath}\ClientInstallInput\SecurityModule.dll"; DestDir: "{app}"; Flags: skipifsourcedoesntexist;
+Source: "{#SourcePath}\ClientInstallInput\AuditTrail.dll"; DestDir: "{app}"; Flags: skipifsourcedoesntexist;
+Source: "{#SourcePath}\ClientInstallInput\itl.ico"; DestDir: "{app}";
+
+//for modules not worked on yet
+Source: "{#SourcePath}\ClientInstallInput\API\ActiveX\EnbSessionX2.ocx"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\bin\EnablerEvent.dll"; DestDir: "{app}\bin"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\Extra\PDFViewer.exe"; DestDir: "{app}\bin"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\bin\odbcnfg.exe"; DestDir: "{app}\bin"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\bin\odbcnfg64.exe"; DestDir: "{app}\bin"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\bin\setx64.exe"; DestDir: "{app}\bin"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\bin\subinacl.exe"; DestDir: "{app}\bin"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\bin\atutil.exe"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\enbkick.exe"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\autosupport.exe"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\CreateRegKeyEvent.bat"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\ConvertV4BetaLicense.exe"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\API\Java\enabler-api-1.0.jar"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\EnablerSoundEvents.reg"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\API\ActiveX\EnbAttendantX2.ocx"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\bin\enbclient.exe"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\EnbKick.exe"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\API\ActiveX\EnbPumpX2.ocx"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\scripts\Instances.bat"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\bin\Interop.IWshRuntimeLibrary.dll"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\API\NET\ITL.Enabler.WPFControls.dll"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\EnbSecurityController.exe"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\Extra\joda-time-2.0.jar"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\Extra\joda-time-LICENSE.txt"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\Extra\joda-time-NOTICE.txt"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\MsiQueryProduct.exe"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\API\NET\System.Windows.Controls.DataVisualization.Toolkit.dll"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\Extra\vcredist_x86.exe"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\ClientInstallInput\API\NET\WPFToolkit.dll"; DestDir: "{app}"; Check: IsInstallType('A');
+
+//has several conditions to check
+Source: "{#SourcePath}\ClientInstallInput\API\NET\InstallEnablerApi.msi"; DestDir: "{app}"; Check: IsInstallType('A');
+
+[Dirs]
+// deleteafterinstal ONLY DELETES if folder empty at end of install
+Name: "{app}\Docs";
+Name: "{app}\SDK\Doc\VisualStudio"; 
+Name: "{app}\SDK"; 
+Name: "{app}\SDK\Samples"; 
+Name: "{group}\SDK\";
 [Run]
 ; Test the running of an executable file if a server installation is selected in the wizard.
 Filename: "{#SourcePath}\ForTestPurposesOnly\SqlServerMockInstall.exe"; Check: IsInstallType('B');
@@ -228,6 +290,10 @@ var
 //========================================
 //installer-wide functions
 //======================================== 
+
+//abort an install
+procedure ExitProcess(exitCode:integer);
+  external 'ExitProcess@kernel32.dll stdcall';
 
 
 // Returns true if the installation type is the type passed to the function.
@@ -745,6 +811,33 @@ begin
       FileCopy(logFilePathName, newFilePathName, false);  // Copy log file again to include the 'unable to delete log file' entry.
 end;
 
+//========================================
+//Install user docs
+//========================================
+
+procedure basicPDFFiles();
+begin
+  if FileExists(ExpandConstant('{src}')+'\Documentation\ENABLER Demonstration POS Application Reference Manual.pdf') then begin
+    FileCopy(ExpandConstant('{src}')+'\Documentation\ENABLER Demonstration POS Application Reference Manual.pdf', ExpandConstant('{app}')+'\Docs\ENABLER Demonstration POS Application Reference Manual.pdf', False)
+  end
+  else begin
+    Log('Enabler POS Documentation not found')
+  end;
+  if FileExists(ExpandConstant('{src}')+'\Documentation\ENABLER Web Reference Manual.pdf') then begin
+    FileCopy(ExpandConstant('{src}')+'\Documentation\ENABLER Web Reference Manual.pdf', ExpandConstant('{app}')+'\Docs\ENABLER Web Reference Manual.pdf', False)
+  end
+  else begin
+    Log('Enabler Web Documentation not found')
+  end;
+end;
+
+    //TODO - create shortcuts from pdfs to {group}\manuals\pdfs.lnk
+    //Couldn't get the old installer to do this on my PC so I could see what's happening
+
+//================
+//install SDK docs
+//=================
+
 
 //========================================
 //initialize/deinitialize setup
@@ -789,6 +882,7 @@ end;
 // Called just before Setup terminates. 
 procedure DeinitializeSetup();
 begin
+    basicPDFFiles();
   MoveLogFile();
 end;
 
