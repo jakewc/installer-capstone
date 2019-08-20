@@ -146,7 +146,15 @@ var
   // Installer variables.
   appName: string;
   COMPONENTS: string;
+  APPLICATIONS:String;
+  PERATING_SYSTEM:String;
 
+  ENBWEB_DOMAIN:String;
+  ENBWEB_PORT:String;
+  COMPUTERNAME:String;
+
+  OS_ARCHITECTURE:String;
+  OS_ARCHITEW6432:String; 
   //The default is for none of the apps to be installed without the SDKoption selected
   SDK_OPTIONS:String;
   OS:Integer;
@@ -390,8 +398,8 @@ begin
 end;
 
 
-{Variable COMPONENTS}
-function GetCOMPONENTS(COMPONENTS: String):Boolean;
+ {Variable COMPONENTS}
+procedure getCOMPONENTS(COMPONENTS: String);
 var
     ResultString:String;
 begin
@@ -400,135 +408,127 @@ begin
     RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ResultString)
     COMPONENTS:=ResultString;
   end;
-  
-  Result:=True;
 end;
 
 {Variable APPLICATIONS}
-function GetAPPLICATIONS():String;
+procedure getAPPLICATIONS(APPLICATIONS:String);
 var 
-  APPLICATIONS:String;  
+  ResultString:String;
 begin
-  APPLICATIONS:='';
   if RegValueExists(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)')then
   begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',APPLICATIONS)
+    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ResultString)
+    APPLICATIONS:=ResultString;
   end;
-  Result:=APPLICATIONS;
 end;
 
 {Variable OPERATING_SYSTEM}
-function GetOPERATING_SYSTEM():String;
+procedure getOPERATING_SYSTEM(PERATING_SYSTEM:String);
 var 
-  OPERATING_SYSTEM:String;  
+  ResultString:String;  
 begin
-  OPERATING_SYSTEM:='';
   if RegValueExists(HKLM,'Software\Microsoft\Windows NT\CurrentVersion','CurrentVersion')then
   begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'Software\Microsoft\Windows NT\CurrentVersion','CurrentVersion',OPERATING_SYSTEM)
+    RegQueryStringValue(HKEY_LOCAL_MACHINE,'Software\Microsoft\Windows NT\CurrentVersion','CurrentVersion',ResultString)
+    PERATING_SYSTEM:=ResultString;
   end;
-  Result:=OPERATING_SYSTEM;
 end;
 
-{Variable SDK}
-function GetSDK():String;
+{Variable SDK[remain problem]}
+procedure getSDK(SDK:Boolean);
 var 
-  SDK:String;  
+  ResultString:Boolean;  
 begin
-  SDK:='';
   if RegValueExists(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)')then
   begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',SDK)
-  end;
-  Result:=SDK;
+    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ResultString)
+    SDK:=ResultString;
+  end; 
 end;
 
 {Variable ENBWEB_DOMAIN}
-function GetENBWEB_DOMAIN():String;
+procedure GetENBWEB_DOMAIN(ENBWEB_DOMAIN:String);
 var 
-  ENBWEB_DOMAIN:String;  
+  ResultString:String;  
 begin
-  ENBWEB_DOMAIN:='';
   if RegValueExists(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)')then
   begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ENBWEB_DOMAIN)
-  end;
-  Result:=ENBWEB_DOMAIN;
+    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ResultString)
+    ENBWEB_DOMAIN:=ResultString;
+  end; 
 end;
 
 {Variable ENBWEB_PORT}
-function GetENBWEB_PORT():String;
+function GetENBWEB_PORT(ENBWEB_PORT:String);
 var 
-  ENBWEB_PORT:String;  
+  ResultString:String;  
 begin
-  ENBWEB_PORT:='';
   if RegValueExists(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)')then
   begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ENBWEB_PORT)
+    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ResultString)
+    ENBWEB_PORT:=ResultString;
   end;
-  Result:=ENBWEB_PORT;
 end;
 
 {Variable ENV_COMPUTERNAME}
-function GetENV_COMPUTERNAME():String;
+function GetENV_COMPUTERNAME(COMPUTERNAME:String);
 var 
-  ENV_COMPUTERNAME:String;  
+  ResultString:String;  
 begin
-  ENV_COMPUTERNAME:='';
   if RegValueExists(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Services/EventLog/State', 'LastComputerName')then
   begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Services/EventLog/State', 'LastComputerName',ENV_COMPUTERNAME)
+    RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Services/EventLog/State', 'LastComputerName',ResultString)
+    COMPUTERNAME:=ResultString;
   end;
-  Result:=ENV_COMPUTERNAME;
 end;
 
 
 {Variable OS,OS_ARCHITECTURE,OS_ARCHITEW6432}
 {Variable OS_ARCHITECTURE,OS_ARCHITEW6432}
-function GetOS_ARCHITECTURE():String;
+function GetOS_ARCHITECTURE(OS_ARCHITECTURE:String);
 var 
-  OS_ARCHITECTURE:String;  
+  ResultString:String;  
 begin
-  OS_ARCHITECTURE:='';
   if RegValueExists(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE')then
   begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE',OS_ARCHITECTURE)
+    RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE',ResultString)
+    OS_ARCHITECTURE:=ResultString;
   end;
-  Result:=OS_ARCHITECTURE;
 end;
 
-function GetOS_ARCHITEW6432():String;
+function GetOS_ARCHITEW6432(OS_ARCHITEW6432:String);
 var 
-  OS_ARCHITEW6432:String;  
+  ResultString:String;  
 begin
-  OS_ARCHITEW6432:='';
   if RegValueExists(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE')then
   begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE',OS_ARCHITEW6432)
+    RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE',ResultString)
+    OS_ARCHITEW6432:=ResultString;
   end;
-  Result:=OS_ARCHITEW6432;
 end;
 
 function GetOS():Integer;
 begin
 OS:=0;
-if GetOS_ARCHITECTURE()='AMD64' then
+GetOS_ARCHITECTURE(OS_ARCHITECTURE);
+GetOS_ARCHITEW6432(OS_ARCHITEW6432);
+if OS_ARCHITECTURE ='AMD64' then
   begin
     os:=64;
   end;
-if GetOS_ARCHITECTURE()='IA64' then
+if OS_ARCHITECTURE ='IA64' then
   begin
     OS:=64;
   end;
-if GetOS_ARCHITECTURE()='x86' then
+if OS_ARCHITECTURE ='x86' then
   begin
-    if GetOS_ARCHITEW6432() = 'AMD64' then
+    if OS_ARCHITEW6432 = 'AMD64' then
       begin
         OS:=64;
       end
       else
       begin
-        OS:=32
+        OS:=32;
       end;
   end;
   Result:=OS
@@ -540,6 +540,12 @@ var
   osResultCode: Integer;
 begin
   getCOMPONENTS(COMPONENTS);
+  getAPPLICATIONS(APPLICATIONS);
+  getOPERATING_SYSTEM(PERATING_SYSTEM);
+  getSDK(SDK);
+  getENBWEB_DOMAIN(ENBWEB_DOMAIN);
+  getENBWEB_PORT(ENBWEB_PORT);
+  getCOMPUTERNAME(COMPUTERNAME);
   DRIVERCODE:=0;
   APPNAME := '{#SetupSetting("AppName")}';
   APPTITLE:='The Enabler';
