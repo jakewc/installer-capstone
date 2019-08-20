@@ -145,10 +145,11 @@ var
 
   // Installer variables.
   appName: string;
-  components: string;
+  COMPONENTS: string;
 
-  {The default is for none of the apps to be installed without the SDKoption selected}
-  SDK_OPTIONS:Boolean;
+  //The default is for none of the apps to be installed without the SDKoption selected
+  SDK_OPTIONS:String;
+  OS:Integer;
 
   { Disabling 8.3 will install files with short name:
    https://support.microsoft.com/en-us/kb/121007}
@@ -390,16 +391,17 @@ end;
 
 
 {Variable COMPONENTS}
-function GetCOMPONENTS():String;
-var 
-  COMPONENTS:String;  
+function GetCOMPONENTS(COMPONENTS: String):Boolean;
+var
+    ResultString:String;
 begin
-  COMPONENTS:='';
   if RegValueExists(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)')then
   begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',COMPONENTS)
+    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ResultString)
+    COMPONENTS:=ResultString;
   end;
-  Result:=COMPONENTS;
+  
+  Result:=True;
 end;
 
 {Variable APPLICATIONS}
@@ -508,8 +510,6 @@ begin
 end;
 
 function GetOS():Integer;
-var
-OS:Integer;
 begin
 OS:=0;
 if GetOS_ARCHITECTURE()='AMD64' then
@@ -539,13 +539,13 @@ procedure variableInitialisation ();
 var 
   osResultCode: Integer;
 begin
+  getCOMPONENTS(COMPONENTS);
   DRIVERCODE:=0;
   APPNAME := '{#SetupSetting("AppName")}';
   APPTITLE:='The Enabler';
   GROUP:='The Enabler';
   DISABLED:='!';
-  MAINDIR:='Enabler';
-  MAINDIR:='C:\'+ MAINDIR;       
+  MAINDIR:=ExpandConstant('{app}');       
   BACKUP:=MAINDIR+'\BACKUP';
   DOBACKUP:='B';
   DBDIR:=' C:\EnablerDB';
@@ -849,20 +849,9 @@ var message: String;
 begin
   appName := '{#SetupSetting("AppName")}';
   Log('Initialising variables.');
-  variableInitialisation();
 
   // Check that the minimum Windows version is installed.
-  if WINDOWS_BASE_VERSION < MIN_WINDOWS_VERSION then
-  begin 
-    message := 'The base Windows version found was V' + IntToStr(WINDOWS_BASE_VERSION) + ' but the minimum Windows version required is V' + IntToStr(MIN_WINDOWS_VERSION) + '. Aborting installation.';
-    Log(message);
-    MsgBox(message, mbCriticalError, MB_OK);
-    Result := False;
-  end
-  else
-  begin
-    Result := True; // Inno setup doesn't proceed to next step if true is not returned.
-  end;
+  
 end;
 
 //runs wizard
@@ -875,6 +864,19 @@ begin
   createNoServerInstalledPage();
   createSAPasswordPage();
   createNetworkPortPage();
+    variableInitialisation();
+
+    if WINDOWS_BASE_VERSION < MIN_WINDOWS_VERSION then
+  begin 
+    message := 'The base Windows version found was V' + IntToStr(WINDOWS_BASE_VERSION) + ' but the minimum Windows version required is V' + IntToStr(MIN_WINDOWS_VERSION) + '. Aborting installation.';
+    Log(message);
+    MsgBox(message, mbCriticalError, MB_OK);
+    Result := False;
+  end
+  else
+  begin
+    Result := True; // Inno setup doesn't proceed to next step if true is not returned.
+  end;
 
 end;
 
