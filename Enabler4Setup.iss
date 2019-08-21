@@ -137,7 +137,7 @@ WelcomeLabel2=We Recommend that you exit all Windows programs before running thi
 [Code]
 
 //========================================
-//variable initializations
+//variable declarations
 //========================================
 var
   
@@ -154,9 +154,13 @@ var
   COMPUTERNAME:String;
 
   OS_ARCHITECTURE:String;
-  OS_ARCHITEW6432:String; 
+  OS_ARCHITEW6432:String;
+   
   //The default is for none of the apps to be installed without the SDKoption selected
   SDK_OPTIONS:String;
+  SDK_APPS:Integer;  {Set variables for an SDK build. SDK checked, SDK_APPS if present}
+  SDK:String;
+
   OS:Integer;
 
   { Disabling 8.3 will install files with short name:
@@ -224,9 +228,6 @@ var
    in the wizard loop}
   CHECKED:String;
 
-  {Set variables for an SDK build. SDK checked, SDK_APPS if present}
-  SDK_APPS:Boolean;
-
   {Initialise icons variable. A is desktop icons B is start menu icons}
   ICONS:String;
 
@@ -268,7 +269,6 @@ var
   radioClient,radioServer: TRadioButton;
   lblClient, lblServer, lblSDK: TLabel;
   sdkCheckBox: TNewCheckBox;
-  sdk:Boolean;
 
   //server name entry page
   serverNameEntryPage:TInputQueryWizardPage;
@@ -435,14 +435,11 @@ begin
 end;
 
 {Variable SDK[remain problem]}
-procedure getSDK(SDK:Boolean);
-var 
-  ResultString:Boolean;  
+procedure getSDK();  
 begin
   if RegValueExists(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)')then
   begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ResultString)
-    SDK:=ResultString;
+    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',SDK)
   end; 
 end;
 
@@ -459,7 +456,7 @@ begin
 end;
 
 {Variable ENBWEB_PORT}
-function GetENBWEB_PORT(ENBWEB_PORT:String);
+procedure GetENBWEB_PORT(ENBWEB_PORT:String);
 var 
   ResultString:String;  
 begin
@@ -471,7 +468,7 @@ begin
 end;
 
 {Variable ENV_COMPUTERNAME}
-function GetENV_COMPUTERNAME(COMPUTERNAME:String);
+procedure GetENV_COMPUTERNAME(COMPUTERNAME:String);
 var 
   ResultString:String;  
 begin
@@ -485,7 +482,7 @@ end;
 
 {Variable OS,OS_ARCHITECTURE,OS_ARCHITEW6432}
 {Variable OS_ARCHITECTURE,OS_ARCHITEW6432}
-function GetOS_ARCHITECTURE(OS_ARCHITECTURE:String);
+procedure GetOS_ARCHITECTURE(OS_ARCHITECTURE:String);
 var 
   ResultString:String;  
 begin
@@ -496,7 +493,7 @@ begin
   end;
 end;
 
-function GetOS_ARCHITEW6432(OS_ARCHITEW6432:String);
+procedure GetOS_ARCHITEW6432(OS_ARCHITEW6432:String);
 var 
   ResultString:String;  
 begin
@@ -539,13 +536,15 @@ procedure variableInitialisation ();
 var 
   osResultCode: Integer;
 begin
+  Log('Initialising variables.');
+
   getCOMPONENTS(COMPONENTS);
   getAPPLICATIONS(APPLICATIONS);
   getOPERATING_SYSTEM(PERATING_SYSTEM);
-  getSDK(SDK);
+  getSDK();
   getENBWEB_DOMAIN(ENBWEB_DOMAIN);
   getENBWEB_PORT(ENBWEB_PORT);
-  getCOMPUTERNAME(COMPUTERNAME);
+  getENV_COMPUTERNAME(COMPUTERNAME);
   DRIVERCODE:=0;
   APPNAME := '{#SetupSetting("AppName")}';
   APPTITLE:='The Enabler';
@@ -559,7 +558,7 @@ begin
   INSTANCE_NAME_LIST:=False;
   PRE_BACKUP:=False;
   CHECKED:='A';
-  SDK_APPS:=False;
+  SDK_APPS:=0;
   ICONS:='B';
   NOSTART:=False;
   UNATTENDED:=False;
@@ -634,7 +633,7 @@ end;
 
 procedure SDKOptionClicked(Sender: TObject);
 begin
-  sdk:=true;
+  sdk:='A';
 end;
 
 procedure createPageInstallType();
@@ -853,11 +852,19 @@ end;
 function InitializeSetup(): Boolean;
 var message: String;
 begin
-  appName := '{#SetupSetting("AppName")}';
-  Log('Initialising variables.');
-
-  // Check that the minimum Windows version is installed.
+  variableInitialisation();
   
+  // Check that the minimum Windows version is installed.
+  if WINDOWS_BASE_VERSION < MIN_WINDOWS_VERSION then
+  begin 
+    message := 'The base Windows version found was V' + IntToStr(WINDOWS_BASE_VERSION) + ' but the minimum Windows version required is V' + IntToStr(MIN_WINDOWS_VERSION) + '. Aborting installation.';
+    Log(message);
+    MsgBox(message, mbCriticalError, MB_OK);
+    Result := False;
+    Exit;
+  end;
+
+  Result := True; // Inno setup doesn't proceed to next step if true is not returned.  
 end;
 
 //runs wizard
@@ -870,20 +877,6 @@ begin
   createNoServerInstalledPage();
   createSAPasswordPage();
   createNetworkPortPage();
-    variableInitialisation();
-
-    if WINDOWS_BASE_VERSION < MIN_WINDOWS_VERSION then
-  begin 
-    message := 'The base Windows version found was V' + IntToStr(WINDOWS_BASE_VERSION) + ' but the minimum Windows version required is V' + IntToStr(MIN_WINDOWS_VERSION) + '. Aborting installation.';
-    Log(message);
-    MsgBox(message, mbCriticalError, MB_OK);
-    Result := False;
-  end
-  else
-  begin
-    Result := True; // Inno setup doesn't proceed to next step if true is not returned.
-  end;
-
 end;
 
 
