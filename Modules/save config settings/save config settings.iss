@@ -4,6 +4,7 @@
 //save configuration settings in case of reboot
 //===================================
 
+//Save install options selected by the user so we can re-load these if the installer is restarted
 
 RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'Applications', APPLICATIONS);
 RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'Backup', PRE_UPGRADE_BACKUP);
@@ -21,6 +22,7 @@ var
   INSTALL_RESULT:integer;
 if COMPONENTS = 'B' then begin
   Log('Server was chosen');
+  //Checking to see if the C: drive is compressed. SQL server doesn't like the EnablerDB files in a compressed location
   if OPERATING_SYSTEM >= 5.1 then begin
     FileCopy('{#SourcePath}\Input\bin\DriveCompressed.exe', ExpandConstant('{app}')+'\bin\DriveCOmpressed.exe', false);
     if OPERATING_SYSTEM >= 6 and OS=64 then begin
