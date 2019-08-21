@@ -472,8 +472,8 @@ begin
   RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',APPLICATIONS);  // Initialise Applications variable
 
   // Get the environment variables to determine OS.
-  RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE',OS_ARCHITECTURE);
-  RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITEW6432',OS_ARCHITEW6432);
+  OS_ARCHITECTURE := GetEnv('PROCESSOR_ARCHITECTURE');
+  OS_ARCHITEW6432 := GetEnv('PROCESSOR_ARCHITEW6432');
 
   if OS_ARCHITECTURE ='AMD64' then begin
     OS:=64;
