@@ -459,7 +459,7 @@ begin
 end;
 
 {Variable ENBWEB_PORT}
-function GetENBWEB_PORT(ENBWEB_PORT:String);
+procedure GetENBWEB_PORT(ENBWEB_PORT:String);
 var 
   ResultString:String;  
 begin
@@ -471,7 +471,7 @@ begin
 end;
 
 {Variable ENV_COMPUTERNAME}
-function GetENV_COMPUTERNAME(COMPUTERNAME:String);
+procedure GetENV_COMPUTERNAME(COMPUTERNAME:String);
 var 
   ResultString:String;  
 begin
@@ -485,7 +485,7 @@ end;
 
 {Variable OS,OS_ARCHITECTURE,OS_ARCHITEW6432}
 {Variable OS_ARCHITECTURE,OS_ARCHITEW6432}
-function GetOS_ARCHITECTURE(OS_ARCHITECTURE:String);
+procedure GetOS_ARCHITECTURE(OS_ARCHITECTURE:String);
 var 
   ResultString:String;  
 begin
@@ -496,7 +496,7 @@ begin
   end;
 end;
 
-function GetOS_ARCHITEW6432(OS_ARCHITEW6432:String);
+procedure GetOS_ARCHITEW6432(OS_ARCHITEW6432:String);
 var 
   ResultString:String;  
 begin
