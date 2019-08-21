@@ -398,18 +398,6 @@ begin
 end;
 
 
- {Variable COMPONENTS}
-procedure getCOMPONENTS(COMPONENTS: String);
-var
-    ResultString:String;
-begin
-  if RegValueExists(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)')then
-  begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ResultString)
-    COMPONENTS:=ResultString;
-  end;
-end;
-
 {Variable APPLICATIONS}
 procedure getAPPLICATIONS(APPLICATIONS:String);
 var 
@@ -422,17 +410,6 @@ begin
   end;
 end;
 
-{Variable OPERATING_SYSTEM}
-procedure getOPERATING_SYSTEM(PERATING_SYSTEM:String);
-var 
-  ResultString:String;  
-begin
-  if RegValueExists(HKLM,'Software\Microsoft\Windows NT\CurrentVersion','CurrentVersion')then
-  begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'Software\Microsoft\Windows NT\CurrentVersion','CurrentVersion',ResultString)
-    PERATING_SYSTEM:=ResultString;
-  end;
-end;
 
 {Variable SDK[remain problem]}
 procedure getSDK();  
@@ -480,80 +457,60 @@ begin
 end;
 
 
-{Variable OS,OS_ARCHITECTURE,OS_ARCHITEW6432}
-{Variable OS_ARCHITECTURE,OS_ARCHITEW6432}
-procedure GetOS_ARCHITECTURE(OS_ARCHITECTURE:String);
-var 
-  ResultString:String;  
-begin
-  if RegValueExists(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE')then
-  begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE',ResultString)
-    OS_ARCHITECTURE:=ResultString;
-  end;
-end;
-
-procedure GetOS_ARCHITEW6432(OS_ARCHITEW6432:String);
-var 
-  ResultString:String;  
-begin
-  if RegValueExists(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE')then
-  begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE',ResultString)
-    OS_ARCHITEW6432:=ResultString;
-  end;
-end;
-
-function GetOS():Integer;
-begin
-OS:=0;
-GetOS_ARCHITECTURE(OS_ARCHITECTURE);
-GetOS_ARCHITEW6432(OS_ARCHITEW6432);
-if OS_ARCHITECTURE ='AMD64' then
-  begin
-    os:=64;
-  end;
-if OS_ARCHITECTURE ='IA64' then
-  begin
-    OS:=64;
-  end;
-if OS_ARCHITECTURE ='x86' then
-  begin
-    if OS_ARCHITEW6432 = 'AMD64' then
-      begin
-        OS:=64;
-      end
-      else
-      begin
-        OS:=32;
-      end;
-  end;
-  Result:=OS
-end;
-
-
 procedure variableInitialisation ();
 var 
   osResultCode: Integer;
 begin
   Log('Initialising variables.');
 
-  getCOMPONENTS(COMPONENTS);
-  getAPPLICATIONS(APPLICATIONS);
-  getOPERATING_SYSTEM(PERATING_SYSTEM);
-  getSDK();
-  getENBWEB_DOMAIN(ENBWEB_DOMAIN);
-  getENBWEB_PORT(ENBWEB_PORT);
-  getENV_COMPUTERNAME(COMPUTERNAME);
-  DRIVERCODE:=0;
+  // To Do: Check that registry keys are being read into script correctly. 
+  // Wise script says: 
+  // Get Registry Key Software\ITL\Enabler place in Variable COMPONENTS and 
+  // Get Registry Key Software\ITL\Enabler place in Variable APPLICATIONS, 
+  // but same key is surely not saved into different variables.
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',COMPONENTS);  // Initialise components variable
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',APPLICATIONS);  // Initialise Applications variable
+
+  // Get the environment variables to determine OS.
+  RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE',OS_ARCHITECTURE);
+  RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITEW6432',OS_ARCHITEW6432);
+
+  if OS_ARCHITECTURE ='AMD64' then begin
+    OS:=64;
+  end
+  else if OS_ARCHITECTURE ='IA64' then begin
+      OS:=64;
+  end
+  else if OS_ARCHITECTURE ='x86' then begin
+    if OS_ARCHITEW6432 = 'AMD64' then begin
+      OS:=64;   // Installing driver from 32-bit installer on 64-bit OS (WOW64).
+    end
+    else begin
+      OS:=32;   // Installing driver from 32-bit installer on 32-bit OS.
+    end;
+  end;
+
+  // We will set this variable according to the 'Windows Current Version' Registry Key
+  // NOTE: The Registry Key is: \\HKLM\Software\Microsoft\Windows NT\CurrentVersion\(CurrentVersion) - it contains a number.
+  // NOTE: Windows 10 returns a value of 6.3 for backwards compatibility. Indicates its Windows 8.1
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'Software\Microsoft\Windows NT\CurrentVersion','CurrentVersion',OPERATING_SYSTEM);
+
+  //getSDK();
+  //getENBWEB_DOMAIN(ENBWEB_DOMAIN);
+  //getENBWEB_PORT(ENBWEB_PORT);
+  //getENV_COMPUTERNAME(COMPUTERNAME);
+
+  DRIVERCODE:=0;   // Driver Installation code.
   APPNAME := '{#SetupSetting("AppName")}';
-  APPTITLE:='The Enabler';
-  GROUP:='The Enabler';
-  DISABLED:='!';
-  MAINDIR:=ExpandConstant('{app}');       
-  BACKUP:=MAINDIR+'\BACKUP';
-  DOBACKUP:='B';
-  DBDIR:=' C:\EnablerDB';
+  APPTITLE:='The Enabler';  // APPTITLE is the application title of the installation.
+  GROUP:='The Enabler';   // GROUP is the variable that holds the Program Files Group that shortcuts will be placed on the Windows Start Menu.
+  DISABLED:='!';  // DISABLED variable is initialized for backward compatability.
+  
+  MAINDIR:=ExpandConstant('{app}');   // MAINDIR is the variable that holds the default destination directory.    
+  BACKUP:=MAINDIR+'\BACKUP';   // BACKUP is the variable that holds the path that all backup files will be copied to when overwritten
+  DOBACKUP:='B';   // DOBACKUP determines if a backup will be performed. The possible values are A (do backup) or B (do not do backup).
+  DBDIR:=' C:\EnablerDB';   // DBDIR specifies the location of the Enabler database files.
+
   INSTANCE_NAME_NEEDED:=True;
   INSTANCE_NAME_LIST:=False;
   PRE_BACKUP:=False;
@@ -578,7 +535,7 @@ begin
     Log('Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10');
   end;
   
-  Log('Installing Enabler V' + ENB_VERSION + ' on Windows V' + WINDOWS_VERSION + ' ' + IntToStr(GetOS()) + 'bit (Version ' + OPERATING_SYSTEM + ')');                     
+  Log('Installing Enabler V' + ENB_VERSION + ' on Windows V' + WINDOWS_VERSION + ' ' + IntToStr(OS) + 'bit (Version ' + OPERATING_SYSTEM + ')');                     
 end;
 
 
