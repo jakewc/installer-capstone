@@ -1,0 +1,3292 @@
+Rem SQL2008 R2 preferred, then SQL2005, SQL2012 next, then MSDE2000
+
+Rem ==========================================
+Rem ======                              ======
+Rem ======  V4  SCRIPT INITIALISATION   ======
+Rem ======                              ======
+Rem ==========================================
+ 
+Rem EnablerSetup return codes:
+Rem 0 - Successful
+Rem 1 - Parameter error
+Rem 2 - new IE/new MDAC required
+Rem 3 - UNC(network) Install error
+Rem 4 - No Database Server/MSI/.NET components to install. (Can't add Start menu items)
+Rem 5 - SA Password error
+Rem 6 - MSDE/MSI requires reboot
+Rem 7 - MSDE/MSI/.NET installation error
+Rem 8 - OSQL not working after install. Reboot required.
+Rem 9 - DBInstall.bat error
+Rem 10 - Upgrade error
+Rem 11 - SQL Server not running
+Rem 12 - Windows OS not supported
+Rem 13 - UNUSED (was Device Driver Installation Failure)
+Rem 14 - UNUSED (was The Driver requires a restart to complete installation)
+Rem 15 - UNUSED (was The Device wasn't present after driver installation)
+Rem 16 - UNUSED (was File copy error)
+Rem 17 - Not admin
+Rem 18 - SQL Version not compatible
+Rem 19 - SQL Named Instance incorrect
+Rem 20 - not enough disk space
+Rem 21 - C: drive compressed
+Rem 22 - Installation of VC runtime failed
+Rem 23 - .NET 3.5 required but cannot be installed automatically (Windows Server 2008 only)
+Rem 24 - Enabler API install failed
+Rem 25 - 8dot3Name disabled
+ 
+ 
+Rem This varaible forces applications to be installed even if the SDK options is not avaliable or selected
+Rem By including a letter in a varaible that application will be installed
+Rem Even if the SDK options is not avaliable or ticked
+Rem See the varaible near the bottom to change what applications are installed when SDK is checked
+Rem A - MMPSim
+Rem B - Pumpdemo
+Rem C - Documents (This includes all SDK documents)
+Rem D - Sample Apps (All sample apps are copied across)
+Rem F - ITLMPPSim.dll
+Rem The default is for none of the apps to be installed without the SDK option selected
+Set Variable SDK_OPTIONS to 
+ 
+Rem Initialise components variable
+Set Variable COMPONENTS to 
+Get Registry Key Software\ITL\Enabler place in Variable COMPONENTS
+ 
+Rem Initialise Applications variable
+Set Variable APPLICATIONS to 
+Get Registry Key Software\ITL\Enabler place in Variable APPLICATIONS
+ 
+Rem OS_ARCHITECTURE variable to store the OS architecture (32 or 64)
+Set Variable OS to 
+Set Variable OS_ARCHITECTURE to 
+Set Variable OS_ARCHITEW6432 to 
+Set Variable OPERATING_SYSTEM to 
+Rem Disabling 8.3 will install files with short name: https://support.microsoft.com/en-us/kb/121007
+Set Variable FILE_SYSTEM to 
+ 
+Rem Get the environment variables to determine OS
+Get Environment Variable PROCESSOR_ARCHITECTURE into Variable OS_ARCHITECTURE
+Get Environment Variable PROCESSOR_ARCHITEW6432 into Variable OS_ARCHITEW6432
+ 
+If OS_ARCHITECTURE Equals "AMD64" then
+   Set Variable OS to 64
+ElseIf OS_ARCHITECTURE Equals "IA64" then
+   Set Variable OS to 64
+ElseIf OS_ARCHITECTURE Equals "x86" then
+   If OS_ARCHITEW6432 Equals "AMD64" then
+      Rem Installing driver from 32-bit installer on 64-bit OS (WOW64)
+      Set Variable OS to 64
+   Else
+      Rem Installing driver from 32-bit installer on 32-bit OS
+      Set Variable OS to 32
+   End
+End
+ 
+Rem We will set this variable according to the 'Windows Current Version' Registry Key
+Rem NOTE: The Registry Key is: \\HKLM\Software\Microsoft\Windows NT\CurrentVersion\(CurrentVersion) - it contains a number.
+Rem NOTE: Windows 10 returns a value of 6.3 for backwards compatibility. Indicates its Windows 8.1
+Get Registry Key Software\Microsoft\Windows NT\CurrentVersion place in Variable OPERATING_SYSTEM
+ 
+Rem Driver Installation code
+Set Variable DRIVERCODE to 0
+ 
+Rem SQL Server Major Product Number
+Set Variable SQLVER_MAJOR to 
+ 
+Rem APPTITLE is the application title of the installation
+Set Variable APPTITLE to The Enabler
+Set Variable SQLTITLE to 
+ 
+Rem GROUP is the variable that holds the Program Files Group that shortcuts will be placed on the Windows Start Menu
+Set Variable GROUP to The Enabler
+ 
+Rem DISABLED variable is initialized for backward compatability
+Set Variable DISABLED to !
+ 
+Rem MAINDIR is the variable that holds the default destination directory
+Set Variable MAINDIR to Enabler
+Set Variable MAINDIR to C:\%MAINDIR%
+ 
+Set Variable BACKUP to %MAINDIR%\BACKUP
+Rem BACKUP is the variable that holds the path that all backup files will be copied to when overwritten
+ 
+Rem DOBACKUP determines if a backup will be performed.  The possible values are A (do backup) or B (do not do backup)
+Set Variable DOBACKUP to B
+ 
+Rem DBDIR specifies the location of the Enabler database files
+Set Variable DBDIR to C:\EnablerDB
+ 
+Set Variable SQLSERVER_STARTED to 
+ 
+Rem SA_PASSWORD stores the SA password (if any)
+Set Variable SA_PASSWORD to 
+ 
+Rem SQL Named Instance name
+Set Variable SQL_SERVERS to 
+ 
+Rem SQL Named Instance name
+Set Variable SQL_INSTANCE to 
+Set Variable CLIENT_SQL_INSTANCE to 
+Set Variable PC_NAME to 
+Get Environment Variable COMPUTERNAME into Variable PC_NAME
+Set Variable SQLQUERY to 
+Set Variable INSTANCE_NAME_NEEDED to 1
+Set Variable INSTANCE_NAME_LIST to 0
+Set Variable CMD_INSTANCE to 
+Set Variable SQL_INSTANCES to 
+ 
+Rem OSQL_PATH stores the path to OSQL.EXE
+Set Variable OSQL_PATH to 
+ 
+Rem SERVER_NAME stores the Enabler Server name (used for client installs only)
+Set Variable SERVER_NAME to 
+Get Environment Variable COMPUTERNAME into Variable ENV_COMPUTERNAME
+ 
+Rem Variable to determine if the BAckup up checkbox option should be shown or not
+Set Variable PRE_BACKUP to 0
+ 
+Rem Initialise Checked variable this stops applications variable resetting in the wizard loop
+Set Variable CHECKED to A
+ 
+Rem Set variables for an SDK build. SDK checked, SDK_APPS if present
+Set Variable SDK to 
+Set Variable SDK_APPS to 0
+Get Registry Key Software\ITL\Enabler place in Variable SDK
+ 
+Rem Variables with defaults for ENBWEB port & domain
+Get Registry Key Software\ITL\Enabler place in Variable ENBWEB_DOMAIN
+Get Registry Key Software\ITL\Enabler place in Variable ENBWEB_PORT
+ 
+Rem Initialise icons variable. A is desktop icons B is start menu icons
+Set Variable ICONS to B
+ 
+Rem set variables to start apps or restart computer on finish
+Set Variable NOSTART to 0
+Set Variable RUNNING to 
+Set Variable START_MPP to 
+Set Variable START_PUMP to 
+ 
+Rem Initialise unattended variables
+Set Variable UNATTENDED to 0
+Set Variable SILENT to 0
+Set Variable PHASE2 to 0
+ 
+Rem Initialise fast startup variables
+Set Variable FAST_STARTUP to 0
+ 
+Rem Initialise variables for detecting Adminstrator and User group
+Set Variable BUILTIN_USERS_GROUP to S-1-5-32-545
+Set Variable BUILTIN_ADMINISTRATORS_GROUP to S-1-5-32-544
+ 
+Rem SHOW_USAGE indicates whether we should display a dialog describing the installer command-line usage
+Set Variable SHOW_USAGE to 0
+ 
+If System Doesn't Have Windows NT Running then
+   If System Doesn't Have Windows NT/95/98/ME Running Abort Installation
+End
+ 
+Rem Get Windows version
+Get System Information into WINDOWS_VERSION
+ 
+Rem Start WISE.LOG and record the Enabler version
+Continue/Start writing to installation log
+ 
+Rem Check the Windows version to see if running on Windows 10
+Execute CMD.EXE /C  ver | find /i "Version 10." (Wait)
+If INSTALL_RESULT Equals "0" then
+   Add "Running on Windows 10 / Windows Server 2016, set OPERATING SYSTEM = 10" to INSTALL.LOG
+   Set Variable OPERATING_SYSTEM to 10
+End
+ 
+Add "os = %OPERATING_SYSTEM%  ir=%INSTALL_RESULT%" to INSTALL.LOG
+ 
+Add "Installing Enabler V%ENB_VERSION% on Windows V%WINDOWS_VERSION% %OS%bit (Version %OPERATING_SYSTEM%)" to INSTALL.LOG
+ 
+Rem Driver Installation code
+ 
+Rem ====================================================================================
+Rem PARSE COMMAND LINE OPTIONS
+Rem ====================================================================================
+Set Variable CMDLINE_LOG to 
+Set Variable CMDLINEUPPER to %CMDLINE%
+While CMDLINE Not Equal "" loop
+   Set Variable CMDOPTION to 
+   Set Variable CMDUPPER to 
+   Parse String "%CMDLINE%" into CMDOPTION and CMDLINE
+   Set Variable CMDUPPER to %CMDOPTION%
+   Rem !!! DEBUG ONLY - COMMENT OUT FOR RELEASE !!!
+   /* Add "Option = %CMDUPPER%" to INSTALL.LOG
+   Rem !!! DEBUG ONLY - COMMENT OUT FOR RELEASE !!!
+    
+   Set Variable CMDSTART to 
+   Set Variable CMDEND to 
+   Parse String "%CMDUPPER%" into CMDSTART and CMDEND
+    
+   Rem Check for /? or /h or -? or -h  - AT THE START OF THE STRING
+   If CMDSTART Equals (Ignore Case) "-H" then
+      Add "User requested usage -H" to INSTALL.LOG
+      Set Variable SHOW_USAGE to 1
+   End
+   If CMDSTART Equals (Ignore Case) "-?" then
+      Add "User requested usage -?" to INSTALL.LOG
+      Set Variable SHOW_USAGE to 1
+   End
+   If CMDSTART Equals (Ignore Case) "/H" then
+      Add "User requested usage /H" to INSTALL.LOG
+      Set Variable SHOW_USAGE to 1
+   End
+   If CMDSTART Equals (Ignore Case) "/?" then
+      Add "User requested usage /?" to INSTALL.LOG
+      Set Variable SHOW_USAGE to 1
+   End
+    
+   Rem Silent unattended install
+   If CMDUPPER Contains "/S" then
+      Add "SILENT install selected" to INSTALL.LOG
+      Set Variable UNATTENDED to 1
+      Set Variable SILENT to 1
+      Rem This error return code is only for Silent Mode Install
+      Set Variable WISE_ERROR_RTN to 1
+   End
+    
+   Rem Automatic server install
+   If CMDUPPER Contains "/FULL" then
+      Add "FULL Enabler Server install selected" to INSTALL.LOG
+      Set Variable UNATTENDED to 1
+      Set Variable COMPONENTS to B
+      Set Variable APPLICATIONS to ABCDEF
+      If CMDLINEUPPER Contains "/CLIENT" then
+         Add "ERROR: Cannot use /CLIENT and /FULL together" to INSTALL.LOG
+         Exit Installation
+      End
+   End
+    
+   Rem Automatic client install
+   If CMDUPPER Contains "/CLIENT" then
+      Add "CLIENT install selected" to INSTALL.LOG
+      Set Variable UNATTENDED to 1
+      Set Variable COMPONENTS to A
+      If CMDLINEUPPER Contains "/FULL" then
+         Add "ERROR: Cannot use /CLIENT and /FULL together" to INSTALL.LOG
+         Exit Installation
+      End
+      If CMDLINEUPPER Contains "/PASSWORD" then
+         Add "ERROR: Cannot use /CLIENT and /PASSWORD together" to INSTALL.LOG
+         Exit Installation
+      End
+      If CMDUPPER Contains "/CLIENT:" then
+         Parse String "%CMDOPTION%" into JUNK and SERVER_NAME
+         Add "Enabler Server name has been entered: %SERVER_NAME%" to INSTALL.LOG
+      End
+   End
+    
+   Rem Get SA password (used for Server installs with pre-existing SQL server)
+   If CMDUPPER Contains "/PASSWORD" then
+      Parse String "%CMDOPTION%" into JUNK and SA_PASSWORD
+      Set Variable CMDUPPER to /PASSWORD:*****
+      Add "PASSWORD for SA has been entered" to INSTALL.LOG
+   End
+    
+   Rem Get the SQL Instance name
+   If CMDUPPER Contains "/INSTANCE" then
+      Parse String "%CMDOPTION%" into JUNK and SQL_INSTANCE
+      Set Variable CMDUPPER to /INSTANCE:*****
+      Add "SQL Named Instance - %SQL_INSTANCE%" to INSTALL.LOG
+      Set Variable CMD_INSTANCE to 1
+       
+      Rem Configure SQL query for the default instance or the instance name passed in the command line
+      Set Variable SQLQUERY to %PC_NAME%\%SQL_INSTANCE%
+   End
+    
+   Rem The APPS option is no longer supported
+   If CMDUPPER Contains "/APPS:" then
+      Add "The /APPS option was ignored - this option is no longer supported." to INSTALL.LOG
+   End
+    
+   Rem Option to install simulators WITHOUT SDK
+   If CMDUPPER Contains "/MPPSIM" then
+      Add "Install Simulator EXE and DLL" to INSTALL.LOG
+      Set Variable SDK_OPTIONS to AF
+   End
+    
+   Rem Option to install but NOT start Enabler services
+   If CMDUPPER Contains "/NOSTART" then
+      Add "Not starting Enabler services - NOSTART was selected." to INSTALL.LOG
+      Set Variable NOSTART to 1
+   End
+    
+   Rem Option to install SDK automatically
+   If CMDUPPER Contains "/ENABLERSDK" then
+      Add "Install Full SDK" to INSTALL.LOG
+      Set Variable SDK_OPTIONS to ABC
+      Set Variable SDK to A
+   End
+    
+   Rem Rebuild representation of cmdline suitable for logging
+   Set Variable CMDLINE_LOG to %CMDUPPER%  (Append)
+    
+   Rem Supplying the parameter /BACKUPDB will initiate a Pre-Upgrade Backup
+   If CMDUPPER Contains "/BACKUPDB" then
+      If COMPONENTS Equals (Ignore Case) "A" then
+         Add "INFO: /BACKUPDB option ignored. Cannot backup database on a /CLIENT install." to INSTALL.LOG
+      Else
+         Set Variable PRE_UPGRADE_BACKUP to A
+      End
+   End
+    
+End
+ 
+If SHOW_USAGE Equals "1" then
+   Add "WARNING: Install stopped to show usage." to INSTALL.LOG
+   Custom Dialog "Install Usage"
+   Exit Installation
+End
+ 
+Add "CMD %CMDLINE_LOG%" to INSTALL.LOG
+ 
+Rem ====================================================================================
+Rem STARTUP PROCESSING
+Rem ====================================================================================
+Rem Check if the user is an admin first
+Install File v:\IsAdmin.exe to %TEMP%\IsAdmin.exe
+Execute %TEMP%\IsAdmin.exe  (Wait)
+If INSTALL_RESULT Equals "0" then
+   If SILENT Equals "0" then
+      Display Message "Not an Administrator"
+   End
+   Add "Install stopped - Not an administrator" to INSTALL.LOG
+   Exit Installation
+End
+ 
+ 
+Rem Install autosupport early on so that if an error occurs customers can use it
+Install File V:\AutoSupport.exe to %MAINDIR%\AutoSupport.exe
+ 
+Rem Needed to view release notes. Maybe a pdf version could be included as well as we have a pdf viewer
+Rem IEXPLORE_PATH is used to store the full path and name of the IE executable.
+Set Variable IEXPLORE_PATH to 
+Get Registry Key SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\IEXPLORE.EXE place in Variable IEXPLORE_PATH
+Add "IE location %IEXPLORE_PATH%" to INSTALL.LOG
+Get System Information into IEXPLORE_VERSION
+Add "IE Ver %IEXPLORE_VERSION%" to INSTALL.LOG
+If IEXPLORE_VERSION Less Than "5" then
+   Rem We require IE 5 or later
+   Set Variable SHOW_IE_WARNING to 0
+   If File or Directory exists %INST%\Release Notes.htm then
+      Add "WARNING:A newer version of IE is required to display Release Notes" to INSTALL.LOG
+      Set Variable SHOW_IE_WARNING to 1
+   End
+   If SHOW_IE_WARNING Equals "1" then
+      If UNATTENDED Equals "1" then
+         Add "Install stopped - newer version of IE is required" to INSTALL.LOG
+         Exit Installation
+      End
+      If Display Message "A newer Internet Explorer is Required" then
+         Add "User chose to exit install" to INSTALL.LOG
+         Exit Installation
+      End
+   End
+End
+ 
+Rem Copy readme and release notes files into TEMP folder
+Get Temporary Filename into READMEFILE
+Install File v:\release.txt to %TEMP%\%READMEFILE%
+If File or Directory exists %INST%\Release Notes.htm then
+   Set Variable HTML_RELEASE_NOTES to 1
+Else
+   Set Variable HTML_RELEASE_NOTES to 0
+End
+ 
+Rem If the destination system does not have a writable Windows\System directory, system files will be written to the Windows\ directory
+If Directory not writable %SYS% then
+   Set Variable SYS to %WIN%
+End
+ 
+Rem INST_DRIVE stores the drive letter we are installing from
+Parse String "%INST%" into INST_DRIVE and 
+Add "Installing from %INST_DRIVE% drive" to INSTALL.LOG
+ 
+Rem Figure out the Windows OS product type
+Execute %SYS32%\cmd.exe /c wmic.exe os get producttype > "%TEMP%\WinProductType.txt" (Wait)
+ 
+Search for file CMD.EXE in Path and place into Variable CMD_PATH
+ 
+Rem USERNAME is the variable that holds the Windows Logon name
+Get System Information into USERNAME
+ 
+Rem Decide whether we are installing on a server OS
+Set Variable IS_WINDOWS_SERVER to 0
+Read lines of file %TEMP%\WinProductType.txt into variable WIN_PRODUCT_TYPE_LINE Start Block
+   If WIN_PRODUCT_TYPE_LINE Contains "1" then
+      Rem Workstation Edition of Windows
+      Set Variable WIN_PRODUCT_TYPE to 1
+   End
+   If WIN_PRODUCT_TYPE_LINE Contains "2" then
+      Rem Domain controller
+      Set Variable WIN_PRODUCT_TYPE to 2
+      Set Variable IS_WINDOWS_SERVER to 1
+   End
+   If WIN_PRODUCT_TYPE_LINE Contains "3" then
+      Rem Server
+      Set Variable WIN_PRODUCT_TYPE to 3
+      Set Variable IS_WINDOWS_SERVER to 1
+   End
+End
+Add "Windows Product Type: %WIN_PRODUCT_TYPE%" to INSTALL.LOG
+ 
+Rem This IF/THEN/ELSE blocks reads the default Program Files and Common directories from the registry
+If System Has Windows 95 Shell Interface then
+   Get Registry Key SOFTWARE\Microsoft\Windows\CurrentVersion place in Variable COMMON
+   Get Registry Key SOFTWARE\Microsoft\Windows\CurrentVersion place in Variable PROGRAM_FILES
+   Set Variable EXPLORER to 1
+End
+ 
+Rem BRANDING determines if the installation will be branded with a name and company. 
+If File or Directory exists %INST%\branding\config.ini then
+   Read INI Value from %INST%\branding\config.ini into Variable NAME
+   Read INI Value from %INST%\branding\config.ini into Variable COMPANY
+   Read INI Value from %INST%\branding\config.ini into Variable LOGO_TYPE
+   If NAME Equals "" then
+      Set Variable DOBRAND to 1
+      Get System Information into NAME
+      Get System Information into COMPANY
+   End
+End
+ 
+Rem See if there is a current Enabler database.
+If File or Directory exists %DBDIR%\ENBData.dat then
+   Set Variable PRE_BACKUP to 1
+End
+ 
+Rem Initialise COMPONENTS variable depending on windows system type
+If System Has Windows NT Running then
+   Rem Don't want to overwrite registry variable so if already defined leave variable
+   If COMPONENTS Equals "" then
+      Set Variable COMPONENTS to B
+   End
+Else
+   Rem Cannot install server without NT
+   Set Variable COMPONENTS to A
+    
+   If UNATTENDED Equals "1" then
+      If COMPONENTS Contains "A" then
+         Add "ERROR: Cannot install server on this version of Windows" to INSTALL.LOG
+         Exit Installation
+      End
+   End
+End
+ 
+Rem ====================================================================================
+Rem SQL SETUP
+Rem ====================================================================================
+Rem Install batch script to collect instance names
+Install File V:\scripts\Instances.bat to %MAINDIR%\Instances.bat
+ 
+Rem Some initial checks are required to determine the wizard flow relating to the SQL install
+Search for file osql.exe in Path and place into Variable OSQL_PATH
+Add "Location of OSQL.EXE is %OSQL_PATH% (Initial Checks)" to INSTALL.LOG
+If OSQL_PATH Equals "" then
+   Rem ====================================================================================
+   Rem DETECT SQL SERVERS AVAILABLE TO INSTALL
+   Rem ====================================================================================
+   Set Variable SQL_NEEDED to 1
+   Set Variable SQLEXPRESSNAME to 
+    
+   Rem Try SQL2014 first
+   If Directory exists %INST%\SQL2014 then
+      Set Variable SQLEXPRESSNAME to SQL2014
+      Add "Folder SQL2014 found, so this will be installed." to INSTALL.LOG
+       
+   Else
+      Rem Try SQL2012 next
+      If Directory exists %INST%\SQL2012 then
+         Set Variable SQLEXPRESSNAME to SQL2012
+         Add "Folder SQL2012 found, so this will be installed." to INSTALL.LOG
+          
+      Else
+         Rem Try SQL2008R2 next
+         If Directory exists %INST%\SQL2008R2 then
+            Set Variable SQLEXPRESSNAME to SQL2008R2
+            Add "Folder SQL2008R2 found, so this will be installed." to INSTALL.LOG
+             
+         Else
+            Rem Try SQL2005 next
+            If Directory exists %INST%\SQL2005 then
+               Set Variable SQLEXPRESSNAME to SQL2005
+               Add "Folder SQL2005 found, so this will be installed." to INSTALL.LOG
+                
+            Else
+               Rem Try MSDE finally
+               If Directory exists %INST%\MSDE2000 then
+                  Set Variable SQLEXPRESSNAME to MSDE2000
+                  Add "Folder MSDE2000 found, so this will be installed." to INSTALL.LOG
+                   
+               Else
+                  Add "ERROR: MSDE not found - cannot install server without SQL (Expected in %INST%\MSDE2000)" to INSTALL.LOG
+                  Set Variable SQLEXPRESSNAME to 
+                  If UNATTENDED Equals "1" then
+                     If COMPONENTS Contains "B" then
+                        Exit Installation
+                     End
+                  End
+                   
+               End
+            End
+         End
+      End
+   End
+    
+   Rem If SQL2014 already detected, then no more additional checks.  Otherwise, check if we can use SQL Server 2016
+   If SQLEXPRESSNAME Not Equal "SQL2014" then
+      Rem If SQL2016 available and 64bit and not Windows 7 then use it instead
+      If Directory exists %INST%\SQL2016 then
+         If OS Equals "64" then
+            If OPERATING_SYSTEM Greater Than or Equal "6.2" then
+               Set Variable SQLEXPRESSNAME to SQL2016
+               Add "Folder SQL2016 found, so this will be installed instead." to INSTALL.LOG
+            End
+         End
+      End
+   End
+    
+   Add "SQL server folders parsed,  SQL server to install=%SQLEXPRESSNAME%,  Architecture=%OS%,  Windows version=%WINDOWS_VERSION%    OS ver=%OPERATING_SYSTEM%" to INSTALL.LOG
+    
+    
+   Set Variable SQLEXPRESSFULLNAME to %SQLEXPRESSNAME%
+   If SQLEXPRESSNAME Not Equal "MSDE2000" then
+      Set Variable SQLEXPRESSFULLNAME to %SQLEXPRESSNAME% Express
+   End
+   Add "SQLEXPRESSNAME = %SQLEXPRESSNAME%" to INSTALL.LOG
+    
+   Rem Check if the system needs WIndows updates before runing Enabler install
+   Rem Windows 8.1 64 bit  & Windows Server 2012 require updates before SQL2016 installed
+   If OPERATING_SYSTEM Equals "6.3" then
+      If OS Equals "64" then
+         If SQLEXPRESSNAME Equals "SQL2016" then
+            Add "Checking SQL2016 requirements for Windows 8.1 or Server 2012  64 bit" to INSTALL.LOG
+            Execute C:\WINDOWS\Sysnative\CMD.EXE /C  wmic qfe get HotFixId | find "KB2919355" (Wait)
+            Set Variable KB_FIND1 to %INSTALL_RESULT%
+            /* Execute C:\WINDOWS\Sysnative\CMD.EXE /C  wmic qfe get HotFixId | find "KB2919442" (Wait)
+            /* Set Variable KB_FIND2 to %INSTALL_RESULT%
+            Add "Result of Windows update finds %KB_FIND1% " to INSTALL.LOG
+            If  Expression True "KB_FIND1=1 " then
+               Display Message "Requirements for SQL2016 not met"
+               Add "Windows 8.1 or Server 2012 requires system updates to install SQL2016 (KB2919355)" to INSTALL.LOG
+               Exit Installation
+            End
+         End
+      End
+   End
+    
+Else
+   Rem ==========================================
+   Rem OSQL has been found, SQL server already installed
+   Rem ==========================================
+   Set Variable SQL_NEEDED to 0
+    
+   If SILENT Equals "0" then
+      Display Progress Message "The Enabler"
+   End
+    
+   Rem If no instance has been passed by the command line
+   If CMD_INSTANCE Equals "" then
+      Rem ====================================================================================
+      Rem GET LIST OF NAMED INSTANCES
+      Rem ====================================================================================
+      Rem Server SQL ettings
+      /* Get Registry Key SOFTWARE\Microsoft\Microsoft SQL Server place in Variable SQL_INSTANCES
+      /* If SQL_INSTANCES Not Equal "" then
+      Get Temporary Filename into INSTANCES
+      If  Expression True "OS=64 And OPERATING_SYSTEM >= 6" then
+         Execute C:\WINDOWS\Sysnative\CMD.EXE /C %MAINDIR%\Instances.bat %TEMP%\%INSTANCES% (Wait)
+      Else
+         Execute CMD.EXE /C %MAINDIR%\Instances.bat %TEMP%\%INSTANCES% (Wait)
+      End
+       
+      If INSTALL_RESULT Not Equal "0" then
+         Add "Unable to get SQL Instance Name registry key. %INSTALL_RESULT%" to INSTALL.LOG
+         Set Variable INSTANCE_NAME_NEEDED to 1
+      Else
+         Set Variable LINE to 
+         Set Variable NAME to 
+         Set Variable SQL_INSTANCES to 
+         Read lines of file %TEMP%\%INSTANCES% into variable LINE Start Block
+            /* If  Expression True "Instr(LINE,"!") Or Instr(Line,"\") Or Line=""" then
+            /* Else
+            Parse String "%LINE%" into NAME and 
+            If  Expression True "NAME="MSSQLSERVER" And INSTANCE_NAME_NEEDED=1" then
+               Set Variable INSTANCE_NAME_NEEDED to 0
+            ElseIf  Expression True "NAME="SQLEXPRESS" And NAME="MSSQLSERVER" And INSTANCE_NAME_NEEDED=1" then
+               Set Variable SQL_INSTANCE to SQLEXPRESS
+               Set Variable SQLQUERY to %PC_NAME%\%SQL_INSTANCE%
+               Set Variable INSTANCE_NAME_NEEDED to 0
+            End
+            Rem Build list of instances names incase they need to be displayed
+            Set Variable SQL_INSTANCES to %NAME%%CRLF% (Append)
+            /* End
+         End
+         /* End
+          
+         Add "SQL Instance Names found %CRLF%%SQL_INSTANCES%" to INSTALL.LOG
+          
+         Rem Check if we found a known instance, if we haven't do we have a list of instances
+         If  Expression True "INSTANCE_NAME_NEEDED=1 And Len(RTrim$(SQL_INSTANCES)) > 0" then
+            Rem We have fouind instance names, if we haven't found a default one we need to display the list
+            Set Variable INSTANCE_NAME_LIST to 1
+         End
+      End
+       
+      If  Expression True "Len(RTrim$(SQL_INSTANCES)) <= 0" then
+         Add "No SQL Instance names found" to INSTALL.LOG
+      End
+       
+      Rem If we found no avaliable instances
+      If  Expression True "INSTANCE_NAME_LIST <> 1 And INSTANCE_NAME_NEEDED = 1" then
+          
+         Rem ====================================================================================
+         Rem OSQL DETECT DEFAULT SQL NAMED INSTANCES
+         Rem ====================================================================================
+         Rem Execute the sql to get the verify the instance name of the default instance or the instance name passed by the command line
+         Add "Query database to check instance name %SQLQUERY%" to INSTALL.LOG
+         Execute %OSQL_PATH%\OSQL.EXE -b -d master -E -S%SQLQUERY% -Q "select count(*) from sysobjects" (Wait)
+          
+         If INSTALL_RESULT Not Equal "0" then
+            Add "%SQLQUERY% database instance does not exisit or the SQL server is not configured correctly the osql query failed" to INSTALL.LOG
+             
+            Rem Try again with a different Instance name
+            Set Variable SQL_INSTANCE to SQLEXPRESS
+            Set Variable SQLQUERY to %PC_NAME%\%SQL_INSTANCE%
+            Add "Query database to check instance name %SQLQUERY%" to INSTALL.LOG
+            Execute %OSQL_PATH%\OSQL.EXE -b -d master -E -S%SQLQUERY% -Q "select count(*) from sysobjects" (Wait)
+             
+            If INSTALL_RESULT Not Equal "0" then
+               Set Variable SQL_INSTANCE to 
+               Add "%SQLQUERY% database instance does not exisit or the SQL server is not configured correctly the osql query failed" to INSTALL.LOG
+               Set Variable INSTANCE_NAME_NEEDED to 1
+            Else
+               Set Variable INSTANCE_NAME_NEEDED to 0
+            End
+         Else
+            Set Variable INSTANCE_NAME_NEEDED to 0
+         End
+          
+      End
+   End
+    
+   Rem ====================================================================================
+   Rem GET AVALIABLE SQL SERVERS FOR CLIENT INSTALL
+   Rem ====================================================================================
+   Rem Gets the avaliable SQL Servers. Although for this to work we would have to redistrubute SQLCMD
+   /* Get Temporary Filename into SERVERS
+   Rem -L gives list of servers, c option gives a clean output
+   /* Execute %OSQL_PATH%\OSQL.EXE -L c -o %TEMP%\%SERVERS% (Wait)
+   /* If INSTALL_RESULT Not Equal "0" then
+   /* Add "Unable to get list of SQL Servers" to INSTALL.LOG
+   /* End
+    
+   If SILENT Equals "0" then
+      Display Progress Message "The Enabler"
+   End
+    
+End
+ 
+Rem Check if the source media is located in a network drive
+If SQLEXPRESSNAME Not Equal "" then
+   If INST_DRIVE Equals "\\" then
+      Rem If the installer is being run from a network location (UNC name) then we cannot install SQL2005
+      If UNATTENDED Equals "0" then
+         Display Message "Cannot install %SQLEXPRESSNAME% from UNC path"
+      End
+      Add "ERROR: Cannot install %SQLEXPRESSNAME% from UNC path" to INSTALL.LOG
+      Exit Installation
+   End
+End
+ 
+ 
+Rem ====================================================================================
+Rem ARE WE RETURNING FROM A RESTART
+Rem ====================================================================================
+Rem See if we are restarting because of an MSDE or MSI Installer or .NET restart
+Get Registry Key SOFTWARE\ITL\Enabler place in Variable RESTART
+Get Registry Key SOFTWARE\ITL\Enabler place in Variable LAST_COMPONENTS
+If RESTART Not Equal "" then
+   Add "Restarting from previous installation reboot." to INSTALL.LOG
+   Set Variable PHASE2 to 1
+   Registry Key Software\ITL\Enabler = True
+   Rem Load the variables from the registry. Components, SDK and Applications do this already
+   Get Registry Key SOFTWARE\ITL\Enabler place in Variable PRE_UPGRADE_BACKUP
+   Get Registry Key SOFTWARE\ITL\Enabler place in Variable SA_PASSWORD
+   Get Registry Key SOFTWARE\ITL\Enabler place in Variable UNATTENDED
+   Get Registry Key SOFTWARE\ITL\Enabler place in Variable SQL_INSTANCE
+ElseIf LAST_COMPONENTS Not Equal "" then
+   Add "Restarting from MSDE 2000 reboot." to INSTALL.LOG
+   Registry Key Software\ITL\Enabler = COMPONENTS
+   If SQL_NEEDED Equals "1" then
+      If UNATTENDED Equals "0" then
+         Display Message "Could not locate MSDE"
+      End
+      Add "ERROR:Continuing a previous install - MSDE was not located" to INSTALL.LOG
+      Exit Installation
+   End
+   Set Variable PHASE2 to 1
+   Set Variable COMPONENTS to %LAST_COMPONENTS%
+    
+   If SILENT Equals "0" then
+      Display Progress Message "%APPTITLE% - Continuing Install"
+   End
+   Add "Continuing Install" to INSTALL.LOG
+   Pause 5000 Milliseconds
+    
+   If SILENT Equals "0" then
+      Display Progress Message " "
+   End
+End
+ 
+Rem The SDK option is avaliable if the SDK folder is present
+If Directory exists %INST%\SDK then
+   Set Variable SDK_APPS to 1
+End
+ 
+ 
+Rem ====================================================================================
+Rem INSTALL WIZARD LOOP
+Rem ====================================================================================
+If  Expression True "PHASE2=0 And UNATTENDED=0" then
+   Rem The Wizard Loop contains the dialog screens that the user sees in the installation
+   Rem If you would like to change the graphic on the dialog boxes, you need to change it by double-clicking on the Wizard Loop line and change the bitmap path.
+   Rem NOTE: The wizard loop runs once per dialog that is displayed
+   Wizard Loop
+      /* Add "Wizard Loop" to INSTALL.LOG
+      /* Add " SQL_NEEDED = %SQL_NEEDED%" to INSTALL.LOG
+      /* Add " SQLEXPRESSNAME = %SQLEXPRESSNAME%" to INSTALL.LOG
+      /* Add " INSTANCE_NAME_LIST = %INSTANCE_NAME_LIST%" to INSTALL.LOG
+      /* Add " INSTANCE_NAME_NEEDED= %INSTANCE_NAME_NEEDED%" to INSTALL.LOG
+      /* Add " COMPONENTS = %COMPONENTS%" to INSTALL.LOG
+      /* Add " CMD_INSTANCE = %CMD_INSTANCE%" to INSTALL.LOG
+       
+      Rem If you need to change the size of your Custom Dialogs, you need only change the "Welcome" screen.  
+      Rem It's size is the template for all following dialogs within the Wizard Loop.
+      Custom Dialog "Welcome"
+      Custom Dialog "Display ReadMe"
+      Rem Select Server or Client install
+      Custom Dialog "Select Components"
+       
+      Rem !!! ACHTUNG! NOTE! WARNING! I have reverted to using IF statements here because the wizard loop conditions seem to be broken on Chinese Editions of Windows !!!
+      If  Expression True "NOT( Instr(COMPONENTS,"A") Or SQL_NEEDED=1 Or INSTANCE_NAME_NEEDED=1)" then
+         Custom Dialog "SQL Server Already Installed"
+      End
+       
+      If  Expression True "NOT( Instr(COMPONENTS,"A") Or SQL_NEEDED=1 Or INSTANCE_NAME_NEEDED=0 Or INSTANCE_NAME_LIST=0 )" then
+         Custom Dialog "SQL Named Instance list"
+      End
+       
+      If  Expression True "NOT( Instr(COMPONENTS,"A") Or SQL_NEEDED=1 Or INSTANCE_NAME_NEEDED=0 Or INSTANCE_NAME_LIST=1)" then
+         Custom Dialog "SQL Named Instance needed"
+      End
+       
+      Rem This screen is used if there is no SQL Server, and none available to the installer
+      If  Expression True "Instr(COMPONENTS,"B") AND SQL_NEEDED=1 AND Len(SQLEXPRESSNAME) < 1" then
+         Add "Cannot continue MSDE2000, SQL2005, SQL2008R2, SQL2012, SQL2014 or SQL2016 installation folder not found" to INSTALL.LOG
+         Custom Dialog "Cannot Continue"
+      End
+       
+      If  Expression True "Instr(COMPONENTS,"B") AND SQL_NEEDED=1 AND Len(SQLEXPRESSNAME) > 1" then
+         Add "Install Default %SQLEXPRESSFULLNAME% Server" to INSTALL.LOG
+         Custom Dialog "Install Default SQL Server"
+      End
+       
+      Rem Get the SQL SA Password.
+      If  Expression True "NOT( Instr(COMPONENTS,"A") Or SQL_NEEDED=0 Or SQLEXPRESSNAME="MSDE2000" )" then
+         Custom Dialog "SA Password Required"
+      End
+       
+      If  Expression True "Instr(COMPONENTS,"B")" then
+         Rem Confirm EnbWeb settings
+         Custom Dialog "Confirm Web Port and Domain"
+      Else
+         Rem This is a client install...
+         Custom Dialog "Enter Enabler Server Name"
+      End
+       
+      If  Expression True "Instr(COMPONENTS,"A") Or CMD_INSTANCE=1" then
+         Rem Client Install to Enabler Desktop (NOT Embedded)
+         If CLIENTEMBEDDED Does Not Contain "A" then
+            Custom Dialog "Enter Instance Name"
+         End
+      End
+       
+      Custom Dialog "Start Installation"
+       
+      Rem Wizard loop end
+   End
+Else
+   Add "Unattended (%UNATTENDED%) Install or reboot from previous installation Phase2 (%PHASE2%)" to INSTALL.LOG
+End
+ 
+ 
+Rem ========================================
+Rem Get File system value
+Rem ========================================
+ 
+Get Registry Key SYSTEM\CurrentControlSet\Control\FileSystem\ place in Variable FILE_SYSTEM
+Add "File system is %FILE_SYSTEM%" to INSTALL.LOG
+If FILE_SYSTEM Equals "1" then
+   Add "ERROR: 8dot3 name creation is disabled on all volumes on the system" to INSTALL.LOG
+   If UNATTENDED Equals "0" then
+      Display Message "Installation Failed. Error Code: 25"
+   End
+   Exit Installation
+End
+ 
+ 
+Rem ==========================================
+Rem CHECK DISK SPACE REQUIREMENTS
+Rem ==========================================
+Rem Hardcoded to 800MB plus the COMPONENTS. 800MB is to cover space for - Applications, SDK doc, SDK app, SQL Server, MIS, .NET
+Rem SQL 2016 - 1480MB for enginel
+Rem SQL 2008/2012/2014 - 820MB for engine 3.8GB for complete install
+Rem SQL 2005 - 280MB for engine, 2.0GB for complete install
+Rem SQL 2000 - 270MB (obsolete)
+Rem MPPSim - 192KB
+Rem Pumpdemo - 200KB
+Rem .NET 3.5 - 30MB
+Rem MSI 4.5 - 3MB - based on installer size
+Rem SDK Docs - 2.08MB
+Rem Sample Apps - 8.55MB
+Rem Documentation - 5.2MB
+ 
+Get System Information into DISK_SPACE
+If DISK_SPACE Less Than "1480000" then
+   If SILENT Equals "0" then
+      Display Message "Installation failed"
+   End
+   Add "Not enough free disk space" to INSTALL.LOG
+   Exit Installation
+End
+ 
+Rem ==========================================
+Rem SAVE CONFIGURATION SETTINGS INCASE OF REBOOT
+Rem ==========================================
+Stop writing to installation log
+Rem Save install options selected by the user so we can re-load these if the installer is restarted
+Edit 9 registry keys
+	HKEY_LOCAL_MACHINE\
+		Software\
+			ITL\
+				Enabler\
+					(create and/or set the following key values)
+					Applications (STRING) = %APPLICATIONS%
+					Backup (STRING) = %PRE_UPGRADE_BACKUP%
+					Components (STRING) = %COMPONENTS%
+					EnbWebDomain (STRING) = %ENBWEB_DOMAIN%
+					EnbWebPort (STRING) = %ENBWEB_PORT%
+					InstanceName (STRING) = %SQL_INSTANCE%
+					SA (STRING) = %SQ_PASSWORD%
+					SDK (STRING) = %SDK%
+					UnattendedInstall (STRING) = %UNATTENDED%
+
+Continue/Start writing to installation log
+ 
+ 
+Rem Set Client install varaible
+If COMPONENTS Contains Any Letters In "B" then
+   Add "Server was chosen" to INSTALL.LOG
+   Rem Checking to see if the C: drive is compressed. SQL server doesn't like the EnablerDB files in a compressed location
+   If OPERATING_SYSTEM Greater Than or Equal "5.1" then
+      Install File V:\bin\DriveCompressed.exe to %MAINDIR%\bin\DriveCompressed.exe
+      If  Expression True "OS=64 And OPERATING_SYSTEM >= 6" then
+         Execute C:\WINDOWS\Sysnative\CMD.EXE /C %MAINDIR%\bin\DriveCompressed.exe (Wait)
+      Else
+         Execute CMD.EXE /C %MAINDIR%\bin\DriveCompressed.exe (Wait)
+      End
+      Rem A 0 means it is not compressed, 1 is compressed, -1 is an error occured during the application
+      If INSTALL_RESULT Greater Than "0" then
+         If SILENT Equals "0" then
+            Display Message "C: drive compressed"
+         End
+         Add "C: drive is compressed, which is not supported" to INSTALL.LOG
+         Exit Installation
+      ElseIf INSTALL_RESULT Less Than "0" then
+         Add "Error running DriveCompressed utility, continuing install" to INSTALL.LOG
+      Else
+         Add "C: drive is not compressed" to INSTALL.LOG
+      End
+   End
+Else
+   Add "Client was chosen" to INSTALL.LOG
+End
+ 
+Rem ==========================================
+Rem MSI4.5 Install
+Rem ==========================================
+If COMPONENTS Contains Any Letters In "B" then
+   If SQL_NEEDED Not Equal "0" then
+      Rem Check the version of MSI installed - .NET3.5 requires 4.5
+      Get System Information into MSI_VERSION
+      If MSI_VERSION Less Than "4.5" then
+         Add "SQL2008R2 requires MSI 4.5 and .NET 3.5 SP1 - MSI will be installed and will require a reboot." to INSTALL.LOG
+         Rem Check if we need to install the latest MSI 4.5 Installer 
+          
+         If File or Directory doesn't exist %INST%\Win\MSI\4.5\WindowsXP-KB942288-v3-x86.exe then
+            If SILENT Equals "0" then
+               Display Message "MSI 4.5 Installer Failed"
+            End
+            Add "Missing MSI 4.5 Installer" to INSTALL.LOG
+            Exit Installation
+         End
+          
+         If SILENT Equals "0" then
+            Display Progress Message "Installing MSI 4.5 Installer"
+         End
+         Add "Installing MSI 4.5" to INSTALL.LOG
+          
+         If OPERATING_SYSTEM Equals "5.1" then
+            Rem NOTE: 5.1 = Windows XP
+            If OS Equals "32" then
+               Execute CMD.EXE /C ""%INST%\Win\MSI\4.5\WindowsXP-KB942288-v3-x86.exe"" /quiet /passive /norestart  (Wait)
+            Else
+               Execute CMD.EXE /C ""%INST%\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x64.exe"" /quiet /passive /norestart  (Wait)
+            End
+         End
+          
+         If OPERATING_SYSTEM Equals "5.2" then
+            Rem NOTE: 5.2 = Windows 2003
+            If OS Equals "32" then
+               Execute CMD.EXE /C ""%INST%\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x86.exe"" /quiet /passive /norestart  (Wait)
+            Else
+               Execute CMD.EXE /C ""%INST%\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x64.exe"" /quiet /passive /norestart  (Wait)
+            End
+         End
+          
+         If OPERATING_SYSTEM Equals "6.0" then
+            Rem NOTE: 6.0 = Windows Vista or Windows Server 2008
+            Rem NOTE: msu files do not support the /passive switch
+            If OS Equals "32" then
+               Execute CMD.EXE /C ""%INST%\Win\MSI\4.5\Windows6.0-KB942288-v2-x86.msu"" /quiet /norestart (Wait)
+            Else
+               Execute CMD.EXE /C ""%INST%\Win\MSI\4.5\Windows6.0-KB942288-v2-x64.msu"" /quiet /norestart (Wait)
+            End
+         End
+          
+         If OPERATING_SYSTEM Greater Than or Equal "6.1" then
+            Rem NOTE: 6.1 = Windows 7 and Windows 2008 R2
+            Add "Found either Windows 7, Windows Server 2008 or Later Windows - so don't need a newer version of MSI installed" to INSTALL.LOG
+         End
+          
+         If OPERATING_SYSTEM Equals "" then
+            Add "Could not determine OS current version, so that we can install the correct edition of MSI 4.5" to INSTALL.LOG
+            If SILENT Equals "0" then
+               Display Message "Exiting"
+            End
+            Exit Installation
+         End
+          
+         If INSTALL_RESULT Equals "0" then
+            Add "MSI 4.5 Already Installed" to INSTALL.LOG
+         Else
+            Rem 3010 means Reboot is required. Set Runonce to Enabler Installer
+            If INSTALL_RESULT Equals "3010" then
+               If SILENT Equals "0" then
+                  Display Message "Rebooting"
+               End
+               Rem Add Registry Keys before rebooting
+               Registry Key Software\ITL\Enabler = True
+               Rem Stop adding this entry to the Log file. This stops this being doing on uninstall.
+               Rem If the RunOnce key is deleted on uninstall and then Enabler is reinstalled the driver will fail its install
+               Rem As windows requires the runonce key to be present to install drivers
+               Stop writing to installation log
+               Registry Key SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce = "%INST%\Enabler4Setup.exe"
+               Continue/Start writing to installation log
+               Add "MSI 4.5 installed - reboot pending" to INSTALL.LOG
+               Reboot System
+               Exit Installation
+            End
+            Rem 1603 means Windows OS platform is not supported.
+            If INSTALL_RESULT Equals "1603" then
+               If SILENT Equals "0" then
+                  Display Message "MSI 4.5 Installer Failed"
+               End
+               Add "MSI 4.5 Installation Failed - Windows OS Platform not supported." to INSTALL.LOG
+               Exit Installation
+            Else
+               If SILENT Equals "0" then
+                  Display Message "MSI 4.5 Installer Failed"
+               End
+               Add "MSI 4.5 Installion Failed" to INSTALL.LOG
+            End
+            Exit Installation
+         End
+          
+      Else
+         Add "The version of MSI is OK - %MSI_VERSION%" to INSTALL.LOG
+      End
+   End
+End
+ 
+Rem ==========================================
+Rem .NET 3.5 SP1
+Rem ==========================================
+Rem Check the version of .NET installed
+Get Registry Key SOFTWARE\Microsoft\NET Framework Setup\NDP\v2.0.50727 place in Variable NET2_0_INSTALLED
+Get Registry Key SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.0 place in Variable NET3_0_INSTALLED
+Get Registry Key SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5 place in Variable NET3_5_INSTALLED
+Get Registry Key SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full place in Variable NET4_INSTALLED
+Get Registry Key SOFTWARE\Microsoft\NET Framework Setup\NDP\v4.6\Full place in Variable NET4_6_INSTALLED
+ 
+Set Variable DOTNET_VERSION to 0
+Set Variable DOTNET350_SP to 0
+ 
+If NET3_5_INSTALLED Equals "1" then
+   Add "Found .NET v3.5 runtime" to INSTALL.LOG
+   Set Variable DOTNET_VERSION to 350
+   Get Registry Key SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5\ place in Variable DOTNET350_SP
+ElseIf NET3_0_INSTALLED Equals "1" then
+   Add "Found .NET v3.0 runtime" to INSTALL.LOG
+   Set Variable DOTNET_VERSION to 300
+ElseIf NET2_0_INSTALLED Equals "1" then
+   Add "Found .NET v2.0 runtime" to INSTALL.LOG
+   Set Variable DOTNET_VERSION to 200
+End
+ 
+Rem We actually require .NET 3.5 SP 1 to run (see EP-1146)
+Set Variable DOTNET_RUNTIME_REQUIRED to 0
+If DOTNET_VERSION Less Than "350" then
+   Set Variable DOTNET_RUNTIME_REQUIRED to 1
+End
+If DOTNET350_SP Equals "0" then
+   Set Variable DOTNET_RUNTIME_REQUIRED to 1
+End
+If DOTNET_RUNTIME_REQUIRED Equals "1" then
+   If File or Directory doesn't exist %INST%\Win\DotNetFX\3.5\dotNetFx35setup.exe then
+      If SILENT Equals "0" then
+         Display Message ".NET 3.5 Framework Installer Failed"
+      End
+      Add "ERROR: Missing .NET 3.5 Framework Installer" to INSTALL.LOG
+      Exit Installation
+   End
+   If SILENT Equals "0" then
+      Display Progress Message "Installing .NET 3.5 Framework"
+   End
+    
+   Rem On Windows Server 2008 the runtime has to be installed using the server manager tool, so if we get here we can't continue
+   Set Variable WIN2008_SERVER to 0
+   If OPERATING_SYSTEM Equals (Ignore Case) "6.0" then
+      Set Variable WIN2008_SERVER to 1
+   End
+   If OPERATING_SYSTEM Equals (Ignore Case) "6.1" then
+      Set Variable WIN2008_SERVER to 1
+   End
+   If WIN2008_SERVER Equals "1" then
+      If IS_WINDOWS_SERVER Equals "1" then
+         Add "INFO: Cannot use dotNetFx installer on Windows Server 2008 " to INSTALL.LOG
+         Add "INFO: .NET Runtime must be installed before Enabler using Administrative Tools - Server Manager." to INSTALL.LOG
+         If SILENT Equals "0" then
+            Display Message ".NET 3.5 Runtime Required"
+         End
+         Exit Installation
+      End
+   End
+    
+   Rem .NET 3.5 will auto-reboot therefore better write RunOnce to the registry
+   Registry Key Software\ITL\Enabler = True
+   Stop writing to installation log
+   Registry Key SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce = "%INST%\Enabler4Setup.exe"
+   Continue/Start writing to installation log
+    
+   Add "Installing .NET 3.5 Framework" to INSTALL.LOG
+   Execute CMD.EXE /C ""%INST%\Win\DotNetFX\3.5\dotNetFx35setup.exe"" /Q (Wait)
+   Rem 3010 means already installed.
+   If INSTALL_RESULT Equals "3010" then
+      Add "INFO: .NET 3.5 Framework Already Installed" to INSTALL.LOG
+   Else
+      If INSTALL_RESULT Not Equal "0" then
+         Rem 4121 means MSI is required - should not happen because we install this automatically.
+         If INSTALL_RESULT Equals "4121" then
+            If SILENT Equals "0" then
+               Display Message ".NET 3.5 Framework Installer Failed"
+            End
+            Add ".NET 3.5 requires MSI 4.5" to INSTALL.LOG
+         Else
+            If SILENT Equals "0" then
+               Display Message ".NET 3.5 Framework Installer Failed"
+            End
+            Add ".NET 3.5 Framework Installation Failed" to INSTALL.LOG
+         End
+         Rem Remove the registry keys added by MSI reboot
+         Remove Registry Key Software\ITL\Enabler
+         Rem Removed exit !!!!!!!!!!!!!!!!!!!!!!!
+      End
+   End
+   Display Progress Message "REMOVE Installing .NET 3.5 Framework"
+End
+ 
+Rem Remove the registry keys added by any restart in the previous sections
+Edit 5 registry keys
+	HKEY_LOCAL_MACHINE\
+		Software\
+			ITL\
+				Enabler\
+					(remove key and value)
+					Backup
+					InstanceName
+					Restart
+					SA
+					UnattendedInstall
+
+
+Rem Remove the one once key if still present.
+Rem This happens if 3.5 is installed and doesn't reboot
+Rem And then the driver install on XP will execute the runonce key causing the install to start again
+Registry Key SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce = "%INST%\Enabler4Setup.exe"
+ 
+ 
+Rem ==========================================
+Rem Check if .Net 4 needs to be installed - SQL2014 only
+Rem ==========================================
+Add "Check Net 4 install slqexpressname = %SQLEXPRESSNAME%, net 4 installed = %NET4_INSTALLED%" to INSTALL.LOG
+If SQLEXPRESSNAME Equals "SQL2014" then
+   If NET4_INSTALLED Not Equal "1" then
+      If File or Directory doesn't exist %INST%\Win\DotNetFX\4\dotNetFx40_Full_x86_x64.exe then
+         If SILENT Equals "0" then
+            Display Message ".NET 4 Framework Installer Failed"
+         End
+         Add "ERROR: Missing .NET 4 Framework Installer" to INSTALL.LOG
+         Exit Installation
+      End
+      If SILENT Equals "0" then
+         Display Progress Message "Installing .NET 4 Framework"
+      End
+       
+      Rem .Net 4 install will fail if windows update is running so stop duing install - Error 80240016
+      Execute CMD.EXE /C ""net stop WuAuServ""  (Wait)
+      Add "Stopping Windows update before installing .NET 4 Framework" to INSTALL.LOG
+       
+      Add "Installing .NET 4 Framework" to INSTALL.LOG
+      Execute CMD.EXE /C ""%INST%\Win\DotNetFX\4\dotNetFx40_Full_x86_x64.exe"" /norestart /Q (Wait)
+       
+      Add "Restarting Windows update before installing .NET 4 Framework" to INSTALL.LOG
+      Execute CMD.EXE /C ""net start WuAuServ""  (Wait)
+       
+      If INSTALL_RESULT Equals "1" then
+         Add ".NET 4 Framework Installation return 1, Ok but reboot required" to INSTALL.LOG
+      ElseIf INSTALL_RESULT Not Equal "0" then
+         If SILENT Equals "0" then
+            Display Message ".NET 4 Framework Installer Failed"
+         End
+         Add ".NET 4 Framework Installation Failed, ERRORLEVEL = %INSTALL_RESULT%" to INSTALL.LOG
+         Exit Installation
+      End
+       
+      Display Progress Message " "
+   Else
+      Add ".NET 4 Framework already installed" to INSTALL.LOG
+   End
+End
+ 
+ 
+Rem ==========================================
+Rem Checking installed Service Pack for Vista /Server 2008 when installing SQL 2012 only
+Rem ==========================================
+If COMPONENTS Contains Any Letters In "B" then
+   If SQL_NEEDED Equals "1" then
+      If SQLEXPRESSNAME Equals "SQL2012" then
+         If OPERATING_SYSTEM Equals "6.0" then
+             
+            Get Registry Key Software\Microsoft\Windows NT\CurrentVersion place in Variable VISTASP
+            Add "Vista Build Number is %VISTASP%" to INSTALL.LOG
+            Rem NOTE: 6.0 = Windows Vista or Windows Server 2008
+            Rem NOTE: msu files do not support the /passive switch
+            If VISTASP Equals "2" then
+               Rem No SP installed
+               Rem Installing SP1
+               Display Message "SQL2012 prerequisites not met"
+                
+               Add "ERROR: Vista has no required Service Packs installed, exiting installation" to INSTALL.LOG
+               Exit Installation
+                
+            ElseIf VISTASP Equals "1616" then
+               Rem No SP2 installed
+               Display Message "SQL2012 prerequisites not met"
+                
+               Add "ERROR: Vista does not have required Service Pack 2 installed, exiting installation" to INSTALL.LOG
+               Exit Installation
+            End
+             
+         End
+      End
+   End
+End
+ 
+Rem ==========================================
+Rem INSTALL SERVER COMPONENTS
+Rem ==========================================
+If COMPONENTS Contains Any Letters In "B" then
+   If SQL_NEEDED Equals "0" then
+       
+      Set Variable SQLQUERY to %PC_NAME%\%SQL_INSTANCE%
+      Add "SQLQUERY = %SQLQUERY%" to INSTALL.LOG
+       
+      Rem ==========================================
+      Rem TRUSTED CONNECTION
+      Rem ==========================================
+      Set Variable TRUSTED_CONNECTION to 1
+      Add "About to query sysobjects %OSQL_PATH% with Trusted Connection" to INSTALL.LOG
+      Execute %OSQL_PATH%\OSQL.EXE -b -d master -E -S%SQLQUERY% -Q "select count(*) from sysobjects" (Wait)
+      If INSTALL_RESULT Equals "0" then
+         Execute CMD.EXE /C osql -b -d master -E -S%SQLQUERY% -Q "select count(*) from sysobjects" (Wait)
+         If INSTALL_RESULT Equals "0" then
+            Add "Trusted Connection Succeed !!!" to INSTALL.LOG
+         Else
+            Set Variable TRUSTED_CONNECTION to 0
+         End
+      Else
+         Set Variable TRUSTED_CONNECTION to 0
+      End
+      If TRUSTED_CONNECTION Equals "0" then
+         If SILENT Equals "0" then
+            Display Message "Installation failed"
+         End
+         Add "Trusted Connection Failed ! SQL server might not have installed correctly. Or the Named instance was incorrect rc=%INSTALL_RESULT%" to INSTALL.LOG
+         Exit Installation
+      End
+       
+      Rem ==========================================
+      Rem DETECT VERSION OF SQL SERVERS INSTALLED
+      Rem ==========================================
+      Rem Make sure OSQL_PATH does not end in \
+      Set Variable OSQL_PATH to %OSQL_PATH%
+       
+      Rem Find out the version of SQL installed.
+      Rem SQL 2000 and newer support the following method of getting the version
+      Rem Older versions do not. The Microsoft documentation for this method is at the link below
+      Rem http://support.microsoft.com/default.aspx?scid=kb;en-us;321185#3
+       
+      Rem Create a temporary file to store the SQL results in.
+      Get Temporary Filename into SQLINFO
+       
+      If SILENT Equals "0" then
+         Display Progress Message "SQL Version"
+      End
+       
+      Rem Execute the sql to get the SQL version of a default instance or the instance name passed by the command line
+      Add "Query database for version using server and instance name %SQLQUERY%" to INSTALL.LOG
+      Execute %OSQL_PATH%\OSQL.EXE -b -E -S%SQLQUERY% -dmaster -h-1 -Q"select SERVERPROPERTY('productversion')" -o %TEMP%\%SQLINFO% (Wait)
+       
+      If INSTALL_RESULT Not Equal "0" then
+         If SILENT Equals "0" then
+            Display Progress Message "SQL Version"
+            Display Message "OSQL failed to Execute"
+         End
+         Add "%SQLQUERY% SQL server is not configured correctly the osql query failed" to INSTALL.LOG
+         Exit Installation
+      End
+       
+      Set Variable LINE to 
+      Rem Read each line of the SQL query results
+      Read lines of file %TEMP%\%SQLINFO% into variable LINE Start Block
+         If SQLVER_MAJOR Equals "" then
+            Parse String "%LINE%" into SQLVER_MAJOR and 
+         End
+      End
+      Rem Is SQL Server major revision greator than or equal to the number 8 (version 2000)
+      If SQLVER_MAJOR Greater Than or Equal "8" then
+         Add "SQL Version found %SQLVER_MAJOR%" to INSTALL.LOG
+      Else
+         Rem If the line read is greator than or equal to the number it is 2000 or newe
+         If LINE Greater Than or Equal "8.00.0000.00" then
+            Add "SQL Version found %LINE%" to INSTALL.LOG
+         Else
+            Rem Display the message to exit
+            If SILENT Equals "0" then
+               Display Message "A newer SQL Server is Required"
+            End
+            Add "Exiting installation as Enabler requires newer version than %SQLVER_MAJOR% of SQL Server" to INSTALL.LOG
+            Exit Installation
+         End
+      End
+       
+      If SILENT Equals "0" then
+         Display Progress Message "SQL Version"
+      End
+       
+       
+      Rem ==========================================
+      Rem IS THERE AN EXISTING ENABLER INSTALL
+      Rem ==========================================
+      Rem Does the enabler database already exist?
+      If PRE_UPGRADE_BACKUP Equals "A" then
+         Execute %OSQL_PATH%\OSQL.EXE -d EnablerDB -E -S%SQLQUERY% -Q "select count(*) from global_settings" -b (Wait)
+         If INSTALL_RESULT Equals "0" then
+            Add "Preupgrade backup check for Enabler DB: Database FOUND" to INSTALL.LOG
+         Else
+            Add "Preupgrade backup check for Enabler DB: Database NOT found" to INSTALL.LOG
+            Set Variable PRE_UPGRADE_BACKUP to 
+         End
+      End
+       
+   Else
+      Rem ==========================================
+      Rem SQL SERVER IS REQUIRED
+      Rem ==========================================
+      Rem We know what if SQLServer is required and what version will be installed, so that optionally install MSI 4.5 and .NET
+       
+      If UNATTENDED Equals "0" then
+          
+         Rem ==========================================
+         Rem SQL2005 PREREQUISITES
+         Rem ==========================================
+         If SQLEXPRESSNAME Equals "SQL2005" then
+            Add "SQLServer2005 Express will be installed" to INSTALL.LOG
+            Rem ==========================================
+            Rem Check SQL EXPRESS 2005 required components before SQL installation
+            Rem ==========================================
+            Rem Fetch MSI version, .NET version information and MDAC version
+            Get System Information into MSI_VERSION
+            Get Registry Key SOFTWARE\Microsoft\.NETFramework\policy\v2.0\ place in Variable DOTNET_VERSION
+            Get Registry Key SOFTWARE\Microsoft\DataAccess place in Variable MDAC_VERSION
+             
+            Rem ==========================================
+            Rem MDAC 2.8?
+            Rem ==========================================
+            If MDAC_VERSION Less Than "2.80.1022.3" then
+               If SILENT Equals "0" then
+                  Display Message "MDAC 2.8 Required by SQL2005"
+               End
+               Add "MDAC 2.8 Required for SQL2005 Express" to INSTALL.LOG
+               Exit Installation
+            End
+             
+            Rem ==========================================
+            Rem IE6 SP1?
+            Rem ==========================================
+            If IEXPLORE_VERSION Less Than "6.0.2800.1106" then
+               If SILENT Equals "0" then
+                  Display Message "IE 6.0 Service Pack 1 Required by SQL2005"
+               End
+               Add "IE 6.0 SP1 Required for SQL2005 Express" to INSTALL.LOG
+               Exit Installation
+            End
+             
+            /* Rem ==========================================
+            /* Rem MSI 3.1?
+            /* Rem ==========================================
+            /* If MSI_VERSION Less Than "3.1.400.2435" then
+            /* If File or Directory doesn't exist %INST%\Win\MSI\3.1\WindowsInstaller-KB893803-v2-x86.exe then
+            /* If SILENT Equals "0" then
+            /* Display Message "MSI 3.1 Installer Failed"
+            /* End
+            /* Add "Missing MSI 3.1 Installer" to INSTALL.LOG
+            /* Exit Installation
+            /* End
+            /* If SILENT Equals "0" then
+            /* Display Progress Message "Installing MSI 3.1 Installer"
+            /* End
+            /* Add "Installing MSI 3.1" to INSTALL.LOG
+            /* Execute CMD.EXE /C ""%INST%\Win\MSI\3.1\WindowsInstaller-KB893803-v2-x86.exe"" /quiet /passive /norestart  (Wait)
+            /* If INSTALL_RESULT Equals "0" then
+            /* Add "MSI 3.1 Already Installed" to INSTALL.LOG
+            /* Else
+            /* Rem 3010 means Reboot is required. Set Runonce to Enabler Installer
+            /* If INSTALL_RESULT Equals "3010" then
+            /* If SILENT Equals "0" then
+            /* Display Message "Rebooting"
+            /* End
+            /* Rem Add Registry Keys before rebooting
+            /* Registry Key Software\ITL\Enabler = %UNATTENDED%
+            /* Rem Stop adding this entry to the Log file. This stops this being doing on uninstall.
+            /* Rem If the RunOnce key is deleted on uninstall and then Enabler is reinstalled the driver will fail its install
+            /* Rem As windows requires the runonce key to be present to install drivers
+            /* Stop writing to installation log
+            /* Registry Key SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce = %INST%\Enabler4Setup.exe
+            /* Continue/Start writing to installation log
+            /* Add "MSI 3.1 installed - reboot pending" to INSTALL.LOG
+            /* Exit Installation
+            /* End
+            /* Rem 1603 means Windows OS platform is not supported.
+            /* If INSTALL_RESULT Equals "1603" then
+            /* If SILENT Equals "0" then
+            /* Display Message "MSI 3.1 Installer Failed"
+            /* End
+            /* Add "MSI 3.1 Installation Failed - Windows OS Platform not supported." to INSTALL.LOG
+            /* Exit Installation
+            /* Else
+            /* If SILENT Equals "0" then
+            /* Display Message "MSI 3.1 Installer Failed"
+            /* End
+            /* Add "MSI 3.1 Installion Failed" to INSTALL.LOG
+            /* End
+            /* Exit Installation
+            /* End
+            /* End
+             
+            /* Rem ==========================================
+            /* Rem .NET 2.0 Framework? no longer require since we now install 3.5 by default
+            /* Rem ==========================================
+            /* If DOTNET_VERSION Equals "" then
+            /* If File or Directory doesn't exist %INST%\Win\DotNetFX\2.0\install.exe then
+            /* If SILENT Equals "0" then
+            /* Display Message ".NET 2.0 Framework Installer Failed"
+            /* End
+            /* Add "Missing .NET 2.0 Framework Installer" to INSTALL.LOG
+            /* Rem Remove the registry keys added by MSI reboot
+            /* Remove Registry Key Software\ITL\Enabler
+            /* Exit Installation
+            /* End
+            /* If SILENT Equals "0" then
+            /* Display Progress Message "Installing .NET 2.0 Framework"
+            /* End
+            /* Add "Installing .NET 2.0 Framework" to INSTALL.LOG
+            /* Execute CMD.EXE /C ""%INST%\Win\DotNetFX\2.0\install.exe"" /Q (Wait)
+            /* Rem 3010 means already installed.
+            /* If INSTALL_RESULT Equals "3010" then
+            /* Add ".NET 2.0 Framework Already Installed" to INSTALL.LOG
+            /* Else
+            /* If INSTALL_RESULT Not Equal "0" then
+            /* Rem 4121 means MSI is required
+            /* If INSTALL_RESULT Equals "4121" then
+            /* If SILENT Equals "0" then
+            /* Display Message ".NET 2.0 Framework Installer Failed"
+            /* End
+            /* Add ".NET 2.0 requires MSI 3.1" to INSTALL.LOG
+            /* Else
+            /* If SILENT Equals "0" then
+            /* Display Message ".NET 2.0 Framework Installer Failed"
+            /* End
+            /* Add ".NET 2.0 Framework Installation Failed" to INSTALL.LOG
+            /* End
+            /* Rem Remove the registry keys added by MSI reboot
+            /* Remove Registry Key Software\ITL\Enabler
+            /* Exit Installation
+            /* End
+            /* End
+            /* End
+            Rem End SQL2005 Block Prerequisites
+         End
+      End
+      Rem End Server not needed
+   End
+   Rem End Server install
+Else
+   Rem Client Install make sure SQL Instance variable is set
+   Set Variable SQL_INSTANCE to %CLIENT_SQL_INSTANCE%
+End
+ 
+Rem ==========================================
+Rem Blank Password checks for SQL2005, SQL2008, SQL2012, SQL2014 and SQL2016
+Rem ==========================================
+If COMPONENTS Contains Any Letters In "B" then
+   If SQL_NEEDED Equals "1" then
+      If SQLEXPRESSNAME Not Equal "MSDE2000" then
+         If SA_PASSWORD Length Equal To "0" then
+            Add "Blank passwords not allowed for %SQLEXPRESSFULLNAME%" to INSTALL.LOG
+            If SILENT Equals "0" then
+               Display Message "Passwords blank"
+            End
+            Exit Installation
+         End
+      End
+   End
+End
+ 
+Rem ==========================================
+Rem INSTALL SQL SERVER or CHECK SA LOGIN
+Rem ==========================================
+Rem The Server Component requires either a preinstalled DB Server, or to install our own
+Rem If enabler server install selected
+If COMPONENTS Contains Any Letters In "B" then
+   If SQL_NEEDED Equals "1" then
+      Set Variable INST_DRIVE to 
+      Parse String "%INST%" into INST_DRIVE and 
+      Set Variable INST_DRIVE to : (Append)
+      Create Directory %MAINDIR%
+      If SQLEXPRESSNAME Equals "MSDE2000" then
+         Rem ==========================================
+         Rem MSDE2000 Installation
+         Rem ==========================================
+         Install File V:\scripts\MSDEInstall.bat to %MAINDIR%\MSDEInstall.bat
+         Rem Install MSDE2000 now
+         If SILENT Equals "0" then
+            Display Progress Message "Installing SQL Server (MSDE2000)"
+         End
+         Add "Starting MSDE2000 install from %INST%\MSDE2000..." to INSTALL.LOG
+         Execute CMD.EXE /C %MAINDIR%\MSDEInstall.bat %INST_DRIVE% "%INST%\MSDE2000" "%SA_PASSWORD%" (Wait)
+         If File or Directory exists %MAINDIR%\MSDE_REBOOT_PENDING then
+            If UNATTENDED Equals "0" then
+               Display Message "Rebooting"
+            End
+            Add "MSDE installed - reboot pending" to INSTALL.LOG
+            Exit Installation
+         End
+          
+      Else
+         Rem ==========================================
+         Rem SQL2016 / 2014 / 2012 / 2008 /2005
+         Rem ==========================================
+         Get Environment Variable USERDOMAIN into Variable USER_DOMAIN
+         Get Environment Variable USERNAME into Variable USER_NAME
+         Set Variable SQL_SYSADMIN_USER to %USER_DOMAIN%
+         Set Variable SQL_SYSADMIN_USER to \ (Append)
+         Set Variable SQL_SYSADMIN_USER to %USER_NAME% (Append)
+         Add "Assigning system administrator privileges to %SQL_SYSADMIN_USER%" to INSTALL.LOG
+          
+         Rem Install the SQLInstall batch file.
+         Install File V:\scripts\SQLInstall.bat to %MAINDIR%\SQLInstall.bat
+         If SILENT Equals "0" then
+            Display Progress Message "Installing SQL Server (%SQLEXPRESSNAME%)"
+         End
+         Add "Starting %SQLEXPRESSNAME% install from %INST%\%SQLEXPRESSNAME%..." to INSTALL.LOG
+          
+         If SQLEXPRESSNAME Equals "SQL2016" then
+            Rem Extra checks for SQL2016 - Must be 64 bit and Windows greater than Windows 7
+            If OPERATING_SYSTEM Less Than "6.2" then
+               If UNATTENDED Equals "0" then
+                  Display Message "%SQLEXPRESSFULLNAME% Install"
+               End
+               Add "ERROR: %SQLEXPRESSFULLNAME% not supported on Windows 7 or earlier" to INSTALL.LOG
+               Exit Installation
+            End
+            If OS Not Equal (Ignore Case) "64" then
+               If UNATTENDED Equals "0" then
+                  Display Message "%SQLEXPRESSFULLNAME% Install"
+               End
+               Add "ERROR: %SQLEXPRESSFULLNAME% not supported on 32 bit installs" to INSTALL.LOG
+               Exit Installation
+            End
+            Rem ==========================================
+            Rem SQL2016 Express Install
+            Rem ==========================================
+            Rem Path to setup exe depends on whether 32 or 64 bit OS is found ( Only 64 bit for SQL2016)
+            Execute CMD.EXE /C %MAINDIR%\SQLInstall.bat %INST_DRIVE% "%INST%\SQL2016\%OS%" "%SA_PASSWORD%" "%SQL_SYSADMIN_USER%" SQL2016 (Wait)
+             
+         ElseIf SQLEXPRESSNAME Equals "SQL2014" then
+            Rem ==========================================
+            Rem SQL2014 Express Install
+            Rem ==========================================
+            Rem Path to setup exe depends on whether 32 or 64 bit OS is found
+            Execute CMD.EXE /C %MAINDIR%\SQLInstall.bat %INST_DRIVE% "%INST%\SQL2014\%OS%" "%SA_PASSWORD%" "%SQL_SYSADMIN_USER%" SQL2014 (Wait)
+             
+         ElseIf SQLEXPRESSNAME Equals "SQL2012" then
+            Rem ==========================================
+            Rem SQL2012 Express Install
+            Rem ==========================================
+            Rem Path to setup exe depends on whether 32 or 64 bit OS is found
+            Execute CMD.EXE /C %MAINDIR%\SQLInstall.bat %INST_DRIVE% "%INST%\SQL2012\%OS%" "%SA_PASSWORD%" "%SQL_SYSADMIN_USER%" SQL2012 (Wait)
+             
+         ElseIf SQLEXPRESSNAME Equals "SQL2008R2" then
+            Rem ==========================================
+            Rem SQL2008 Express Install
+            Rem ==========================================
+            Rem Path to setup exe depends on whether 32 or 64 bit OS is found
+            /* Add "About to issue command: /C %MAINDIR%\SQLInstall.bat %INST_DRIVE% "%INST%\SQL2008R2\%OS%" "%SA_PASSWORD%" "%SQL_SYSADMIN_USER%"" to INSTALL.LOG
+            Execute CMD.EXE /C %MAINDIR%\SQLInstall.bat %INST_DRIVE% "%INST%\SQL2008R2\%OS%" "%SA_PASSWORD%" "%SQL_SYSADMIN_USER%" (Wait)
+         Else
+            Rem ==========================================
+            Rem SQL2005 Express Install
+            Rem ==========================================
+            Execute CMD.EXE /C %MAINDIR%\SQLInstall.bat %INST_DRIVE% "%INST%\SQL2005" "%SA_PASSWORD%" (Wait)
+         End
+      End
+       
+      Add "Result of SqlInstall  %INSTALL_RESULT%" to INSTALL.LOG
+       
+      Rem Error 1 - Password not strong
+      If INSTALL_RESULT Equals "1" then
+         If UNATTENDED Equals "0" then
+            Display Message "%SQLEXPRESSFULLNAME% Install"
+         End
+         Add "ERROR: %SQLEXPRESSFULLNAME% install failed due to  SQL password not strong" to INSTALL.LOG
+         Exit Installation
+      End
+       
+      Rem Make sure the SQL Server doesn't need a reboot
+      If INSTALL_RESULT Equals "2" then
+         If SILENT Equals "0" then
+            Display Message "Reboot required"
+         End
+         Rem Add Registry Keys before rebooting
+         Registry Key Software\ITL\Enabler = True
+         Stop writing to installation log
+         Registry Key SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce = "%INST%\Enabler4Setup.exe"
+         Continue/Start writing to installation log
+         Add "%SQLEXPRESSFULLNAME% installed - reboot pending" to INSTALL.LOG
+         Reboot System
+         Exit Installation
+      End
+       
+      Rem Error 3 - Updates required
+      If INSTALL_RESULT Equals "3" then
+         If UNATTENDED Equals "0" then
+            Display Message "%SQLEXPRESSFULLNAME% Install"
+         End
+         Add "ERROR: %SQLEXPRESSFULLNAME% install failed, updates are required" to INSTALL.LOG
+         Exit Installation
+      End
+       
+      Rem Error 4 or any other error -  Failed Intall
+      Rem Make sure the SQL Server was installed
+      If INSTALL_RESULT Not Equal "0" then
+         If UNATTENDED Equals "0" then
+            Display Message "%SQLEXPRESSFULLNAME% Install"
+         End
+         Add "ERROR: %SQLEXPRESSFULLNAME% install failed" to INSTALL.LOG
+         Exit Installation
+      End
+       
+      Rem Make sure the SQL Server engine is running
+      Start Service mssqlserver
+      If SILENT Equals "0" then
+         Display Progress Message " "
+      End
+       
+      Rem Set up Registry Key for SQL version client Setup
+      Set Variable REG_KEY_IN to 
+      If SQLEXPRESSNAME Equals "SQL2016" then
+         Set Variable REG_KEY_IN to SOFTWARE\\Microsoft\\Microsoft SQL Server\\130\\Tools\\ClientSetup
+      ElseIf SQLEXPRESSNAME Equals "SQL2014" then
+         Set Variable REG_KEY_IN to SOFTWARE\\Microsoft\\Microsoft SQL Server\\120\\Tools\\ClientSetup
+      ElseIf SQLEXPRESSNAME Equals "SQL2012" then
+         Set Variable REG_KEY_IN to SOFTWARE\\Microsoft\\Microsoft SQL Server\\110\\Tools\\ClientSetup
+      ElseIf SQLEXPRESSNAME Equals "SQL2008R2" then
+         Set Variable REG_KEY_IN to SOFTWARE\\Microsoft\\Microsoft SQL Server\\100\\Tools\\ClientSetup
+      End
+       
+       
+      Rem If we get here must send the full path to OSQL.EXE to DBInstall to make sure it can run properly
+      If REG_KEY_IN Not Equal "" then
+         Rem Locate OSQL for 2008R2, 2012, 2014, 2016 
+         Rem ==============================================================================================================
+         Rem == We are using a custom built DLL to get the registry key value from the windows registry
+         Rem == if installing on a 64-bit OS the DLL will get the key from the 64-bit side of the registry.
+         Rem == This is required because this installer (which is a 32-bit app) would otherwise incorrectly retrieve keys from the 32-bit side of the registry)
+         Rem == FYI - - - On a 64-bit system there would be a \Program Files\ folder for 64-bit apps
+         Rem == FYI - - - ...and a \Program Files (x86)\ folder for 32-bit apps
+         Rem ==============================================================================================================
+         If OS Equals "64" then
+            Set Variable SUB_KEY_IN to Path
+            Add "64-bit OS therefore copying EnablerInstall.dll to Installation folder" to INSTALL.LOG
+            Install File v:\bin\enablerinstall.dll to %Maindir%\bin\EnablerInstall.dll
+            Set Variable REGKEY to 
+            Call DLL %MAINDIR%\bin\EnablerInstall.dll Function GetRegKeyValue
+            Add "The path to OSQL.EXE for this 64-bit install of SQL Server is: %REGKEY%" to INSTALL.LOG
+            Set Variable OSQL_PATH to %REGKEY%
+            Add "OSQL_PATH is currently set to %OSQL_PATH%" to INSTALL.LOG
+         ElseIf OS Equals "32" then
+            Add "32-bit OS therefore will use standard WISE way to get key from registry" to INSTALL.LOG
+            Get Registry Key %REG_KEY_IN% place in Variable OSQL_PATH
+            Add "OSQL_PATH is %OSQL_PATH%" to INSTALL.LOG
+         End
+         Add "Processor bit size (e.g. 32/64 bit), the variable OS is %OS%" to INSTALL.LOG
+      Else
+         Rem Locate OSQL for SQL2005 and MSDE2000 
+         Get Registry Key Software\Microsoft\Windows\CurrentVersion place in Variable POSQL_PATH
+         Set Variable POSQL_PATH to %POSQL_PATH%
+         Rem Try SQL2005 Path first
+         Set Variable OSQL_PATH to %POSQL_PATH%\Microsoft SQL Server\90\Tools\Binn
+         If File or Directory doesn't exist %OSQL_PATH%\OSQL.EXE then
+            Rem Try MSDE Path second
+            Set Variable OSQL_PATH to %POSQL_PATH%\Microsoft SQL Server\80\Tools\Binn
+         End
+         Add "Location of OSQL.EXE is %OSQL_PATH% (SQL2005 Installation in progress)" to INSTALL.LOG
+      End
+       
+      Rem In case we can't find OSQL.EXE anywhere
+      If File or Directory doesn't exist %OSQL_PATH%\OSQL.EXE then
+         Add "ERROR: Cannot find OSQL.EXE" to INSTALL.LOG
+         Exit Installation
+      End
+       
+      Rem oSQL should work now, we will test it now to make sure.
+      Add "Making sure that OSQL works %OSQL_PATH%" to INSTALL.LOG
+      Execute %OSQL_PATH%\OSQL.EXE -b -d master -E -S%SQLQUERY% -Q "select count(*) from sysobjects" (Wait)
+      If INSTALL_RESULT Equals "0" then
+         Rem Ok we can run oSQL properly now, so remove Registry entries to restart after reboot
+         Registry Key Software\ITL\Enabler = 
+         Registry Key Software\ITL\Enabler = 
+         Rem Stop adding this entry to the Log file. This stops this being doing on uninstall.
+         Rem If the RunOnce key is deleted on uninstall and then Enabler is reinstalled the driver will fail its install
+         Rem As windows requires the runonce key to be present to install drivers
+         Stop writing to installation log
+         Registry Key SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce = 
+         Continue/Start writing to installation log
+         Add "OSQL working OK!" to INSTALL.LOG
+      Else
+         Rem We cannot continue with install now because oSQL is not working correctly, a reboot is required...
+         If UNATTENDED Equals "0" then
+            Display Message "%APPTITLE%"
+         End
+         Add "OSQL not working, rebooting..." to INSTALL.LOG
+         Reboot System
+         Exit Installation
+      End
+       
+   Else
+      Rem If a SQL already installed
+      Rem Make sure the SQL server is running
+      If SQL_INSTANCE Equals "" then
+         Start Service MSSQLSERVER
+      Else
+         Start Service %SQL_INSTANCE%
+      End
+       
+   End
+    
+   Rem ==========================================
+   Rem INSTALL WINDOWS DRIVER FOR ENABLER
+   Rem ==========================================
+   If File or Directory exists %INST%\Driver then
+      If SILENT Equals "0" then
+         Display Progress Message "Installing"
+      End
+      Rem Delete All Drivers before copy the latest
+      Delete File(s) %MAINDIR%\Driver\*
+      Rem Copy Installation files across
+      Copy local file from %INST%\Driver\DriverInstaller.exe to %MAINDIR%\Driver\DriverInstaller.exe
+      If OS Equals "64" then
+         Copy local file from %INST%\Driver\x64\EnablerPCI.inf to %MAINDIR%\Driver\EnablerPCI.inf
+         Copy local file from %INST%\Driver\x64\Enbx64.sys to %MAINDIR%\Driver\Enbx64.sys
+         Copy local file from %INST%\Driver\x64\enbamd64.cat to %MAINDIR%\Driver\enbamd64.cat
+         Copy local file from %INST%\Driver\x64\DPInst.exe to %MAINDIR%\Driver\DPInst.exe
+         Copy local file from %INST%\Driver\x64\DPInst.xml to %MAINDIR%\Driver\DPInst.xml
+         Copy local file from %INST%\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\enablerexpressamd64.cat to %MAINDIR%\Driver\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\enablerexpressamd64.cat
+         Copy local file from %INST%\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressx64.inf to %MAINDIR%\Driver\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressx64.inf
+         Copy local file from %INST%\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressx64.sys to %MAINDIR%\Driver\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressx64.sys
+      Else
+         Copy local file from %INST%\Driver\x86\EnablerPCI.inf to %MAINDIR%\Driver\EnablerPCI.inf
+         Copy local file from %INST%\Driver\x86\Enbx32.sys to %MAINDIR%\Driver\Enbx32.sys
+         Copy local file from %INST%\Driver\x86\enbx86.cat to %MAINDIR%\Driver\enbx86.cat
+         Copy local file from %INST%\Driver\x86\DPInst.xml to %MAINDIR%\Driver\DPInst.xml
+         Copy local file from %INST%\Driver\x86\DPInst.exe to %MAINDIR%\Driver\DPInst.exe
+         Copy local file from %INST%\Driver\x86\dd6f1c9a-e12e-4635-ad02-38e3553533bf\enablerexpressx86.cat to %MAINDIR%\Driver\dd6f1c9a-e12e-4635-ad02-38e3553533bf\enablerexpressx86.cat
+         Copy local file from %INST%\Driver\x86\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx32.inf to %MAINDIR%\Driver\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx32.inf
+         Copy local file from %INST%\Driver\x86\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx32.sys to %MAINDIR%\Driver\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx32.sys
+      End
+      Rem Check that the RunOnce Key is present and create it if it doesn't
+      Registry Key SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce = 
+       
+      Rem Installs the Driver calling an application that returns a success or not
+      Execute %MAINDIR%\Driver\DriverInstaller.exe  (Wait)
+      Add "Driver Installer return code %INSTALL_RESULT%" to INSTALL.LOG
+      If INSTALL_RESULT Equals "1" then
+         Rem Requires Reboot
+         Set Variable DRIVERCODE to 1
+      ElseIf INSTALL_RESULT Equals "2" then
+         Rem Failed Install
+         Set Variable DRIVERCODE to 2
+      ElseIf INSTALL_RESULT Equals "3" then
+         Rem No device present
+         Set Variable DRIVERCODE to 3
+      Else
+         Rem Successful Install
+         Set Variable DRIVERCODE to 0
+      End
+      If SILENT Equals "0" then
+         Display Progress Message "Installing"
+      End
+   Else
+      Display Message "Unable to Install Driver"
+   End
+   Rem End Installing Server components
+End
+ 
+Rem ==========================================
+Rem Install VS 2008 SP1 C++ Redistributables - Used by Enabler v4 Psvr and EnbSessionX2
+Rem ==========================================
+If SILENT Equals "0" then
+   Display Progress Message "Installing VS C++ 2008 SP1 Redistributables"
+End
+ 
+Install File V:\MsiQueryProduct.exe to %MAINDIR%\MsiQueryProduct.exe
+Execute %MAINDIR%\MsiQueryProduct.exe {9A25302D-30C0-39D9-BD6F-21E6EC160475} (Wait)
+If VC2008RUNTIME_STATUS Equals "5" then
+   Add "INFO: Skipping VS C++ 2008 SP1 runtime - already installed" to INSTALL.LOG
+Else
+    
+   Rem Ok now we try to install the runtime
+   If File or Directory doesn't exist %MAINDIR%\vcredist_x86.exe then
+      Add "Installing VS C++ 2008 SP1 Redistributables" to INSTALL.LOG
+      Install File V:\Extra\vcredist_x86.exe to %MAINDIR%\vcredist_x86.exe
+      Execute CMD.EXE /C %MAINDIR%\vcredist_x86.exe /q (Wait)
+      If INSTALL_RESULT Not Equal "0" then
+         If INSTALL_RESULT Not Equal "3010" then
+            If SILENT Equals "0" then
+               Display Message "VS C++ 2008 SP1 Redistributables Installer Failed"
+            End
+            Add "ERROR: VS C++ 2008 SP1 Redistributables Installation Failed" to INSTALL.LOG
+            Exit Installation
+         Else
+            Add "INFO: VS C++ 2008 SP1 Redistributables Installation reported error 3010, Reboot pending" to INSTALL.LOG
+         End
+      End
+   End
+End
+ 
+
+If SILENT Equals "0" then
+   Display Progress Message "The Enabler"
+End
+ 
+Rem ==========================================
+Rem Remove variables saved in the Windows Registry
+Rem ==========================================
+Stop writing to installation log
+Edit 6 registry keys
+	HKEY_LOCAL_MACHINE\
+		Software\
+			ITL\
+				Enabler\
+					(remove key and value)
+					Applications
+					Backup
+					Components
+					SA
+					SDK
+					UnattendedInstall
+
+Continue/Start writing to installation log
+ 
+Rem When the BACKUP feature is enabled, the BACKUPDIR is initialized
+If DOBACKUP Equals "A" then
+   Set Variable BACKUPDIR to %BACKUP%
+End
+ 
+Rem Check free disk space calculates free disk space as well as component sizes.
+Rem It should be located before all Install File actions.
+Check free disk space
+ 
+Rem This include script allows uninstall support
+Include Script %_WISE_%\INCLUDE\uninstal.wse
+ 
+Rem ==========================================
+Rem Remove ATL.DLL hook if preset to prevent automatic activation of MSDE setup - See http://support.microsoft.com/kb/889289 
+Rem ==========================================
+Registry Key CLSID\{44EC053A-400F-11D0-9DCD-00A0C90391D3}\InprocServer32 = )1pFEf=hI=DBiz@GgPxz>w.'b9VZqf(g6u.Q(31aR
+Add "Removing ATL.DLL hook MSDN KB:889289" to INSTALL.LOG
+ 
+Rem First we create the log directory - even clients need this
+Create Directory %MAINDIR%\Log
+ 
+Rem ==========================================
+Rem INSTALL ENABLER FILES
+Rem ==========================================
+ 
+Rem Load registry settings required to Add start menu items
+If System Has Windows 95 Shell Interface then
+   Get Registry Key Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders place in Variable STARTUPDIR
+   Get Registry Key Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders place in Variable DESKTOPDIR
+   Get Registry Key Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders place in Variable STARTMENUDIR
+   Get Registry Key Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders place in Variable GROUPDIR
+   Get Registry Key Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders place in Variable CSTARTUPDIR
+   Get Registry Key Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders place in Variable CDESKTOPDIR
+   Get Registry Key Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders place in Variable CSTARTMENUDIR
+   Get Registry Key Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders place in Variable CGROUPDIR
+   Set Variable CGROUP_SAVE to %GROUP%
+   Set Variable DESKTOPDIR to %CDESKTOPDIR%
+   Set Variable GROUP to %CGROUPDIR%\%GROUP%
+Else
+   Rem Just being paranoid really - we should never get here because we check the OS Version earlier on
+   Add "ERROR: Cannot add Start menu items" to INSTALL.LOG
+   Exit Installation
+End
+ 
+If COMPONENTS Contains Any Letters In "B" then
+   Install File v:\bin\scutil.exe to %MAINDIR%\scutil.exe
+   If File or Directory exists %MAINDIR%\psrvr4.exe then
+      Execute %MAINDIR%\scutil.exe /STOP psrvr (Wait)
+      If INSTALL_RESULT Not Equal "0" then
+         Add "INFO: Could not stop PSRVR (rc=%INSTALL_RESULT%)" to INSTALL.LOG
+      End
+   End
+   If File or Directory exists %MAINDIR%\bin\psrvr4.exe then
+      Execute %MAINDIR%\scutil.exe /STOP psrvr (Wait)
+      If INSTALL_RESULT Not Equal "0" then
+         Add "INFO: Could not stop PSRVR (rc=%INSTALL_RESULT%)" to INSTALL.LOG
+      End
+   Else
+      If File or Directory exists %MAINDIR%\psrvr.exe then
+         Execute %MAINDIR%\scutil.exe /STOP psrvr (Wait)
+         If INSTALL_RESULT Not Equal "0" then
+            Add "INFO: Could not stop PSRVR (rc=%INSTALL_RESULT%)" to INSTALL.LOG
+         End
+      End
+   End
+   If File or Directory exists %MAINDIR%\bin\WebHost.exe then
+      Execute %MAINDIR%\scutil.exe /STOP WebHost (Wait)
+      If INSTALL_RESULT Not Equal "0" then
+         Add "INFO: Could not stop Enabler Web (rc=%INSTALL_RESULT%)" to INSTALL.LOG
+      End
+   End
+   If File or Directory exists %MAINDIR%\bin\EnbWeb.exe then
+      Execute %MAINDIR%\scutil.exe /STOP EnbWeb (Wait)
+      If INSTALL_RESULT Not Equal "0" then
+         Add "INFO: Could not stop Enabler Web (rc=%INSTALL_RESULT%)" to INSTALL.LOG
+      End
+   End
+End
+ 
+Rem ==========================================
+Rem Create License.xml for licensed v4.0 Beta customers
+Rem ==========================================
+Add "Check for V4 Beta License " to INSTALL.LOG
+Install File V:\ConvertV4BetaLicense.exe to %MAINDIR%\ConvertV4BetaLicense.exe
+Execute %MAINDIR%\ConvertV4BetaLicense.exe /c (Wait)
+If INSTALL_RESULT Equals "0" then
+   Add "v4.0 Beta License converted" to INSTALL.LOG
+End
+ 
+Rem SETUP ENVIRONMENT VARIABLES AND REGISTRY KEYS
+If OS Equals "64" then
+   Install File v:\bin\setx64.exe to %MAINDIR%\bin\setx64.exe
+   Set Variable SETX_PATH to %MAINDIR%\bin\setx64.exe
+Else
+   Install File v:\bin\setx32.exe to %MAINDIR%\bin\setx32.exe
+   Set Variable SETX_PATH to %MAINDIR%\bin\setx32.exe
+End
+Display Progress Message " "
+Execute %SETX_PATH% ENABLER_ROOT %MAINDIR% -M (Wait)
+Execute %SETX_PATH% ENABLER_LOG %MAINDIR%\Log -M (Wait)
+Execute %SETX_PATH% ENABLER_DB_INSTANCE_NAME "%SQL_INSTANCE%" -M (Wait)
+Edit 6 registry keys
+	HKEY_LOCAL_MACHINE\
+		Software\
+			ITL\
+				Enabler\
+					(Create and set key value)
+					DatabaseInstanceName (STRING) = %SQL_INSTANCE%
+					Enabler_Log (STRING) = %MAINDIR%\Log
+					Root (STRING) = %MAINDIR%
+ 
+Rem And now the files
+If WINDOWS_VERSION Less Than "5" then
+   Rem Should we install these into the SYSTEM32 folder?
+   Add "Installing on Windows %WINDOWS_VERSION% installing extra DLLs" to INSTALL.LOG
+   Install File V:\Extra\ATL.DLL to %MAINDIR%\ATL.DLL
+   Install File v:\extra\mfc42.dll to %MAINDIR%\mfc42.dll
+   Install File v:\extra\mfc42u.dll to %MAINDIR%\mfc42u.dll
+End
+Delete File(s) %MAINDIR%\Release Notes.html
+If File or Directory exists V:\Release Notes.htm then
+   Install File V:\Release Notes.htm to %MAINDIR%\Release Notes.htm
+End
+If File or Directory exists V:\Update\PumpUpdate.htm then
+   Install File V:\Update\PumpUpdate.htm to %MAINDIR%\PumpUpdate.htm
+End
+Install File v:\bin\atutil.exe to %MAINDIR%\atutil.exe
+Install File v:\bin\odbcnfg.exe to %MAINDIR%\bin\odbcnfg.exe
+Install File V:\bin\ODBCnfg64.exe to %MAINDIR%\bin\odbcnfg64.exe
+Install File V:\EnbKick.exe to %MAINDIR%\EnbKick.exe
+ 
+Rem ==========================================
+Rem API ASSEMBLIES - perhaps some of these should be optional install components
+Rem ==========================================
+ 
+/* Install File v:\API\ActiveX\EnbSessionX.ocx to %MAINDIR%\EnbSessionX.ocx
+/* Install File v:\API\ActiveX\EnbOPTX.ocx to %MAINDIR%\EnbOPTX.ocx
+/* Install File v:\API\ActiveX\EnbPumpX.ocx to %MAINDIR%\EnbPumpX.ocx
+/* Install File v:\API\ActiveX\EnbAttendantX.ocx to %MAINDIR%\EnbAttendantX.ocx
+Rem Only include ActiveX2 controls if they're in the source directory
+Install File v:\API\ActiveX\EnbPumpX2.ocx to %MAINDIR%\EnbPumpX2.ocx
+Install File v:\API\ActiveX\EnbSessionX2.ocx to %MAINDIR%\EnbSessionX2.ocx
+Install File v:\API\ActiveX\EnbAttendantX2.ocx to %MAINDIR%\EnbAttendantX2.ocx
+Install File v:\EnablerSoundEvents.reg to %MAINDIR%\EnablerSoundEvents.reg
+Rem Include EnbConfigX if available
+If Compiler Variable  File Exists "v:\API\EnbConfigX.ocx" then
+Install File v:\API\ActiveX\EnbConfigX.ocx to %MAINDIR%\EnbConfigX.ocx
+Compiler Variable End
+Rem Java Assemblies
+Install File V:\API\Java\enabler-api-1.0.jar to %MAINDIR%\enabler-api-1.0.jar
+Install File v:\Extra\joda-time-2.0.jar to %MAINDIR%\joda-time-2.0.jar
+Install File v:\Extra\joda-time-NOTICE.txt to %MAINDIR%\joda-time-NOTICE.txt
+Install File v:\Extra\joda-time-LICENSE.txt to %MAINDIR%\joda-time-LICENSE.txt
+ 
+Rem Enabler 4 .NET API assembly self installing package
+Rem TODO: update this MSI to install to different locations.
+If File or Directory exists %MAINDIR%\InstallEnablerAPI.msi then
+   Rem Uninstall the previous version before installing the new one.
+   Execute %SYS32%\msiexec.exe /quiet /L+* %MAINDIR%\log\APIInstall.log /uninstall {30876486-DB1A-41CE-95D0-58F1EEA13AE8} (Wait)
+   If INSTALL_RESULT Not Equal "0" then
+      Add "INFO: Could not uninstall existing Enabler API - ERRORLEVEL = %INSTALL_RESULT%" to INSTALL.LOG
+   End
+End
+Install File V:\API\NET\InstallEnablerAPI.msi to %MAINDIR%\InstallEnablerAPI.msi
+Execute %SYS32%\msiexec.exe /quiet /L+* %MAINDIR%\log\APIInstall.log /package %MAINDIR%\InstallEnablerAPI.msi (Wait)
+If INSTALL_RESULT Not Equal "0" then
+   Add "INFO: Could not install Enabler API - ERRORLEVEL = %INSTALL_RESULT%" to INSTALL.LOG
+   If SILENT Equals "0" then
+      Display Message "Enabler API"
+   End
+   Exit Installation
+End
+ 
+Rem Enabler 4 WPF Controls for .NET API
+Install File V:\API\NET\ITL.Enabler.WPFControls.dll to %MAINDIR%\ITL.Enabler.WPFControls.dll (Version)
+Install File V:\API\NET\System.Windows.Controls.DataVisualization.Toolkit.dll to %MAINDIR%\System.Windows.Controls.DataVisualization.Toolkit.dll (Version)
+Install File V:\API\NET\WPFToolkit.dll to %MAINDIR%\WPFToolkit.dll (Version)
+ 
+Rem ==========================================
+Rem SECURITY COMPONENTS - ALWAYS INSTALLED
+Rem ==========================================
+If Compiler Variable  File Exists "v:\EnbSecurityController.exe" then
+Install File v:\EnbSecurityController.exe to %MAINDIR%\EnbSecurityController.exe
+Compiler Variable End
+If Compiler Variable  File Exists "v:\SecurityModule.dll" then
+Install File v:\SecurityModule.dll to %MAINDIR%\SecurityModule.dll
+Compiler Variable End
+Rem Security components always get installed
+If Compiler Variable  File Exists "v:\AuditTrail.dll" then
+Install File v:\AuditTrail.dll to %MAINDIR%\AuditTrail.dll
+Compiler Variable End
+ 
+Rem Icon for Add/Remove programs
+Install File v:\itl.ico to %MAINDIR%\itl.ico
+ 
+Rem ==========================================
+Rem THIRD PARTY DLL & OCX FILES FOR VB6 APPS (e.g. MPPSIM)
+Rem ==========================================
+Install File v:\Extra\Mscomm32.ocx to %MAINDIR%\Mscomm32.ocx (Version)
+Install File v:\Extra\Comdlg32.ocx to %MAINDIR%\Comdlg32.ocx (Version)
+Install File v:\Extra\Comctl32.ocx to %MAINDIR%\Comctl32.ocx (Version)
+Install File v:\Extra\Comct232.ocx to %MAINDIR%\Comct232.ocx (Version)
+Rem MsFlxGrd required for VB6 PumpDemo
+Install File v:\Extra\Msflxgrd.ocx to %MAINDIR%\Msflxgrd.ocx (Version)
+Install File v:\Extra\Msvcp60.dll to %MAINDIR%\Msvcp60.dll (Version)
+Install File v:\Extra\Msrdo20.dll to %MAINDIR%\Msrdo20.dll (Version)
+Install File v:\Extra\Msrdc20.ocx to %MAINDIR%\Msrdc20.ocx (Version)
+ 
+Rem ==========================================
+Rem INSTALL SERVER FILES 
+Rem ==========================================
+If COMPONENTS Contains Any Letters In "B" then
+    
+   Rem Environment and Registry variables
+   Execute %SETX_PATH% ENABLER_SERVER %ENV_COMPUTERNAME% -M (Wait)
+   Execute %SETX_PATH% ENABLER_WEB "%MAINDIR%\www" -M (Wait)
+   Execute %SETX_PATH% ENABLER_BIN "%MAINDIR%\bin" -M (Wait)
+   Execute %SETX_PATH% ENABLER_DB "%DBDIR%" -M (Wait)
+   Edit 8 registry keys
+	HKEY_LOCAL_MACHINE\
+		Software\
+			ITL\
+				Enabler\
+					(Create and/or set the following keys)
+					Bin (STRING) = %MAINDIR%\bin
+					Database (STRING) = enablerdb
+					DatabasePath (STRING) = C:\EnablerDB
+					ServerName (STRING) = %ENV_COMPUTERNAME%
+					Web (STRING) = %MAINDIR%\www
+    
+   Rem Enabler Database scripts and batch files
+   Install File v:\scripts\DBInstall.bat to %MAINDIR%\DBInstall.bat
+   Install File v:\scripts\DBUpgrade.bat to %MAINDIR%\DBUpgrade.bat
+   Install File v:\scripts\AfterRestore.sql to %MAINDIR%\AfterRestore.sql
+   Install File v:\scripts\attach.sql to %MAINDIR%\attach.sql
+   Install File v:\scripts\checkdb.sql to %MAINDIR%\checkdb.sql
+   Install File v:\scripts\config70.sql to %MAINDIR%\config70.sql
+   Install File v:\scripts\DefaultData.sql to %MAINDIR%\DefaultData.sql
+   Install File v:\scripts\enabler.sql to %MAINDIR%\enabler.sql
+   Install File v:\scripts\eic.sql to %MAINDIR%\eic.sql
+   Install File v:\scripts\Load.sql to %MAINDIR%\Load.sql
+If Compiler Variable  File Exists "v:\scripts\AuditTriggers.sql" then
+   /* Install File v:\scripts\AuditTriggers.sql to %MAINDIR%\AuditTriggers.sql
+Compiler Variable End
+   Install File v:\scripts\MkUpgrade.sql to %MAINDIR%\MkUpgrade.sql
+   Install File v:\scripts\populate.sql to %MAINDIR%\populate.sql
+   Install File v:\scripts\LOADEnbConfigX.SQL to %MAINDIR%\LOADEnbConfigX.SQL
+    
+   Install File v:\scripts\dbfix.sql to %MAINDIR%\dbfix.sql
+   Install File v:\scripts\drop.sql to %MAINDIR%\drop.sql
+   If File or Directory exists %MAINDIR%\nightly70.bat then
+      Delete File(s) %MAINDIR%\nightly70.bat
+      Rem Remove any schedule entry for the nightly backup (just in case the server software was previous installed)
+      Execute %MAINDIR%\atutil.exe /d \Enabler\nightly (Wait)
+   End
+   If File or Directory exists %MAINDIR%\bin\nightly.bat then
+      Delete File(s) %MAINDIR%\bin\nightly.bat
+      Rem Remove any schedule entry for the nightly backup (just in case the server software was previous installed)
+      Execute %MAINDIR%\atutil.exe /d %MAINDIR%\bin\nightly (Wait)
+   End
+   Install File v:\scripts\Nightly.bat to %MAINDIR%\Nightly.bat
+   Install File v:\scripts\Nightly.sql to %MAINDIR%\Nightly.sql
+   Install File v:\scripts\EnablerRestore.bat to %MAINDIR%\EnablerRestore.bat
+   Install File v:\scripts\sql70.bat to %MAINDIR%\sql70.bat
+    
+   Rem Enabler Server Executables
+   Install File v:\bin\ExpressUpdate.exe to %MAINDIR%\ExpressUpdate.exe
+   If  Expression True "OS=64 And OPERATING_SYSTEM >= 6" then
+      Install File v:\bin\ExpressUpdatex64.exe to %MAINDIR%\ExpressUpdatex64.exe
+   End
+   Install File V:\bin\PCIUpdate.exe to %MAINDIR%\PCIUpdate.exe
+   If File or Directory exists %MAINDIR%\Install.exe then
+      Rem Remove the older install.exe application which has been renamed to PCIUpdate
+      Delete File(s) %MAINDIR%\Install.exe
+   End
+   Install File v:\bin\psrvr4.exe to %MAINDIR%\bin\psrvr4.exe
+   If File or Directory exists %MAINDIR%\vsql.exe then
+      Delete File(s) %MAINDIR%\vsql.exe
+   End
+   /* Install File v:\windrvr.sys to %MAINDIR%\windrvr.sys
+    
+   Rem Now the batch files...
+   Install File v:\scripts\onmains.bat to %MAINDIR%\onmains.bat
+   Install File v:\scripts\onbatt.bat to %MAINDIR%\onbatt.bat
+   Install File v:\scripts\CommsLst.bat to %MAINDIR%\CommsLst.bat
+   Install File v:\scripts\CommsEst.bat to %MAINDIR%\CommsEst.bat
+   Install File v:\scripts\ComLstBt.bat to %MAINDIR%\ComLstBt.bat
+   Install File v:\scripts\BattLow.bat to %MAINDIR%\BattLow.bat
+   Install File v:\scripts\BattGood.bat to %MAINDIR%\BattGood.bat
+   Install File v:\scripts\BattFlat.bat to %MAINDIR%\BattFlat.bat
+    
+   Rem Copy version EIC.INF file - for USB connection to new hardware
+   Install File V:\EicGX.inf to %MAINDIR%\EicGX.inf
+    
+   Rem Install Enabler E firmware
+   Install File V:\EicMain2.hex to %MAINDIR%\EicMain2.hex
+    
+   Rem Customer or integrator branding; customer configurable files
+   If File or Directory exists %INST%\branding\integrator.xml then
+      Copy local file from %INST%\branding\integrator.xml to %MAINDIR%\integrator\integrator.xml
+   Else
+      Delete File(s) %MAINDIR%\integrator\integrator.xml
+   End
+    
+   Rem These are now combined into the EnbWeb/WebPages assembly by the obsfucator. Delete these files if they exists!
+   If File or Directory exists %MAINDIR%\bin\DataAccess.dll then
+      Delete File(s) %MAINDIR%\bin\DataAccess.dll
+   End
+   If File or Directory exists %MAINDIR%\bin\DataEntity.dll then
+      Delete File(s) %MAINDIR%\bin\DataEntity.dll
+   End
+   If File or Directory exists %MAINDIR%\bin\DataModules.dll then
+      Delete File(s) %MAINDIR%\bin\DataModules.dll
+   End
+   If File or Directory exists %MAINDIR%\bin\DataValidation.dll then
+      Delete File(s) %MAINDIR%\bin\DataValidation.dll
+   End
+   If File or Directory exists %MAINDIR%\bin\WebData.dll then
+      Delete File(s) %MAINDIR%\bin\WebData.dll
+   End
+    
+   Rem Web Server files and assemblies
+   Install File V:\bin\OpenNETCF.SSL.dll to %MAINDIR%\bin\OpenNETCF.SSL.dll
+   Install File V:\bin\OpenNETCF.Web.dll to %MAINDIR%\bin\OpenNETCF.Web.dll
+   Install File V:\bin\OpenNETCF.Web.Html.dll to %MAINDIR%\bin\OpenNETCF.Web.Html.dll
+   Install File V:\bin\Utilities.dll to %MAINDIR%\bin\Utilities.dll
+   Install File V:\bin\Newtonsoft.Json.dll to %MAINDIR%\bin\Newtonsoft.Json.dll
+   Rem SSL files
+   Install File V:\bin\openssl.exe to %MAINDIR%\bin\openssl.exe
+   Install File V:\bin\libeay32.dll to %MAINDIR%\bin\libeay32.dll
+   Install File V:\bin\ssleay32.dll to %MAINDIR%\bin\ssleay32.dll
+   Install File V:\bin\openssl.cnf to %MAINDIR%\bin\openssl.cnf
+   Install File V:\bin\OpenSSL-License.txt to %MAINDIR%\bin\OpenSSL-License.txt
+   Install File V:\bin\SecureBlackbox.dll to %MAINDIR%\bin\SecureBlackbox.dll
+   Install File V:\bin\SecureBlackbox.SSLCommon.dll to %MAINDIR%\bin\SecureBlackbox.SSLCommon.dll
+   Install File V:\bin\SecureBlackbox.SSLServer.dll to %MAINDIR%\bin\SecureBlackbox.SSLServer.dll
+   Install File V:\bin\SecureBlackbox.Mail.dll to %MAINDIR%\bin\SecureBlackbox.Mail.dll
+   Install File V:\bin\SecureBlackbox.MIME.dll to %MAINDIR%\bin\SecureBlackbox.MIME.dll
+   If File or Directory exists %MAINDIR%\bin\webhost.exe then
+      Execute %MAINDIR%\bin\webhost.exe /uninstall (Wait)
+   End
+   If File or Directory exists %MAINDIR%\bin\enbweb.exe then
+      Execute %MAINDIR%\bin\enbweb.exe /stop (Wait)
+      Execute %MAINDIR%\bin\enbweb.exe /uninstall (Wait)
+   End
+   Install File V:\bin\EnbWeb.exe to %MAINDIR%\bin\EnbWeb.exe
+   Install File V:\bin\EnbWeb.exe.config to %MAINDIR%\bin\EnbWeb.exe.config
+   Insert line "DefaultPort="%ENBWEB_PORT%"" into text file %MAINDIR%\bin\EnbWeb.exe.config.
+   Insert line "Domain="%ENBWEB_DOMAIN%"" into text file %MAINDIR%\EnbWeb.exe.config.
+   Delete File(s) %MAINDIR%\WebHost.exe.config
+   Delete File(s) %MAINDIR%\WebHost.exe
+    
+   Rem Assembly containing English resource strings
+   Install File V:\www\bin\WebPages.dll to %MAINDIR%\www\bin\WebPages.dll
+    
+   Rem Assembly containing RestData API
+   Install File V:\bin\RESTData.dll to %MAINDIR%\bin\RESTData.dll
+    
+   Rem Assembly containing English resource strings
+   Install File V:\bin\PageResources.dll to %MAINDIR%\bin\PageResources.dll
+   Rem Satellite assemblies for specific languages
+   Install File V:\bin\es\PageResources.resources.dll to %MAINDIR%\bin\es\PageResources.resources.dll
+   Install File V:\bin\fr\PageResources.resources.dll to %MAINDIR%\bin\fr\PageResources.resources.dll
+   Install File V:\bin\id\PageResources.resources.dll to %MAINDIR%\bin\id\PageResources.resources.dll
+   Install File V:\bin\it-IT\PageResources.resources.dll to %MAINDIR%\bin\it-IT\PageResources.resources.dll
+   Install File V:\bin\pt-BR\PageResources.resources.dll to %MAINDIR%\bin\pt-BR\PageResources.resources.dll
+   Install File V:\bin\ru\PageResources.resources.dll to %MAINDIR%\bin\ru\PageResources.resources.dll
+   Install File V:\bin\sl\PageResources.resources.dll to %MAINDIR%\bin\sl\PageResources.resources.dll
+   Install File V:\bin\th\PageResources.resources.dll to %MAINDIR%\bin\th\PageResources.resources.dll
+   Install File V:\bin\zh-CHS\PageResources.resources.dll to %MAINDIR%\bin\zh-CHS\PageResources.resources.dll
+    
+   Rem Web files
+   Install File V:\www\css\Enabler.css to %MAINDIR%\www\css\Enabler.css
+   Install File V:\www\css\EnablerPrintReport.css to %MAINDIR%\www\css\EnablerPrintReport.css
+   Install File V:\www\css\EnablerReport.css to %MAINDIR%\www\css\EnablerReport.css
+   Install File V:\www\css\EnablerSiteMonitor.css to %MAINDIR%\www\css\EnablerSiteMonitor.css
+   Install File V:\www\css\EnablerTable.css to %MAINDIR%\www\css\EnablerTable.css
+   Install File V:\www\css\Login.css to %MAINDIR%\www\css\Login.css
+   Install File V:\www\css\menu.css to %MAINDIR%\www\css\menu.css
+    
+   Install File V:\www\images\bluecircle.png to %MAINDIR%\www\images\bluecircle.png
+   Install File V:\www\images\down.png to %MAINDIR%\www\images\down.png
+   Install File V:\www\images\flag_ar.jpg to %MAINDIR%\www\images\flag_ar.jpg
+   Install File V:\www\images\flag_au.jpg to %MAINDIR%\www\images\flag_au.jpg
+   Install File V:\www\images\flag_bo.jpg to %MAINDIR%\www\images\flag_bo.jpg
+   Install File V:\www\images\flag_br.jpg to %MAINDIR%\www\images\flag_br.jpg
+   Install File V:\www\images\flag_ca.jpg to %MAINDIR%\www\images\flag_ca.jpg
+   Install File V:\www\images\flag_cl.jpg to %MAINDIR%\www\images\flag_cl.jpg
+   Install File V:\www\images\flag_cn.jpg to %MAINDIR%\www\images\flag_cn.jpg
+   Install File V:\www\images\flag_el.jpg to %MAINDIR%\www\images\flag_el.jpg
+   Install File V:\www\images\flag_es.jpg to %MAINDIR%\www\images\flag_es.jpg
+   Install File V:\www\images\flag_fi.jpg to %MAINDIR%\www\images\flag_fi.jpg
+   Install File V:\www\images\flag_fr.jpg to %MAINDIR%\www\images\flag_fr.jpg
+   Install File V:\www\images\flag_gb.jpg to %MAINDIR%\www\images\flag_gb.jpg
+   Install File V:\www\images\flag_gu.jpg to %MAINDIR%\www\images\flag_gu.jpg
+   Install File V:\www\images\flag_hk.jpg to %MAINDIR%\www\images\flag_hk.jpg
+   Install File V:\www\images\flag_id.jpg to %MAINDIR%\www\images\flag_id.jpg
+   Install File V:\www\images\flag_in.jpg to %MAINDIR%\www\images\flag_in.jpg
+   Install File V:\www\images\flag_ir.jpg to %MAINDIR%\www\images\flag_ir.jpg
+   Install File V:\www\images\flag_it.jpg to %MAINDIR%\www\images\flag_it.jpg
+   Install File V:\www\images\flag_ml.jpg to %MAINDIR%\www\images\flag_ml.jpg
+   Install File V:\www\images\flag_mx.jpg to %MAINDIR%\www\images\flag_mx.jpg
+   Install File V:\www\images\flag_nz.jpg to %MAINDIR%\www\images\flag_nz.jpg
+   Install File V:\www\images\flag_om.jpg to %MAINDIR%\www\images\flag_om.jpg
+   Install File V:\www\images\flag_pe.jpg to %MAINDIR%\www\images\flag_pe.jpg
+   Install File V:\www\images\flag_ph.jpg to %MAINDIR%\www\images\flag_ph.jpg
+   Install File V:\www\images\flag_pk.jpg to %MAINDIR%\www\images\flag_pk.jpg
+   Install File V:\www\images\flag_ru.jpg to %MAINDIR%\www\images\flag_ru.jpg
+   Install File V:\www\images\flag_si.jpg to %MAINDIR%\www\images\flag_si.jpg
+   Install File V:\www\images\flag_th.jpg to %MAINDIR%\www\images\flag_th.jpg
+   Install File V:\www\images\flag_us.jpg to %MAINDIR%\www\images\flag_us.jpg
+   Install File V:\www\images\flag_za.jpg to %MAINDIR%\www\images\flag_za.jpg
+   Install File V:\www\images\folder.gif to %MAINDIR%\www\images\folder.gif
+   Install File V:\www\images\greenarrow.png to %MAINDIR%\www\images\GreenArrow.png
+   Install File V:\www\images\greentick.png to %MAINDIR%\www\images\GreenTick.png
+   Install File V:\www\images\greenticksmall.png to %MAINDIR%\www\images\GreenTickSmall.png
+   Install File V:\www\images\IncompleteSmall.png to %MAINDIR%\www\images\IncompleteSmall.png
+   If File or Directory exists %INST%\branding\logo-web.png then
+      Copy local file from %INST%\branding\logo-web.png to %MAINDIR%\www\images\logo.png
+   Else
+      Install File V:\www\images\logo.png to %MAINDIR%\www\images\logo.png
+   End
+   Install File V:\www\images\pumpx-animate.gif to %MAINDIR%\www\images\pumpx-animate.gif
+   Install File V:\www\images\RedCross.png to %MAINDIR%\www\images\RedCross.png
+   Install File V:\www\images\RedCrossSmall.png to %MAINDIR%\www\images\RedCrossSmall.png
+   Install File V:\www\images\tools32.PNG to %MAINDIR%\www\images\tools32.PNG
+   Install File V:\www\images\tableft.gif to %MAINDIR%\www\images\tableft.gif
+   Install File V:\www\images\tableft.jpg to %MAINDIR%\www\images\TabLeft.jpg
+   Install File V:\www\images\tableftactive.gif to %MAINDIR%\www\images\tableftactive.gif
+   Install File V:\www\images\TabLeftActive.jpg to %MAINDIR%\www\images\TabLeftActive.jpg
+   Install File V:\www\images\tabright.gif to %MAINDIR%\www\images\tabright.gif
+   Install File V:\www\images\TabRight.jpg to %MAINDIR%\www\images\TabRight.jpg
+   Install File V:\www\images\tabrightactive.gif to %MAINDIR%\www\images\tabrightactive.gif
+   Install File V:\www\images\TabRightActive.jpg to %MAINDIR%\www\images\TabRightActive.jpg
+   Install File V:\www\images\text.gif to %MAINDIR%\www\images\text.gif
+   Install File V:\www\images\textfolder.gif to %MAINDIR%\www\images\textfolder.gif
+    
+   Install File V:\www\images\icons\critical.PNG to %MAINDIR%\www\images\icons\critical.PNG
+   Install File V:\www\images\icons\error.PNG to %MAINDIR%\www\images\icons\error.PNG
+   Install File V:\www\images\icons\information.PNG to %MAINDIR%\www\images\icons\information.PNG
+   Install File V:\www\images\icons\warning.PNG to %MAINDIR%\www\images\icons\warning.PNG
+    
+   Install File V:\www\images\pump\authed.png to %MAINDIR%\www\images\pump\authed.png
+   Install File V:\www\images\pump\AuthedDisabled.png to %MAINDIR%\www\images\pump\AuthedDisabled.png
+   Install File V:\www\images\pump\calling.png to %MAINDIR%\www\images\pump\calling.png
+   Install File V:\www\images\pump\calling1.png to %MAINDIR%\www\images\pump\calling1.png
+   Install File V:\www\images\pump\CallingDisabled.png to %MAINDIR%\www\images\pump\CallingDisabled.png
+   Install File V:\www\images\pump\DeliveringDisabled.png to %MAINDIR%\www\images\pump\DeliveringDisabled.png
+   Install File V:\www\images\pump\deliverying.png to %MAINDIR%\www\images\pump\deliverying.png
+   Install File V:\www\images\pump\error.png to %MAINDIR%\www\images\pump\error.png
+   Install File V:\www\images\pump\errordelivery.png to %MAINDIR%\www\images\pump\errordelivery.png
+   Install File V:\www\images\pump\invalidprice.png to %MAINDIR%\www\images\pump\invalidprice.png
+   Install File V:\www\images\pump\MECHANICAL.png to %MAINDIR%\www\images\pump\MECHANICAL.png
+   Install File V:\www\images\pump\notinstalled.png to %MAINDIR%\www\images\pump\notinstalled.png
+   Install File V:\www\images\pump\nozout.png to %MAINDIR%\www\images\pump\nozout.png
+   Install File V:\www\images\pump\nozzle.png to %MAINDIR%\www\images\pump\nozzle.png
+   Install File V:\www\images\pump\NozzleDisabled.png to %MAINDIR%\www\images\pump\NozzleDisabled.png
+   Install File V:\www\images\pump\NozzleOutDisabled1.png to %MAINDIR%\www\images\pump\NozzleOutDisabled1.png
+   Install File V:\www\images\pump\NozzleOutDisabled2.png to %MAINDIR%\www\images\pump\NozzleOutDisabled2.png
+   Install File V:\www\images\pump\PREAUTHAUTH.png to %MAINDIR%\www\images\pump\PREAUTHAUTH.png
+   Install File V:\www\images\pump\PreauthAuthedDisabled.png to %MAINDIR%\www\images\pump\PreauthAuthedDisabled.png
+   Install File V:\www\images\pump\PREAUTHDEL.png to %MAINDIR%\www\images\pump\PREAUTHDEL.png
+   Install File V:\www\images\pump\PreauthDeliveringDisabled.png to %MAINDIR%\www\images\pump\PreauthDeliveringDisabled.png
+   Install File V:\www\images\pump\PREAUTHRES.png to %MAINDIR%\www\images\pump\PREAUTHRES.png
+   Install File V:\www\images\pump\PreauthReservedDisabled.png to %MAINDIR%\www\images\pump\PreauthReservedDisabled.png
+   Install File V:\www\images\pump\prepayauth.png to %MAINDIR%\www\images\pump\prepayauth.png
+   Install File V:\www\images\pump\PrepayAuthedDisabled.png to %MAINDIR%\www\images\pump\PrepayAuthedDisabled.png
+   Install File V:\www\images\pump\PREPAYDEL.png to %MAINDIR%\www\images\pump\PREPAYDEL.png
+   Install File V:\www\images\pump\PrepayDeliveringDisabled.png to %MAINDIR%\www\images\pump\PrepayDeliveringDisabled.png
+   Install File V:\www\images\pump\prepayres.png to %MAINDIR%\www\images\pump\prepayres.png
+   Install File V:\www\images\pump\PrepayReservedDisabled.png to %MAINDIR%\www\images\pump\PrepayReservedDisabled.png
+   Install File V:\www\images\pump\pricechange.png to %MAINDIR%\www\images\pump\pricechange.png
+   Install File V:\www\images\pump\pumpbusy.png to %MAINDIR%\www\images\pump\pumpbusy.png
+   Install File V:\www\images\pump\refundlost.png to %MAINDIR%\www\images\pump\refundlost.png
+   Install File V:\www\images\pump\RefundLostDisabled.png to %MAINDIR%\www\images\pump\RefundLostDisabled.png
+   Install File V:\www\images\pump\stopped.png to %MAINDIR%\www\images\pump\stopped.png
+   Install File V:\www\images\pump\stopped1.png to %MAINDIR%\www\images\pump\stopped1.png
+   Install File V:\www\images\pump\Stopped1Disabled.png to %MAINDIR%\www\images\pump\Stopped1Disabled.png
+   Install File V:\www\images\pump\stopped2.png to %MAINDIR%\www\images\pump\stopped2.png
+   Install File V:\www\images\pump\Stopped2Disabled.png to %MAINDIR%\www\images\pump\Stopped2Disabled.png
+   Install File V:\www\images\pump\StoppedDisabled.png to %MAINDIR%\www\images\pump\StoppedDisabled.png
+   Install File V:\www\images\pump\TotalsLost.png to %MAINDIR%\www\images\pump\TotalsLost.png
+   Install File V:\www\images\pump\undefinederror.png to %MAINDIR%\www\images\pump\undefinederror.png
+    
+   Install File V:\www\images\tankgauge\capacity.PNG to %MAINDIR%\www\images\tankgauge\capacity.PNG
+   Install File V:\www\images\tankgauge\ullage.PNG to %MAINDIR%\www\images\tankgauge\ullage.PNG
+   Install File V:\www\images\tankgauge\volume.PNG to %MAINDIR%\www\images\tankgauge\volume.PNG
+   Install File V:\www\images\tankgauge\water.PNG to %MAINDIR%\www\images\tankgauge\water.PNG
+    
+   Install File V:\www\reports\DailyTankReport.xsl to %MAINDIR%\www\reports\DailyTankReport.xsl
+    
+   Install File V:\www\scripts\ActivationScripts.js to %MAINDIR%\www\scripts\ActivationScripts.js
+   Install File V:\www\scripts\AttendantTotalsScripts.js to %MAINDIR%\www\scripts\AttendantTotalsScripts.js
+   Install File V:\www\scripts\BlockingScripts.js to %MAINDIR%\www\scripts\BlockingScripts.js
+   Install File V:\www\scripts\CommonScripts.js to %MAINDIR%\www\scripts\CommonScripts.js
+   Install File V:\www\scripts\datepicker.js to %MAINDIR%\www\scripts\datepicker.js
+   Install File V:\www\scripts\EventReportScripts.js to %MAINDIR%\www\scripts\EventReportScripts.js
+   Install File V:\www\scripts\FuelReconDataScripts.js to %MAINDIR%\www\scripts\FuelReconDataScripts.js
+   Install File V:\www\scripts\FuelReconMeter.js to %MAINDIR%\www\scripts\FuelReconMeter.js
+   Install File V:\www\scripts\FuelTransactionScripts.js to %MAINDIR%\www\scripts\FuelTransactionScripts.js
+   Install File V:\www\scripts\GradesScripts.js to %MAINDIR%\www\scripts\GradesScripts.js
+   Install File V:\www\scripts\GridSelector.js to %MAINDIR%\www\scripts\GridSelector.js
+   Install File V:\www\scripts\jquery.js to %MAINDIR%\www\scripts\jquery.js
+   Install File V:\www\scripts\PortScripts.js to %MAINDIR%\www\scripts\PortScripts.js
+   Install File V:\www\scripts\PumpScripts.js to %MAINDIR%\www\scripts\PumpScripts.js
+   Install File V:\www\scripts\PumpTotalsScripts.js to %MAINDIR%\www\scripts\PumpTotalsScripts.js
+   Install File V:\www\scripts\SiteConfigurationScripts.js to %MAINDIR%\www\scripts\SiteConfigurationScripts.js
+   Install File V:\www\scripts\SiteModesScripts.js to %MAINDIR%\www\scripts\SiteModesScripts.js
+   Install File V:\www\scripts\sitemonitor.js to %MAINDIR%\www\scripts\sitemonitor.js
+   Install File V:\www\scripts\TagControllersScripts.js to %MAINDIR%\www\scripts\TagControllersScripts.js
+   Install File V:\www\scripts\TankGaugeScripts.js to %MAINDIR%\www\scripts\TankGaugeScripts.js
+   Install File V:\www\scripts\TankScripts.js to %MAINDIR%\www\scripts\TankScripts.js
+   Install File V:\www\scripts\TankTotalsScripts.js to %MAINDIR%\www\scripts\TankTotalsScripts.js
+   Install File V:\www\scripts\TerminalScripts.js to %MAINDIR%\www\scripts\TerminalScripts.js
+   Install File V:\www\scripts\UsersScripts.js to %MAINDIR%\www\scripts\UsersScripts.js
+   Install File V:\www\scripts\WetstockPumpData.js to %MAINDIR%\www\scripts\WetstockPumpData.js
+   Install File V:\www\scripts\WetstockTankData.js to %MAINDIR%\www\scripts\WetstockTankData.js
+   Install File V:\www\scripts\FuelReconDips.js to %MAINDIR%\www\scripts\FuelReconDips.js
+   Install File V:\www\scripts\GradePrices.js to %MAINDIR%\www\scripts\GradePrices.js
+   Install File V:\www\scripts\FuelReconMovements.js to %MAINDIR%\www\scripts\FuelReconMovements.js
+   Install File V:\www\scripts\AttendantScripts.js to %MAINDIR%\www\scripts\AttendantScripts.js
+    
+   Install File V:\www\favicon.ico to %MAINDIR%\www\favicon.ico
+    
+   Install File V:\www\Activate.aspx to %MAINDIR%\www\Activate.aspx
+   Install File V:\www\Attendants.aspx to %MAINDIR%\www\Attendants.aspx
+   Install File V:\www\AttendantTotals.aspx to %MAINDIR%\www\AttendantTotals.aspx
+   Install File V:\www\Blocking.aspx to %MAINDIR%\www\Blocking.aspx
+   Install File V:\www\BlockingStatus.aspx to %MAINDIR%\www\BlockingStatus.aspx
+   Install File V:\www\Cards.aspx to %MAINDIR%\www\Cards.aspx
+   Install File V:\www\Contacts.aspx to %MAINDIR%\www\Contacts.aspx
+   Install File V:\www\DeliveryHistory.aspx to %MAINDIR%\www\DeliveryHistory.aspx
+   Install File V:\www\Events.aspx to %MAINDIR%\www\Events.aspx
+   Install File V:\www\Fallback.aspx to %MAINDIR%\www\Fallback.aspx
+   Install File V:\www\FuelReconData.aspx to %MAINDIR%\www\FuelReconData.aspx
+   Install File V:\www\FuelReconDips.aspx to %MAINDIR%\www\FuelReconDips.aspx
+   Install File V:\www\FuelReconMeters.aspx to %MAINDIR%\www\FuelReconMeters.aspx
+   Install File V:\www\FuelReconMovements.aspx to %MAINDIR%\www\FuelReconMovements.aspx
+   Install File V:\www\FuelTransactionHistory.aspx to %MAINDIR%\www\FuelTransactionHistory.aspx
+   Install File V:\www\GradePricesScheduled.aspx to %MAINDIR%\www\GradePricesScheduled.aspx
+   Install File V:\www\GradePrices.aspx to %MAINDIR%\www\GradePrices.aspx
+   Install File V:\www\Grades.aspx to %MAINDIR%\www\Grades.aspx
+   Install File V:\www\Language.aspx to %MAINDIR%\www\Language.aspx
+   Install File V:\www\Login.aspx to %MAINDIR%\www\Login.aspx
+   Install File V:\www\Logoff.aspx to %MAINDIR%\www\Logoff.aspx
+   Install File V:\www\MonitorState.aspx to %MAINDIR%\www\MonitorState.aspx
+   Install File V:\www\Ports.aspx to %MAINDIR%\www\Ports.aspx
+   Install File V:\www\Pumps.aspx to %MAINDIR%\www\Pumps.aspx
+   Install File V:\www\PumpTotals.aspx to %MAINDIR%\www\PumpTotals.aspx
+   Install File V:\www\SiteConfiguration.aspx to %MAINDIR%\www\SiteConfiguration.aspx
+   Install File V:\www\SiteModes.aspx to %MAINDIR%\www\SiteModes.aspx
+   Install File V:\www\SiteModeChange.aspx to %MAINDIR%\www\SiteModeChange.aspx
+   Install File V:\www\SiteMonitor.aspx to %MAINDIR%\www\SiteMonitor.aspx
+   Install File V:\www\SiteSettings.aspx to %MAINDIR%\www\SiteSettings.aspx
+   Install File V:\www\SystemStatus.aspx to %MAINDIR%\www\SystemStatus.aspx
+   Install File V:\www\Tags.aspx to %MAINDIR%\www\Tags.aspx
+   Install File V:\www\TagControllers.aspx to %MAINDIR%\www\TagControllers.aspx
+   Install File V:\www\TankGauges.aspx to %MAINDIR%\www\TankGauges.aspx
+   Install File V:\www\TankTotals.aspx to %MAINDIR%\www\TankTotals.aspx
+   Install File V:\www\Tanks.aspx to %MAINDIR%\www\Tanks.aspx
+   Install File V:\www\Terminals.aspx to %MAINDIR%\www\Terminals.aspx
+   Install File V:\www\Users.aspx to %MAINDIR%\www\Users.aspx
+   Install File V:\www\WetstockPumpData.aspx to %MAINDIR%\www\WetstockPumpData.aspx
+   Install File V:\www\WetstockTankData.aspx to %MAINDIR%\www\WetstockTankData.aspx
+    
+   Rem Add firewall rules for Enabler Pump Server and EnbWeb
+   Rem NOTE: 5.1 = Windows XP
+   Rem NOTE: 5.2 = Windows 2003
+   Rem NOTE: 6.0 = Windows Vista or Windows Server 2008
+   If SILENT Equals "0" then
+      Display Progress Message "Adding Windows Firewall Rules..."
+   End
+   If OPERATING_SYSTEM Greater Than or Equal "6.0" then
+      Add "Updating Windows Advanced Firewall Rules" to INSTALL.LOG
+      Rem New Advanced Firewall (Vista and later) - need to delete previous rules to avoid duplicates.
+      Execute netsh advfirewall firewall delete rule name="Enabler Web Server" program=%MAINDIR%\bin\enbweb.exe (Wait)
+      Add "Removed old Firewall rule for Web Server (%INSTALL_RESULT%)" to INSTALL.LOG
+      Execute netsh advfirewall firewall delete rule name="Enabler Pump Server" program=%MAINDIR%\bin\psrvr4.exe (Wait)
+      Add "Removed old Firewall rule for Pump Server (%INSTALL_RESULT%)" to INSTALL.LOG
+      Execute netsh advfirewall firewall add rule name="Enabler Web Server" dir=in action=allow program=%MAINDIR%\bin\enbweb.exe enable=yes (Wait)
+      Add "Added Firewall rule for Web Server (%INSTALL_RESULT%)" to INSTALL.LOG
+      Execute netsh advfirewall firewall add rule name="Enabler Pump Server" dir=in action=allow program=%MAINDIR%\bin\psrvr4.exe enable=yes (Wait)
+      Add "Added Firewall rule for Pump Server (%INSTALL_RESULT%)" to INSTALL.LOG
+   Else
+      Rem Windows XP style firewall
+      Add "Updating Windows Firewall Rules" to INSTALL.LOG
+      Execute netsh firewall set allowedprogram program=%MAINDIR%\bin\enbweb.exe name="Enabler Web Server" mode=enable (Wait)
+      Add "Updated Firewall rule for Web Server (%INSTALL_RESULT%)" to INSTALL.LOG
+      Execute netsh firewall set allowedprogram program=%MAINDIR%\bin\psrvr4.exe name="Enabler Pump Server" mode=enable (Wait)
+      Add "Updated Firewall rule for Pump Server (%INSTALL_RESULT%)" to INSTALL.LOG
+   End
+   If SILENT Equals "0" then
+      Display Progress Message "The Enabler"
+   End
+    
+   Rem Obsolete or renamed files
+   Delete File(s) %MAINDIR%\www\Welcome.aspx
+    
+   Rem Pump Update install - to run
+   Install File V:\update\PumpUpdate.exe to %MAINDIR%\PumpUpdate.exe
+   Rem Blank file - is not easy to get Wise Installer to create a blank file.
+   Install File V:\update\PumpUpdate.ini to %MAINDIR%\PumpUpdate.ini
+Else
+   Rem Corresponding registry keys for client installs
+   Execute %SETX_PATH% ENABLER_SERVER %SERVER_NAME% -M (Wait)
+   Edit 4 registry keys
+	HKEY_LOCAL_MACHINE\
+		Software\
+			ITL\
+				Enabler\
+					(create and/or set key and value)
+					ServerName (STRING) = %SERVER_NAME%
+
+End
+ 
+Rem Install the DLL that contains the message ids for the Enabler Windows custom log
+Install File V:\bin\EnablerEvent.dll to %MAINDIR%\bin\EnablerEvent.dll
+Rem These files are needed later so install them here
+Install File V:\bin\subinacl.exe to %MAINDIR%\bin\subinacl.exe
+Install File V:\CreateRegKeyEvent.bat to %MAINDIR%\CreateRegKeyEvent.bat
+ 
+Add "Group Path %GROUP%" to INSTALL.LOG
+Add "Group Directory %GROUPDIR%" to INSTALL.LOG
+Add "Desktop Path %DESKTOPDIR%" to INSTALL.LOG
+Add "Start Menu Path %STARTMENUDIR%" to INSTALL.LOG
+ 
+Rem Delete any Start menu links
+Delete File(s) %GROUP%\*
+Delete File(s) %GROUPDIR%\The Enabler\*
+ 
+Rem Create shortcut to web apps
+If SERVER_NAME Equals "" then
+   Create Shortcut from http://localhost:%ENBWEB_PORT% to %GROUP%\Enabler Web.lnk
+   Create Shortcut from http://localhost:%ENBWEB_PORT%/WetstockTankData.aspx to %GROUP%\Wet Stock Management.lnk
+   Create Shortcut from http://localhost:%ENBWEB_PORT%/GradePricesScheduled.aspx to %GROUP%\Grade Pricing.lnk
+   Create Shortcut from http://localhost:%ENBWEB_PORT%/SiteMonitor.aspx to %GROUP%\Site Monitor.lnk
+Else
+   If CLIENTEMBEDDED Does Not Contain "A" then
+      Rem Default Server Desktop Web Port to :8081
+      Set Variable ENBWEB_PORT_STR to :8081
+      Create Shortcut from http://%SERVER_NAME%%ENBWEB_PORT_STR%/WetstockTankData.aspx to %GROUP%\Wet Stock Management.lnk
+   Else
+      Rem Embedded uses Default port (80) - so no port required
+      Set Variable ENBWEB_PORT_STR to 
+   End
+   Create Shortcut from http://%SERVER_NAME%%ENBWEB_PORT_STR% to %GROUP%\Enabler Web.lnk
+   Create Shortcut from http://%SERVER_NAME%%ENBWEB_PORT_STR%/GradePricesScheduled.aspx to %GROUP%\Grade Pricing.lnk
+   Create Shortcut from http://%SERVER_NAME%%ENBWEB_PORT_STR%/SiteMonitor.aspx to %GROUP%\Site Monitor.lnk
+End
+ 
+Rem Remove old EXE applications (if they are present)
+If File exists %MAINDIR%\EnbConfig.exe then
+   Delete File(s) %MAINDIR%\EnbConfig.exe
+   Delete File(s) %DESKTOPDIR%\Enabler Configuration.Ink
+End
+If File exists %MAINDIR%\enbmaint.exe then
+   Delete File(s) %MAINDIR%\EnbMaint.exe
+   Delete File(s) %DESKTOPDIR%\Enabler Management.lnk
+End
+If File exists %MAINDIR%\EnbBlockMgr.exe then
+   Delete File(s) %MAINDIR%\EnbBlockMgr.exe
+   Delete File(s) %DESKTOPDIR%\Enabler Block Manager.lnk
+End
+If File exists %MAINDIR%\FCMan.exe then
+   Delete File(s) %MAINDIR%\FCMan.exe
+End
+If File exists %MAINDIR%\FuelReconReport.exe then
+   Delete File(s) %MAINDIR%\FuelReconReport.exe
+End
+If File exists %MAINDIR%\FuelRecon.exe then
+   Delete File(s) %MAINDIR%\FuelRecon.exe
+   Delete File(s) %DESKTOPDIR%\Fuel Reconciliation.lnk
+End
+If File exists %MAINDIR%\wetstk.exe then
+   Delete File(s) %MAINDIR%\wetstk.exe
+   Delete File(s) %DESKTOPDIR%\Wetstock Maintenance.lnk
+End
+ 
+Rem Create a variable to determine if the pdf reader needs associating
+Install File v:\Extra\PDFViewer.exe to %MAINDIR%\bin\PDFViewer.exe
+ 
+Rem Set the SDK_OPTIONS variable
+Rem Set this varible Below to the applications you would like installed when SDK is checked,  both Client & Server versions now
+Rem A - MPPSim
+Rem B - Pumpdemo
+Rem C - Documents (This includes all SDK documents and sample code)
+If SDK Contains "A" then
+   Set Variable SDK_OPTIONS to ABC
+   If COMPONENTS Contains Any Letters In "B" then
+      If ICONS Contains "B" then
+         If OS Equals "32" then
+            Create Shortcut from %MAINDIR%\ExpressUpdate.exe to %GROUP%\Tools\Firmware Update for Express.lnk
+         Else
+            Create Shortcut from %MAINDIR%\ExpressUpdatex64.exe to %GROUP%\Tools\Firmware Update for Express-x64.lnk
+         End
+         Create Shortcut from %MAINDIR%\PCIUpdate.exe to %GROUP%\Tools\Firmware Update for PCI.lnk
+      End
+      If ICONS Contains "A" then
+         If OS Equals "32" then
+            Create Shortcut from %MAINDIR%\ExpressUpdate.exe to %DESKTOPDIR%\Firmware Update for Express.lnk
+         Else
+            Create Shortcut from %MAINDIR%\ExpressUpdatex64.exe to %DESKTOPDIR%\Tools\Firmware Update for Express-x64.lnk
+         End
+         Create Shortcut from %MAINDIR%\PCIUpdate.exe to %DESKTOPDIR%\Firmware Update for PCI.lnk
+      End
+   End
+End
+ 
+Rem Install the SDK applications (based on client/server install)
+Rem Install MPPSIM and Driver DLL
+If SDK_OPTIONS Contains "A" then
+   Install File v:\MPPSim.exe to %MAINDIR%\MPPSim.exe
+   If COMPONENTS Contains Any Letters In "B" then
+      Install File v:\ITLMPPSim.dll to %MAINDIR%\ITLMPPSim.dll
+   End
+   Delete File(s) %GROUP%\MPPSim.lnk
+   Delete File(s) %GROUP%\Pump Simulator.lnk
+   If ICONS Contains "B" then
+      Create Shortcut from %MAINDIR%\MPPSim.exe to %GROUP%\Pump Simulator.lnk
+   End
+   If ICONS Contains "A" then
+      Create Shortcut from %MAINDIR%\MPPSim.exe to %DESKTOPDIR%\Pump Simulator.lnk
+   End
+Else
+   If File exists %MAINDIR%\ITLMPPSim.dll then
+      Execute regsvr32 /u /s %MAINDIR%\ITLMPPSim.dll (Wait)
+      Delete File(s) %MAINDIR%\ITLMPPSim.dll
+   End
+   If File exists %MAINDIR%\bin\ITLMPPSim.dll then
+      Execute regsvr32 /u /s %MAINDIR%\bin\ITLMPPSim.dll (Wait)
+      Delete File(s) %MAINDIR%\bin\ITLMPPSim.dll
+   End
+   If File exists %MAINDIR%\MPPSim.exe then
+      Delete File(s) %MAINDIR%\MPPSim.exe
+      Delete File(s) %GROUP%\MPPSim.lnk
+      Delete File(s) %GROUP%\Pump Simulator.lnk
+      Delete File(s) %DESKTOPDIR%\MPPSim.lnk
+      Delete File(s) %DESKTOPDIR%\Pump Simulator.lnk
+   End
+End
+ 
+Rem Install Pumpdemo
+If SDK_OPTIONS Contains "B" then
+   Install File v:\pumpdemo.exe to %MAINDIR%\pumpdemo.exe
+   Delete File(s) %GROUP%\Pump Demo.lnk
+   Rem Enabler 4 pump demo
+   Install File v:\PumpDemoWPF.exe to %MAINDIR%\PumpDemoWPF.exe
+   Install File v:\SampleCom.exe to %MAINDIR%\SampleCom.exe
+   Rem Enabler 4 pump demo Java - including dependencies
+   Install File v:\pumpdemo.jar to %MAINDIR%\pumpdemo.jar
+   Install File v:\enabler-pmp-ctrl-1.0.jar to %MAINDIR%\enabler-pmp-ctrl-1.0.jar
+   Install File v:\forms-1.3.0.jar to %MAINDIR%\forms-1.3.0.jar
+   Install File v:\glazedlists-1.8.0_java15.jar to %MAINDIR%\glazedlists-1.8.0_java15.jar
+   Install File v:\icu4j-49_1.jar to %MAINDIR%\icu4j-49_1.jar
+   Install File v:\miglayout15-swing.jar to %MAINDIR%\miglayout15-swing.jar
+    
+   If ICONS Contains "B" then
+      Create Shortcut from %MAINDIR%\pumpdemo.exe to %GROUP%\Pump Demo.lnk
+      Create Shortcut from %MAINDIR%\PumpDemoWPF.exe to %GROUP%\Pump Demo WPF.lnk
+      Create Shortcut from %MAINDIR%\SampleCom.exe to %GROUP%\Sample COM.lnk
+      Create Shortcut from %MAINDIR%\PumpDemo.jar to %GROUP%\Pump Demo (Java).lnk
+   End
+   If ICONS Contains "A" then
+      Create Shortcut from %MAINDIR%\pumpdemo.exe to %DESKTOPDIR%\Pump Demo.lnk
+      Create Shortcut from %MAINDIR%\PumpDemoWPF.exe to %DESKTOPDIR%\Pump Demo WPF.lnk
+      Create Shortcut from %MAINDIR%\SampleCom.exe to %DESKTOPDIR%\Sample COM.lnk
+      Create Shortcut from %MAINDIR%\pumpdemo.jar to %DESKTOPDIR%\Pump Demo (Java).lnk
+   End
+Else
+   Rem Remove PumpDemo and links if it was not selected for this install
+   If File exists %MAINDIR%\pumpdemo.exe then
+      Delete File(s) %MAINDIR%\pumpdemo.exe
+      Delete File(s) %GROUP%\Pump Demo.lnk
+      Delete File(s) %DESKTOPDIR%\Pump Demo.lnk
+   End
+   If File exists %MAINDIR%\PumpDemoWPF.exe then
+      Delete File(s) %MAINDIR%\PumpDemoWPF.exe
+      Delete File(s) %GROUP%\Pump Demo WPF.lnk
+      Delete File(s) %DESKTOPDIR%\Pump Demo WPF.lnk
+   End
+   If File exists %MAINDIR%\SampleCom.exe then
+      Delete File(s) %MAINDIR%\SampleCom.exe
+      Delete File(s) %GROUP%\Sample COM.lnk
+      Delete File(s) %DESKTOPDIR%\Sample COM.lnk
+   End
+   If File exists %MAINDIR%\pumpdemo.jar then
+      Delete File(s) %MAINDIR%\pumpdemo.jar
+      Delete File(s) %GROUP%\Pump Demo (Java).lnk
+      Delete File(s) %DESKTOPDIR%\Pump Demo (Java).lnk
+   End
+End
+ 
+Rem Remove vbComOleAPI sample if it exists - this has been renamed to SampleCOM
+If File exists %MAINDIR%\vbcomapitest.exe then
+   Delete File(s) %MAINDIR%\vbcomapitest.exe
+   Delete File(s) %DESKTOPDIR%\Pump COM/OLE API Test.lnk
+   Delete File(s) %GROUP%\Pump COM/OLE API Test.lnk
+End
+ 
+Rem Remove Pumpdemo2.exe if it exists - this is obsolete
+Delete File(s) %MAINDIR%\pumpdemo2.exe
+ 
+Rem ==========================================
+Rem INSTALL USER DOCUMENTATION - BOTH CLIENT AND SERVER INSTALLS GET THIS
+Rem ==========================================
+If Directory exists %INST%\Documentation then
+   If File exists %INST%\Documentation\ENABLER Demonstration POS Application Reference Manual.pdf then
+      Copy local file from %INST%\Documentation\ENABLER Demonstration POS Application Reference Manual.pdf to %MAINDIR%\Doc\ENABLER Demonstration POS Application Reference Manual.pdf
+      Create Shortcut from %MAINDIR%\doc\ENABLER Demonstration POS Application Reference Manual.pdf to %GROUP%\Manuals\Demonstration POS Application Reference Manual.lnk
+   End
+    
+   If File exists %INST%\Documentation\Enabler Web Reference Manual.pdf then
+      Copy local file from %INST%\Documentation\Enabler Web Reference Manual.pdf to %MAINDIR%\Doc\Enabler Web Reference Manual.pdf
+      Create Shortcut from %MAINDIR%\doc\Enabler Web Reference Manual.pdf to %GROUP%\Manuals\Web Reference Manual.lnk
+   End
+Else
+   Add "Documentation folder not found" to INSTALL.LOG
+End
+ 
+Rem Install SDK Documentation
+If SDK_OPTIONS Contains "C" then
+    
+   Rem ==========================================
+   Rem INSTALL SDK DOCUMENTATION
+   Rem ==========================================
+   If Directory exists %INST%\SDK then
+       
+      Rem Remove old SDK documentation
+      Delete File(s) %MAINDIR%\SDK\
+       
+      Rem Install the new SDK documentation
+      Search for file %WIN%\hh.exe place in Variable MICROSOFT_HELP
+      Add "Microsoft help location: %MICROSOFT_HELP%" to INSTALL.LOG
+      Copy local file from %INST%\SDK\* to %MAINDIR%\SDK\
+      Install File V:\Extra\InnovaHxReg.exe to %MAINDIR%\SDK\Doc\VisualStudio\InnovaHxReg.exe
+      If  Expression True "OS=64 And OPERATING_SYSTEM >= 6" then
+         Execute C:\WINDOWS\Sysnative\CMD.EXE /C %MAINDIR%\SDK\Doc\VisualStudio\registerhelp2.bat (Wait)
+         Add "Execute path: C:\WINDOWS\Sysnative\CMD.EXE /C %MAINDIR%\SDK\Doc\VisualStudio\unregisterhelp2.bat" to INSTALL.LOG
+      Else
+         Execute CMD.EXE /C %MAINDIR%\SDK\Doc\VisualStudio\registerhelp2.bat (Wait)
+         Add "Execute path: CMD.EXE /C %MAINDIR%\SDK\Doc\VisualStudio\unregisterhelp2.bat" to INSTALL.LOG
+      End
+      If ICONS Contains "B" then
+         Delete File(s) %GROUP%\SDK\Database Dictionary.lnk
+         Delete File(s) %GROUP%\SDK\Developers Guide.lnk
+         Delete File(s) %GROUP%\SDK\Developers Reference.lnk
+         Delete File(s) %GROUP%\SDK\Hardware Setup and Installation Manual.lnk
+         Delete File(s) %GROUP%\SDK\Embedded Getting Started Guide.lnk
+         Delete File(s) %GROUP%\SDK\Site Installation Checklist.lnk
+         Delete File(s) %GROUP%\SDK\Embedded Site Installation Checklist.lnk
+         Delete File(s) %GROUP%\SDK\Embedded REST API Reference.lnk
+          
+         Rem SDK docs common for PC and Embedded
+         If File exists %MAINDIR%\SDK\Doc\ActiveX\ENABLER ActiveX Developers Reference.chm then
+            Create Shortcut from %MAINDIR%\SDK\Doc\ActiveX\ENABLER ActiveX Developers Reference.chm to %GROUP%\SDK\V3 ActiveX Developers Reference.lnk
+         End
+         If File exists %MAINDIR%\SDK\Doc\Java\JavaDoc\index.html then
+            Create Shortcut from %MAINDIR%\SDK\Doc\Java\JavaDoc\index.html to %GROUP%\SDK\Java API Reference.lnk
+         End
+         If File exists %MAINDIR%\SDK\Doc\ENABLER Developers Reference.chm then
+            Create Shortcut from %MAINDIR%\SDK\Doc\ENABLER Developers Reference.chm to %GROUP%\SDK\Developers Reference.lnk
+         End
+         If File exists %MAINDIR%\SDK\Doc\ENABLER Software Licence Agreement.pdf then
+            Create Shortcut from %MAINDIR%\SDK\Doc\ENABLER Software Licence Agreement.pdf to %GROUP%\SDK\Licence Agreement.lnk
+         End
+          
+         If CLIENTEMBEDDED Does Not Contain "A" then
+            Rem Installing SDK for PC.
+            If File exists %MAINDIR%\SDK\Doc\ENABLER Site Installation Checklist.pdf then
+               Create Shortcut from %MAINDIR%\SDK\Doc\ENABLER Site Installation Checklist.pdf to %GROUP%\SDK\Site Installation Checklist.lnk
+            End
+         Else
+            Rem Installing SDK for Embedded
+            If File exists %MAINDIR%\SDK\Doc\ENABLER Embedded Site Installation Checklist.pdf then
+               Create Shortcut from %MAINDIR%\SDK\Doc\ENABLER Embedded Site Installation Checklist.pdf to %GROUP%\SDK\Embedded Site Installation Checklist.lnk
+            End
+            If File exists %MAINDIR%\SDK\Doc\ENABLER Embedded Getting Started Guide.pdf then
+               Create Shortcut from %MAINDIR%\SDK\Doc\ENABLER Embedded Getting Started Guide.pdf to %GROUP%\SDK\Embedded Getting Started Guide.lnk
+            End
+            If File exists %MAINDIR%\SDK\Doc\REST API Reference.chm then
+               Create Shortcut from %MAINDIR%\SDK\Doc\REST API Reference.chm to %GROUP%\SDK\Embedded REST API Reference.lnk
+            End
+         End
+
+         /* Create Shortcut from %MAINDIR%\SDK\Doc\ENABLER Configuration API Reference.chm to %GROUP%\SDK\ActiveX Configuration API Reference.lnk
+
+      End
+   Else
+      Add "SDK folder not present in installer folder" to INSTALL.LOG
+   End
+Else
+   Rem Not installing SDK - remove any existing files and start menu links.
+   Delete File(s) %MAINDIR%\SDK\
+   If File or Directory doesn't exist %MAINDIR%\SDK\Samples\ then
+      Delete File(s) %GROUP%\SDK\
+   End
+End
+ 
+Rem Remove OPT Simulator and DLL
+If File exists %MAINDIR%\ITLOPTSim.exe then
+   Delete File(s) %MAINDIR%\ITLOPTSim.exe
+   Delete File(s) %GROUP%\ITLOPTSim.lnk
+   Delete File(s) %DESKTOPDIR%\ITLOPTSim.lnk
+End
+If File exists %MAINDIR%\ITLOPTSim.dll then
+   Delete File(s) %MAINDIR%\ITLOPTSim.dll
+End
+ 
+Rem Remove Legacy Startmenu Link
+Delete File(s) %GROUP%\Forecourt Manager.lnk
+ 
+Rem Enabler v4 always removes the CLIENT version of PSRVR
+If File exists %MAINDIR%\psrvr.exe then
+   Delete File(s) %MAINDIR%\psrvr.exe
+End
+ 
+If COMPONENTS Contains Any Letters In "A" then
+   If COMPONENTS Does Not Contain "B" then
+      Rem Client Install to Enabler (Desktop or Embedded)
+      Execute %SETX_PATH% ENABLER_SERVER %SERVER_NAME% -M (Wait)
+   End
+End
+Rem Always install ActiveX client utility - most useful for client installs.
+Install File v:\bin\enbclient.exe to %MAINDIR%\enbclient.exe
+If File exists %MAINDIR%\bin\enbclient.exe then
+   Delete File(s) %MAINDIR%\bin\enbclient.exe
+End
+Install File v:\bin\Interop.IWshRuntimeLibrary.dll to %MAINDIR%\Interop.IWshRuntimeLibrary.dll
+If File exists %MAINDIR%\bin\Interop.IWshRuntimeLibrary.dll then
+   Delete File(s) %MAINDIR%\bin\Interop.IWshRuntimeLibrary.dll
+End
+ 
+Rem Setup PDF files to link to Sumatra PDF if there is no existing reader
+Set Variable PDF to 
+Get Registry Key .pdf place in Variable PDF
+If PDF Equals "" then
+   Add "There is no current PDF reader - Setting up Sumatra PDF " to INSTALL.LOG
+   Edit 5 registry keys
+
+	HKEY_CLASSES_ROOT\
+		ITLPDF.Document\
+			(create and/or set key)
+			<default> (STRING) = "ITL PDF Document"
+
+	HKEY_CLASSES_ROOT\
+		ITLPDF.Document\
+			DefaultIcon\
+				(create and/or set key)
+				<default> (STRING)= %MAINDIR%\bin\PDFViewer.exe
+				
+	HKEY_CLASSES_ROOT\
+		ITLPDF.Document\
+			Shell\
+				Open\
+					Command\
+						(create and/or set key)
+						<default> (STRING) = "%MAINDIR%\bin\PDFViewer.exe" "%%1"
+
+   Registry Key .pdf = ITLPDF.Document
+   Add "Sumatra pdf is now default pdf reader" to INSTALL.LOG
+End
+ 
+Rem ==========================================
+Rem UPDATE SYSTEM CONFIG
+Rem ==========================================
+ 
+Rem All OCX/DLL/EXE files that are self-registered
+Self-Register OCXs/DLLs/EXEs
+ 
+Rem Enabler v4 Configure default registry key for Client Username and Password
+If COMPONENTS Contains Any Letters In "B" then
+   Rem SERVER INSTALLATION
+   Edit 2 registry keys
+	HKEY_LOCAL_MACHINE\
+		SOFTWARE\
+			ITL\
+				Enabler\
+					Client\
+						(Create and/or set key)
+						Hostname (STRING) = localhost
+						Password (STRING) = Default
+
+
+Else
+   Rem CLIENT INSTALLATION
+   Edit 2 registry keys
+	HKEY_LOCAL_MACHINE\
+		SOFTWARE\
+			ITL\
+				Enabler\
+					Client\
+						(Create and/or set key)
+						Hostname (STRING) = %SERVER_NAME%
+						Password (STRING) = Default
+End
+ 
+Rem ==========================================
+Rem Setup Access Permissions
+Rem ==========================================
+Execute net localgroup /add EnablerAdministrators (Wait)
+If SILENT Equals "0" then
+   Display Progress Message "The Enabler"
+End
+ 
+Rem Create Enabler custom event log and grant access to the log  application and evt file
+Execute %MAINDIR%\CreateRegKeyEvent.bat  (Wait)
+Rem Gives user group access to Enabler log dir and files
+Execute %MAINDIR%\bin\subinacl.exe /subdirectories=directoriesonly %MAINDIR%\log /grant=%BUILTIN_USERS_GROUP%=CRWD /pathexclude=C:\*.* (Wait)
+Execute %MAINDIR%\bin\subinacl.exe /subdirectories=filesonly %MAINDIR%\log\*.* /grant=%BUILTIN_USERS_GROUP%=CRWD /pathexclude=C:\*.* (Wait)
+ 
+Set Variable LOGTIME to 
+Get System Information into LOGTIME
+Add "Start of setting permissions %LOGTIME%" to INSTALL.LOG
+ 
+If COMPONENTS Contains Any Letters In "B" then
+   Rem Remove user group permissions from running enbkick, vsql and fcman
+   Execute %MAINDIR%\bin\subinacl.exe /file %MAINDIR%\enbkick.exe /grant=%BUILTIN_USERS_GROUP%= /pathexclude=C:\*.* (Wait)
+   Execute %MAINDIR%\bin\subinacl.exe /file %MAINDIR%\vsql.exe /grant=%BUILTIN_USERS_GROUP%= /pathexclude=C:\*.* (Wait)
+   Execute %MAINDIR%\bin\subinacl.exe /file %MAINDIR%\fcman.exe /grant=%BUILTIN_USERS_GROUP%= /pathexclude=C:\*.* (Wait)
+   Rem Remove Users group from sql bin dir (OSQL_PATH)
+   Execute %MAINDIR%\bin\subinacl.exe /file "%OSQL_PATH%" /grant=%BUILTIN_USERS_GROUP%= /pathexclude=C:\*.* (Wait)
+   Rem Give EnablerAdministrator group full access to osql and the psrvr service
+   Execute %MAINDIR%\bin\subinacl.exe /file "%OSQL_PATH%" /grant=EnablerAdministrators=F /pathexclude=C:\*.* (Wait)
+   Execute %MAINDIR%\bin\subinacl.exe /service psrvr4 /grant=EnablerAdministrators=F /pathexclude=C:\*.* (Wait)
+End
+ 
+Execute %MAINDIR%\bin\subinacl.exe /file %SYS32%\eventvwr.msc  /grant=%BUILTIN_USERS_GROUP%=  /pathexclude=C:\*.* (Wait)
+Execute %MAINDIR%\bin\subinacl.exe /file %SYS32%\config\Enabler.evt  /grant=%BUILTIN_USERS_GROUP%= /pathexclude=C:\*.* (Wait)
+Rem Give EnablerAdministrator group full access to log dir, event viewer and Enabler event log
+Execute %MAINDIR%\bin\subinacl.exe /subdirectories=directoriesonly %MAINDIR%\log /grant=EnablerAdministrators=F /pathexclude=C:\*.* (Wait)
+Execute %MAINDIR%\bin\subinacl.exe /subdirectories=filesonly %MAINDIR%\log\*.* /grant=EnablerAdministrators=F /pathexclude=C:\*.* (Wait)
+ 
+Rem The below line was causing the permissions to be very slow.
+
+Rem Subinacl has a bug where running it on C:\Enabler causes it to serach all folders under C:\ and all its subfolders for folders labelled Enabler
+
+Rem The fix is to seperate it out and do C:\Enabler as a file which does require searching all of the root directory
+Execute %MAINDIR%\bin\subinacl.exe /subdirectories=directoriesonly %MAINDIR%\ /grant=EnablerAdministrators=F (Wait)
+Execute %MAINDIR%\bin\subinacl.exe /file %MAINDIR% /grant=EnablerAdministrators=F (Wait)
+ 
+Execute %MAINDIR%\bin\subinacl.exe /subdirectories=filesonly %MAINDIR%\*.* /grant=EnablerAdministrators=F /pathexclude=C:\*.* (Wait)
+Execute %MAINDIR%\bin\subinacl.exe /file %SYS32%\eventvwr.msc  /grant=EnablerAdministrators=E /pathexclude=C:\*.* (Wait)
+Execute %MAINDIR%\bin\subinacl.exe /file %SYS32%\config\Enabler.evt  /grant=EnablerAdministrators=F /pathexclude=C:\*.* (Wait)
+ 
+Set Variable LOGTIME to 
+Get System Information into LOGTIME
+Add "End of setting permissions %LOGTIME%" to INSTALL.LOG
+ 
+If SILENT Equals "0" then
+   Display Progress Message "The Enabler"
+End
+ 
+If COMPONENTS Contains Any Letters In "B" then
+   Rem SERVER INSTALLATION
+    
+   Rem We modify this component size to allow for the space needed to create the EnablerDB
+   Add "Installing or Updating EnablerDB" to INSTALL.LOG
+    
+   Rem Register the Pump Server
+   If SILENT Equals "0" then
+      Display Progress Message "%APPTITLE%"
+   End
+   Execute %MAINDIR%\bin\psrvr4.exe /service (Wait)
+   Execute %MAINDIR%\bin\enbweb.exe /install (Wait)
+   Add "Update Services Start timout setting" to INSTALL.LOG
+   Registry Key SYSTEM\CurrentControlSet\Control = 180000
+   If SILENT Equals "0" then
+      Display Progress Message " "
+   End
+    
+   Rem ==========================================
+   Rem CONFIRM SQL SERVER RUNNING
+   Rem ==========================================
+   Rem NOTE: This is a copy of whats just after the database password check
+   If SQL_INSTANCE Equals "" then
+      Add "Confirming MSSQLSERVER service is running" to INSTALL.LOG
+      Check Service MSSQLSERVER
+   Else
+      Add "Confirming MSSQL$%SQL_INSTANCE% service is running" to INSTALL.LOG
+      Check Service MSSQL$%SQL_INSTANCE%
+   End
+   Add "SQLServer Status: %SQLSERVER_STARTED%" to INSTALL.LOG
+   If SQLSERVER_STARTED Does Not Contain "Running" then
+      Add "ERROR: SQLServer is not Running" to INSTALL.LOG
+      If SILENT Equals "0" then
+         Display Message "Installation Stopped"
+      End
+      Exit Installation
+   End
+    
+    
+   Rem Setup ODBC Data source and Windows users, info for event logs
+   If SQL_INSTANCE Equals "" then
+      Execute %MAINDIR%\bin\odbcnfg.exe  (Wait)
+      If OS Equals "64" then
+         Execute %MAINDIR%\bin\odbcnfg64.exe  (Wait)
+      End
+   Else
+      Execute %MAINDIR%\bin\odbcnfg.exe /i %SQL_INSTANCE%  (Wait)
+      If OS Equals "64" then
+         Execute %MAINDIR%\bin\odbcnfg64.exe /i %SQL_INSTANCE%  (Wait)
+      End
+   End
+    
+   Rem Run the Nightly.bat script if the user has ticked the checkbox
+   If PRE_UPGRADE_BACKUP Contains "A" then
+      If SILENT Equals "0" then
+         Display Progress Message "The Enabler"
+      End
+      Add "A pre upgrade backup will be performed (Nightly.bat)" to INSTALL.LOG
+      Execute CMD.EXE /C %MAINDIR%\Nightly.bat %SQLQUERY% (Wait)
+      If SILENT Equals "0" then
+         Display Progress Message "The Enabler"
+      End
+   End
+    
+   Rem Now do the EnablerDB install
+   If SILENT Equals "0" then
+      Display Progress Message "%APPTITLE%"
+   End
+    
+   Create Directory %DBDIR%
+   Add "Passing %OSQL_PATH% to DBInstall" to INSTALL.LOG
+   Rem We're supposed to be able to run BAT files directly, but it doesn't seem to work on WinNT
+   Execute CMD.EXE /C %MAINDIR%\DBInstall.bat "%DBDIR%" "%MAINDIR%" "%MAINDIR%\install.log" "%OSQL_PATH%"  %SQLQUERY% (Wait)
+    
+   Rem We can now check for DBINSTALL_OK and MKUPGRADE_OK files to see if the db install/upgrade worked 
+   If File or Directory doesn't exist %MAINDIR%\DBINSTALL_OK then
+      If UNATTENDED Equals "0" then
+         Display Message "Enabler Database Install Failed"
+      End
+      Add "ERROR:Enabler DBInstall.BAT failed" to INSTALL.LOG
+      Exit Installation
+   End
+    
+   If File or Directory doesn't exist %MAINDIR%\DBUPGRADE_OK then
+      If UNATTENDED Equals "0" then
+         Display Message "Enabler Database Upgrade Failed"
+      End
+      Add "ERROR: Enabler Database Upgrade Failed" to INSTALL.LOG
+      Exit Installation
+   End
+    
+   Rem Remove autoupgrade.bat to prevent anyone manually running it later on
+   Delete File(s) %MAINDIR%\autoupgrade.bat
+    
+   If SDK_OPTIONS Not Equal "" then
+      Rem Install schema documentation into database
+      Install File V:\scripts\EnablerDBdoc.sql to %MAINDIR%\EnablerDBdoc.sql
+      If SILENT Equals "0" then
+         Display Progress Message " "
+      End
+      Execute %OSQL_PATH%\OSQL.EXE -b -d EnablerDB -E -S%SQLQUERY% -i "%MAINDIR%\EnablerDBdoc.sql"  -o  %MAINDIR%\EnablerDBdoc.log (Wait)
+   End
+    
+   If SILENT Equals "0" then
+      Display Progress Message "%APPTITLE%"
+   End
+    
+   Rem Run PumpUpdate.EXE to install pump drivers and stuff.
+   If SILENT Equals "0" then
+      Display Progress Message "Forecourt Interface Update"
+   End
+
+   Rem For clean installs we need to pass the path to OSQL to PumpUpdate but Wise doesn't seem to cope with spaces, so we put the path in a txt file for PumpUpdate.exe to read.
+
+   Add "INFO: Putting OSQL path (%OSQL_PATH%) into PumpUpdate.INI" to INSTALL.LOG
+   Edit INI File %MAINDIR%\PumpUpdate.ini
+   Add "INFO: SQL_INSTANCE variable set to '%SQL_INSTANCE%'" to INSTALL.LOG
+   If SQL_INSTANCE Equals "" then
+      Add "INFO: Running PumpUpdate for default instance" to INSTALL.LOG
+      Execute %MAINDIR%\PumpUpdate.exe /S /D /OSQL (Wait)
+   Else
+      Add "INFO: Running PumpUpdate for named instance %SQL_INSTANCE%" to INSTALL.LOG
+      Execute %MAINDIR%\PumpUpdate.exe /S /D /OSQL /INSTANCE:%SQL_INSTANCE% (Wait)
+   End
+    
+   If SILENT Equals "0" then
+      Display Progress Message "Forecourt Interface Drivers"
+   End
+   Add "Pump Update install result %INSTALL_RESULT%" to INSTALL.LOG
+    
+   Rem Add support for EnablerEvent.DLL to the registry
+   Edit 2 registry keys
+	HKEY_LOCAL_MACHINE\
+		SYSTEM\
+			CurrentControlSet\
+				Services\
+					Eventlog\
+						Application\
+							Psrvr\
+								(Create and/or set key)
+								EventMessageFile (STRING) = %MAINDIR%\bin\EnablerEvent.dll
+								TypesSupported (DWORD) = 7
+    
+   If SILENT Equals "0" then
+      Display Progress Message " "
+   End
+    
+   Rem SDK options
+   If SDK_OPTIONS Equals "" then
+      Rem delete Sim, MPP driver if SDK option is not selected
+      Install File v:\scripts\UninstallSim.sql to %MAINDIR%\UninstallSim.sql
+      Execute %OSQL_PATH%\OSQL.EXE -d EnablerDB -E -S%SQLQUERY% -i "%MAINDIR%\UninstallSim.sql"  -o  %MAINDIR%\SimInstall.log
+   Else
+      Rem install Sim, MPP driver if SDK option is selected
+      Install File v:\scripts\InstallSim.sql to %MAINDIR%\InstallSim.sql
+      Execute %OSQL_PATH%\OSQL.EXE -d EnablerDB -E -S%SQLQUERY% -i "%MAINDIR%\InstallSim.sql"  -o  %MAINDIR%\SimInstall.log
+   End
+    
+   Rem ==========================================
+   Rem Remove old registry license for v4.0 Beta customers
+   Rem ==========================================
+   Execute %MAINDIR%\ConvertV4BetaLicense.exe /r (Wait)
+   If INSTALL_RESULT Equals "0" then
+      Add "v4.0 Beta registry license removed " to INSTALL.LOG
+   End
+   Delete File(s) %MAINDIR%\ConvertV4BetaLicense.exe
+    
+   Rem Ok now start the Pump Server and Webhost
+   If NOSTART Equals "0" then
+      Start Service psrvr
+      Start Service enbweb
+   End
+    
+   Rem Add some extra entries to the Wise log - so temporary or generated files are removed at uninstall
+   Add "File Tree: %MAINDIR%\sleep.exe" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\InstallUtil.InstallLog" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\Autoupgrade.*" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\SetVersion.*" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\config70.log" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\DBU*.log" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\DBU*.sql" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\EnablerDBdoc.log" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\PumpUpdate.sql" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\pumpupdate.log" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\WISE_UPDATE.LOG" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\enabler.log" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\load.log" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\*.bat" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\*.oca" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\*.nxe" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\*.nei" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\bin\*.dll" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\*.dll" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\*OK" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\www\Parameters.xml" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\PumpUpdate.log" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\PumpUpdate.sql" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\State\*" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\Driver\*" to INSTALL.LOG
+   Add "File Tree: %MAINDIR%\bin\EnbWeb.InstallLog" to INSTALL.LOG
+    
+   Rem Add entries to the Wise log to stop and remove services
+   Add "Execute path: %MAINDIR%\scutil.exe /STOP enbweb" to INSTALL.LOG
+   Add "Execute path: %MAINDIR%\scutil.exe /STOP psrvr" to INSTALL.LOG
+   Add "Execute path: %MAINDIR%\bin\psrvr4.exe /UNREGSERVER" to INSTALL.LOG
+   Add "Execute path: %MAINDIR%\bin\enbweb.exe /uninstall" to INSTALL.LOG
+    
+Else
+   Rem CLIENT INSTALLATION
+    
+   Rem Need to register the Enabler COM objects
+   If SILENT Equals "0" then
+      Display Progress Message "%APPTITLE%"
+   End
+   Add "Registering Enabler objects" to INSTALL.LOG
+   Execute regsvr32 /s %MAINDIR%\EnbSessionX2.OCX (Wait)
+    
+   Rem Client Install to Enabler Desktop (NOT Embedded)
+   If CLIENTEMBEDDED Does Not Contain "A" then
+      Rem EnbClient utility to setup DCOM to use the remote server we prompted for earlier
+      Pause 2000 Milliseconds
+      Add "Configuring DCOM" to INSTALL.LOG
+      If SERVER_NAME Length Equal To "0" then
+         Add "WARNING: no server name given - setting to default value 'SERVER'" to INSTALL.LOG
+         Set Variable SERVER_NAME to SERVER
+      End
+       
+      Rem Setup ODBC Data source for clients too
+      If SQL_INSTANCE Equals "" then
+         Execute %MAINDIR%\bin\odbcnfg.exe /s %SERVER_NAME% (Wait)
+         If OS Equals "64" then
+            Execute %MAINDIR%\bin\odbcnfg64.exe /s %SERVER_NAME% (Wait)
+         End
+      Else
+         Execute %MAINDIR%\bin\odbcnfg.exe /s %SERVER_NAME% /i %SQL_INSTANCE% (Wait)
+         If OS Equals "64" then
+            Execute %MAINDIR%\bin\odbcnfg64.exe /s %SERVER_NAME% /i %SQL_INSTANCE% (Wait)
+         End
+      End
+   End
+    
+   If SILENT Equals "0" then
+      Display Progress Message " "
+   End
+    
+End
+ 
+Rem ==========================================
+Rem ADD UNINSTALL ITEMS TO THE WISE INSTALL LOG
+Rem ==========================================
+ 
+Rem Uninstall the API
+Add "Execute path: %SYS32%\msiexec.exe /quiet /L+* %MAINDIR%\log\APIInstall.log /uninstall %MAINDIR%\InstallEnablerAPI.msi" to INSTALL.LOG
+ 
+ 
+Rem Embed the Enabler Product Version - used to determine what version is installed
+Add "EnablerVersion: %ENB_VERSION%" to INSTALL.LOG
+ 
+Rem The following two lines reset COMMON and MAINDIR to short filesnames. This is for backwards compatibility.
+Set Variable COMMON to %COMMON%
+Set Variable MAINDIR to %MAINDIR%
+ 
+Rem Add some extra entries to the Wise log - so temporary or generated files are removed at uninstall
+Add "Execute path: %SYS32%\msiexec.exe /quiet /L+* %MAINDIR%\log\APIInstall.log /X %MAINDIR%\InstallEnablerAPI.msi" to INSTALL.LOG
+ 
+Rem Run an optional integrators sql file
+If COMPONENTS Contains Any Letters In "B" then
+   Add "Checking for %INST%\ServerHook.sql  " to INSTALL.LOG
+   If File exists %INST%\ServerHook.sql then
+      Add "Running %INST%\ServerHook.sql  (osql %OSQL_PATH%)" to INSTALL.LOG
+      Execute %OSQL_PATH%\OSQL.EXE -b -d EnablerDB -E -S%SQLQUERY% -i "%INST%\ServerHook.sql"  -o  %MAINDIR%\ServerHook.log (Wait)
+      Add "Completed ServerHook (return code %INSTALL_RESULT% )" to INSTALL.LOG
+   End
+   Check Service psrvr
+End
+ 
+Rem Update Registry Keys for future installations
+Edit 3 registry keys
+ 
+   Edit 2 registry keys
+	HKEY_LOCAL_MACHINE
+		SOFTWARE\
+			ITL\
+				Enabler\
+					Client\
+						(Create and/or set key)
+						Applications (STRING) = %APPLICATIONS%
+						Compontents (STRING) = %COMPONENTS%
+						SDK (STRING) = %SDK%
+
+ 
+ 
+Rem ==========================================
+Rem Reboot system to disable fast startup and change system power settings
+Rem This should be the last thing to do, so we moved the uninstall items before this
+Rem ==========================================
+ 
+Rem Only change setting for server
+If  Expression True "Instr(COMPONENTS,"B")" then
+   Rem This is a server install
+    
+   Rem Get Registry value for Fast startup 
+   Get Registry Key SYSTEM\CurrentControlSet\Control\Power place in Variable FAST_STARTUP
+   Add "Fast Startup setting is: %FAST_STARTUP%" to INSTALL.LOG
+   If FAST_STARTUP Not Equal "0" then
+      Rem Use Powercfg to disable Fast startup. Editing of Registry does NOT work for all OS
+      Execute CMD.exe /C powercfg.exe -H off (Wait)
+      Add "Updating Registry setting to disable Fast Startup" to INSTALL.LOG
+   End
+    
+   Rem Force to disable ALL other sleep settings for all devices.
+    
+   Execute CMD.exe /C powercfg.exe -change -standby-timeout-ac 0 (Wait)
+   Execute CMD.exe /C powercfg.exe -change -standby-timeout-dc 0 (Wait)
+   Add "Update standby TO to 0 to prevent system goes to sleep" to INSTALL.LOG
+    
+   Execute CMD.exe /C powercfg.exe -change -hibernate-timeout-ac 0 (Wait)
+   Execute CMD.exe /C powercfg.exe -change -hibernate-timeout-dc 0 (Wait)
+   Add "Update hibernate TO to 0 to prevent system goes to hibernate" to INSTALL.LOG
+End
+ 
+Rem Log Silent setting
+Add "Silent setting is %SILENT%" to INSTALL.LOG
+ 
+Rem This Wizard Loop finalizes the install 
+If UNATTENDED Equals "0" then
+   Wizard Loop
+      Custom Dialog "Finished"
+   End
+End
+Add "Install is Finished" to INSTALL.LOG
+ 
+Rem Add uninstall details to the registry...
+Rem NOTE: This registry edit does the setup for Windows Add/Remove Programs, so these will be redundant
+Rem       for the new install script. Though if you're upgrading and these keys are present they should
+Rem       probably be removed (after installing the new version you can't uninstall the old one).
+
+Edit 3 registry keys
+	HKEY_LOCAL_MACHINE
+		SOFTWARE\
+			Microsoft\
+				Windows\
+					CurrentVersion\
+						Uninstall\
+							%APPPTITLE%\
+								(Create and/or set key)
+								Comments (STRING) = Windows-based Forecourt Control by Integration Technologies Limited.
+								Publisher (STRING) = Integration Technologies Limited
+								URLInfoAbout (STRING) = https://www.integration.co.nz/support/
+
+Registry Key Software\Microsoft\Windows\CurrentVersion\Uninstall\%APPTITLE% = %MAINDIR%\itl.ico,-0
+ 
+Rem Reboot the PC
+If FAST_STARTUP Not Equal "0" then
+   If SILENT Equals "0" then
+      Add "Rebooting system to disable fast startup" to INSTALL.LOG
+      Reboot System
+   Else
+      Add "Reboot required to disable fast startup" to INSTALL.LOG
+   End
+   Exit Installation
+End
+ 
+If SILENT Equals "1" then
+   Rem This error return code is only for Silent Mode Install
+   Set Variable WISE_ERROR_RTN to 0
+End
+ 
+Rem Decide whether we should start things
+Set Variable DO_START_ACTIONS to 1
+If COMPONENTS Contains Any Letters In "B" then
+   Rem For server installs we only start things if the server is running
+   If RUNNING Does Not Contain "Running" then
+      Set Variable DO_START_ACTIONS to 0
+   End
+End
+ 
+Rem Start things the installer asked for
+If DO_START_ACTIONS Equals "1" then
+   If START_MPP Contains "A" then
+      Execute %MAINDIR%\mppsim.exe 
+   End
+   If START_PUMP Contains "A" then
+      Execute %MAINDIR%\PumpDemoWPF.exe 
+   End
+   If OPEN_WEB Contains "A" then
+      If SERVER_NAME Equals "" then
+         Execute CMD.EXE /C start http://localhost:%ENBWEB_PORT%
+      Else
+         Rem Note that this could be a PC server (port 8081), or EMB (Port 80)
+         Execute CMD.EXE /C start http://%SERVER_NAME%%ENBWEB_PORT_STR%
+      End
+   End
+End
+
