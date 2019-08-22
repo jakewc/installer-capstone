@@ -137,7 +137,7 @@ WelcomeLabel2=We Recommend that you exit all Windows programs before running thi
 [Code]
 
 //========================================
-//variable initializations
+//variable declarations
 //========================================
 var
   
@@ -154,9 +154,13 @@ var
   COMPUTERNAME:String;
 
   OS_ARCHITECTURE:String;
-  OS_ARCHITEW6432:String; 
+  OS_ARCHITEW6432:String;
+   
   //The default is for none of the apps to be installed without the SDKoption selected
   SDK_OPTIONS:String;
+  SDK_APPS:Integer;  {Set variables for an SDK build. SDK checked, SDK_APPS if present}
+  SDK:String;
+
   OS:Integer;
 
   { Disabling 8.3 will install files with short name:
@@ -204,6 +208,7 @@ var
 
   {SQL Named Instance name}
   SQL_INSTANCE:String;
+  PC_NAME:String;
   CLIENT_SQL_INSTANCE:String;
   SQLQUERY:String;
   INSTANCE_NAME_NEEDED:Boolean;
@@ -217,15 +222,14 @@ var
   {SERVER_NAME stores the Enabler Server name (used for client installs only)}
   SERVER_NAME:String;
 
+  ENV_COMPUTERNAME:String;
+
   {Variable to determine if the BAckup up checkbox option should be shown or not}
   PRE_BACKUP:Boolean;
 
   {Initialise Checked variable this stops applications variable resetting
    in the wizard loop}
   CHECKED:String;
-
-  {Set variables for an SDK build. SDK checked, SDK_APPS if present}
-  SDK_APPS:Boolean;
 
   {Initialise icons variable. A is desktop icons B is start menu icons}
   ICONS:String;
@@ -268,7 +272,6 @@ var
   radioClient,radioServer: TRadioButton;
   lblClient, lblServer, lblSDK: TLabel;
   sdkCheckBox: TNewCheckBox;
-  sdk:Boolean;
 
   //server name entry page
   serverNameEntryPage:TInputQueryWizardPage;
@@ -294,6 +297,115 @@ var
   portNum:String;                     //may need to be int
   domainName: String;
   lblPort:TLabel;
+
+
+//========================================
+//Variable initialisation.
+//======================================== 
+procedure variableInitialisation ();
+var 
+  osResultCode: Integer;
+begin
+  Log('Initialising variables.');
+
+  // To Do: Check that registry keys are being read into script correctly. 
+  // Wise script says: 
+  // Get Registry Key Software\ITL\Enabler place in Variable COMPONENTS and 
+  // Get Registry Key Software\ITL\Enabler place in Variable APPLICATIONS, 
+  // but same key is surely not saved into different variables.
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',COMPONENTS);  // Initialise Components variable
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',APPLICATIONS);  // Initialise Applications variable
+
+  // Get the environment variables to determine OS.
+  OS_ARCHITECTURE := GetEnv('PROCESSOR_ARCHITECTURE');
+  OS_ARCHITEW6432 := GetEnv('PROCESSOR_ARCHITEW6432');
+
+  if OS_ARCHITECTURE ='AMD64' then begin
+    OS:=64;
+  end
+  else if OS_ARCHITECTURE ='IA64' then begin
+      OS:=64;
+  end
+  else if OS_ARCHITECTURE ='x86' then begin
+    if OS_ARCHITEW6432 = 'AMD64' then begin
+      OS:=64;   // Installing driver from 32-bit installer on 64-bit OS (WOW64).
+    end
+    else begin
+      OS:=32;   // Installing driver from 32-bit installer on 32-bit OS.
+    end;
+  end;
+
+  // We will set this variable according to the 'Windows Current Version' Registry Key
+  // NOTE: The Registry Key is: \\HKLM\Software\Microsoft\Windows NT\CurrentVersion\(CurrentVersion) - it contains a number.
+  // NOTE: Windows 10 returns a value of 6.3 for backwards compatibility. Indicates its Windows 8.1
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'Software\Microsoft\Windows NT\CurrentVersion','CurrentVersion',OPERATING_SYSTEM);
+
+  DRIVERCODE:=0;   // Driver Installation code.
+  APPNAME := '{#SetupSetting("AppName")}';
+  APPTITLE:='The Enabler';  // APPTITLE is the application title of the installation.
+  GROUP:='The Enabler';   // GROUP is the variable that holds the Program Files Group that shortcuts will be placed on the Windows Start Menu.
+  DISABLED:='!';  // DISABLED variable is initialized for backward compatability.
+  
+  MAINDIR:='C:\Enabler';   // MAINDIR is the variable that holds the default destination directory.    
+  BACKUP:=MAINDIR+'\BACKUP';   // BACKUP is the variable that holds the path that all backup files will be copied to when overwritten
+  DOBACKUP:='B';   // DOBACKUP determines if a backup will be performed. The possible values are A (do backup) or B (do not do backup).
+  DBDIR:=' C:\EnablerDB';   // DBDIR specifies the location of the Enabler database files.
+
+  // SQL Named Instance name.
+  PC_NAME:=GetEnv('COMPUTERNAME');
+  INSTANCE_NAME_NEEDED:=True;
+  INSTANCE_NAME_LIST:=False;
+  ENV_COMPUTERNAME:=GetEnv('COMPUTERNAME');
+
+  PRE_BACKUP:=False;   //Variable to determine if the BAckup up checkbox option should be shown or not
+  CHECKED:='A';  // Initialise Checked variable this stops applications variable resetting in the wizard loop.
+
+  // Set variables for an SDK build. SDK checked, SDK_APPS if present.
+  SDK_APPS:=0;
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',SDK);
+
+  // Variables with defaults for ENBWEB port & domain.
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ENBWEB_DOMAIN);
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ENBWEB_PORT);
+  
+  // Initialise icons variable. A is desktop icons, B is start menu icons.
+  ICONS:='B';
+
+  // Set variables to start apps or restart computer on finish.
+  NOSTART:=False;
+
+  // Initialise unattended variables.
+  UNATTENDED:=False;
+  SILENT:=False;
+  PHASE2:=False;
+
+  // Initialise fast startup variables.
+  FAST_STARTUP:=False;
+
+  // Initialise variables for detecting Adminstrator and User group.
+  BUILTIN_USERS_GROUP:='S-1-5-32-545';
+  BUILTIN_ADMINISTRATORS_GROUP:='S-1-5-32-544';
+
+  // SHOW_USAGE indicates whether we should display a dialog describing the installer command-line usage.
+  SHOW_USAGE:=False;
+
+  // Get the windows version installed.
+  MIN_WINDOWS_VERSION:=3; // The minimum Windows version required. Version 3 is Windows NT.
+  WINDOWS_VERSION:=GetWindowsVersionString;     // Eg. 10.00.1856
+  WINDOWS_BASE_VERSION:=StrToInt(Copy(WINDOWS_VERSION, 1, Pos('.', WINDOWS_VERSION)-1));    // Eg. 10
+
+  // Set the Enabler version.
+  ENB_VERSION:='{#SetupSetting("AppVersion")}'; // This variable was never initialised in the wise script. Initialised with a value here to enable compiler to run.
+  
+  // Check if operating system is Windows 10.
+  if Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C ver | find /i "Version 10."', '', SW_SHOW, ewWaitUntilTerminated, osResultCode) then begin
+    OPERATING_SYSTEM:='10';
+    Log('Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10');
+  end;
+  
+  Log('Installing Enabler V' + ENB_VERSION + ' on Windows V' + WINDOWS_VERSION + ' ' + IntToStr(OS) + 'bit (Version ' + OPERATING_SYSTEM + ')');                     
+end;
+
 
 
 //========================================
@@ -398,191 +510,6 @@ begin
 end;
 
 
- {Variable COMPONENTS}
-procedure getCOMPONENTS(COMPONENTS: String);
-var
-    ResultString:String;
-begin
-  if RegValueExists(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)')then
-  begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ResultString)
-    COMPONENTS:=ResultString;
-  end;
-end;
-
-{Variable APPLICATIONS}
-procedure getAPPLICATIONS(APPLICATIONS:String);
-var 
-  ResultString:String;
-begin
-  if RegValueExists(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)')then
-  begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ResultString)
-    APPLICATIONS:=ResultString;
-  end;
-end;
-
-{Variable OPERATING_SYSTEM}
-procedure getOPERATING_SYSTEM(PERATING_SYSTEM:String);
-var 
-  ResultString:String;  
-begin
-  if RegValueExists(HKLM,'Software\Microsoft\Windows NT\CurrentVersion','CurrentVersion')then
-  begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'Software\Microsoft\Windows NT\CurrentVersion','CurrentVersion',ResultString)
-    PERATING_SYSTEM:=ResultString;
-  end;
-end;
-
-{Variable SDK[remain problem]}
-procedure getSDK(SDK:Boolean);
-var 
-  ResultString:Boolean;  
-begin
-  if RegValueExists(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)')then
-  begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ResultString)
-    SDK:=ResultString;
-  end; 
-end;
-
-{Variable ENBWEB_DOMAIN}
-procedure GetENBWEB_DOMAIN(ENBWEB_DOMAIN:String);
-var 
-  ResultString:String;  
-begin
-  if RegValueExists(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)')then
-  begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ResultString)
-    ENBWEB_DOMAIN:=ResultString;
-  end; 
-end;
-
-{Variable ENBWEB_PORT}
-procedure GetENBWEB_PORT(ENBWEB_PORT:String);
-var 
-  ResultString:String;  
-begin
-  if RegValueExists(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)')then
-  begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','(Default)',ResultString)
-    ENBWEB_PORT:=ResultString;
-  end;
-end;
-
-{Variable ENV_COMPUTERNAME}
-procedure GetENV_COMPUTERNAME(COMPUTERNAME:String);
-var 
-  ResultString:String;  
-begin
-  if RegValueExists(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Services/EventLog/State', 'LastComputerName')then
-  begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Services/EventLog/State', 'LastComputerName',ResultString)
-    COMPUTERNAME:=ResultString;
-  end;
-end;
-
-
-{Variable OS,OS_ARCHITECTURE,OS_ARCHITEW6432}
-{Variable OS_ARCHITECTURE,OS_ARCHITEW6432}
-procedure GetOS_ARCHITECTURE(OS_ARCHITECTURE:String);
-var 
-  ResultString:String;  
-begin
-  if RegValueExists(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE')then
-  begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE',ResultString)
-    OS_ARCHITECTURE:=ResultString;
-  end;
-end;
-
-procedure GetOS_ARCHITEW6432(OS_ARCHITEW6432:String);
-var 
-  ResultString:String;  
-begin
-  if RegValueExists(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE')then
-  begin
-    RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM/CurrentControlSet/Control/Session Manager/Environment', 'PROCESSOR_ARCHITECTURE',ResultString)
-    OS_ARCHITEW6432:=ResultString;
-  end;
-end;
-
-function GetOS():Integer;
-begin
-OS:=0;
-GetOS_ARCHITECTURE(OS_ARCHITECTURE);
-GetOS_ARCHITEW6432(OS_ARCHITEW6432);
-if OS_ARCHITECTURE ='AMD64' then
-  begin
-    os:=64;
-  end;
-if OS_ARCHITECTURE ='IA64' then
-  begin
-    OS:=64;
-  end;
-if OS_ARCHITECTURE ='x86' then
-  begin
-    if OS_ARCHITEW6432 = 'AMD64' then
-      begin
-        OS:=64;
-      end
-      else
-      begin
-        OS:=32;
-      end;
-  end;
-  Result:=OS
-end;
-
-
-procedure variableInitialisation ();
-var 
-  osResultCode: Integer;
-begin
-  getCOMPONENTS(COMPONENTS);
-  getAPPLICATIONS(APPLICATIONS);
-  getOPERATING_SYSTEM(PERATING_SYSTEM);
-  getSDK(SDK);
-  getENBWEB_DOMAIN(ENBWEB_DOMAIN);
-  getENBWEB_PORT(ENBWEB_PORT);
-  getCOMPUTERNAME(COMPUTERNAME);
-  DRIVERCODE:=0;
-  APPNAME := '{#SetupSetting("AppName")}';
-  APPTITLE:='The Enabler';
-  GROUP:='The Enabler';
-  DISABLED:='!';
-  MAINDIR:=ExpandConstant('{app}');       
-  BACKUP:=MAINDIR+'\BACKUP';
-  DOBACKUP:='B';
-  DBDIR:=' C:\EnablerDB';
-  INSTANCE_NAME_NEEDED:=True;
-  INSTANCE_NAME_LIST:=False;
-  PRE_BACKUP:=False;
-  CHECKED:='A';
-  SDK_APPS:=False;
-  ICONS:='B';
-  NOSTART:=False;
-  UNATTENDED:=False;
-  SILENT:=False;
-  PHASE2:=False;
-  FAST_STARTUP:=False;
-  BUILTIN_USERS_GROUP:='S-1-5-32-545';
-  BUILTIN_ADMINISTRATORS_GROUP:='S-1-5-32-544';
-  SHOW_USAGE:=False;
-  MIN_WINDOWS_VERSION:=3; // Version 3 = Windows NT.
-  WINDOWS_VERSION:=GetWindowsVersionString;
-  WINDOWS_BASE_VERSION:=StrToInt(Copy(WINDOWS_VERSION, 1, Pos('.', WINDOWS_VERSION)-1));
-  ENB_VERSION:='{#SetupSetting("AppVersion")}'; // This variable was never initialised in the wise script. Initialised with a value here to enable compiler to run.
-  
-  if Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C ver | find /i "Version 10."', '', SW_SHOW, ewWaitUntilTerminated, osResultCode) then begin
-    OPERATING_SYSTEM:='10';
-    Log('Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10');
-  end;
-  
-  Log('Installing Enabler V' + ENB_VERSION + ' on Windows V' + WINDOWS_VERSION + ' ' + IntToStr(GetOS()) + 'bit (Version ' + OPERATING_SYSTEM + ')');                     
-end;
-
-
 //========================================
 //functions for Read Me/Release Notes page
 //========================================
@@ -634,7 +561,7 @@ end;
 
 procedure SDKOptionClicked(Sender: TObject);
 begin
-  sdk:=true;
+  sdk:='A';
 end;
 
 procedure createPageInstallType();
@@ -817,11 +744,13 @@ begin
       FileCopy(logFilePathName, newFilePathName, false);  // Copy log file again to include the 'unable to delete log file' entry.
 end;
 
+
 //========================================
 //Install user docs
 //========================================
 
 procedure basicPDFFiles();
+var test: String;
 begin
   if FileExists(ExpandConstant('{src}')+'\Documentation\ENABLER Demonstration POS Application Reference Manual.pdf') then begin
     FileCopy(ExpandConstant('{src}')+'\Documentation\ENABLER Demonstration POS Application Reference Manual.pdf', ExpandConstant('{app}')+'\Docs\ENABLER Demonstration POS Application Reference Manual.pdf', False)
@@ -840,6 +769,7 @@ end;
     //TODO - create shortcuts from pdfs to {group}\manuals\pdfs.lnk
     //Couldn't get the old installer to do this on my PC so I could see what's happening
 
+
 //================
 //install SDK docs
 //=================
@@ -853,12 +783,21 @@ end;
 function InitializeSetup(): Boolean;
 var message: String;
 begin
-  appName := '{#SetupSetting("AppName")}';
-  Log('Initialising variables.');
-
-  // Check that the minimum Windows version is installed.
+  variableInitialisation();
   
+  // Check that the minimum Windows version is installed.
+  if WINDOWS_BASE_VERSION < MIN_WINDOWS_VERSION then
+  begin 
+    message := 'The base Windows version found was V' + IntToStr(WINDOWS_BASE_VERSION) + ' but the minimum Windows version required is V' + IntToStr(MIN_WINDOWS_VERSION) + '. Aborting installation.';
+    Log(message);
+    MsgBox(message, mbCriticalError, MB_OK);
+    Result := False;
+    Exit;
+  end;
+
+  Result := True; // Inno setup doesn't proceed to next step if true is not returned.  
 end;
+
 
 //runs wizard
 procedure InitializeWizard();
@@ -870,27 +809,15 @@ begin
   createNoServerInstalledPage();
   createSAPasswordPage();
   createNetworkPortPage();
-    variableInitialisation();
-
-    if WINDOWS_BASE_VERSION < MIN_WINDOWS_VERSION then
-  begin 
-    message := 'The base Windows version found was V' + IntToStr(WINDOWS_BASE_VERSION) + ' but the minimum Windows version required is V' + IntToStr(MIN_WINDOWS_VERSION) + '. Aborting installation.';
-    Log(message);
-    MsgBox(message, mbCriticalError, MB_OK);
-    Result := False;
-  end
-  else
-  begin
-    Result := True; // Inno setup doesn't proceed to next step if true is not returned.
-  end;
-
 end;
 
 
-// Called just before Setup terminates. 
+//========================================
+// Deinitialise setup. Called just before install finishes.
+//========================================
 procedure DeinitializeSetup();
 begin
-    basicPDFFiles();
+  basicPDFFiles();
   MoveLogFile();
 end;
 
