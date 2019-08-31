@@ -1,0 +1,36 @@
+﻿<Window x:Class="ITL.Enabler.Samples.TanksDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Tanks" Height="423" Width="324" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Unloaded="Window_Unloaded">
+    <Grid Height="388">
+        <ComboBox Height="23" Margin="85,11,0,0" Name="comboBox_tanks" VerticalAlignment="Top" ItemsSource="{Binding}" SelectionChanged="comboBox_tanks_SelectionChanged" HorizontalAlignment="Left" Width="210" />
+        <Label Height="28" Margin="12,11,0,0" Name="label1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="67">Select tank</Label>
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,0,7,12" Name="button_cancel" VerticalAlignment="Bottom" Width="75" IsCancel="True" Click="button_cancel_Click">Exit</Button>
+        <GroupBox Header="Tank Details" Margin="12,45,0,0" Name="groupBox1" Height="124" VerticalAlignment="Top" HorizontalAlignment="Left" Width="283">
+            <Grid>
+                <Label HorizontalAlignment="Left" Margin="10,13,0,0" Name="label2" Width="119" Height="28" VerticalAlignment="Top">Gauge Level</Label>
+                <Label Height="28" Margin="10,0,0,7" Name="label3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="119">Theorectical Volume</Label>
+                <Label HorizontalAlignment="Left" Margin="10,42,0,0" Name="label4" Width="119" Height="27.723" VerticalAlignment="Top">Gauge Volume</Label>
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="144,15,0,0" Name="textBox_gaugelevel" VerticalAlignment="Top" Width="113" IsEnabled="False" />
+                <TextBox Margin="144,44,0,38" Name="textBox_gaugevolume" HorizontalAlignment="Left" Width="113" IsEnabled="False" />
+                <TextBox Height="23" Margin="0,0,44,9" Name="textBox_theorectical" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="83" IsEnabled="True" />
+                <Button Height="26" HorizontalAlignment="Right" Margin="0,0,14,7" Name="button_settheo" VerticalAlignment="Bottom" Width="24" Click="button_settheo_Click">Set</Button>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Alarms" Margin="12,175,7,0" Name="groupBox2" Height="172" VerticalAlignment="Top">
+            <Grid Name="AlarmGrid">
+                <CheckBox Height="16" HorizontalAlignment="Left" Margin="10,16,0,0" Name="checkBox1" VerticalAlignment="Top" Width="120" IsEnabled="False">CheckBox</CheckBox>
+                <CheckBox HorizontalAlignment="Left" Margin="10,38,0,0" Name="checkBox2" Width="120" Height="15.723" VerticalAlignment="Top" IsEnabled="False">CheckBox</CheckBox>
+                <CheckBox Height="16" HorizontalAlignment="Left" Margin="10,59.723,0,0" Name="checkBox3" VerticalAlignment="Top" Width="120" IsEnabled="False">CheckBox</CheckBox>
+                <CheckBox Height="16" HorizontalAlignment="Left" Margin="10,78.723,0,0" Name="checkBox4" VerticalAlignment="Top" Width="120" IsEnabled="False">CheckBox</CheckBox>
+                <CheckBox Height="16" Margin="10,100,0,0" Name="checkBox5" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" IsEnabled="False">CheckBox</CheckBox>
+                <CheckBox Margin="9,0,0,12" Name="checkBox6" Height="15.723" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="120" IsEnabled="False">CheckBox</CheckBox>
+                <CheckBox Height="16" Margin="132,16,6,0" Name="checkBox7" VerticalAlignment="Top" IsEnabled="False">CheckBox</CheckBox>
+                <CheckBox Height="16" Margin="132,38,6,0" Name="checkBox8" VerticalAlignment="Top" IsEnabled="False">CheckBox</CheckBox>
+                <CheckBox Margin="132,60,6,73" Name="checkBox9" IsEnabled="False">CheckBox</CheckBox>
+                <CheckBox Margin="132,0,6,51.04" Name="checkBox10" Height="16" VerticalAlignment="Bottom" IsEnabled="False">CheckBox</CheckBox>
+                <CheckBox Margin="132,0,0,29" Name="checkBox11" Height="16.04" VerticalAlignment="Bottom" IsEnabled="False" HorizontalAlignment="Left" Width="133">CheckBox</CheckBox>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>

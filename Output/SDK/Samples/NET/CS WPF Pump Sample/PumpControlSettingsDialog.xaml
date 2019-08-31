@@ -1,0 +1,89 @@
+﻿<Window x:Class="ITL.Enabler.Samples.PumpControlSettingsDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Pump Control Settings" ResizeMode="NoResize" SizeToContent="WidthAndHeight" Width="480">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="Current Delivery" Name="groupBox1" Grid.Column="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+                    <CheckBox Margin="4" Name="checkBox_show_grade" >Show Grade name</CheckBox>
+                    <CheckBox Margin="4" Name="checkBox_show_value" >Show Value</CheckBox>
+                    <CheckBox Margin="4" Name="checkBox_show_quantity" >Show Quantity</CheckBox>
+                    <CheckBox Margin="4" Name="checkBox_show_captiontext" >Show Caption Text</CheckBox>
+                </StackPanel>
+                <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" TextWrapping="Wrap" VerticalAlignment="Center">The masks allow the format of the value and quantity fields to be changed. {0} is the value, {1} is the symbol.</TextBlock>
+                <Label Margin="4,2,4,2" HorizontalAlignment="Right" Grid.Row="3" >Value Mask:</Label>
+                <TextBox Margin="4,4,4,4" Name="textBox_value_mask" TextChanged="textBox_value_mask_TextChanged" Height="22.744" VerticalAlignment="Top" Grid.Row="3" Grid.Column="1" Grid.RowSpan="2"></TextBox>
+                <Label Margin="4,2,4,2" HorizontalAlignment="right" Grid.Row="4">Quantity Mask:</Label>
+                <TextBox Margin="4,4,4,4" Name="textBox_quantity_mask" TextChanged="textBox_quantity_mask_TextChanged" Grid.Row="4" Grid.Column="1"></TextBox>
+            </Grid>
+        </GroupBox>
+
+        <StackPanel Grid.Column="1">
+            <GroupBox Grid.Column="1" Canvas.Top="11" Header="Select style (Overrides Show)" Name="groupBox2" >
+            <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Margin="5" HorizontalAlignment="Right" >Style</Label>
+                    <ComboBox Grid.Column="1" Margin="5" Name="comboBox_style" />
+            </Grid>
+        </GroupBox>
+            <GroupBox Header="Sounds" Name="groupBoxSounds" Grid.Column="1" >
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.ColumnSpan="2">
+                    <CheckBox Name="checkBox_enable_sounds" Grid.ColumnSpan="2" Margin="5" >Enables sounds</CheckBox>
+                    <TextBlock Grid.ColumnSpan="2" Margin="2" Name="textBlock1" Text="Select which system sounds to play for following events, also can have any other sounds file." TextWrapping="Wrap" FontSize="9" MaxWidth="200" />
+                </StackPanel>
+                <ComboBox Name="comboBox_calling_sound" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"   />
+                <ComboBox Name="comboBox_authorised_sound" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Center"  />
+                <ComboBox Name="comboBox_delivery_complete" Grid.Row="3" Grid.Column="1"  VerticalAlignment="Center"   />
+                <ComboBox Name="comboBox_nozzleleftout_sound" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center"  />
+                
+                <Label Grid.Row="1" Margin="4" Height="25.226" VerticalAlignment="Top">Calling</Label>
+                <Label Grid.Row="2" Margin="4" Height="25.226" VerticalAlignment="Top">Authorised</Label>
+                <Label Grid.Row="3" Margin="4" Height="25.226" VerticalAlignment="Top">Delivery complete</Label>
+                <Label Grid.Row="4" Margin="4" Height="25.226" VerticalAlignment="Bottom">Nozzle left out</Label>
+            </Grid>
+        </GroupBox>
+        </StackPanel>
+        
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+        <Button Height="23" HorizontalAlignment="Right" Margin="5" Name="button_ok" VerticalAlignment="Bottom" Width="74.704" IsDefault="True" Canvas.Left="286.293" Canvas.Top="260" Click="button_ok_Click">Ok</Button>
+        <Button Height="23" HorizontalAlignment="Right" Margin="5" Name="button_cancel" VerticalAlignment="Bottom" Width="75" IsCancel="True" Canvas.Left="367" Canvas.Top="260" Click="button_cancel_Click">Cancel</Button>
+        </StackPanel>
+     </Grid>
+</Window>
