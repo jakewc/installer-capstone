@@ -217,7 +217,7 @@ var
   OS:Integer;
 
   //Disabling 8.3 will install files with short name: https://support.microsoft.com/en-us/kb/121007
-  FILE_SYSTEM:String;
+  FILE_SYSTEM:Integer;
 
   //Driver Installation code
   DRIVERCODE:Integer;
@@ -513,7 +513,8 @@ begin
     Log('Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10');
   end;
   
-  Log('Installing Enabler V' + ENB_VERSION + ' on Windows V' + WINDOWS_VERSION + ' ' + IntToStr(OS) + 'bit (Version ' + OPERATING_SYSTEM + ')');                     
+  Log('Installing Enabler V' + ENB_VERSION + ' on Windows V' + WINDOWS_VERSION + ' ' + IntToStr(OS) + 'bit (Version ' + OPERATING_SYSTEM + ')');
+                       
 end;
 
 //========================================
@@ -1011,6 +1012,28 @@ begin
     SDK_APPS:= 1;
   end;
 end;
+
+
+//=============================
+//Check file system
+//=============================
+procedure checkFileSystem();
+var dWordValue: Cardinal;
+begin
+  // Get the file system value. 
+  RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SYSTEM\CurrentControlSet\Control\FileSystem','NtfsDisable8dot3NameCreation',dWordValue);
+  FILE_SYSTEM := dWordValue;                     
+
+  // Check that the Windows file system 8.3 file name creation is not disabled.
+  if FILE_SYSTEM = 1 then begin
+    Log('ERROR: Installation Failed. Error Code: 25. 8dot3 name creation is disabled on all volumes on the system.');
+    if UNATTENDED = '0' then begin
+      SuppressibleMsgBox('Installation Failed. Error Code: 25'#13#10#13#10'Windows file system has 8.3 file name creation disabled. Please refer to the Installation Instructions and re-run the Enabler Installer again.', mbCriticalError, MB_OK, IDOK);
+    end;
+    Abort();
+  end;
+end;
+
 
 //=============================
 //Check disk space requirements
@@ -1781,6 +1804,7 @@ begin
   parseCommandLineOptions();
   startupProcessing();
   returnFromRestart();
+  checkFileSystem();
   checkDiskSpace();
   
   
