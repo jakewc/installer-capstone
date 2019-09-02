@@ -1015,7 +1015,25 @@ end;
 
 
 //=============================
-//Check file system
+//Check Windows version.
+//=============================
+procedure checkWindowsVersion();
+var message: String;
+begin
+  // Check that the minimum Windows version is installed.
+  if WINDOWS_BASE_VERSION < MIN_WINDOWS_VERSION then begin
+    message := 'The base Windows version found was v' + IntToStr(WINDOWS_BASE_VERSION) + ' but the minimum Windows version required is v' + IntToStr(MIN_WINDOWS_VERSION) + '. Aborting installation.';
+    Log(message);
+    if UNATTENDED = '0' then begin
+      SuppressibleMsgBox(message, mbCriticalError, MB_OK, IDOK);
+    end;
+    Abort();
+  end;
+end;
+
+
+//=============================
+//Check file system.
 //=============================
 procedure checkFileSystem();
 var dWordValue: Cardinal;
@@ -1798,25 +1816,14 @@ end;
 
 //runs first
 function InitializeSetup(): Boolean;
-var message: String;
 begin
   variableInitialisation();
   parseCommandLineOptions();
   startupProcessing();
   returnFromRestart();
+  checkWindowsVersion();
   checkFileSystem();
   checkDiskSpace();
-  
-  
-  // Check that the minimum Windows version is installed.
-  if WINDOWS_BASE_VERSION < MIN_WINDOWS_VERSION then
-  begin 
-    message := 'The base Windows version found was V' + IntToStr(WINDOWS_BASE_VERSION) + ' but the minimum Windows version required is V' + IntToStr(MIN_WINDOWS_VERSION) + '. Aborting installation.';
-    Log(message);
-    MsgBox(message, mbCriticalError, MB_OK);
-    Result := False;
-    Exit;
-  end;
 
   Result := True; // Inno setup doesn't proceed to next step if true is not returned.  
 end;
