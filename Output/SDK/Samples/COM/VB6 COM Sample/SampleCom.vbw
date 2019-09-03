@@ -1,0 +1,14 @@
+FormMain = 157, 22, 1002, 684, C, 141, 19, 1232, 804, C
+PumpControl = 123, 84, 1086, 699, C, 67, 46, 482, 449, C
+DialogAttendants = 4, 0, 1213, 711, C, 40, 19, 919, 636, C
+DialogPumps = 17, 12, 817, 847, C, 381, 274, 1125, 939, C
+DialogGlobalSettings = 101, 9, 980, 626, C, 44, 3, 923, 620, C
+DialogProfiles = 103, 24, 982, 641, C, 86, -8, 965, 609, C
+DialogServerInformation = 99, 277, 978, 773, C, 22, 29, 901, 646, C
+DialogGrades = 30, 13, 1178, 780, C, 134, 46, 1002, 725, C
+DialogTerminals = 318, 10, 1127, 893, C, 138, 75, 677, 628, C
+DialogHoses = 14, 27, 881, 805, C, 346, 66, 928, 641, C
+DialogTransaction = 20, 5, 861, 730, C, 21, 25, 1098, 895, C
+DialogTanks = 26, 8, 1114, 763, , 295, -19, 1092, 876, C
+DialogPumpProfile = 25, 194, 953, 829, C, 390, 4, 806, 430, C
+DialogFallback = 141, 254, 1003, 846, C, 29, 7, 622, 604, C

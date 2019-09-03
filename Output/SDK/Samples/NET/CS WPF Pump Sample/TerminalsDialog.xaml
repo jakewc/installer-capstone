@@ -1,0 +1,9 @@
+﻿<Window x:Class="ITL.Enabler.Samples.TerminalsDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="List of Terminals" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" SizeToContent="WidthAndHeight">
+    <Grid Height="164">
+        <ListBox Name="listbox_terminals" ItemsSource="{Binding}" Margin="12,12,12,0" SelectionChanged="listbox_terminals_SelectionChanged" Height="101" VerticalAlignment="Top" MinWidth="150" MinHeight="100"></ListBox>
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,0,12,12" Name="button_exit" VerticalAlignment="Bottom" Width="75" IsCancel="True" Click="button_exit_Click">Exit</Button>
+    </Grid>
+</Window>
