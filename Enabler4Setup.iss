@@ -384,6 +384,7 @@ var
   DOTNET_VERSION: integer;
   DOTNET350_SP: integer;
   DOTNET_RUNTIME_REQUIRED: integer;
+  WIN2008_SERVER: integer;
 
   //Read Me Page  
   readMePage: TOutputMsgMemoWizardPage;
@@ -1109,6 +1110,7 @@ var
   i: Integer;
   dWordValue: Cardinal;
   progressPage: TOutputProgressWizardPage;
+  ResultCode: Integer;
 begin
   // Check the versions of .NET installed.
   RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v2.0.50727','Install',dWordValue);
@@ -1150,6 +1152,8 @@ begin
   if DOTNET350_SP = 0 then begin
     DOTNET_RUNTIME_REQUIRED := 1;
   end;
+    
+  DOTNET_RUNTIME_REQUIRED := 1;
 
   if DOTNET_RUNTIME_REQUIRED = 1 then begin
     if not FileExists(ExpandConstant('{src}')+'\Win\DotNetFX\3.5\dotNetFx35setup.exe') then begin
@@ -1161,17 +1165,54 @@ begin
     end;
 
     if SILENT = False then begin
-      progressPage := CreateOutputProgressPage('Progress','Installing .Net 3.5');
-      progressPage.SetProgress(0, 0);
-      progressPage.Show;
       try
-        for i := 0 to 10 do begin
-          ProgressPage.SetProgress(i, 10);
-          Sleep(100);
-        end;
+        progressPage := CreateOutputProgressPage('Progress Stage','Installing .Net 3.5');
+        progressPage.SetProgress(0, 0);
+        progressPage.Show;
+        MsgBox('Testing .net progress page. Is the progress page showing?', mbInformation, MB_OK);
       finally
         progressPage.Hide;
       end;
+    end;
+
+    // On Windows Server 2008 the runtime has to be installed using the server manager tool, so if we get here we can't continue.
+    WIN2008_SERVER := 0;
+
+    if OPERATING_SYSTEM = '6.0' then begin
+      WIN2008_SERVER := 1;
+    end
+    else if OPERATING_SYSTEM = '6.1' then begin
+      WIN2008_SERVER := 1;
+    end;
+
+    if WIN2008_SERVER = 1 then begin
+      if IS_WINDOWS_SERVER = True then begin
+        Log('INFO: Cannot use dotNetFx installer on Windows Server 2008');
+        Log('INFO: .NET Runtime must be installed before Enabler using Administrative Tools - Server Manager.');
+
+        if SILENT = False then begin
+          message := '.NET 3.5 Runtime required.'#13#10#13#10'The Enabler requires the .NET 3.5 runtime to be installed.'#13#10#13#10;
+          message := message + 'On Windows Server 2008 this must be installed manually using:'#13#10'   Administrative Tools - Server Manager'#13#10#13#10;
+          message := message + 'You must do this before running the Enabler installer.';
+          MsgBox(message, mbInformation, MB_OK);
+        end;
+        Abort();
+      end;
+    end;
+
+    // .NET 3.5 will auto-reboot therefore better write RunOnce to the registry.
+    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','Restart', 'True');
+    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce','EnablerInstall',ExpandConstant('{src}')+'\Enabler4Setup.exe');
+
+    Log('Installing .NET 3.5 Framework');
+    Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "'+ExpandConstant('{src}')+'\Win\DotNetFX\3.5\dotNetFx35setup.exe" /Q', '', SW_SHOW, ewWaitUntilTerminated, ResultCode)
+    
+    If ResultCode = 3010 then begin
+      Log('INFO: .NET 3.5 Framework Already Installed');
+    end
+    else begin
+      // Continue implementing from Wise Script Line 1087.
+      Log('Something');
     end;
   end;
 end;
@@ -1951,11 +1992,13 @@ end;
 procedure CurStepChanged(CurStep:TSetupStep);
 begin
   
-  //this is commented out for now due to a bug in this module
+  
 
-  //if CurStep = ssInstall then begin
+  if CurStep = ssInstall then begin
+    //this is commented out for now due to a bug in this module
     //saveConfig();
-  //end;
+    installNet3Point5();
+  end;
   if CurStep = ssPostInstall then begin
     removeRegistryVars();
     installEnablerFiles();
