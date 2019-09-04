@@ -375,6 +375,15 @@ var
   //install SDK Docs
   ENABLER_SERVER:string;
 
+  //.net framework installation.
+  NET2_0_INSTALLED: integer;
+  NET3_0_INSTALLED: integer;
+  NET3_5_INSTALLED: integer;
+  NET4_INSTALLED: integer;
+  NET4_6_INSTALLED: integer;
+  DOTNET_VERSION: integer;
+  DOTNET350_SP: integer;
+
   //Read Me Page  
   readMePage: TOutputMsgMemoWizardPage;
   releaseNotesButton: TNewButton;
@@ -1087,6 +1096,47 @@ begin
     Abort();
   end;
 end;
+
+
+//=============================
+//INSTALL .NET 3.5
+//=============================
+
+procedure installNet3Point5();
+var dWordValue: Cardinal;
+begin
+  // Check the versions of .NET installed.
+  RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v2.0.50727','Install',dWordValue);
+  NET2_0_INSTALLED := dWordValue;
+  RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.0','Install',dWordValue);
+  NET3_0_INSTALLED := dWordValue;
+  RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5','Install',dWordValue);
+  NET3_5_INSTALLED := dWordValue;
+  RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v4','Install',dWordValue);
+  NET4_INSTALLED := dWordValue;
+  RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v4.6','Install',dWordValue);
+  NET4_6_INSTALLED := dWordValue;
+
+  DOTNET_VERSION := 0;
+  DOTNET350_SP := 0;
+
+  if NET3_5_INSTALLED = 1 then begin
+    Log('Found .NET v3.5 runtime');
+    DOTNET_VERSION := 350;
+    RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5','SP',dWordValue);
+    DOTNET350_SP := dWordValue;
+  end
+  else if NET3_0_INSTALLED = 1 then begin
+    Log('Found .NET v3.0 runtime');
+    DOTNET_VERSION := 300;
+  end
+  else if NET2_0_INSTALLED = 1 then begin
+    Log('Found .NET v2.0 runtime');
+    DOTNET_VERSION := 200;
+  end;
+
+end;
+
 
 //=============================
 //INSTALL ENABLER FILES
