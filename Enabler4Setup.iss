@@ -383,6 +383,7 @@ var
   NET4_6_INSTALLED: integer;
   DOTNET_VERSION: integer;
   DOTNET350_SP: integer;
+  DOTNET_RUNTIME_REQUIRED: integer;
 
   //Read Me Page  
   readMePage: TOutputMsgMemoWizardPage;
@@ -1103,7 +1104,11 @@ end;
 //=============================
 
 procedure installNet3Point5();
-var dWordValue: Cardinal;
+var
+  message: String;
+  i: Integer;
+  dWordValue: Cardinal;
+  progressPage: TOutputProgressWizardPage;
 begin
   // Check the versions of .NET installed.
   RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v2.0.50727','Install',dWordValue);
@@ -1135,6 +1140,40 @@ begin
     DOTNET_VERSION := 200;
   end;
 
+  // We actually require .NET 3.5 SP 1 to run (see EP-1146)
+  DOTNET_RUNTIME_REQUIRED := 0;
+
+  if DOTNET_VERSION < 350 then begin
+    DOTNET_RUNTIME_REQUIRED := 1;
+  end;
+
+  if DOTNET350_SP = 0 then begin
+    DOTNET_RUNTIME_REQUIRED := 1;
+  end;
+
+  if DOTNET_RUNTIME_REQUIRED = 1 then begin
+    if not FileExists(ExpandConstant('{src}')+'\Win\DotNetFX\3.5\dotNetFx35setup.exe') then begin
+      if SILENT = False then begin
+        MsgBox('.NET 3.5 Framework Installer Failed. Aborting installation.', mbInformation, MB_OK);
+      end;
+      Log('ERROR: Missing .NET 3.5 Framework Installer');
+      Abort();
+    end;
+
+    if SILENT = False then begin
+      progressPage := CreateOutputProgressPage('Progress','Installing .Net 3.5');
+      progressPage.SetProgress(0, 0);
+      progressPage.Show;
+      try
+        for i := 0 to 10 do begin
+          ProgressPage.SetProgress(i, 10);
+          Sleep(100);
+        end;
+      finally
+        progressPage.Hide;
+      end;
+    end;
+  end;
 end;
 
 
