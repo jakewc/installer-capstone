@@ -1703,6 +1703,72 @@ begin
   end;
 end;
 
+
+//=====================================================
+// Setup Access Permission
+//=====================================================
+procedure setupAccessPermission();
+var 
+  LOGTIME:String;
+  LOGTIME2:String;
+  ResultCode:Integer;
+
+Begin
+
+  Exec('net.exe', 'localgroup /add EnablerAdministrators', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  if SILENT = false then begin
+    MsgBox('The Enabler', mbinformation, mb_OK);
+  End;
+  Exec(ExpandConstant('{app}\CreateRegKeyEvent.bat'), '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=directoriesonly ' + ExpandConstant('{app}')+'\log /grant='+ BUILTIN_USERS_GROUP+ '=CRWD /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=filesonly ' + ExpandConstant('{app}')+'\log\*.* /grant='+ BUILTIN_USERS_GROUP+ '=CRWD /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+
+  LOGTIME := GetDateTimeString('dd/mm/yyyy hh:nn:ss', '-', ':');
+  Log(Format('Start of setting permissions %s', [LOGTIME]));
+
+  if COMPONENTS = 'B' then begin
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\enbkick.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\vsql.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\fcman.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + OSQL_PATH +' /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + OSQL_PATH +' /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/service psrvr4 /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  End;
+
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{sys}')+'\eventvwr.msc /grant='+BUILTIN_USERS_GROUP+'= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{sys}')+'\config\Enabler.evt /grant='+BUILTIN_USERS_GROUP+'= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\log /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\log\*.* /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\ /grant=EnablerAdministrators=F', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{app}')+' /grant=EnablerAdministrators=F', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=filesonly'+ExpandConstant('{app}')+'\*.* /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file'+ExpandConstant('{sys}')+'%\eventvwr.msc /grant=EnablerAdministrators=E /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file'+ExpandConstant('{sys}')+'\config\Enabler.evt /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+
+  LOGTIME2 := GetDateTimeString('dd/mm/yyyy hh:nn:ss', '-', ':');
+  Log(Format('End of setting permissions %s', [LOGTIME2]));
+
+  if SILENT = false then Begin
+    MsgBox('The Enabler', mbinformation, mb_OK);
+  End;
+
+  if COMPONENTS = 'B' then Begin
+    Log('Installing or Updating EnablerDB');
+    if SILENT = false then Begin
+      MsgBox('The Enabler', mbinformation, mb_OK);
+    End;
+    Exec(ExpandConstant('{app}') + '\bin\psrvr4.exe', '/servuce', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\enbweb.exe', '/install', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Log('Update Services Start timout setting');
+    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control','WaitToKillServiceTimeout','180000');
+    if SILENT = false then Begin
+      MsgBox(' ', mbinformation, mb_OK);
+    End;
+  End;
+End;
+  
 //=======================================================================
 //Reboot system to disable fast startup and change system power settings
 //This should be the last thing to do.
@@ -1875,6 +1941,7 @@ begin
     basicPDFFiles();
     SDKFiles();    
     updateSystemConfig();
+    setupAccessPermission();
     logUninstallItems();
     decideReboot();
   end;  
