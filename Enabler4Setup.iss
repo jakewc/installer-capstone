@@ -201,6 +201,7 @@ WelcomeLabel2=We Recommend that you exit all Windows programs before running thi
 var  
   
   APPNAME: string;
+  OUTPUTBASEFILENAME: String;
   COMPONENTS: string;
   APPLICATIONS:String;
   ENBWEB_DOMAIN:String;
@@ -461,6 +462,7 @@ begin
 
   DRIVERCODE:=0;   // Driver Installation code.
   APPNAME := '{#SetupSetting("AppName")}';
+  OUTPUTBASEFILENAME := '{#SetupSetting("OutputBaseFileName")}';
   APPTITLE:='The Enabler';  // APPTITLE is the application title of the installation.
   GROUP:='The Enabler';   // GROUP is the variable that holds the Program Files Group that shortcuts will be placed on the Windows Start Menu.
   DISABLED:='!';  // DISABLED variable is initialized for backward compatability.
@@ -1152,8 +1154,6 @@ begin
   if DOTNET350_SP = 0 then begin
     DOTNET_RUNTIME_REQUIRED := 1;
   end;
-    
-  DOTNET_RUNTIME_REQUIRED := 1;
 
   if DOTNET_RUNTIME_REQUIRED = 1 then begin
     if not FileExists(ExpandConstant('{src}')+'\Win\DotNetFX\3.5\dotNetFx35setup.exe') then begin
@@ -1166,10 +1166,9 @@ begin
 
     if SILENT = False then begin
       try
-        progressPage := CreateOutputProgressPage('Progress Stage','Installing .Net 3.5');
+        progressPage := CreateOutputProgressPage('Progress Stage','Installing .Net 3.5'#13#10#13#10'This may take a couple of minutes. Please wait...');
         progressPage.SetProgress(0, 0);
         progressPage.Show;
-        MsgBox('Testing .net progress page. Is the progress page showing?', mbInformation, MB_OK);
       finally
         progressPage.Hide;
       end;
@@ -1202,19 +1201,57 @@ begin
 
     // .NET 3.5 will auto-reboot therefore better write RunOnce to the registry.
     RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','Restart', 'True');
-    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce','EnablerInstall',ExpandConstant('{src}')+'\Enabler4Setup.exe');
+    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce','EnablerInstall',ExpandConstant('{src}')+'\'+OUTPUTBASEFILENAME+'.exe');
 
     Log('Installing .NET 3.5 Framework');
     Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "'+ExpandConstant('{src}')+'\Win\DotNetFX\3.5\dotNetFx35setup.exe" /Q', '', SW_SHOW, ewWaitUntilTerminated, ResultCode)
     
-    If ResultCode = 3010 then begin
+    if ResultCode = 3010 then begin
       Log('INFO: .NET 3.5 Framework Already Installed');
     end
     else begin
-      // Continue implementing from Wise Script Line 1087.
-      Log('Something');
+      if not ResultCode = 0 then begin
+        // 4121 means MSI is required - should not happen because we install this automatically.
+        if ResultCode = 4121 then begin
+          if SILENT = False then begin
+            MsgBox('.NET 3.5 Framework Installer Failed. MSI 4.5 required.', mbInformation, MB_OK);
+          end;
+          Log('.NET 3.5 requires MSI 4.5');
+        end
+        else begin
+          if SILENT = False then begin
+            MsgBox('.NET 3.5 Framework Installer Failed. ERROR LEVEL = '+IntToStr(ResultCode), mbInformation, MB_OK);
+          end;
+          Log('.NET 3.5 Framework Installation Failed.');
+        end;
+        // Remove the registry keys added by MSI reboot
+        RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','UnattendedInstall', UNATTENDED);
+        // Removed exit !!!!!!!!!!!!!!!!!!!!!!!
+      end;
+    end;
+
+    if SILENT = False then begin
+      try
+        progressPage.SetText('REMOVE Installing .Net 3.5'#13#10#13#10'This may take a couple of minutes. Please wait...','');
+        progressPage.SetProgress(0, 0);
+        progressPage.Show;
+      finally
+        progressPage.Hide;
+      end;
     end;
   end;
+
+  // Remove the registry keys added by any restart in the previous sections. Note: Contrary to this comment, the old wise script doesn't remove the keys.
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','SA', SA_PASSWORD);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','Backup', PRE_UPGRADE_BACKUP);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','UnattendedInstall', UNATTENDED);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','Restart', RESTART);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','InstanceName', SQL_INSTANCE);
+
+  // Remove the one once key if still present.
+  // This happens if 3.5 is installed and doesn't reboot
+  // And then the driver install on XP will execute the runonce key causing the install to start again
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce','EnablerInstall',ExpandConstant('{src}')+'\'+OUTPUTBASEFILENAME+'.exe');
 end;
 
 
