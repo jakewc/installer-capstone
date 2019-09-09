@@ -1940,6 +1940,7 @@ begin
     //saveConfig();
   //end;
   if CurStep = ssPostInstall then begin
+    //cplusplus();
     removeRegistryVars();
     installEnablerFiles();
     createLicense();

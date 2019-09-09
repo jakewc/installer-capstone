@@ -24,16 +24,16 @@ begin
     if ResultCode <> 0 then begin
       if ResultCode <> 3010 then begin
         if SILENT = false then begin
-          MsgBox('VS C++ SP1 Redistributables install failed', mbinformation, MB_OK);
+          MsgBox('VS C++ SP1 Redistributables install failed with result code '+inttostr(ResultCode), mbinformation, MB_OK);
         end;
-      Log('ERROR: VS C++ SP1 Redistributables install failed');
+      Log('ERROR: VS C++ SP1 Redistributables install failed with result code '+inttostr(ResultCode));
       Abort();
       end
       else begin
         Log('INFO: VS C++ SP1 Redistributables Installation reported error 3010, Reboot pending');
-      end
-    end    
-  end
-end
+      end;
+    end;    
+  end;
+end;
 
 //old Wise script had a section 'INSTALL VS 2015 C++ REDISTRIBUTABLES' here, but it was entirely commented out
