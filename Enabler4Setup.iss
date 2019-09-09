@@ -207,6 +207,7 @@ WelcomeLabel2=We Recommend that you exit all Windows programs before running thi
 var  
   
   APPNAME: string;
+  OUTPUTBASEFILENAME: String;
   COMPONENTS: string;
   APPLICATIONS:String;
   ENBWEB_DOMAIN:String;
@@ -381,6 +382,17 @@ var
   //install SDK Docs
   ENABLER_SERVER:string;
 
+  //.net framework installation.
+  NET2_0_INSTALLED: integer;
+  NET3_0_INSTALLED: integer;
+  NET3_5_INSTALLED: integer;
+  NET4_INSTALLED: integer;
+  NET4_6_INSTALLED: integer;
+  DOTNET_VERSION: integer;
+  DOTNET350_SP: integer;
+  DOTNET_RUNTIME_REQUIRED: integer;
+  WIN2008_SERVER: integer;
+
   //Read Me Page  
   readMePage: TOutputMsgMemoWizardPage;
   releaseNotesButton: TNewButton;
@@ -456,6 +468,7 @@ begin
 
   DRIVERCODE:=0;   // Driver Installation code.
   APPNAME := '{#SetupSetting("AppName")}';
+  OUTPUTBASEFILENAME := '{#SetupSetting("OutputBaseFileName")}';
   APPTITLE:='The Enabler';  // APPTITLE is the application title of the installation.
   GROUP:='The Enabler';   // GROUP is the variable that holds the Program Files Group that shortcuts will be placed on the Windows Start Menu.
   DISABLED:='!';  // DISABLED variable is initialized for backward compatability.
@@ -1093,6 +1106,160 @@ begin
     Abort();
   end;
 end;
+
+
+//=============================
+//INSTALL .NET 3.5
+//=============================
+
+procedure installNet3Point5();
+var
+  message: String;
+  i: Integer;
+  dWordValue: Cardinal;
+  progressPage: TOutputProgressWizardPage;
+  ResultCode: Integer;
+begin
+  // Check the versions of .NET installed.
+  RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v2.0.50727','Install',dWordValue);
+  NET2_0_INSTALLED := dWordValue;
+  RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.0','Install',dWordValue);
+  NET3_0_INSTALLED := dWordValue;
+  RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5','Install',dWordValue);
+  NET3_5_INSTALLED := dWordValue;
+  RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v4','Install',dWordValue);
+  NET4_INSTALLED := dWordValue;
+  RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v4.6','Install',dWordValue);
+  NET4_6_INSTALLED := dWordValue;
+
+  DOTNET_VERSION := 0;
+  DOTNET350_SP := 0;
+
+  if NET3_5_INSTALLED = 1 then begin
+    Log('Found .NET v3.5 runtime');
+    DOTNET_VERSION := 350;
+    RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5','SP',dWordValue);
+    DOTNET350_SP := dWordValue;
+  end
+  else if NET3_0_INSTALLED = 1 then begin
+    Log('Found .NET v3.0 runtime');
+    DOTNET_VERSION := 300;
+  end
+  else if NET2_0_INSTALLED = 1 then begin
+    Log('Found .NET v2.0 runtime');
+    DOTNET_VERSION := 200;
+  end;
+
+  // We actually require .NET 3.5 SP 1 to run (see EP-1146)
+  DOTNET_RUNTIME_REQUIRED := 0;
+
+  if DOTNET_VERSION < 350 then begin
+    DOTNET_RUNTIME_REQUIRED := 1;
+  end;
+
+  if DOTNET350_SP = 0 then begin
+    DOTNET_RUNTIME_REQUIRED := 1;
+  end;
+
+  if DOTNET_RUNTIME_REQUIRED = 1 then begin
+    if not FileExists(ExpandConstant('{src}')+'\Win\DotNetFX\3.5\dotNetFx35setup.exe') then begin
+      if SILENT = False then begin
+        MsgBox('.NET 3.5 Framework Installer Failed. Aborting installation.', mbInformation, MB_OK);
+      end;
+      Log('ERROR: Missing .NET 3.5 Framework Installer');
+      Abort();
+    end;
+
+    if SILENT = False then begin
+      try
+        progressPage := CreateOutputProgressPage('Progress Stage','Installing .Net 3.5'#13#10#13#10'This may take a couple of minutes. Please wait...');
+        progressPage.SetProgress(0, 0);
+        progressPage.Show;
+      finally
+        progressPage.Hide;
+      end;
+    end;
+
+    // On Windows Server 2008 the runtime has to be installed using the server manager tool, so if we get here we can't continue.
+    WIN2008_SERVER := 0;
+
+    if OPERATING_SYSTEM = '6.0' then begin
+      WIN2008_SERVER := 1;
+    end
+    else if OPERATING_SYSTEM = '6.1' then begin
+      WIN2008_SERVER := 1;
+    end;
+
+    if WIN2008_SERVER = 1 then begin
+      if IS_WINDOWS_SERVER = True then begin
+        Log('INFO: Cannot use dotNetFx installer on Windows Server 2008');
+        Log('INFO: .NET Runtime must be installed before Enabler using Administrative Tools - Server Manager.');
+
+        if SILENT = False then begin
+          message := '.NET 3.5 Runtime required.'#13#10#13#10'The Enabler requires the .NET 3.5 runtime to be installed.'#13#10#13#10;
+          message := message + 'On Windows Server 2008 this must be installed manually using:'#13#10'   Administrative Tools - Server Manager'#13#10#13#10;
+          message := message + 'You must do this before running the Enabler installer.';
+          MsgBox(message, mbInformation, MB_OK);
+        end;
+        Abort();
+      end;
+    end;
+
+    // .NET 3.5 will auto-reboot therefore better write RunOnce to the registry.
+    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','Restart', 'True');
+    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce','EnablerInstall',ExpandConstant('{src}')+'\'+OUTPUTBASEFILENAME+'.exe');
+
+    Log('Installing .NET 3.5 Framework');
+    Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "'+ExpandConstant('{src}')+'\Win\DotNetFX\3.5\dotNetFx35setup.exe" /Q', '', SW_SHOW, ewWaitUntilTerminated, ResultCode)
+    
+    if ResultCode = 3010 then begin
+      Log('INFO: .NET 3.5 Framework Already Installed');
+    end
+    else begin
+      if not ResultCode = 0 then begin
+        // 4121 means MSI is required - should not happen because we install this automatically.
+        if ResultCode = 4121 then begin
+          if SILENT = False then begin
+            MsgBox('.NET 3.5 Framework Installer Failed. MSI 4.5 required.', mbInformation, MB_OK);
+          end;
+          Log('.NET 3.5 requires MSI 4.5');
+        end
+        else begin
+          if SILENT = False then begin
+            MsgBox('.NET 3.5 Framework Installer Failed. ERROR LEVEL = '+IntToStr(ResultCode), mbInformation, MB_OK);
+          end;
+          Log('.NET 3.5 Framework Installation Failed.');
+        end;
+        // Remove the registry keys added by MSI reboot
+        RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','UnattendedInstall', UNATTENDED);
+        // Removed exit !!!!!!!!!!!!!!!!!!!!!!!
+      end;
+    end;
+
+    if SILENT = False then begin
+      try
+        progressPage.SetText('REMOVE Installing .Net 3.5'#13#10#13#10'This may take a couple of minutes. Please wait...','');
+        progressPage.SetProgress(0, 0);
+        progressPage.Show;
+      finally
+        progressPage.Hide;
+      end;
+    end;
+  end;
+
+  // Remove the registry keys added by any restart in the previous sections. Note: Contrary to this comment, the old wise script doesn't remove the keys.
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','SA', SA_PASSWORD);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','Backup', PRE_UPGRADE_BACKUP);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','UnattendedInstall', UNATTENDED);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','Restart', RESTART);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','InstanceName', SQL_INSTANCE);
+
+  // Remove the one once key if still present.
+  // This happens if 3.5 is installed and doesn't reboot
+  // And then the driver install on XP will execute the runonce key causing the install to start again
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce','EnablerInstall',ExpandConstant('{src}')+'\'+OUTPUTBASEFILENAME+'.exe');
+end;
+
 
 //=============================
 //INSTALL ENABLER FILES
@@ -1934,11 +2101,13 @@ end;
 procedure CurStepChanged(CurStep:TSetupStep);
 begin
   
-  //this is commented out for now due to a bug in this module
+  
 
-  //if CurStep = ssInstall then begin
+  if CurStep = ssInstall then begin
+    //this is commented out for now due to a bug in this module
     //saveConfig();
-  //end;
+    installNet3Point5();
+  end;
   if CurStep = ssPostInstall then begin
     removeRegistryVars();
     installEnablerFiles();
