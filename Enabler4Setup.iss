@@ -161,6 +161,12 @@ Source:"{#SourcePath}\Input\Extra\InnovaHxReg.exe"; DestDir:"{app}\SDK\Doc\Visua
 Source:"{#SourcePath}\Input\bin\enbclient.exe"; DestDir: "{app}";
 Source:"{#SourcePath}\Input\bin\Interop.IWshRuntimeLibrary.dll"; DestDir: "{app}";
 
+//===========
+//C++ redists
+//===========
+Source: "{#SourcePath}\Input\MsiQueryProduct.exe"; DestDir: "{app}";
+Source: "{#SourcePath}\Input\Extra\vcredist_x86.exe"; DestDir: "{app}";
+
 
 ; for modules not worked on yet
 Source: "{#SourcePath}\ClientInstallInput\bin\EnablerEvent.dll"; DestDir: "{app}\bin"; Check: IsInstallType('A');
@@ -169,8 +175,8 @@ Source: "{#SourcePath}\ClientInstallInput\bin\subinacl.exe"; DestDir: "{app}\bin
 Source: "{#SourcePath}\ClientInstallInput\CreateRegKeyEvent.bat"; DestDir: "{app}"; Check: IsInstallType('A');
 Source: "{#SourcePath}\ClientInstallInput\scripts\Instances.bat"; DestDir: "{app}"; Check: IsInstallType('A');
 Source: "{#SourcePath}\ClientInstallInput\EnbSecurityController.exe"; DestDir: "{app}"; Check: IsInstallType('A');
-Source: "{#SourcePath}\ClientInstallInput\MsiQueryProduct.exe"; DestDir: "{app}"; Check: IsInstallType('A');
-Source: "{#SourcePath}\ClientInstallInput\Extra\vcredist_x86.exe"; DestDir: "{app}"; Check: IsInstallType('A');
+
+
 
 [Dirs]
 ; deleteafterinstall ONLY DELETES if folder empty at end of install
