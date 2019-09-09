@@ -1,0 +1,25 @@
+======================================
+Windows Installer Redistributables 3.1
+======================================
+
+The Windows Installer redistributables may only be redistributed as part 
+of WindowsInstaller-KB893803-v2-x86.exe.  You may not redistribute any of the DLLs in
+WindowsInstaller-KB893803-v2-x86.exe except by using WindowsInstaller-KB893803-v2-x86.exe.
+You may not modify WindowsInstaller-KB893803-v2-x86.exe
+
+WindowsInstaller-KB893803-v2-x86.exe is a self-extracting executable that will install
+the Windows Installer redistributables only if there is not a more recent 
+version of the DLLs in the system directory. WindowsInstaller-KB893803-v2-x86.exe will
+write the registry keys required by Windows Installer.
+
+In addition to the rights granted in Section 1 of the Microsoft Platform 
+Software Development Kit End User License Agreement ("EULA"), with 
+respect to the Redistributable Code, you have the following 
+non-exclusive, royalty free rights subject to the
+Distribution Requirements detailed in Section 1 of the Agreement:
+
+(1) You may distribute WindowsInstaller-KB893803-v2-x86.exe for use only on Windows 2000 Service Pack 3,
+Windows 2000 Service Pack 4, Windows Server 2003, Windows XP, Windows XP Service Pack 1 and Windows XP
+Service Pack 2.
+
+
