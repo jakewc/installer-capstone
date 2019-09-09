@@ -1712,6 +1712,8 @@ var
   LOGTIME:String;
   LOGTIME2:String;
   ResultCode:Integer;
+  CLIENTEMBEDDED:String;//remain problem
+  SERVER:String;   //not sure
 
 Begin
 
@@ -1755,18 +1757,52 @@ Begin
   End;
 
   if COMPONENTS = 'B' then Begin
-    Log('Installing or Updating EnablerDB');
-    if SILENT = false then Begin
-      MsgBox('The Enabler', mbinformation, mb_OK);
+    MsgBox('Skip', mbinformation, mb_OK);
+    //Log('Installing or Updating EnablerDB');
+    //if SILENT = false then Begin
+    //  MsgBox('The Enabler', mbinformation, mb_OK);
+    //End;
+    //Exec(ExpandConstant('{app}') + '\bin\psrvr4.exe', '/servuce', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    //Exec(ExpandConstant('{app}') + '\bin\enbweb.exe', '/install', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    //Log('Update Services Start timout setting');
+    //RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control','WaitToKillServiceTimeout','180000');
+    //if SILENT = false then Begin
+    //  MsgBox(' ', mbinformation, mb_OK);
+    //End;
+  End
+  Else Begin
+    if SILENT = false then begin
+      MsgBox(APPTITLE, mbinformation, mb_OK);
     End;
-    Exec(ExpandConstant('{app}') + '\bin\psrvr4.exe', '/servuce', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(ExpandConstant('{app}') + '\bin\enbweb.exe', '/install', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Log('Update Services Start timout setting');
-    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control','WaitToKillServiceTimeout','180000');
-    if SILENT = false then Begin
-      MsgBox(' ', mbinformation, mb_OK);
+    Log('Registering Enabler objects');
+    Exec('rsgsvr32.exe', '/s '+ExpandConstant('{app}')+'\EnbSessionX2.OCX', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    if CLIENTEMBEDDED <> 'A' then begin
+      sleep(2000);
+      Log('Configuring DCOM');
+      If SERVER_NAME = '' then begin
+        Log('WARNING: no server name given - setting to default value SERVER');
+        SERVER := SERVER_NAME
+      End;
+
+      if SQL_INSTANCE = '' then begin
+        Exec(ExpandConstant('{app}')+'\bin\odbcnfg.exe', '/s '+SERVER_NAME, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        if OS = 64 then begin
+          Exec(ExpandConstant('{app}')+'\bin\odbcnfg64.exe', '/s '+SERVER_NAME, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);      
+        End;
+      End 
+      else begin
+        Exec(ExpandConstant('{app}')+'\bin\odbcnfg.exe', '/s '+SERVER_NAME+ '/i'+ SQL_INSTANCE, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        if OS = 64 then begin
+          Exec(ExpandConstant('{app}')+'\bin\odbcnfg64.exe', '/s '+SERVER_NAME+ '/i'+ SQL_INSTANCE, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);      
+        End;
+      end;
     End;
+
+    if SILENT = false then begin
+      MsgBox('', mbinformation, mb_OK);
+    end
   End;
+
 End;
   
 //=======================================================================
