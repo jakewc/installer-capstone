@@ -2145,6 +2145,7 @@ begin
     installNet3Point5();
   end;
   if CurStep = ssPostInstall then begin
+    //cplusplus();
     removeRegistryVars();
     installEnablerFiles();
     createLicense();
