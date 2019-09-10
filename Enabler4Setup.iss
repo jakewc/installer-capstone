@@ -2152,7 +2152,7 @@ begin
     basicPDFFiles();
     SDKFiles();    
     updateSystemConfig();
-    setupAccessPermission();
+    //setupAccessPermission();
     logUninstallItems();
     decideReboot();
   end;  
