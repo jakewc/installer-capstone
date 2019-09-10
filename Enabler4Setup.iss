@@ -1261,6 +1261,31 @@ begin
 end;
 
 
+
+//=============================
+//INSTALL .NET 4
+//=============================
+
+procedure installNet4();
+begin
+  // Check if .Net 4 needs to be installed - SQL2014 only
+  Log('Check Net 4 install slqexpressname = '+SQLEXPRESSNAME+', net 4 installed = '+IntToStr(NET4_INSTALLED));
+
+  if SQLEXPRESSNAME = 'SQL2014' then begin
+    if not NET4_INSTALLED = 1 then begin
+      if not FileExists(ExpandConstant('{src}')+'\Win\DotNetFX\4\dotNetFx40_Full_x86_x64.exe') then begin
+        if SILENT = False then begin
+          MsgBox('.NET 4 Framework Installer Failed. Aborting installation.', mbInformation, MB_OK);
+        end;
+        Log('ERROR: Missing .NET 4 Framework Installer');
+        Abort();
+      end;
+    end;
+  end;
+end;
+
+
+
 //=============================
 //INSTALL ENABLER FILES
 //=============================
@@ -2143,6 +2168,7 @@ begin
     //this is commented out for now due to a bug in this module
     //saveConfig();
     installNet3Point5();
+    installNet4();
   end;
   if CurStep = ssPostInstall then begin
     //cplusplus();
