@@ -1210,7 +1210,7 @@ begin
     RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce','EnablerInstall',ExpandConstant('{src}')+'\'+OUTPUTBASEFILENAME+'.exe');
 
     Log('Installing .NET 3.5 Framework');
-    Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "'+ExpandConstant('{src}')+'\Win\DotNetFX\3.5\dotNetFx35setup.exe" /Q', '', SW_SHOW, ewWaitUntilTerminated, ResultCode)
+    Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "'+ExpandConstant('{src}')+'\Win\DotNetFX\3.5\dotNetFx35setup.exe" /Q', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
     
     if ResultCode = 3010 then begin
       Log('INFO: .NET 3.5 Framework Already Installed');
@@ -1259,6 +1259,79 @@ begin
   // And then the driver install on XP will execute the runonce key causing the install to start again
   RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce','EnablerInstall',ExpandConstant('{src}')+'\'+OUTPUTBASEFILENAME+'.exe');
 end;
+
+
+
+//=============================
+//INSTALL .NET 4
+//=============================
+
+procedure installNet4();
+var 
+  ResultCode: Integer;
+  progressPage: TOutputProgressWizardPage;
+
+begin
+  // Check if .Net 4 needs to be installed - SQL2014 only
+  Log('Check Net 4 install slqexpressname = '+SQLEXPRESSNAME+', net 4 installed = '+IntToStr(NET4_INSTALLED));
+
+  if SQLEXPRESSNAME = 'SQL2014' then begin
+    if not NET4_INSTALLED = 1 then begin
+      if not FileExists(ExpandConstant('{src}')+'\Win\DotNetFX\4\dotNetFx40_Full_x86_x64.exe') then begin
+        if SILENT = False then begin
+          MsgBox('.NET 4 Framework Installer Failed. Aborting installation.', mbInformation, MB_OK);
+        end;
+        Log('ERROR: Missing .NET 4 Framework Installer');
+        Abort();
+      end;
+
+      if SILENT = False then begin
+        try
+          progressPage := CreateOutputProgressPage('Progress Stage','Installing .Net 4 Framework.'#13#10#13#10'This may take a couple of minutes. Please wait...');
+          progressPage.SetProgress(0, 0);
+          progressPage.Show;
+        finally
+          progressPage.Hide;
+        end;
+      end;
+
+      //  .Net 4 install will fail if windows update is running so stop doing install - Error 80240016
+      Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "net stop WuAuServ"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Log('Stopping Windows update before installing .NET 4 Framework');
+
+      Log('Installing .NET 4 Framework');
+      Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "'+ExpandConstant('{src}')+'\Win\DotNetFX\4\dotNetFx40_Full_x86_x64.exe"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+
+      Log('Restarting Windows update before installing .NET 4 Framework');
+      Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "net start WuAuServ"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+
+      if ResultCode = 1 then begin
+        Log('.NET 4 Framework Installation return 1, Ok but reboot required');
+      end
+      else if not ResultCode = 0 then begin
+        if SILENT = False then begin
+          MsgBox('.NET 4 Framework Installer Failed.', mbInformation, MB_OK);
+        end;
+        Log('.NET 4 Framework Installer Failed. ERROR LEVEL = '+IntToStr(ResultCode));
+        Abort();
+      end;
+
+      if SILENT = False then begin
+        try
+          progressPage := CreateOutputProgressPage('Progress Stage','');
+          progressPage.SetProgress(0, 0);
+          progressPage.Show;
+        finally
+          progressPage.Hide;
+        end;
+      end;
+    end
+    else begin
+      Log('.NET 4 Framework already installed');
+    end;
+  end;
+end;
+
 
 
 //=============================
@@ -2150,6 +2223,7 @@ begin
     //this is commented out for now due to a bug in this module
     //saveConfig();
     installNet3Point5();
+    installNet4();
   end;
   if CurStep = ssPostInstall then begin
     //cplusplus();
