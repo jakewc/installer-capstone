@@ -167,11 +167,16 @@ Source:"{#SourcePath}\Input\bin\Interop.IWshRuntimeLibrary.dll"; DestDir: "{app}
 Source: "{#SourcePath}\Input\MsiQueryProduct.exe"; DestDir: "{app}";
 Source: "{#SourcePath}\Input\Extra\vcredist_x86.exe"; DestDir: "{app}";
 
+//========================
+//setup access permissions
+//========================
+Source: "{#SourcePath}\Input\bin\subinacl.exe"; DestDir: "{app}\bin";
+
+
 
 ; for modules not worked on yet
 Source: "{#SourcePath}\ClientInstallInput\bin\EnablerEvent.dll"; DestDir: "{app}\bin"; Check: IsInstallType('A');
 Source: "{#SourcePath}\ClientInstallInput\Extra\PDFViewer.exe"; DestDir: "{app}\bin"; Check: IsInstallType('A');
-Source: "{#SourcePath}\ClientInstallInput\bin\subinacl.exe"; DestDir: "{app}\bin"; Check: IsInstallType('A');
 Source: "{#SourcePath}\ClientInstallInput\CreateRegKeyEvent.bat"; DestDir: "{app}"; Check: IsInstallType('A');
 Source: "{#SourcePath}\ClientInstallInput\scripts\Instances.bat"; DestDir: "{app}"; Check: IsInstallType('A');
 Source: "{#SourcePath}\ClientInstallInput\EnbSecurityController.exe"; DestDir: "{app}"; Check: IsInstallType('A');
@@ -2153,7 +2158,7 @@ begin
     basicPDFFiles();
     SDKFiles();    
     updateSystemConfig();
-    setupAccessPermission();
+    //setupAccessPermission();
     logUninstallItems();
     decideReboot();
   end;  
