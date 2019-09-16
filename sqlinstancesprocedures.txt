@@ -99,6 +99,7 @@ var
   SQL_INSTANCE: string;
   CLIENT_SQL_INSTANCE: string;
   PC_NAME: string;
+  //COMPUTERNAME:= PC_NAME;
   SQLQUERY: string;
   INSTANCE_NAME_NEEDED: integer;
   INSTANCE_NAME_LIST: integer;
@@ -303,7 +304,6 @@ procedure SetInstanceNameNeeded();
     LINE: string;
     NAME: string;
     SQL_INSTANCES: string;
-
   begin
      INSTALL_RESULT:= getTemporaryFilenameIntoInstances();
      if INSTALL_RESULT <> 0 then
@@ -319,17 +319,17 @@ procedure SetInstanceNameNeeded();
           // If Expression True "Instr(LINE,"!") Or Instr(Line,"\") Or  Line=""" then
           // Else
           //Parse String "%LINE%" into NAME and
-          if NAME='MSSQLSERVER' then if INSTANCE_NAME_NEEDED=1 then
+          if NAME='MSSQLSERVER' and INSTANCE_NAME_NEEDED=1 then
             begin
               INSTANCE_NAME_NEEDED:= 0;
             end
-          else if NAME='SQLEXPRESS' then if NAME='MSSQLSERVER' then if INSTANCE_NAME_NEEDED = 1 then
+          else if NAME='SQLEXPRESS' and NAME='MSSQLSERVER' and INSTANCE_NAME_NEEDED = 1 then
             begin
-              SQL_INSTANCE:= 'SQLEXPRESS';
+              SQL_INSTANCE:= SQLEXPRESS;
               SQLQUERY:= PC_NAME + '\' + SQL_INSTANCE;
               INSTANCE_NAME_NEEDED:= 0;
             end;
-          //Build list of instances names in case they need to be displayed
+          //Build list of instances names incase they need to be displayed
           SQL_INSTANCES:= NAME + '\n';
         end;
   end;
@@ -340,7 +340,7 @@ procedure CheckKnownInstances();
   begin
       //Check if we found a known instance, if we haven't do we have
       //a list of instances
-      if INSTANCE_NAME_NEEDED=1 then if Length(Trim(SQL_INSTANCES)) > 0 then
+      if INSTANCE_NAME_NEEDED=1 and Length(Trim(SQL_INSTANCES)) > 0 then
         begin
           //We have fouind instance names, if we haven't found a default one we need to display the list
           INSTANCE_NAME_LIST:= 1;
@@ -355,10 +355,9 @@ procedure CheckKnownInstances();
 // do this iff we found no available instances
 procedure OsqlDetectDefaultSqlNamedInstances();   
   begin
-    if INSTANCE_NAME_LIST <> 1 then if INSTANCE_NAME_NEEDED = 1 then
+    if INSTANCE_NAME_LIST <> 1 and INSTANCE_NAME_NEEDED = 1 then
 
-  end;
-
+  end
 procedure GetListOfNamedInstances();
 
   begin
@@ -438,137 +437,6 @@ procedure SqlServerSetup();
     end;
 
 
-//LINE 904-1010
-//MSI4.5 Install
-procedure InstallMSI();
-  var 
-    MSI_VERSION: string;
-    INSTALL_RESULT: Integer;
-
-  begin
-
-    if components='B' then  if SQL_NEEDED<>0 then
-        //Check the version of MSI installed - .NET3.5 requires 4.5
-        GetVersionNumbersString(GetSystemDir+'\msi.dll', MSI_VERSION);
-        Log('MSI version: ' + MSI_VERSION);
-        if StrToFloat(MSI_VERSION) < 4.5 then
-            begin
-                Log('SQL2008R2 requires MSI 4.5 and .NET 3.5 SP1 - MSI will be installed and will require a reboot.')
-                //Check if we need to install the latest MSI 4.5 Installer
-                if (FileExists('{app}\Win\MSI\4.5\WindowsXP-KB942288-v3-x86.exe'))<>'True' then
-                  begin
-                    if SILENT=0 then
-                      begin
-                       MsgBox('MSI 4.5 Installer Failed', mbInformation, MB_OK);
-                       Log('Missing MSI 4.5 Installer');
-                       //Exit Installation
-                       Abort();
-                      end
-                  end
-                if SILENT=0 then
-                  begin
-                     MsgBox('Installing MSI 4.5 Installer');
-                     Log('Installing MSI 4.5');
-                     if OPERATING_SYSTEM=5.1 then
-                       begin
-                        //NOTE: 5.1 = Windows XP
-                        if OS = 32 then
-                          begin
-                              INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\WindowsXP-KB942288-v3-x86.exe');
-                          end
-                        else
-                          begin
-                              INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x64.exe');
-                          end
-                       end
-                     if OPERATING_SYSTEM = 5.2 then
-                        begin
-                           //NOTE 5.2 = Windows 2003
-                           if OS = 32 then
-                              begin
-                                 INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x86.exe');
-                              end
-                           else
-                              begin
-                                 INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x64.exe');
-                              end
-                        end
-                     if OPERATING_SYSTEM = 6.0 then
-                        //NOTE: 6.0 = Windows Vista or Windows Server 2008
-                        //NOTE: msu files do not support the /passive switch
-                        begin
-                          if OS = 32 then
-                            begin
-                                INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\Windows6.0-KB942288-v2-x86.msu');
-
-                            end
-                          else
-                            begin
-                                INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\Windows6.0-KB942288-v2-x64.msu');
-                            end
-                        end
-                     if OPERATING_SYSTEM >= 6.0 then
-                        //NOTE: NOTE: 6.1 = Windows 7 and Windows 2008 R2
-                        begin
-                            Log('Found either Windows 7, Windows Server 2008 or Later Windows - so dont need a newer version of MSI installed');
-                            if SILENT = 0 then
-                              begin
-                                 MsgBox('Exiting', mbInformation, MB_OK);
-                              end
-                            //Exit Installation 
-                            Abort(); 
-                        end
-                     if INSTALL_RESULT = 0 then
-                        begin
-                           Log('MSI 4.5 already installed');
-                        end
-                     else
-                        // 3010 means Reboot is required. Set Runonce to Enabler Installer
-                        if INSTALL_RESULT = 3010 then
-                            begin
-                               if SILENT = 0 then
-                                  begin
-                                     MsgBox('Rebooting', mbInformation, MB_OK); 
-                                  end
-                               // Add Registry Keys before rebooting
-                               RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler', 'InstallPath', ExpandConstant('{app}');
-                               //Stop adding this entry to the log file. This stops this being doing on uninstall.
-                               //Rem If the RunOnce key is deleted on uninstall and then Enabler is reinstalled the driver will fail its install
-                               //windows requires the runonce key to be present to install drivers
-                               //Stop writing to installation log
-                               // Registry Key SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce =
-                               Log('MSI 4.5 installed - reboot pending');
-                               //Reboot System
-                               //Exit Installation
-
-                            end
-                        // 1603 means Windows OS platform is not supported.
-                        if INSTALL_RESULT = 1603 then
-                          begin
-                             if SILENT = 0 then
-                                begin
-                                   MsgBox('MSI 4.5 Installer Failed');
-                                   Log('MSI 4.5 Installation Failed - Windows OS Platform not supported.');
-                                   //Exit Installation
-                                end
-                          end
-                        else 
-                          begin
-                            if SILENT = 0 then
-                                begin
-                                   MsgBox('MSI 4.5 Installer Failed');
-                                   Log('MSI 4.5 Installion Failed');
-                                   //Exit Installation
-                                end
-                          end
-                  end
-            end
-        else
-          begin
-             Log('The version of MSI is OK - '+ MSI_VERSION);
-          end
-               
-  end;
 
 function InitializeSetup(): Boolean;
 begin
@@ -582,8 +450,6 @@ begin
   INSTANCE_NAME_NEEDED:= 1;
   INSTANCE_NAME_LIST:= 0;
   MAINDIR:= 'C:\%MAINDIR%';
-  PC_NAME:= GetComputerNameString();
-
 
   Result := True;
 
