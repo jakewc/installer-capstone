@@ -455,7 +455,7 @@ procedure InstallMSI();
             begin
                 Log('SQL2008R2 requires MSI 4.5 and .NET 3.5 SP1 - MSI will be installed and will require a reboot.')
                 //Check if we need to install the latest MSI 4.5 Installer
-                if (FileExists('{app}\Win\MSI\4.5\WindowsXP-KB942288-v3-x86.exe'))<>'True' then
+                if (FileExists('{app}\Win\MSI\4.5\WindowsXP-KB942288-v3-x86.exe'))<>True then
                   begin
                     if SILENT=0 then
                       begin
@@ -464,23 +464,23 @@ procedure InstallMSI();
                        //Exit Installation
                        Abort();
                       end
-                  end
+                  end;
                 if SILENT=0 then
                   begin
-                     MsgBox('Installing MSI 4.5 Installer');
+                     MsgBox('Installing MSI 4.5 Installer', mbInformation, MB_OK);
                      Log('Installing MSI 4.5');
                      if OPERATING_SYSTEM=5.1 then
                        begin
-                        //NOTE: 5.1 = Windows XP
-                        if OS = 32 then
-                          begin
-                              INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\WindowsXP-KB942288-v3-x86.exe');
-                          end
-                        else
-                          begin
-                              INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x64.exe');
-                          end
-                       end
+                          //NOTE: 5.1 = Windows XP
+                          if OS = 32 then
+                            begin
+                                INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\WindowsXP-KB942288-v3-x86.exe');
+                            end
+                          else
+                            begin
+                                INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x64.exe');
+                            end
+                       end;
                      if OPERATING_SYSTEM = 5.2 then
                         begin
                            //NOTE 5.2 = Windows 2003
@@ -492,21 +492,21 @@ procedure InstallMSI();
                               begin
                                  INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x64.exe');
                               end
-                        end
+                        end;
                      if OPERATING_SYSTEM = 6.0 then
                         //NOTE: 6.0 = Windows Vista or Windows Server 2008
                         //NOTE: msu files do not support the /passive switch
                         begin
-                          if OS = 32 then
-                            begin
-                                INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\Windows6.0-KB942288-v2-x86.msu');
+                            if OS = 32 then
+                              begin
+                                  INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\Windows6.0-KB942288-v2-x86.msu');
 
-                            end
-                          else
-                            begin
-                                INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\Windows6.0-KB942288-v2-x64.msu');
-                            end
-                        end
+                              end
+                            else
+                              begin
+                                  INSTALL_RESULT := CommandPromptExecutor('{app}\Win\MSI\4.5\Windows6.0-KB942288-v2-x64.msu');
+                              end
+                        end;
                      if OPERATING_SYSTEM >= 6.0 then
                         //NOTE: NOTE: 6.1 = Windows 7 and Windows 2008 R2
                         begin
@@ -514,10 +514,10 @@ procedure InstallMSI();
                             if SILENT = 0 then
                               begin
                                  MsgBox('Exiting', mbInformation, MB_OK);
-                              end
+                              end;
                             //Exit Installation 
                             Abort(); 
-                        end
+                        end;
                      if INSTALL_RESULT = 0 then
                         begin
                            Log('MSI 4.5 already installed');
@@ -529,9 +529,9 @@ procedure InstallMSI();
                                if SILENT = 0 then
                                   begin
                                      MsgBox('Rebooting', mbInformation, MB_OK); 
-                                  end
+                                  end;
                                // Add Registry Keys before rebooting
-                               RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler', 'InstallPath', ExpandConstant('{app}');
+                               RegWriteStringValue(HKEY_AUTO, 'Software\ITL\Enabler', 'InstallPath', ExpandConstant('{app}'));
                                //Stop adding this entry to the log file. This stops this being doing on uninstall.
                                //Rem If the RunOnce key is deleted on uninstall and then Enabler is reinstalled the driver will fail its install
                                //windows requires the runonce key to be present to install drivers
@@ -541,13 +541,13 @@ procedure InstallMSI();
                                //Reboot System
                                //Exit Installation
 
-                            end
+                            end;
                         // 1603 means Windows OS platform is not supported.
                         if INSTALL_RESULT = 1603 then
                           begin
                              if SILENT = 0 then
                                 begin
-                                   MsgBox('MSI 4.5 Installer Failed');
+                                   MsgBox('MSI 4.5 Installer Failed', mbInformation, MB_OK);
                                    Log('MSI 4.5 Installation Failed - Windows OS Platform not supported.');
                                    //Exit Installation
                                 end
@@ -556,7 +556,7 @@ procedure InstallMSI();
                           begin
                             if SILENT = 0 then
                                 begin
-                                   MsgBox('MSI 4.5 Installer Failed');
+                                   MsgBox('MSI 4.5 Installer Failed', mbInformation, MB_OK);
                                    Log('MSI 4.5 Installion Failed');
                                    //Exit Installation
                                 end
@@ -568,6 +568,49 @@ procedure InstallMSI();
              Log('The version of MSI is OK - '+ MSI_VERSION);
           end
                
+  end;
+
+
+//line 1160-1192
+//  Checking installed Service Pack for Vista /Server 2008 when installing SQL 2012 only
+
+procedure ServicePackInstallSQL2012();
+  var
+    VISTASP : string;
+  begin
+     if components = 'B' then
+        begin
+           if SQL_NEEDED =1 then
+              begin
+                 if SQLEXPRESSNAME = 'SQL2012' then
+                    begin
+                       if OPERATING_SYSTEM = 6.0 then
+                            begin
+                                  RegQueryStringVAlue(HKLM, 'Software\Microsoft\Windows NT\CurrentVersion', '', VISTASP);
+                                  Log('Vista Build Number is ' + VISTASP);
+                                  //NOTE: 6.0 = Windows Vista or Windows Server 2008
+                                  //NOTE: msu files do not support the /passive switch
+                                  if StrToInt(VISTASP) = 2 then
+                                      begin
+                                         //No SP installed
+                                         //Installing SP1
+                                         MsgBox('SQL2012 prerequisites not met', mbInformation, MB_OK);
+                                         Log('ERROR: Vista has no required Service Packs installed, exiting installation');
+                                         //EXIT INSTALLATION 
+                                         Abort();
+                                      end;
+                                  if StrToInt(VISTASP) = 1616 THEN
+                                      begin
+                                          //No SP2 installed
+                                          MsgBox('SQL2012 prerequisites not met', mbInformation, MB_OK);
+                                          Log('ERROR: Vista does not have required Service Pack 2 installed, exiting installation');
+                                          //EXIT INSTALLATION
+                                          Abort();
+                                      end
+                            end
+                    end
+              end
+        end
   end;
 
 function InitializeSetup(): Boolean;
