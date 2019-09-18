@@ -71,6 +71,9 @@ var
 
   // MAINDIR is the variable that holds the default destination directory
   MAINDIR : string;
+  
+  // SA_PASSWORD stores the SA password (if any)
+  SA_PASSWORD: string;
 
   // The default is for none of the apps to be installed without the SDK option selected
   SDK_OPTIONS: integer;
@@ -586,7 +589,7 @@ procedure ServicePackInstallSQL2012();
                     begin
                        if OPERATING_SYSTEM = 6.0 then
                             begin
-                                  RegQueryStringVAlue(HKLM, 'Software\Microsoft\Windows NT\CurrentVersion', '', VISTASP);
+                                  RegQueryStringValue(HKLM, 'Software\Microsoft\Windows NT\CurrentVersion', '', VISTASP);
                                   Log('Vista Build Number is ' + VISTASP);
                                   //NOTE: 6.0 = Windows Vista or Windows Server 2008
                                   //NOTE: msu files do not support the /passive switch
@@ -610,6 +613,33 @@ procedure ServicePackInstallSQL2012();
                             end
                     end
               end
+        end
+  end;
+
+ 
+ //line 1447 to 1463
+ // Blank Password checks for SQL2005, SQL2008, SQL2012, SQL2014 and SQL2016
+procedure SQLServerBlankPasswordChecks();
+
+  begin
+     if components = 'B' then
+        begin
+            if SQL_NEEDED = 1 then
+                begin
+                    if SQLEXPRESSNAME <> 'MSDE2000' then
+                        begin
+                           if Length(SA_PASSWORD) = 0 then
+                              begin
+                                 Log('Blank passwords not allowed for ' + SQLEXPRESSFULLNAME);
+                                 if SILENT = 0 then
+                                    begin
+                                       MsgBox('Passwords blank', mbInformation, MB_OK);
+                                       //EXIT INSTALLATION
+                                       Abort();
+                                    end
+                              end
+                        end
+                end
         end
   end;
 
