@@ -69,6 +69,8 @@ var
   appName: string;
   components: string;
 
+  //SQL Server Major Product Number
+  SQLVER_MAJOR : string;
   // MAINDIR is the variable that holds the default destination directory
   MAINDIR : string;
   
@@ -616,7 +618,292 @@ procedure ServicePackInstallSQL2012();
         end
   end;
 
- 
+
+procedure DetectVersionSQLServersInstalled();
+  // Make sure OSQL_PATH does not end in '\'
+  var 
+    TEMP : string;
+    SQLINFO : string;
+    INSTALL_RESULT : integer;
+    CREATE_TEMP_FILE_RESULT : boolean; 
+    LINE : AnsiString;
+
+  begin
+     (*Find out the version of SQL installed.block
+      SQL 2000 and newer support the following method of getting the version
+      Older versions do not. The Microsoft documentation for this method is at the link below
+      http://support.microsoft.com/default.aspx?scid=kb;en-us;321185#3
+      Create a temporary file to store the SQL results in.  *)
+      TEMP := GetTempDir();
+      SQLINFO := '\SQLINFO';
+      SaveStringToFile(TEMP+SQLINFO, '', False);
+      if SILENT = 0 then
+        begin
+           MsgBox('SQL Version', mbInformation, MB_OK);
+           //Execute the sql to get the SQL version of a default instance or the instance name passed by the command line
+           Log('Query database for version using server and instance name ' + SQLQUERY);
+           INSTALL_RESULT := CommandPromptExecutor(OSQL_PATH + '\OSQL.EXE -b -E -S ' + SQLQUERY + ' -dmaster -h-1 -Q "select SERVERPROPERTY('+ '"productversion"' + ')" -o ' + TEMP + SQLINFO);
+           if INSTALL_RESULT <> 0 then
+              begin
+                 if SILENT = 0 then
+                    begin
+                       MsgBox('SQL VERSION', mbInformation, MB_OK);
+                       MsgBox('OSQL failed to execute', mbError, MB_OK);
+                       Log(SQLQUERY + ' SQL server is not configured correctly the osql query failed');
+                       Abort();
+                    end
+              end;
+            //Read each line of the SQL query results
+            LoadStringFromFile(TEMP + SQLINFO, LINE);
+            if SQLVER_MAJOR = '' then
+                begin
+                   SQLVER_MAJOR := LINE;
+                end;
+            //Is SQL Server major revision greator than or equal to the number 8 (version 2000)
+            if StrToFloat(SQLVER_MAJOR) >= 8 then
+              begin
+                Log('SQL Version found ' + SQLVER_MAJOR );
+              end
+            else
+              //If the line read is greator than or equal to the number it is 2000 or newe
+              begin
+                 if StrToFloat(LINE) >= 8 then
+                    begin
+                       Log('SQL Version found ' + LINE);
+                    end
+                 else
+                    begin
+                       //Display the message to exit
+                       if SILENT = 0 then
+                          begin
+                             MsgBox('A newer SQL Server is required', mbInformation, MB_OK);
+                             Log('Exiting installation as Enabler requires newer version than ' + SQLVER_MAJOR + ' of SQL Server');
+                             Abort();
+                          end
+                    end
+              end
+        end
+  end;
+
+
+procedure IsThereAnExistingEnablerInstall();
+//Does the enabler database already exist?
+  var
+    PRE_UPGRADE_BACKUP : string;
+    INSTALL_RESULT : integer;
+  begin
+     if PRE_UPGRADE_BACKUP = 'A' then
+        begin
+           INSTALL_RESULT := CommandPromptExecutor(OSQL_PATH + '\OSQL.EXE -d EnablerDB -E -S' + SQLQUERY + ' -Q "select count(*) from global_settings" -b');
+           if INSTALL_RESULT = 0 then
+              begin
+                 Log('Preupgrade backup check for Enabler DB: Database FOUND');
+              end
+           else
+              begin
+                 Log('Preupgrade backup check for Enabler DB: Database NOT found');
+                 PRE_UPGRADE_BACKUP := '';
+              end
+        end
+  end;
+
+procedure SQLServerIsRequired();
+  //SQL SERVER IS REQUIRED
+  var
+    MSI_VERSION : string;
+    DOTNET_VERSION : string;
+    MDAC_VERSION : string;
+    IEXPLORE_VERSION : double;
+
+  begin
+     //We know what if SQLServer is required and what version will be installed, so that optionally install MSI 4.5 and .NET
+     if UNATTENDED = 0 then
+        begin
+           //SQL2005 PREREQUISITES
+           if SQLEXPRESSNAME = 'SQL2005' then
+              begin
+                 Log('SQLServer2005 Express will be installed');
+                 //Check SQL EXPRESS 2005 required components before SQL installation
+                 //Fetch MSI version, .NET version information and MDAC version
+                 GetVersionNumbersString(GetSystemDir+'\msi.dll', MSI_VERSION);
+                 RegQueryStringValue('HKEY_LOCAL_MACHINE', 'SOFTWARE\Microsoft\.NETFramework\policy\v2.0\', 'Default', DOTNET_VERSION);
+                 RegQueryStringValue('HKEY_LOCAL_MACHINE', 'SOFTWARE\Microsoft\DataAccess', 'Version', MDAC_VERSION);
+                 //MDAC 2.8?
+                 if StrToFloat(MDAC_VERSION) < StrToFloat('2.80.1022.3') then
+                    begin
+                       if SILENT = 0 then
+                          begin
+                             MsgBox('MDAC 2.8 Required by SQL2005', mbInformation, MB_OK);
+                             Abort();
+                          end
+                    end;
+                 //IE6 SP1?
+                 if IEXPLORE_VERSION < StrToFloat('6.0.2800.1106') then
+                   begin
+                      if SILENT = 0 then
+                          begin
+                             MsgBox('IE 6.0 Service Pack 1 Required by SQL2005', mbInformation, MB_OK);
+                             Log('IE 6.0 SP1 Required for SQL2005 Express');
+                             Abort();
+                          end
+                   end
+                   //THIS BLOCK OF CODE HAS BEEN COMMENTED OUT IN THE ORIGINAL SCRIPT
+                (* /* Rem ==========================================
+1344 /* Rem MSI 3.1?
+1345 /* Rem ==========================================
+1346 /* If MSI_VERSION Less Than "3.1.400.2435" then
+1347 /* If File or Directory doesn't exist
+%INST%\Win\MSI\3.1\WindowsInstaller-KB893803-v2-x86.exe ...
+1348 /* If SILENT Equals "0" then
+1349 /* Display Message "MSI 3.1 Installer Failed"
+1350 /* End
+1351 /* Add "Missing MSI 3.1 Installer" to INSTALL.LOG
+1352 /* Exit Installation
+1353 /* End
+1354 /* If SILENT Equals "0" then
+1355 /* Display Progress Message "Installing MSI 3.1 Installer"
+1356 /* End
+1357 /* Add "Installing MSI 3.1" to INSTALL.LOG
+1358 /* Execute CMD.EXE /C
+""%INST%\Win\MSI\3.1\WindowsInstaller-KB893803-v2-x86.ex...
+1359 /* If INSTALL_RESULT Equals "0" then
+1360 /* Add "MSI 3.1 Already Installed" to INSTALL.LOG
+1361 /* Else
+1362 /* Rem 3010 means Reboot is required. Set Runonce to Enabler
+Installer
+1363 /* If INSTALL_RESULT Equals "3010" then
+1364 /* If SILENT Equals "0" then
+1365 /* Display Message "Rebooting"
+1366 /* End
+1367 /* Rem Add Registry Keys before rebooting
+1368 /* Registry Key Software\ITL\Enabler = %UNATTENDED%
+1369 /* Rem Stop adding this entry to the Log file. This stops this
+being doing on uninstall.
+1370 /* Rem If the RunOnce key is deleted on uninstall and then
+Enabler is reinstalled the driver will fail its install
+1371 /* Rem As windows requires the runonce key to be present to
+install drivers
+1372 /* Stop writing to installation log
+1373 /* Registry Key
+SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce = %INS...
+1374 /* Continue/Start writing to installation log
+1375 /* Add "MSI 3.1 installed - reboot pending" to INSTALL.LOG
+1376 /* Exit Installation
+1377 /* End
+1378 /* Rem 1603 means Windows OS platform is not supported.
+1379 /* If INSTALL_RESULT Equals "1603" then
+1380 /* If SILENT Equals "0" then
+1381 /* Display Message "MSI 3.1 Installer Failed"
+1382 /* End
+1383 /* Add "MSI 3.1 Installation Failed - Windows OS Platform not
+supported." to INSTALL.LOG
+1384 /* Exit Installation
+1385 /* Else
+1386 /* If SILENT Equals "0" then
+1387 /* Display Message "MSI 3.1 Installer Failed"
+1388 /* End
+1389 /* Add "MSI 3.1 Installion Failed" to INSTALL.LOG
+1390 /* End
+1391 /* Exit Installation
+1392 /* End
+1393 /* End
+1394
+1395 /* Rem ==========================================
+1396 /* Rem .NET 2.0 Framework? no longer require since we now
+install 3.5 by default
+1397 /* Rem ==========================================
+1398 /* If DOTNET_VERSION Equals "" then
+1399 /* If File or Directory doesn't exist
+%INST%\Win\DotNetFX\2.0\install.exe then
+1400 /* If SILENT Equals "0" then
+1401 /* Display Message ".NET 2.0 Framework Installer Failed"
+1402 /* End
+1403 /* Add "Missing .NET 2.0 Framework Installer" to INSTALL.LOG
+1404 /* Rem Remove the registry keys added by MSI reboot
+1405 /* Remove Registry Key Software\ITL\Enabler
+1406 /* Exit Installation
+1407 /* End
+1408 /* If SILENT Equals "0" then
+1409 /* Display Progress Message "Installing .NET 2.0 Framework"
+1410 /* End
+1411 /* Add "Installing .NET 2.0 Framework" to INSTALL.LOG
+1412 /* Execute CMD.EXE /C ""%INST%\Win\DotNetFX\2.0\install.exe""
+/Q (Wait)
+1413 /* Rem 3010 means already installed.
+1414 /* If INSTALL_RESULT Equals "3010" then
+1415 /* Add ".NET 2.0 Framework Already Installed" to INSTALL.LOG
+1416 /* Else
+1417 /* If INSTALL_RESULT Not Equal "0" then
+1418 /* Rem 4121 means MSI is required
+1419 /* If INSTALL_RESULT Equals "4121" then
+1420 /* If SILENT Equals "0" then
+1421 /* Display Message ".NET 2.0 Framework Installer Failed"
+1422 /* End
+1423 /* Add ".NET 2.0 requires MSI 3.1" to INSTALL.LOG
+1424 /* Else
+1425 /* If SILENT Equals "0" then
+1426 /* Display Message ".NET 2.0 Framework Installer Failed"
+1427 /* End
+1428 /* Add ".NET 2.0 Framework Installation Failed" to INSTALL.LOG
+1429 /* End
+1430 /* Rem Remove the registry keys added by MSI reboot
+1431 /* Remove Registry Key Software\ITL\Enabler
+1432 /* Exit Installation
+1433 /* End
+1434 /* End
+1435 /* End*)
+              end
+        end
+  end;
+// lines 1193-1446
+//INSTALL SERVER COMPONENTS
+
+procedure InstallServerComponents();
+    var
+      TRUSTED_CONNECTION: integer;
+      INSTALL_RESULT: integer;
+    begin
+       if components = 'B' then
+          begin
+             if SQL_NEEDED = 0 then                             
+                begin
+                   SQLQUERY := PC_NAME + '\' + SQL_INSTANCE;
+                   Log('SQLQUERY = ' + SQLQUERY);
+
+                   //TRUSTED CONNECTION
+                   TRUSTED_CONNECTION := 1;
+                   Log('About to query sysobjects ' +  OSQL_PATH + ' with Trusted Connection');
+                   INSTALL_RESULT := CommandPromptExecutor(OSQL_PATH + '\OSQL.EXE -b -d master -E -S ' + SQLQUERY +  ' -Q ' +  '"select count(*) from sysobjects"');
+                   if INSTALL_RESULT = 0 then
+                      begin
+                         Log('Trusted Connection Succeed !!!');
+                      end
+                   else 
+                      begin
+                         TRUSTED_CONNECTION := 0;
+                      end;
+                   if TRUSTED_CONNECTION = 0 then
+                      begin
+                         if SILENT = 0 then
+                            begin
+                               MsgBox('Installation failed', mbInformation, MB_OK);
+                               Log('Trusted Connection Failed ! SQL server might not have installed correctly. Or the Named instance was incorrect rc');
+                               //EXIT INSTALLATION
+                               Abort();
+                            end
+                      end;
+                    DetectVersionSQLServersInstalled();
+                    IsThereAnExistingEnablerInstall();
+                end
+              else
+                begin
+                   SQLServerIsRequired();
+                end
+             
+
+                
+          end
+    end; 
  //line 1447 to 1463
  // Blank Password checks for SQL2005, SQL2008, SQL2012, SQL2014 and SQL2016
 procedure SQLServerBlankPasswordChecks();
