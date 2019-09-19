@@ -930,6 +930,57 @@ procedure SQLServerBlankPasswordChecks();
         end
   end;
 
+
+//lines 1464 to 1763
+(*INSTALL SQL SERVER or CHECK SA LOGIN
+  The Server Component requires either a preinstalled DB Server, or to install our own
+*)
+
+procedure InstallSQLServerOrCheckSALogin();
+    var
+      INST_DRIVE: string;
+    begin
+       //If enabler server install selected  
+       if components = 'B' then
+          begin
+             if SQL_NEEDED = 1 then
+                begin
+                    INST_DRIVE := '{app}';
+                    INST_DRIVE := INST_DRIVE + ':';
+                    CreateDir(MAINDIR);
+                    if SQLEXPRESSNAME = 'MSDE2000' then
+                      begin
+                         //MSDE2000 Installation
+                         FileCopy('{app}\scripts\MSDEInstall.bat', MAINDIR + '\MSDEInstall.bat', False);
+                         //Install MSDE2000 now
+                         if SILENT = 0 then
+                            begin
+                               MsgBox('Installing SQL Server (MSDE2000)', mbInformation, MB_OK);
+                               Log('Starting MSDE2000 install from ' + '{app}\MSDE2000');
+                               CommandPromptExecutor('/C {MAINDIR}\MSDEInstall.bat {INST_DRIVE} "{app}\MSDE2000" "{SA_PASSWORD}"');
+                            end;
+                         if DirExists('{MAINDIR}\MSDE_REBOOT_PENDING') OR FileExists('{MAINDIR}\MSDE_REBOOT_PENDING') then
+                            begin
+                               if UNATTENDED = 0 then
+                                  begin
+                                     MsgBox('Rebooting', mbInformation, MB_OK);
+                                     Log('MSDE installed - reboot pending');
+                                     Abort();
+                                  end
+                            end
+                      end
+                    else
+                        begin
+                          // Install SQL2016 / 2014 / 2012 / 2008 /2005
+
+                        end
+
+
+                end
+          end
+
+    end;
+  
 function InitializeSetup(): Boolean;
 begin
   appName := '{#SetupSetting("AppName")}';
