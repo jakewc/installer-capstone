@@ -1,0 +1,442 @@
+﻿2019-09-21 15:31:50.515   Log opened. (Time zone: UTC+12:00)
+2019-09-21 15:31:50.522   Setup version: Inno Setup version 6.0.2 (u)
+2019-09-21 15:31:50.525   Original Setup EXE: D:\Capstone\installer-capstone\Output\Enabler4Setup.exe
+2019-09-21 15:31:50.530   Setup command line: /SL5="$140744,14015169,721408,D:\Capstone\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$B205D8 /NOTIFYWND=$34144C /DEBUGWND=$F0FFA 
+2019-09-21 15:31:50.541   Windows version: 10.0.18362  (NT platform: Yes)
+2019-09-21 15:31:50.542   64-bit Windows: Yes
+2019-09-21 15:31:50.544   Processor architecture: x64
+2019-09-21 15:31:50.554   User privileges: Administrative
+2019-09-21 15:31:50.566   Administrative install mode: Yes
+2019-09-21 15:31:50.572   Install mode root key: HKEY_LOCAL_MACHINE
+2019-09-21 15:31:50.575   64-bit install mode: No
+2019-09-21 15:31:50.587   Created temporary directory: C:\Users\dell\AppData\Local\Temp\is-P8J26.tmp
+2019-09-21 15:31:50.598   -- DLL function import --
+2019-09-21 15:31:50.599   Function name: ExitProcess
+2019-09-21 15:31:50.605   DLL name: kernel32.dll
+2019-09-21 15:31:50.607   Dest DLL name: kernel32.dll
+2019-09-21 15:31:50.609   Importing the DLL function.
+2019-09-21 15:31:50.611   Successfully imported the DLL function. Delay loaded? No
+2019-09-21 15:31:50.622   Initialising variables.
+2019-09-21 15:31:51.378   Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10
+2019-09-21 15:31:51.395   Installing Enabler V4.6.3.6087 on Windows V10.00.18362 64bit (Version 10)
+2019-09-21 15:31:51.442   CMD 
+2019-09-21 15:31:51.489   IE Location C:\Program Files\Internet Explorer;
+2019-09-21 15:31:51.505   IE VERSION: 9.11.18362.0
+2019-09-21 15:31:51.543   Installing from D:\Capstone\installer-capstone\Output drive.
+2019-09-21 15:31:52.227   Windows product type: 1
+2019-09-21 15:31:52.338   Checking disk space
+2019-09-21 15:31:52.690   A
+2019-09-21 15:32:01.754   Calling RestartManager's RmGetList.
+2019-09-21 15:32:01.776   RmGetList finished successfully.
+2019-09-21 15:32:01.780   RestartManager found no applications using one of our files.
+2019-09-21 15:32:01.852   Found .NET v3.5 runtime
+2019-09-21 15:32:01.922   Check Net 4 install slqexpressname = , net 4 installed = 1
+2019-09-21 15:32:01.940   Starting the installation process.
+2019-09-21 15:32:01.957   Creating directory: C:\Program Files (x86)\Enabler4\SDK
+2019-09-21 15:32:01.963   Creating directory: C:\Program Files (x86)\Enabler4\SDK\Doc
+2019-09-21 15:32:01.967   Creating directory: C:\Program Files (x86)\Enabler4\SDK\Doc\VisualStudio
+2019-09-21 15:32:01.973   Creating directory: C:\Program Files (x86)\Enabler4\SDK\Samples
+2019-09-21 15:32:01.983   Creating directory: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\(Default)\SDK
+2019-09-21 15:32:02.066   Directory for uninstall files: C:\Program Files (x86)\Enabler4
+2019-09-21 15:32:02.069   Will append to existing uninstall log: C:\Program Files (x86)\Enabler4\unins000.dat
+2019-09-21 15:32:02.077   -- File entry --
+2019-09-21 15:32:02.081   Dest filename: C:\Program Files (x86)\Enabler4\unins000.exe
+2019-09-21 15:32:02.088   Time stamp of our file: 2019-09-21 15:31:49.769
+2019-09-21 15:32:02.091   Dest file exists.
+2019-09-21 15:32:02.093   Time stamp of existing file: 2019-09-21 15:24:43.375
+2019-09-21 15:32:02.095   Version of our file: 51.1052.0.0
+2019-09-21 15:32:02.099   Version of existing file: 51.1052.0.0
+2019-09-21 15:32:02.104   Installing the file.
+2019-09-21 15:32:02.113   Leaving temporary file in place for now.
+2019-09-21 15:32:02.117   -- File entry --
+2019-09-21 15:32:02.122   Dest filename: C:\Program Files (x86)\Enabler4\comdlg32.ocx
+2019-09-21 15:32:02.125   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.127   Dest file exists.
+2019-09-21 15:32:02.129   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.130   Version of our file: 6.0.84.18
+2019-09-21 15:32:02.134   Version of existing file: 6.0.84.18
+2019-09-21 15:32:02.139   Same version. Skipping.
+2019-09-21 15:32:02.141   -- File entry --
+2019-09-21 15:32:02.148   Dest filename: C:\Program Files (x86)\Enabler4\comct232.ocx
+2019-09-21 15:32:02.157   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.158   Dest file exists.
+2019-09-21 15:32:02.161   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.164   Version of our file: 6.0.80.22
+2019-09-21 15:32:02.170   Version of existing file: 6.0.80.22
+2019-09-21 15:32:02.173   Same version. Skipping.
+2019-09-21 15:32:02.178   -- File entry --
+2019-09-21 15:32:02.188   Dest filename: C:\Program Files (x86)\Enabler4\comctl32.ocx
+2019-09-21 15:32:02.190   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.194   Dest file exists.
+2019-09-21 15:32:02.197   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.200   Version of our file: 6.0.81.5
+2019-09-21 15:32:02.203   Version of existing file: 6.0.81.5
+2019-09-21 15:32:02.205   Same version. Skipping.
+2019-09-21 15:32:02.208   -- File entry --
+2019-09-21 15:32:02.218   Dest filename: C:\Program Files (x86)\Enabler4\Mscomm32.ocx
+2019-09-21 15:32:02.223   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.225   Dest file exists.
+2019-09-21 15:32:02.228   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.229   Version of our file: 6.0.81.69
+2019-09-21 15:32:02.234   Version of existing file: 6.0.81.69
+2019-09-21 15:32:02.235   Same version. Skipping.
+2019-09-21 15:32:02.237   -- File entry --
+2019-09-21 15:32:02.246   Dest filename: C:\Program Files (x86)\Enabler4\Msflxgrd.ocx
+2019-09-21 15:32:02.248   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.251   Dest file exists.
+2019-09-21 15:32:02.254   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.255   Version of our file: 6.0.84.18
+2019-09-21 15:32:02.259   Version of existing file: 6.0.84.18
+2019-09-21 15:32:02.262   Same version. Skipping.
+2019-09-21 15:32:02.264   -- File entry --
+2019-09-21 15:32:02.273   Dest filename: C:\Program Files (x86)\Enabler4\Msrdc20.ocx
+2019-09-21 15:32:02.285   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.289   Dest file exists.
+2019-09-21 15:32:02.292   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.294   Version of our file: 6.0.84.18
+2019-09-21 15:32:02.296   Version of existing file: 6.0.84.18
+2019-09-21 15:32:02.298   Same version. Skipping.
+2019-09-21 15:32:02.301   -- File entry --
+2019-09-21 15:32:02.305   Dest filename: C:\Program Files (x86)\Enabler4\Msrdo20.dll
+2019-09-21 15:32:02.307   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.310   Dest file exists.
+2019-09-21 15:32:02.312   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.313   Version of our file: 6.0.88.62
+2019-09-21 15:32:02.321   Version of existing file: 6.0.88.62
+2019-09-21 15:32:02.323   Same version. Skipping.
+2019-09-21 15:32:02.325   -- File entry --
+2019-09-21 15:32:02.329   Dest filename: C:\Program Files (x86)\Enabler4\Msvcp60.dll
+2019-09-21 15:32:02.332   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.340   Dest file exists.
+2019-09-21 15:32:02.345   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.348   Version of our file: 6.0.8972.0
+2019-09-21 15:32:02.352   Version of existing file: 6.0.8972.0
+2019-09-21 15:32:02.356   Same version. Skipping.
+2019-09-21 15:32:02.358   -- File entry --
+2019-09-21 15:32:02.364   Dest filename: C:\Program Files (x86)\Enabler4\EnbSecurityController.exe
+2019-09-21 15:32:02.373   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.375   Dest file exists.
+2019-09-21 15:32:02.377   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.378   Version of our file: 1.1.4.0
+2019-09-21 15:32:02.382   Version of existing file: 1.1.4.0
+2019-09-21 15:32:02.385   Same version. Skipping.
+2019-09-21 15:32:02.387   -- File entry --
+2019-09-21 15:32:02.392   Dest filename: C:\Program Files (x86)\Enabler4\SecurityModule.dll
+2019-09-21 15:32:02.394   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:02.396   Dest file exists.
+2019-09-21 15:32:02.401   Time stamp of existing file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:02.404   Version of our file: 1.0.7.0
+2019-09-21 15:32:02.407   Version of existing file: 1.0.7.0
+2019-09-21 15:32:02.409   Same version. Skipping.
+2019-09-21 15:32:02.413   -- File entry --
+2019-09-21 15:32:02.420   Dest filename: C:\Program Files (x86)\Enabler4\itl.ico
+2019-09-21 15:32:02.422   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:02.424   Dest file exists.
+2019-09-21 15:32:02.425   Time stamp of existing file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:02.426   Version of our file: (none)
+2019-09-21 15:32:02.432   Version of existing file: (none)
+2019-09-21 15:32:02.434   Installing the file.
+2019-09-21 15:32:02.439   Successfully installed the file.
+2019-09-21 15:32:02.441   -- File entry --
+2019-09-21 15:32:02.445   Dest filename: C:\Program Files (x86)\Enabler4\ConvertV4BetaLicense.exe
+2019-09-21 15:32:02.448   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.453   Dest file exists.
+2019-09-21 15:32:02.455   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.457   Version of our file: 1.0.1.0
+2019-09-21 15:32:02.461   Version of existing file: 1.0.1.0
+2019-09-21 15:32:02.464   Same version. Skipping.
+2019-09-21 15:32:02.468   -- File entry --
+2019-09-21 15:32:02.479   Dest filename: C:\Program Files (x86)\Enabler4\EnbSessionX2.ocx
+2019-09-21 15:32:02.487   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.490   Dest file exists.
+2019-09-21 15:32:02.493   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.496   Version of our file: 4.9.0.0
+2019-09-21 15:32:02.500   Version of existing file: 4.9.0.0
+2019-09-21 15:32:02.503   Same version. Skipping.
+2019-09-21 15:32:02.507   -- File entry --
+2019-09-21 15:32:02.512   Dest filename: C:\Program Files (x86)\Enabler4\EnablerSoundEvents.reg
+2019-09-21 15:32:02.514   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.516   Dest file exists.
+2019-09-21 15:32:02.519   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.521   Version of our file: (none)
+2019-09-21 15:32:02.527   Version of existing file: (none)
+2019-09-21 15:32:02.530   Installing the file.
+2019-09-21 15:32:02.537   Successfully installed the file.
+2019-09-21 15:32:02.540   -- File entry --
+2019-09-21 15:32:02.546   Dest filename: C:\Program Files (x86)\Enabler4\EnbAttendantX2.ocx
+2019-09-21 15:32:02.548   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.551   Dest file exists.
+2019-09-21 15:32:02.553   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.554   Version of our file: 4.2.0.0
+2019-09-21 15:32:02.559   Version of existing file: 4.2.0.0
+2019-09-21 15:32:02.560   Same version. Skipping.
+2019-09-21 15:32:02.562   -- File entry --
+2019-09-21 15:32:02.569   Dest filename: C:\Program Files (x86)\Enabler4\EnbPumpX2.ocx
+2019-09-21 15:32:02.573   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.576   Dest file exists.
+2019-09-21 15:32:02.578   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.581   Version of our file: 3.41.0.0
+2019-09-21 15:32:02.586   Version of existing file: 3.41.0.0
+2019-09-21 15:32:02.588   Same version. Skipping.
+2019-09-21 15:32:02.590   -- File entry --
+2019-09-21 15:32:02.595   Dest filename: C:\Program Files (x86)\Enabler4\joda-time-LICENSE.txt
+2019-09-21 15:32:02.596   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.599   Dest file exists.
+2019-09-21 15:32:02.602   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.606   Version of our file: (none)
+2019-09-21 15:32:02.609   Version of existing file: (none)
+2019-09-21 15:32:02.610   Installing the file.
+2019-09-21 15:32:02.620   Successfully installed the file.
+2019-09-21 15:32:02.624   -- File entry --
+2019-09-21 15:32:02.630   Dest filename: C:\Program Files (x86)\Enabler4\joda-time-NOTICE.txt
+2019-09-21 15:32:02.633   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.637   Dest file exists.
+2019-09-21 15:32:02.638   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.640   Version of our file: (none)
+2019-09-21 15:32:02.642   Version of existing file: (none)
+2019-09-21 15:32:02.644   Installing the file.
+2019-09-21 15:32:02.652   Successfully installed the file.
+2019-09-21 15:32:02.655   -- File entry --
+2019-09-21 15:32:02.661   Dest filename: C:\Program Files (x86)\Enabler4\enabler-api-1.0.jar
+2019-09-21 15:32:02.668   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.669   Dest file exists.
+2019-09-21 15:32:02.671   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.672   Version of our file: (none)
+2019-09-21 15:32:02.675   Version of existing file: (none)
+2019-09-21 15:32:02.680   Installing the file.
+2019-09-21 15:32:02.709   Successfully installed the file.
+2019-09-21 15:32:02.714   -- File entry --
+2019-09-21 15:32:02.720   Dest filename: C:\Program Files (x86)\Enabler4\joda-time-2.0.jar
+2019-09-21 15:32:02.722   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.723   Dest file exists.
+2019-09-21 15:32:02.725   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.726   Version of our file: (none)
+2019-09-21 15:32:02.729   Version of existing file: (none)
+2019-09-21 15:32:02.732   Installing the file.
+2019-09-21 15:32:02.785   Successfully installed the file.
+2019-09-21 15:32:02.787   -- File entry --
+2019-09-21 15:32:02.792   Dest filename: C:\Program Files (x86)\Enabler4\InstallEnablerApi.msi
+2019-09-21 15:32:02.794   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.797   Dest file exists.
+2019-09-21 15:32:02.799   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.801   Version of our file: (none)
+2019-09-21 15:32:02.806   Version of existing file: (none)
+2019-09-21 15:32:02.811   Installing the file.
+2019-09-21 15:32:02.873   Successfully installed the file.
+2019-09-21 15:32:02.877   -- File entry --
+2019-09-21 15:32:02.885   Dest filename: C:\Program Files (x86)\Enabler4\ITL.Enabler.WPFControls.dll
+2019-09-21 15:32:02.889   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.890   Dest file exists.
+2019-09-21 15:32:02.892   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.893   Version of our file: 1.2.0.0
+2019-09-21 15:32:02.900   Version of existing file: 1.2.0.0
+2019-09-21 15:32:02.904   Same version. Skipping.
+2019-09-21 15:32:02.906   -- File entry --
+2019-09-21 15:32:02.912   Dest filename: C:\Program Files (x86)\Enabler4\System.Windows.Controls.DataVisualization.Toolkit.dll
+2019-09-21 15:32:02.915   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.926   Dest file exists.
+2019-09-21 15:32:02.928   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.929   Version of our file: 3.5.0.0
+2019-09-21 15:32:02.934   Version of existing file: 3.5.0.0
+2019-09-21 15:32:02.936   Same version. Skipping.
+2019-09-21 15:32:02.940   -- File entry --
+2019-09-21 15:32:02.953   Dest filename: C:\Program Files (x86)\Enabler4\WPFToolkit.dll
+2019-09-21 15:32:02.956   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.960   Dest file exists.
+2019-09-21 15:32:02.963   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:02.967   Version of our file: 3.5.50211.1
+2019-09-21 15:32:02.972   Version of existing file: 3.5.50211.1
+2019-09-21 15:32:02.974   Same version. Skipping.
+2019-09-21 15:32:02.979   -- File entry --
+2019-09-21 15:32:02.985   Dest filename: C:\Users\dell\AppData\Local\Temp\is-P8J26.tmp\IsAdmin.exe
+2019-09-21 15:32:02.987   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:02.990   Installing the file.
+2019-09-21 15:32:03.002   Successfully installed the file.
+2019-09-21 15:32:03.008   -- File entry --
+2019-09-21 15:32:03.022   Dest filename: C:\Program Files (x86)\Enabler4\AutoSupport.exe
+2019-09-21 15:32:03.027   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:03.029   Dest file exists.
+2019-09-21 15:32:03.032   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:03.039   Version of our file: 2.9.1.0
+2019-09-21 15:32:03.042   Version of existing file: 2.9.1.0
+2019-09-21 15:32:03.044   Same version. Skipping.
+2019-09-21 15:32:03.046   -- File entry --
+2019-09-21 15:32:03.055   Dest filename: C:\Users\dell\AppData\Local\Temp\is-P8J26.tmp\release.txt
+2019-09-21 15:32:03.058   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.061   Installing the file.
+2019-09-21 15:32:03.075   Successfully installed the file.
+2019-09-21 15:32:03.085   -- File entry --
+2019-09-21 15:32:03.095   Dest filename: C:\Program Files (x86)\Enabler4\bin\setx64.exe
+2019-09-21 15:32:03.097   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.099   Dest file exists.
+2019-09-21 15:32:03.106   Time stamp of existing file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.108   Version of our file: 6.0.6000.16386
+2019-09-21 15:32:03.115   Version of existing file: 6.0.6000.16386
+2019-09-21 15:32:03.119   Same version. Skipping.
+2019-09-21 15:32:03.122   -- File entry --
+2019-09-21 15:32:03.128   Dest filename: C:\Program Files (x86)\Enabler4\Release Notes.htm
+2019-09-21 15:32:03.130   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.142   Dest file exists.
+2019-09-21 15:32:03.144   Time stamp of existing file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.149   Version of our file: (none)
+2019-09-21 15:32:03.156   Version of existing file: (none)
+2019-09-21 15:32:03.160   Installing the file.
+2019-09-21 15:32:03.175   Successfully installed the file.
+2019-09-21 15:32:03.181   -- File entry --
+2019-09-21 15:32:03.189   Dest filename: C:\Program Files (x86)\Enabler4\PumpUpdate.htm
+2019-09-21 15:32:03.191   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.193   Dest file exists.
+2019-09-21 15:32:03.195   Time stamp of existing file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.197   Version of our file: (none)
+2019-09-21 15:32:03.202   Version of existing file: (none)
+2019-09-21 15:32:03.204   Installing the file.
+2019-09-21 15:32:03.217   Successfully installed the file.
+2019-09-21 15:32:03.219   -- File entry --
+2019-09-21 15:32:03.225   Dest filename: C:\Program Files (x86)\Enabler4\atutil.exe
+2019-09-21 15:32:03.229   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.232   Dest file exists.
+2019-09-21 15:32:03.235   Time stamp of existing file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.237   Version of our file: 1.6.0.0
+2019-09-21 15:32:03.241   Version of existing file: 1.6.0.0
+2019-09-21 15:32:03.243   Same version. Skipping.
+2019-09-21 15:32:03.251   -- File entry --
+2019-09-21 15:32:03.258   Dest filename: C:\Program Files (x86)\Enabler4\odbcnfg.exe
+2019-09-21 15:32:03.260   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.261   Dest file exists.
+2019-09-21 15:32:03.263   Time stamp of existing file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.264   Version of our file: 1.0.4.0
+2019-09-21 15:32:03.270   Version of existing file: 1.0.4.0
+2019-09-21 15:32:03.274   Same version. Skipping.
+2019-09-21 15:32:03.278   -- File entry --
+2019-09-21 15:32:03.285   Dest filename: C:\Program Files (x86)\Enabler4\odbcnfg64.exe
+2019-09-21 15:32:03.287   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.288   Dest file exists.
+2019-09-21 15:32:03.290   Time stamp of existing file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.291   Version of our file: 1.0.4.0
+2019-09-21 15:32:03.297   Version of existing file: 1.0.4.0
+2019-09-21 15:32:03.300   Same version. Skipping.
+2019-09-21 15:32:03.306   -- File entry --
+2019-09-21 15:32:03.312   Dest filename: C:\Program Files (x86)\Enabler4\EnbKick.exe
+2019-09-21 15:32:03.315   Time stamp of our file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:03.317   Dest file exists.
+2019-09-21 15:32:03.321   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:03.323   Version of our file: 2.2.0.0
+2019-09-21 15:32:03.326   Version of existing file: 2.2.0.0
+2019-09-21 15:32:03.327   Same version. Skipping.
+2019-09-21 15:32:03.330   -- File entry --
+2019-09-21 15:32:03.340   Dest filename: C:\Program Files (x86)\Enabler4\bin\DriveCompressed.exe
+2019-09-21 15:32:03.342   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.344   Dest file exists.
+2019-09-21 15:32:03.345   Time stamp of existing file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.346   Version of our file: (none)
+2019-09-21 15:32:03.366   Version of existing file: (none)
+2019-09-21 15:32:03.372   Installing the file.
+2019-09-21 15:32:03.386   Successfully installed the file.
+2019-09-21 15:32:03.388   -- File entry --
+2019-09-21 15:32:03.393   Dest filename: C:\Program Files (x86)\Enabler4\enbclient.exe
+2019-09-21 15:32:03.396   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.398   Dest file exists.
+2019-09-21 15:32:03.400   Time stamp of existing file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.402   Version of our file: 1.2.0.0
+2019-09-21 15:32:03.406   Version of existing file: 1.2.0.0
+2019-09-21 15:32:03.407   Same version. Skipping.
+2019-09-21 15:32:03.412   -- File entry --
+2019-09-21 15:32:03.418   Dest filename: C:\Program Files (x86)\Enabler4\Interop.IWshRuntimeLibrary.dll
+2019-09-21 15:32:03.420   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.422   Dest file exists.
+2019-09-21 15:32:03.424   Time stamp of existing file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.425   Version of our file: 1.0.0.0
+2019-09-21 15:32:03.429   Version of existing file: 1.0.0.0
+2019-09-21 15:32:03.433   Same version. Skipping.
+2019-09-21 15:32:03.437   -- File entry --
+2019-09-21 15:32:03.443   Dest filename: C:\Program Files (x86)\Enabler4\MsiQueryProduct.exe
+2019-09-21 15:32:03.446   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.451   Dest file exists.
+2019-09-21 15:32:03.453   Time stamp of existing file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.454   Version of our file: (none)
+2019-09-21 15:32:03.468   Version of existing file: (none)
+2019-09-21 15:32:03.470   Installing the file.
+2019-09-21 15:32:03.478   Successfully installed the file.
+2019-09-21 15:32:03.483   -- File entry --
+2019-09-21 15:32:03.488   Dest filename: C:\Program Files (x86)\Enabler4\vcredist_x86.exe
+2019-09-21 15:32:03.490   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.494   Dest file exists.
+2019-09-21 15:32:03.505   Time stamp of existing file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.511   Version of our file: 9.0.30729.17
+2019-09-21 15:32:03.516   Version of existing file: 9.0.30729.17
+2019-09-21 15:32:03.518   Same version. Skipping.
+2019-09-21 15:32:03.523   -- File entry --
+2019-09-21 15:32:03.528   Dest filename: C:\Program Files (x86)\Enabler4\bin\subinacl.exe
+2019-09-21 15:32:03.530   Time stamp of our file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.532   Dest file exists.
+2019-09-21 15:32:03.535   Time stamp of existing file: 2019-08-13 13:26:58.000
+2019-09-21 15:32:03.537   Version of our file: 5.2.3790.1180
+2019-09-21 15:32:03.540   Version of existing file: 5.2.3790.1180
+2019-09-21 15:32:03.542   Same version. Skipping.
+2019-09-21 15:32:03.550   -- File entry --
+2019-09-21 15:32:03.562   Dest filename: C:\Program Files (x86)\Enabler4\bin\EnablerEvent.dll
+2019-09-21 15:32:03.567   Time stamp of our file: 2019-08-20 16:17:20.000
+2019-09-21 15:32:03.574   Dest file exists.
+2019-09-21 15:32:03.576   Time stamp of existing file: 2019-08-20 16:17:20.000
+2019-09-21 15:32:03.577   Version of our file: (none)
+2019-09-21 15:32:03.595   Version of existing file: (none)
+2019-09-21 15:32:03.598   Installing the file.
+2019-09-21 15:32:03.606   Successfully installed the file.
+2019-09-21 15:32:03.609   -- File entry --
+2019-09-21 15:32:03.615   Dest filename: C:\Program Files (x86)\Enabler4\bin\PDFViewer.exe
+2019-09-21 15:32:03.618   Time stamp of our file: 2019-08-20 16:17:20.000
+2019-09-21 15:32:03.619   Dest file exists.
+2019-09-21 15:32:03.621   Time stamp of existing file: 2019-08-20 16:17:20.000
+2019-09-21 15:32:03.622   Version of our file: (none)
+2019-09-21 15:32:03.645   Version of existing file: (none)
+2019-09-21 15:32:03.654   Installing the file.
+2019-09-21 15:32:03.812   Successfully installed the file.
+2019-09-21 15:32:03.817   -- File entry --
+2019-09-21 15:32:03.822   Dest filename: C:\Program Files (x86)\Enabler4\CreateRegKeyEvent.bat
+2019-09-21 15:32:03.824   Time stamp of our file: 2019-08-20 16:17:20.000
+2019-09-21 15:32:03.827   Dest file exists.
+2019-09-21 15:32:03.828   Time stamp of existing file: 2019-08-20 16:17:20.000
+2019-09-21 15:32:03.830   Version of our file: (none)
+2019-09-21 15:32:03.836   Version of existing file: (none)
+2019-09-21 15:32:03.838   Installing the file.
+2019-09-21 15:32:03.842   Successfully installed the file.
+2019-09-21 15:32:03.844   -- File entry --
+2019-09-21 15:32:03.850   Dest filename: C:\Program Files (x86)\Enabler4\Instances.bat
+2019-09-21 15:32:03.852   Time stamp of our file: 2019-08-20 16:17:20.000
+2019-09-21 15:32:03.855   Dest file exists.
+2019-09-21 15:32:03.857   Time stamp of existing file: 2019-08-20 16:17:20.000
+2019-09-21 15:32:03.858   Version of our file: (none)
+2019-09-21 15:32:03.861   Version of existing file: (none)
+2019-09-21 15:32:03.862   Installing the file.
+2019-09-21 15:32:03.870   Successfully installed the file.
+2019-09-21 15:32:03.872   -- File entry --
+2019-09-21 15:32:03.877   Dest filename: C:\Program Files (x86)\Enabler4\EnbSecurityController.exe
+2019-09-21 15:32:03.879   Time stamp of our file: 2019-08-20 16:17:20.000
+2019-09-21 15:32:03.886   Dest file exists.
+2019-09-21 15:32:03.889   Time stamp of existing file: 2019-08-13 13:26:56.000
+2019-09-21 15:32:03.891   Version of our file: 1.1.4.0
+2019-09-21 15:32:03.895   Version of existing file: 1.1.4.0
+2019-09-21 15:32:03.902   Same version. Skipping.
+2019-09-21 15:32:03.915   Saving uninstall information.
+2019-09-21 15:32:03.926   Renaming uninstaller.
+2019-09-21 15:32:03.930   Deleting uninstall key left over from previous administrative 32-bit install.
+2019-09-21 15:32:03.935   Creating new uninstall key: HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Uninstall\{95EC957B-DB36-4EDD-9C7C-B19F896CC37D}_is1
+2019-09-21 15:32:03.937   Writing uninstall key values.
+2019-09-21 15:32:03.940   Detected previous non administrative install? No
+2019-09-21 15:32:03.942   Detected previous administrative 64-bit install? No
+2019-09-21 15:32:03.954   Installation process succeeded.
+2019-09-21 15:32:04.073   Check for V4 Beta License
+2019-09-21 15:32:04.343   Result code from COnvertV4BetaLicense was 1
+2019-09-21 15:32:07.105   Start of setting permissions 21-09-2019 15:32:07
+2019-09-21 15:32:08.868   End of setting permissions 21-09-2019 15:32:08
+2019-09-21 15:32:08.962   Registering Enabler objects
+2019-09-21 15:32:10.995   Configuring DCOM
+2019-09-21 15:32:11.007   WARNING: no server name given - setting to default value SERVER
+2019-09-21 15:32:11.127   Execute path: C:\WINDOWS\system32\msiexec.exe /quiet /L+* C:\Program Files (x86)\Enabler4\log\APIInstall.log /uninstall C:\Program Files (x86)\Enabler4\InstallEnablerAPI.msi
+2019-09-21 15:32:11.134   EnablerVersion: 4.6.3.6087
+2019-09-21 15:32:11.152   Execute path: C:\WINDOWS\system32\msiexec.exe /quiet /L+* C:\Program Files (x86)\Enabler4\log\APIInstall.log /X C:\Program Files (x86)\Enabler4\InstallEnablerAPI.msi
+2019-09-21 15:32:11.189   Silent setting is 0
+2019-09-21 15:32:11.197   Install is finished
+2019-09-21 15:32:11.256   Need to restart Windows? No
+2019-09-21 15:32:58.590   Deinitializing Setup.
+2019-09-21 15:32:58.713   Unable to delete log file C:\Users\dell\AppData\Local\Temp\Setup Log 2019-09-21 #006.txt

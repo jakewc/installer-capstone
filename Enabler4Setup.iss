@@ -1970,37 +1970,33 @@ var
   LOGTIME:String;
   LOGTIME2:String;
   ResultCode:Integer;
-  CLIENTEMBEDDED:String;//remain problem
-  SERVER:String;   //not sure
-
+  SERVER:String;  
+  progressPage: TOutputProgressWizardPage;
 Begin
 
   Exec('net.exe', 'localgroup /add EnablerAdministrators', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
   if SILENT = false then begin
-    MsgBox('The Enabler', mbinformation, mb_OK);
-  End;
+    try
+      progressPage := CreateOutputProgressPage('Progress Stage','The Enabler');
+      progressPage.SetProgress(0, 0);
+      progressPage.Show;
+    finally
+      progressPage.Hide;
+    end;
+  end;
   Exec(ExpandConstant('{app}\CreateRegKeyEvent.bat'), '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=directoriesonly ' + ExpandConstant('{app}')+'\log /grant='+ BUILTIN_USERS_GROUP+ '=CRWD /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=filesonly ' + ExpandConstant('{app}')+'\log\*.* /grant='+ BUILTIN_USERS_GROUP+ '=CRWD /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  //Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=directoriesonly ' + ExpandConstant('{app}')+'\log /grant='+ BUILTIN_USERS_GROUP+ '=CRWD /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  //Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=filesonly ' + ExpandConstant('{app}')+'\log\*.* /grant='+ BUILTIN_USERS_GROUP+ '=CRWD /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
 
   LOGTIME := GetDateTimeString('dd/mm/yyyy hh:nn:ss', '-', ':');
   Log(Format('Start of setting permissions %s', [LOGTIME]));
 
-  if COMPONENTS = 'B' then begin
-    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\enbkick.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\vsql.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\fcman.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + OSQL_PATH +' /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + OSQL_PATH +' /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/service psrvr4 /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  End;
-
   Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{sys}')+'\eventvwr.msc /grant='+BUILTIN_USERS_GROUP+'= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
   Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{sys}')+'\config\Enabler.evt /grant='+BUILTIN_USERS_GROUP+'= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\log /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\log\*.* /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\ /grant=EnablerAdministrators=F', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  //Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\log /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  //Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\log\*.* /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+     
+  //Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\ /grant=EnablerAdministrators=F', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
   Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{app}')+' /grant=EnablerAdministrators=F', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
 
   Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=filesonly'+ExpandConstant('{app}')+'\*.* /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
@@ -2010,31 +2006,32 @@ Begin
   LOGTIME2 := GetDateTimeString('dd/mm/yyyy hh:nn:ss', '-', ':');
   Log(Format('End of setting permissions %s', [LOGTIME2]));
 
-  if SILENT = false then Begin
-    MsgBox('The Enabler', mbinformation, mb_OK);
-  End;
+  if SILENT = false then begin
+    try
+      progressPage := CreateOutputProgressPage('Progress Stage','The Enabler');
+      progressPage.SetProgress(0, 0);
+      progressPage.Show;
+    finally
+      progressPage.Hide;
+    end;
+  end;
 
   if COMPONENTS = 'B' then Begin
     MsgBox('Skip', mbinformation, mb_OK);
-    //Log('Installing or Updating EnablerDB');
-    //if SILENT = false then Begin
-    //  MsgBox('The Enabler', mbinformation, mb_OK);
-    //End;
-    //Exec(ExpandConstant('{app}') + '\bin\psrvr4.exe', '/servuce', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    //Exec(ExpandConstant('{app}') + '\bin\enbweb.exe', '/install', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    //Log('Update Services Start timout setting');
-    //RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control','WaitToKillServiceTimeout','180000');
-    //if SILENT = false then Begin
-    //  MsgBox(' ', mbinformation, mb_OK);
-    //End;
   End
   Else Begin
     if SILENT = false then begin
-      MsgBox(APPTITLE, mbinformation, mb_OK);
-    End;
+    try
+      progressPage := CreateOutputProgressPage('Progress Stage',APPTITLE);
+      progressPage.SetProgress(0, 0);
+      progressPage.Show;
+    finally
+      progressPage.Hide;
+    end;
+  end;
     Log('Registering Enabler objects');
     Exec('rsgsvr32.exe', '/s '+ExpandConstant('{app}')+'\EnbSessionX2.OCX', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    if CLIENTEMBEDDED <> 'A' then begin
+    if embedded = false then begin
       sleep(2000);
       Log('Configuring DCOM');
       If SERVER_NAME = '' then begin
@@ -2057,8 +2054,14 @@ Begin
     End;
 
     if SILENT = false then begin
-      MsgBox('', mbinformation, mb_OK);
-    end
+    try
+      progressPage := CreateOutputProgressPage('Progress Stage','');
+      progressPage.SetProgress(0, 0);
+      progressPage.Show;
+    finally
+      progressPage.Hide;
+    end;
+  end;
   End;
 
 End;
@@ -2239,7 +2242,7 @@ begin
     basicPDFFiles();
     SDKFiles();    
     updateSystemConfig();
-    //setupAccessPermission();
+    setupAccessPermission();
     logUninstallItems();
     decideReboot();
   end;  
