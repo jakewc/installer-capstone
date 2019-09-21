@@ -277,6 +277,7 @@ var
   INSTANCE_NAME_LIST:Boolean;
   CMD_INSTANCE:boolean;
   SQL_INSTANCES:String;
+  SQLEXPRESSFULLNAME:String;
 
   //OSQL_PATH stores the path to OSQL.EXE
   OSQL_PATH:String;
@@ -1337,6 +1338,62 @@ begin
   end;
 end;
 
+//===========================
+//Check Vista Service Packs
+//===========================
+
+procedure checkSP();
+
+var
+  VISTASP:string;
+
+begin
+  if COMPONENTS = 'B' then begin
+    if SQL_NEEDED = true then begin
+      if SQLEXPRESSNAME = 'SQL2012' then begin
+        if OPERATING_SYSTEM = '6' then begin
+          RegQueryStringValue(HKEY_LOCAL_MACHINE, 'Software\Microsoft\Windows NT\CurrentVersion', 'CSDBuildNumber', VISTASP);
+          Log('Vista build number is ' + VISTASP);
+          // NOTE: 6.0 = Windows Vista or Windows Server 2008 1171
+          // NOTE: msu files do not support the /passive switch
+          if VISTASP = '2' then begin
+            //no SP installed
+            //installing SP1
+            MsgBox('SQL2012 prerequisites not met - Vista Service Pack 1 not installed', mbinformation, MB_OK);
+            Log('ERROR: Vista has no required Service Packs installed, exiting installation.');
+            Abort();
+          end
+          else if VISTASP = '1616' then begin
+            //no SP2 installed
+            MsgBox('SQL2012 prerequisites not met - Vista Service Pack 2 not installed', mbinformation, MB_OK);
+            Log('ERROR: Vista does not have required Service Pack 2 installed, exiting installation.');
+            Abort();
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
+//======================
+//Blank password checks
+//====================== 
+
+//It should be impossible to get here, Innosetup checks the password field is not blank
+procedure blankPasswordChecks();
+begin
+  if COMPONENTS = 'B' then begin
+    if SQLEXPRESSNAME <> 'MSDE2000' then begin
+      if SA_PASSWORD = '' then begin
+        Log('Blank passwords are not allowed for ' + SQLEXPRESSFULLNAME);
+        if SILENT = false then begin
+          Msgbox('Passwords blank, aborting install', mbinformation, MB_OK);
+        end;
+        Abort();
+      end;
+    end;
+  end;
+end;
 
 
 //=============================
@@ -1678,7 +1735,7 @@ begin
   SAPasswordPage:=CreateInputQueryPage(noServerInstalledPage.ID, 'To install the SQL Server SQL2014Express, SA password is required.', '','To install the SQL Server SQL2014Express, SA password is required. Please choose a strong password and keep it for future reference.');
   SAPasswordPage.Add(SetupMessage(msgPasswordEditLabel),True);
   SAPasswordPage.Add('Re-enter password:',True);
-  SA_PASSWORD:=SAPasswordPage.Edits[0].Text;
+  //SA_PASSWORD:=SAPasswordPage.Edits[0].Text;
 end;
 
 //========================================
@@ -2215,6 +2272,7 @@ begin
   // Set the main and backup directory as the last step in the wizard. 
   MAINDIR:=ExpandConstant('{app}');
   BACKUP:=MAINDIR+'\BACKUP';
+  SA_PASSWORD:=SAPasswordPage.Edits[0].Text;
 
 end;
 
@@ -2232,8 +2290,10 @@ begin
     //saveConfig();
     installNet3Point5();
     installNet4();
+    checkSP();
   end;
   if CurStep = ssPostInstall then begin
+    blankPasswordChecks();
     //cplusplus();
     removeRegistryVars();
     installEnablerFiles();
