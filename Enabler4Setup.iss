@@ -1021,8 +1021,9 @@ end;
 
 procedure parseCommandLineOptions();
 begin
+  //CMDLINEUPPER:= GetCmdTail;
   CMDLINEUPPER:= ExpandConstant('{param:CMDLINEVAL|}');  //  NOTE!!! You need /CMDLINEVAL='' to specify a command line command
-  if CMDLINEUPPER <> '' then begin
+  if (CMDLINEUPPER <> '') or WizardSilent then begin  // If command line values or the native parameter /SILENT has been specified.
     CMDOPTION:= CMDLINEUPPER;
     CMDUPPER:= CMDLINEUPPER;
     //!!! DEBUG ONLY - COMMENT OUT FOR RELEASE !!! MAKES PASSWORD VISIBLE!!!!
@@ -1050,7 +1051,7 @@ begin
     end;
 
     //Silent unattended install
-    if pos('/S',CMDUPPER) <> 0 then begin
+    if (pos('/S',CMDUPPER) <> 0) or WizardSilent then begin
       Log('SILENT install selected')
       UNATTENDED:='1'
       SILENT:=true
@@ -2784,13 +2785,13 @@ end;
 //=========================
 procedure InitializeWizard();
 begin
-  createReadMePage();
-  createPageInstallType();
-  createClientSelectedPage();
-  createInstanceNamePage();
-  createNoServerInstalledPage();
-  createSAPasswordPage();
-  createNetworkPortPage();
+    createReadMePage();
+    createPageInstallType();
+    createClientSelectedPage();
+    createInstanceNamePage();
+    createNoServerInstalledPage();
+    createSAPasswordPage();
+    createNetworkPortPage();
 end;
 
 
