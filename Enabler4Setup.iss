@@ -8,7 +8,7 @@ DefaultDirName={commonpf}\Enabler4
 OutputBaseFilename=Enabler4Setup
 SetupLogging=yes
 DisableWelcomePage=no
-
+RestartIfNeededByRun=yes
 
 [Files]
 ; The following two lines are for testing the installer adds the files applicable for the installation type (client or server).
@@ -936,9 +936,20 @@ procedure SQLServerBlankPasswordChecks();
   The Server Component requires either a preinstalled DB Server, or to install our own
 *)
 
+function NeedRestart(): Boolean;
+begin
+    Result:= True;
+end;
+
 procedure InstallSQLServerOrCheckSALogin();
     var
       INST_DRIVE: string;
+      USER_DOMAIN: string;
+      USER_NAME: string;
+      SQL_SYSADMIN_USER: string;
+      INSTALL_RESULT: integer;
+      REG_KEY_IN: string;
+
     begin
        //If enabler server install selected  
        if components = 'B' then
@@ -946,7 +957,7 @@ procedure InstallSQLServerOrCheckSALogin();
              if SQL_NEEDED = 1 then
                 begin
                     INST_DRIVE := '{app}';
-                    INST_DRIVE := INST_DRIVE + ':';
+                    INST_DRIVE := INST_DRIVE + ':';              
                     CreateDir(MAINDIR);
                     if SQLEXPRESSNAME = 'MSDE2000' then
                       begin
@@ -972,14 +983,166 @@ procedure InstallSQLServerOrCheckSALogin();
                     else
                         begin
                           // Install SQL2016 / 2014 / 2012 / 2008 /2005
+                            USER_DOMAIN:= GetEnv('USERDOMAIN');
+                            USER_NAME:= GetEnv('USERNAME');
+                            SQL_SYSADMIN_USER:= USER_DOMAIN + '\' + USER_NAME;
+                            Log('Assigning system administrator privileges to ' + SQL_SYSADMIN_USER);
+                            //Install the SQLInstall batch file.
+                            FileCopy('{app}\scripts\SQLInstall.bat', MAINDIR + '\SQLInstall.bat', False);
+                            if SILENT = 0 then
+                              begin
+                                 MsgBox('Installing SQL Server ' + SQLEXPRESSNAME, mbInformation, MB_OK);
+                                 Log('Starting {SQLEXPRESSNAME} install from {INST}\{SQLEXPRESSNAME}');
+                              end;
+                            if SQLEXPRESSNAME =  'SQL2016' then
+                              begin
+                                 //Extra checks for SQL2016 - Must be 64 bit and Windows greater than Windows 7
+                                 if OPERATING_SYSTEM < 6.2 then
+                                    begin
+                                       if UNATTENDED = 0 then
+                                          begin
+                                             MsgBox('{SQLEXPRESSFULLNAME} Install', mbInformation, mb_OK);
+                                             Log('ERROR: {SQLEXPRESSFULLNAME} not supported on Windows 7');
+                                             Abort();
+                                          end
+                                    end;
+                                 if OS <> 64 then
+                                    begin
+                                       if UNATTENDED = 0 then
+                                          begin
+                                             MsgBox('{SQLEXPRESSFULLNAME} Install', mbInformation, mb_OK);
+                                             Log('ERROR: {SQLEXPRESSFULLNAME} not supported on 32 bit installs');
+                                             Abort();
+                                          end
+                                    end;
+                                 //SQL2016 Express Install
+                                 //Path to setup exe depends on whether 32 or 64 bit OS is found ( Only 64 bit for SQL2016)
+                                 INSTALL_RESULT:=  CommandPromptExecutor('/C '+MAINDIR+'\SQLInstall.bat '+ INST_DRIVE + '"{app}\SQL2016\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"');                                
+                              end
+                            else if SQLEXPRESSNAME =  'SQL2014' then
+                               begin
+                                 //Path to setup exe depends on whether 32 or 64 bit OS is found
+                                  INSTALL_RESULT:=  CommandPromptExecutor('/C '+MAINDIR+'\SQLInstall.bat '+ INST_DRIVE + '"{app}\SQL2014\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"');                                
 
+                               end
+                            else if SQLEXPRESSNAME =  'SQL2012' then
+                               begin
+                                 //Path to setup exe depends on whether 32 or 64 bit OS is found
+                                  INSTALL_RESULT:=  CommandPromptExecutor('/C '+MAINDIR+'\SQLInstall.bat '+ INST_DRIVE + '"{app}\SQL2012\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"');                                
+
+                               end
+                            else if SQLEXPRESSNAME =  'SQL2008  ' then
+                               begin
+                                 //Path to setup exe depends on whether 32 or 64 bit OS is found
+                                  Log('About to issue command: /C '+MAINDIR+'\SQLInstall.bat '+ INST_DRIVE + '"{app}\SQL2008R2\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"');
+                                  INSTALL_RESULT:=  CommandPromptExecutor('/C '+MAINDIR+'\SQLInstall.bat '+ INST_DRIVE + '"{app}\SQL2008R2\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"');                                
+
+                               end
+                            else
+                              begin
+                                //SQL2005 Express Install
+                                INSTALL_RESULT:=  CommandPromptExecutor('/C '+MAINDIR+'\SQLInstall.bat '+ INST_DRIVE + '"{app}\SQL2005\{OS}" "{SA_PASSWORD}"');                                
+                                Log('Result of SqlInstall {INSTALL_RESULT}');
+                              end;
+                            //Error 1 - Password not strong
+                            if INSTALL_RESULT = 1 then
+                              begin
+                                 if UNATTENDED = 0 then
+                                    begin
+                                       Log('{SQLEXPRESSFULLNAME} install failed due to SQL password not strong');
+                                       Abort();
+                                    end
+                              end;
+                            //Make sure the SQL Server doesn't need a reboot
+                            if INSTALL_RESULT = 2 then
+                              begin
+                                 MsgBox('Reboot required', mbInformation, MB_OK);
+                                 //Add Registry Keys before rebooting
+                                 RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler', 'ITL', 'Enabler');
+                                 //Stop writing to installation log                                 
+                                 RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'Enabler', '{INST}\Enabler4Setup.exe');
+                                 Log('{SQLEXPRESSFULLNAME} installed - reboot pending');
+                                 //Reboot system
+                                 if MsgBox('Reboot system?', mbConfirmation, MB_YESNO) = IDYES then
+                                   begin
+                                       NeedRestart();
+                                       //EXIT Installation;
+                                   end;
+
+                              end;
+                            //Error 3 - Updates required
+                            if INSTALL_RESULT = 3 then
+                              begin
+                                 if UNATTENDED = 0  then
+                                    begin
+                                       MsgBox('{SQLEXPRESSFULLNAME} Install', mbInformation, MB_OK);
+                                       Log('ERROR: {SQLEXPRESSFULLNAME} install failed, updates are required');
+                                       //EXIT INSTALLATION
+                                       Abort();
+                                    end
+                              end;
+                            //Error 4 or any other error - Failed Intall
+                            //Make sure the SQL Server was installed
+                            if INSTALL_RESULT <> 0 then
+                              begin
+                                 MsgBox('{SQLEXPRESSFULLNAME} Install', mbInformation, MB_OK);
+                                 Log('ERROR: {SQLEXPRESSFULLNAME} install failed'); \
+                                 //EXIT INSTALLATION
+                                 Abort();
+                              end;
+                            //Make sure the SQL Server engine is running
+                            //Start Service mssqlserver
+                            if SILENT = 0 then
+                              begin
+                                 MsgBox('', mbInformation, MB_OK);
+                              end;
+                            //Set up Registry Key for SQL version client Setup
+                            if SQLEXPRESSNAME = 'SQL2016' then
+                              begin
+                              REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\130\\Tools\\ClientSetup';
+                              end
+                            else if SQLEXPRESSNAME = 'SQL2014' then
+                              begin
+                                REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\120\\Tools\\ClientSetup';
+                              end                              
+                            else if SQLEXPRESSNAME = 'SQL2012' then
+                              begin
+                                REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\110\\Tools\\ClientSetup';
+                              end
+                            else if SQLEXPRESSNAME = 'SQL2008R2' then
+                              begin
+                                REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\100\\Tools\\ClientSetup';
+                              end; 
+                            //If we get here must send the full path to OSQL.EXE to DBInstall to make sure it can run properly
+                            if REG_KEY_IN <> '' then
+                              begin
+                                   //This block of code were original remarks in the old script so I am just replicating them here
+                                  (*1631 Rem == We are using a custom built DLL to get the registry key
+                                  value from the windows registry
+                                  1632 Rem == if installing on a 64-bit OS the DLL will get the key from
+                                  the 64-bit side of the registry.
+                                  1633 Rem == This is required because this installer (which is a 32-bit
+                                  app) would otherwise incorrectly retrieve keys from the 32-...
+                                  1634 Rem == FYI - - - On a 64-bit system there would be a \Program
+                                  Files\ folder for 64-bit apps
+                                  1635 Rem == FYI - - - ...and a \Program Files (x86)\ folder for 32-bit
+                                  apps
+                                  1636 Rem*)
+                              end
+                        end
+                end
+          end
+    end;                    
+ (*
+
+1628 If REG_KEY_IN Not Equal "" then)
                         end
 
 
                 end
           end
 
-    end;
+    end;  *)
   
 function InitializeSetup(): Boolean;
 begin
