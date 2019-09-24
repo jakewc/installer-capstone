@@ -87,10 +87,14 @@ var
   OPERATING_SYSTEM: Longint;
   //Initialise unattended variables
 
+  DRIVERCODE := integer;
   UNATTENDED: integer;
   SILENT: integer;
   PHASE2: integer;
 
+
+  //APPTITLE is the application title of the installation
+  APPTITLE: string;
 
   // Installation Type page variables.
   pageInstallType: TwizardPage;
@@ -941,6 +945,10 @@ begin
     Result:= True;
 end;
 
+function GetRegKeyValue(): Integer;
+external'GetRegKeyValue@files:EnablerInstall.dll stdcall';
+
+
 procedure InstallSQLServerOrCheckSALogin();
     var
       INST_DRIVE: string;
@@ -949,6 +957,9 @@ procedure InstallSQLServerOrCheckSALogin();
       SQL_SYSADMIN_USER: string;
       INSTALL_RESULT: integer;
       REG_KEY_IN: string;
+      SUB_KEY_IN: string;
+      REGKEY: integer;
+      POSQL_PATH: string;
 
     begin
        //If enabler server install selected  
@@ -1128,22 +1139,163 @@ procedure InstallSQLServerOrCheckSALogin();
                                   1635 Rem == FYI - - - ...and a \Program Files (x86)\ folder for 32-bit
                                   apps
                                   1636 Rem*)
+                                  if OS = 64 then
+                                    begin
+                                      SUB_KEY_IN:= GetEnv('PATH'); 
+                                      Log('64-bit OS therefore copying EnablerInstall.dll');
+                                      FileCopy('{app}\bin\enablerinstall.dll', MAINDIR + '\bin\EnablerInstall.dll', False);
+                                      REGKEY:= GetRegKeyValue();
+                                      Log('The path to OSQL.EXE for this 64-bit install of SQL Server is: ' + IntToStr(REGKEY));
+                                      OSQL_PATH:= IntToStr(REGKEY);
+                                      Log('OSQL_PATH is currently set to ' + OSQL_PATH);
+                                    end
+                                  else if OS = 32 then
+                                    begin
+                                       Log('32-bit OS therefore will use standard WISE way to get key from registry');
+                                       RegQueryStringValue('HKEY_AUTO', REG_KEY_IN, 'Default', OSQL_PATH);
+                                       Log('OSQL_PATH is ' + OSQL_PATH);
+                                       
+                                    end;
+                                  Log('Processor bit size (e.g. 32/64 bit), the variable OS is ' + IntToStr(OS));
                               end
+                            else
+                              begin
+                                  //Locate OSQL for SQL2005 and MSDE2000
+                                  RegQueryStringValue('HKEY_AUTO', 'Software\Microsoft\Windows\CurrentVersion', 'Default', POSQL_PATH);
+                                  //Try SQL2005 Path first
+                                  OSQL_PATH := POSQL_PATH+ '\Microsoft SQLServer\90\Tools\Binn';
+                                  if FileExists(OSQL_PATH +'\OSQL.EXE')=False then
+                                      begin
+                                         //Try MSDE Path second
+                                         OSQL_PATH := POSQL_PATH+ '\Microsoft SQLServer\80\Tools\Binn';
+                                      end;
+                                  Log('Location of OSQL.EXE is %OSQL_PATH% (SQL2005 Installation in progress)');
+                                  
+                              end;
+                            //In case we can't find OSQL.EXE anywhere
+                            if FileExists(OSQL_PATH +'\OSQL.EXE')=False then
+                                begin
+                                   Log('ERROR: Cannot find OSQL.EXE');
+                                   Abort();
+                                end;
+                            //OSQL should work now, we will test it now to make sure.
+                            Log('Making sure that OSQL works ' + OSQL_PATH);
+                            INSTALL_RESULT := CommandPromptExecutor(OSQL_PATH+'\OSQL.EXE -b -d master -E -S%SQLQUERY% -Q "select count(*) from sysobjects"');
+                            if INSTALL_RESULT = 0 then
+                                begin
+                                  //Ok we can run oSQL properly now, so remove Registry entries to restart after reboot
+                                  RegDeleteKeyIncludingSubkeys('HKLM', 'Software\ITL\Enabler');
+                                  (*1678 Rem Stop adding this entry to the Log file. This stops this being doing on uninstall.
+                                    1679 Rem If the RunOnce key is deleted on uninstall and then Enabler is reinstalled the driver will fail its install
+                                    1680 Rem As windows requires the runonce key to be present to install drivers*);
+                                    //Stop writing to installation log
+                                  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'Enabler', '{INST}\Enabler4Setup.exe');
+                                  Log('OSQL working OK');  
+                                end
+                            else
+                                begin
+                                  //We cannot continue with install now because OSQL is not working correctly, a reboot is required'):
+                                   if UNATTENDED = 0 then
+                                      begin
+                                         MsgBox(APPTITLE, mbInformation, MB_OK);
+                                      end;
+                                   Log('OSQL not working, rebooting...');
+                                   NeedRestart();
+                                   //EXIT INSTALLATION
+                                   Abort();
+                                end
                         end
                 end
+            else
+               begin
+                  //If a SQL already installed Make sure the SQL server is running
+                  if SQL_INSTANCE = '' then
+                      begin
+                          CommandPromptExecutor('net start mssqlserver');
+                      end
+                  else
+                      begin
+                          CommandPromptExecutor('net start MSSQL$'+SQL_INSTANCE);
+
+                      end
+               end;
+            //INSTALL WINDOWS DRIVER FOR ENABLER
+            if DirExists('{app}\Driver') then
+              begin
+                if SILENT = 0 then
+                  begin
+                     MsgBox('Installing', mbInformation, MB_OK);
+                     //Delete All Drivers before copy the latest
+                     DelTree(MAINDIR+'\Driver\*', False, True, True);
+                     //Copy Installation files across
+                     FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                     if OS = 64 then
+                        begin
+                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+
+                        end
+                     else
+                          begin
+                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                          end;
+                     //Check that the RunOnce Key is present and create it if it doesn't
+                     if RegKeyExists('HKLM', 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce')=False then
+                        RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'EnablerDriver', MAINDIR+'\Driver\DriverInstaller.exe');
+; 
+                     //Installs the Driver calling an application that returns a success or not
+                     INSTALL_RESULT:= CommandPromptExecutor(MAINDIR+'\Driver\DriverInstaller.exe');
+                     if INSTALL_RESULT = 1 then
+                        begin
+                           //requires reboot
+                           DRIVERCODE := 1;
+
+                        end
+                     else if INSTALL_RESULT = 2 then
+                        begin
+                           //Failed Install
+                           DRIVERCODE = 2;
+
+                        end
+                     else if INSTALL_RESULT = 3 then
+                        begin
+                           //No device present
+                           DRIVERCODE:= 3;
+                        end
+                     else
+                        begin
+                           //Successful install
+                           DRIVERCODE:= 0;
+                        end
+                     if SILENT = 0 then
+                        begin
+                           MsgBox('Installing', mbInformation, MB_OK);
+
+                        end
+                  end
+
+              end  
+           else
+              begin
+                 MsgBox('Unable to install driver', mbInformation, MB_OK);
+              end
           end
+      //End installing server components
     end;                    
- (*
 
-1628 If REG_KEY_IN Not Equal "" then)
-                        end
-
-
-                end
-          end
-
-    end;  *)
-  
 function InitializeSetup(): Boolean;
 begin
   appName := '{#SetupSetting("AppName")}';
@@ -1153,10 +1305,12 @@ begin
   //===================================
 
   Log('Initialising variables.');
+  APPTITLE:= 'Enabler';
   INSTANCE_NAME_NEEDED:= 1;
   INSTANCE_NAME_LIST:= 0;
   MAINDIR:= 'C:\%MAINDIR%';
   PC_NAME:= GetComputerNameString();
+  DRIVERCODE:= 0;
 
 
   Result := True;
