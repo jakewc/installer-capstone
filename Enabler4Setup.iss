@@ -114,6 +114,7 @@ var
   CMD_INSTANCE: string;
   SQL_INSTANCES: string;
 
+  INST_DRIVE: string;
  // OSQL_PATH stores the path to OSQL.EXE
   OSQL_PATH: string;
 
@@ -284,6 +285,7 @@ procedure DisplayMessage(Caption: String; Description: String; Duration: Integer
            end;
     end;
 
+ //to be used in SqlSetup procedure
 function getTemporaryFilenameIntoInstances(): Integer;
   var
     path: string;
@@ -306,7 +308,47 @@ function getTemporaryFilenameIntoInstances(): Integer;
   end;
 
 
-procedure SetInstanceNameNeeded();
+
+//to be used in SqlSetup procedure
+//OSQL DETECT DEFAULT SQL NAMED INSTANCES
+procedure OsqlDetectDefaultSqlNamedInstances();   
+  var
+  INSTALL_RESULT: integer;
+
+  begin
+    //Execute the sql to get the verify the instance name of the default instance or the instance name passed by the command
+    Log('Query database to check instance name' + SQLQUERY);
+    INSTALL_RESULT:= CommandPromptExecutor(OSQL_PATH + '\OSQL.EXE -b -d master -E -S%SQLQUERY% -Q "select count(*) from sysobjects"');
+    if INSTANCE_NAME_LIST <> 1 then if INSTANCE_NAME_NEEDED = 1 then
+      begin
+         if INSTALL_RESULT <> 0 then
+            begin
+                Log('"%SQLQUERY% database instance does not exisit or the SQL server is not configured correctly the osql query failed...');
+                //Try again with a different Instance name
+                SQL_INSTANCE := 'SQLEXPRESS';
+                SQLQUERY := PC_NAME + '\' + SQL_INSTANCE;
+                Log('Query database to check instance name ' + SQLQUERY); 
+                INSTALL_RESULT:=   CommandPromptExecutor('%OSQL_PATH%\OSQL.EXE -b -d master -E -S%SQLQUERY% -Q "select count(*) from sysobjects"'); 
+                if INSTALL_RESULT <> 0 then
+                    begin
+                       SQL_INSTANCE:= '';
+                       Log(SQLQUERY + ' database instance does not exisit or the SQL server is not configured correctly the osql query');
+                       INSTANCE_NAME_NEEDED:= 1;
+                    end
+                else
+                   begin
+                      INSTANCE_NAME_NEEDED:= 0;
+                   end
+             end
+         else
+            begin
+               INSTANCE_NAME_NEEDED:= 0;
+            end
+       end
+  end;
+
+//to be used in SqlSetup procedure
+procedure GetListOfNamedInstances();
   var
     INSTALL_RESULT: Integer;
     LINE: string;
@@ -340,44 +382,36 @@ procedure SetInstanceNameNeeded();
             end;
           //Build list of instances names in case they need to be displayed
           SQL_INSTANCES:= NAME + '\n';
+          Log('"SQL Instance Names found ' + SQL_INSTANCES );
+          //Check if we found a known instance, if we haven't do we have a list of instances
+          if  INSTANCE_NAME_NEEDED = 1 then
+             begin
+                if Length(Trim(SQL_INSTANCES)) > 0 then
+                   begin
+                      //We have fouind instance names, if we haven't found a default one we need to display the list
+                      INSTANCE_NAME_LIST := 1;
+                   end
+             end
         end;
-  end;
-
-  
-
-procedure CheckKnownInstances();
-  begin
-      //Check if we found a known instance, if we haven't do we have
-      //a list of instances
-      if INSTANCE_NAME_NEEDED=1 then if Length(Trim(SQL_INSTANCES)) > 0 then
+     if Length(Trim(SQL_INSTANCES)) <= 0 then
         begin
-          //We have fouind instance names, if we haven't found a default one we need to display the list
-          INSTANCE_NAME_LIST:= 1;
+            Log('No SQL Instance names found');
         end;
-      if Length(Trim(SQL_INSTANCES)) <= 0 then
-        begin
-          Log('No SQL Instance names found');
 
-        end;
-  end;
+     //Rem If we found no avaliable instances
+     if INSTANCE_NAME_LIST <> 1 then
+       begin
+        if INSTANCE_NAME_NEEDED = 1 then
+          begin
+              OsqlDetectDefaultSqlNamedInstances();
+          end
+       end
+  end; 
 
-// do this iff we found no available instances
-procedure OsqlDetectDefaultSqlNamedInstances();   
-  begin
-    if INSTANCE_NAME_LIST <> 1 then if INSTANCE_NAME_NEEDED = 1 then
 
-  end;
-
-procedure GetListOfNamedInstances();
-
-  begin
-     GetTemporaryFilenameIntoInstances();
-     SetInstanceNameNeeded();
-     CheckKnownInstances();
-     OsqlDetectDefaultSqlNamedInstances();     
-  end;
-
-procedure SqlServerSetup();
+//lines 480-704
+//SQL SETUP
+procedure SqlSetup();
     begin
        //Some initial checks are required to determine the wizard flow relating to the SQL install
        OSQL_PATH := FileSearch('osql.exe', GetEnv('PATH'));
@@ -437,14 +471,47 @@ procedure SqlServerSetup();
         else
            begin       
 
-              Log('OSQL has been found SQL SERVER ALREADY INSTALLED');
+              //'OSQL has been found SQL SERVER ALREADY INSTALLED';
               SQL_NEEDED := 0;
-              DisplayMessage('The Enabler', 'The Enabler', 5);
-              GetListOfNamedInstances();
-
-              
-           end 
-    end;
+              if SILENT  = 0 then
+                begin
+                    MsgBox('The Enabler', mbInformation, MB_OK);
+                end;
+              if CMD_INSTANCE = '' then
+                begin
+                  GetListOfNamedInstances();
+                end;
+              //GET AVALIABLE SQL SERVERS FOR CLIENT INSTALL
+              (*Gets the avaliable SQL Servers. Although for this to work we would
+                have to redistrubute SQLCMD
+                681 /* Get Temporary Filename into SERVERS
+                682 Rem -L gives list of servers, c option gives a clean output
+                683 /* Execute %OSQL_PATH%\OSQL.EXE -L c -o %TEMP%\%SERVERS% (Wait)
+                684 /* If INSTALL_RESULT Not Equal "0" then
+                685 /* Add "Unable to get list of SQL Servers" to INSTALL.LOG
+                686 /* End*)
+              if SILENT = 0 then
+                  begin
+                     MsgBox('The Enabler', mbInformation, MB_OK);
+                  end                     
+           end; 
+        //Rem Check if the source media is located in a network drive
+        if SQLEXPRESSNAME <> '' then
+          begin
+             if INST_DRIVE = '\\' then
+                //Rem If the installer is being run from a network location (UNC name)
+                //then we cannot install SQL2005
+                begin
+                  if UNATTENDED = 0 then
+                    begin
+                        MsgBox('Cannot install ' + SQLEXPRESSNAME + ' from UNC_path', mbInformation, MB_OK);
+                        Log('ERROR: Cannot install ' + SQLEXPRESSNAME + ' from  UNC_path');
+                        Abort();
+                    end
+                end
+          
+          end;
+      end;
 
 
 //LINE 904-1010
@@ -951,7 +1018,6 @@ external'GetRegKeyValue@files:EnablerInstall.dll stdcall';
 
 procedure InstallSQLServerOrCheckSALogin();
     var
-      INST_DRIVE: string;
       USER_DOMAIN: string;
       USER_NAME: string;
       SQL_SYSADMIN_USER: string;
@@ -1329,7 +1395,7 @@ end;
 procedure RadioServerClicked(Sender: TObject);
 begin
   components := 'B';  // Server install.
-  SqlServerSetup(); //calls the procedure to setup sql
+  SqlSetup(); //calls the procedure to setup sql
 end;
 
 

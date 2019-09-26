@@ -1,0 +1,22 @@
+﻿2019-10-01 23:32:45.991   Log opened. (Time zone: UTC+13:00)
+2019-10-01 23:32:45.991   Setup version: Inno Setup version 6.0.2 (u)
+2019-10-01 23:32:45.992   Original Setup EXE: C:\Users\14400\Documents\capstone-github\installer-capstone\Sprint1\Week4\Enabler4Setup.exe
+2019-10-01 23:32:45.992   Setup command line: /SL5="$50452,69242528,721408,C:\Users\14400\Documents\capstone-github\installer-capstone\Sprint1\Week4\Enabler4Setup.exe" /SPAWNWND=$60252 /NOTIFYWND=$100222 
+2019-10-01 23:32:45.992   Windows version: 10.0.17134  (NT platform: Yes)
+2019-10-01 23:32:45.992   64-bit Windows: Yes
+2019-10-01 23:32:45.993   Processor architecture: x64
+2019-10-01 23:32:45.993   User privileges: Administrative
+2019-10-01 23:32:45.999   Administrative install mode: Yes
+2019-10-01 23:32:45.999   Install mode root key: HKEY_LOCAL_MACHINE
+2019-10-01 23:32:45.999   64-bit install mode: No
+2019-10-01 23:32:46.007   Created temporary directory: C:\Users\14400\AppData\Local\Temp\is-1L10Q.tmp
+2019-10-01 23:32:47.181   Initialising variables.
+2019-10-01 23:33:33.557   Message box (Yes/No):
+                          Setup is not complete. If you exit now, the program will not be installed.
+                          
+                          You may run Setup again at another time to complete the installation.
+                          
+                          Exit Setup?
+2019-10-01 23:33:35.217   User chose Yes.
+2019-10-01 23:33:35.217   Deinitializing Setup.
+2019-10-01 23:33:35.223   Unable to delete log file C:\Users\14400\AppData\Local\Temp\Setup Log 2019-10-01 #001.txt
