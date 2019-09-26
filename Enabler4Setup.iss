@@ -87,7 +87,7 @@ var
   OPERATING_SYSTEM: Longint;
   //Initialise unattended variables
 
-  DRIVERCODE := integer;
+  DRIVERCODE : integer;
   UNATTENDED: integer;
   SILENT: integer;
   PHASE2: integer;
@@ -1231,26 +1231,26 @@ procedure InstallSQLServerOrCheckSALogin();
                      FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
                      if OS = 64 then
                         begin
-                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                            FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                            FileCopy('{app}\Driver\x64\EnablerPCI.inf', MAINDIR+'\Driver\EnablerPCI.inf', False);
+                            FileCopy('{app}\Driver\x64\Enbx64.sys', MAINDIR+'\Driver\Enbx64.sys', False);
+                            FileCopy('{app}\Driver\x64\enbamd64.cat', MAINDIR+'\Driver\enbamd64.cat', False);
+                            FileCopy('{app}\Driver\x64\DPInst.exe', MAINDIR+'\Driver\DPInst.exe', False);
+                            FileCopy('{app}\Driver\x64\DPInst.xml', MAINDIR+'\Driver\DPInst.xml', False);
+                            FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c', MAINDIR+'\Driver\DPInst.exe', False);
+                            FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                            FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c', MAINDIR+'\Driver\DriverInstaller.exe', False);
 
                         end
                      else
                           begin
-                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                           FileCopy('{app}\Driver\DriverInstaller.exe', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                            FileCopy('{app}\Driver\x86\EnablerPCI.inf', MAINDIR+'\Driver\EnablerPCI.inf', False);
+                            FileCopy('{app}\Driver\x86\Enbx32.sys', MAINDIR+'\Driver\Enbx32.sys', False);
+                            FileCopy('{app}\Driver\x86\enbx86.cat', MAINDIR+'\Driver\enbx86.cat', False);
+                            FileCopy('{app}\Driver\x86\DPInst.xml', MAINDIR+'\Driver\DPInst.xml', False);
+                            FileCopy('{app}\Driver\x86\DPInst.exe', MAINDIR+'\Driver\DPInst.exe', False);
+                            FileCopy('{app}\Driver\x86\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c', MAINDIR+'\Driver\DPInst.exe', False);
+                            FileCopy('{app}\Driver\x86\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                            FileCopy('{app}\Driver\x86\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c', MAINDIR+'\Driver\DriverInstaller.exe', False);
                           end;
                      //Check that the RunOnce Key is present and create it if it doesn't
                      if RegKeyExists('HKLM', 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce')=False then
@@ -1267,7 +1267,7 @@ procedure InstallSQLServerOrCheckSALogin();
                      else if INSTALL_RESULT = 2 then
                         begin
                            //Failed Install
-                           DRIVERCODE = 2;
+                           DRIVERCODE := 2;
 
                         end
                      else if INSTALL_RESULT = 3 then
@@ -1279,7 +1279,7 @@ procedure InstallSQLServerOrCheckSALogin();
                         begin
                            //Successful install
                            DRIVERCODE:= 0;
-                        end
+                        end;
                      if SILENT = 0 then
                         begin
                            MsgBox('Installing', mbInformation, MB_OK);
