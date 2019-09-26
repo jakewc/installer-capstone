@@ -1236,9 +1236,9 @@ procedure InstallSQLServerOrCheckSALogin();
                             FileCopy('{app}\Driver\x64\enbamd64.cat', MAINDIR+'\Driver\enbamd64.cat', False);
                             FileCopy('{app}\Driver\x64\DPInst.exe', MAINDIR+'\Driver\DPInst.exe', False);
                             FileCopy('{app}\Driver\x64\DPInst.xml', MAINDIR+'\Driver\DPInst.xml', False);
-                            FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c', MAINDIR+'\Driver\DPInst.exe', False);
-                            FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                            FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c', MAINDIR+'\Driver\DriverInstaller.exe', False);
+                            FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressamd64.cat', MAINDIR+'\Driver\EnablerExpressamd64.cat', False);
+                            FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressx64.inf', MAINDIR+'\Driver\EnablerExpressx64.inf', False);
+                            FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressx64.sys', MAINDIR+'\Driver\EnablerExpressx64.sys', False);
 
                         end
                      else
@@ -1248,10 +1248,10 @@ procedure InstallSQLServerOrCheckSALogin();
                             FileCopy('{app}\Driver\x86\enbx86.cat', MAINDIR+'\Driver\enbx86.cat', False);
                             FileCopy('{app}\Driver\x86\DPInst.xml', MAINDIR+'\Driver\DPInst.xml', False);
                             FileCopy('{app}\Driver\x86\DPInst.exe', MAINDIR+'\Driver\DPInst.exe', False);
-                            FileCopy('{app}\Driver\x86\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c', MAINDIR+'\Driver\DPInst.exe', False);
-                            FileCopy('{app}\Driver\x86\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                            FileCopy('{app}\Driver\x86\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c', MAINDIR+'\Driver\DriverInstaller.exe', False);
-                          end;
+                            FileCopy('{app}\Driver\x64\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx32.inf', MAINDIR+'\Driver\EnablerExpressx32.inf', False);
+                            FileCopy('{app}\Driver\x64\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx86.cat', MAINDIR+'\Driver\EnablerExpressx86.cat', False);
+                            FileCopy('{app}\Driver\x64\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx32.sys', MAINDIR+'\Driver\EnablerExpressx32.sys', False);
+                        end;
                      //Check that the RunOnce Key is present and create it if it doesn't
                      if RegKeyExists('HKLM', 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce')=False then
                         RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'EnablerDriver', MAINDIR+'\Driver\DriverInstaller.exe');
