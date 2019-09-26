@@ -172,6 +172,10 @@ Source: "{#SourcePath}\Input\Extra\vcredist_x86.exe"; DestDir: "{app}";
 //========================
 Source: "{#SourcePath}\Input\bin\subinacl.exe"; DestDir: "{app}\bin";
 
+Source: "{#SourcePath}\Input\scripts\EnablerDBdoc.sql"; DestDir:"{app}"; Check: isSDK_OPTIONSempty(); 
+Source: "{#SourcePath}\Input\scripts\UninstallSim.sql"; DestDir:"{app}"; Check: isSDK_OPTIONSempty();
+Source: "{#SourcePath}\Input\scripts\InstallSim.sql"; DestDir:"{app}"; Check: isNotSDK_OPTIONSempty();
+
 
 
 ; for modules not worked on yet
@@ -508,6 +512,9 @@ Filename: "{#SourcePath}\ForTestPurposesOnly\SqlServerMockInstall.exe"; Check: I
 ;Change the message on the standard welcome page
 WelcomeLabel1=Welcome to The Enabler Setup Program. %nThis Program will install The Enabler on your computer.
 WelcomeLabel2=We Recommend that you exit all Windows programs before running this Setup Program. %n%nClick Cancel to quit Setup and close any programs you have running. Click Next to continue with the Setup program. %n%nWARNING: This program is protected by copyright law and international treaties. %n%nUnauthorized reproduction or distribution of this program, or any portion of it, may result in severe civil and criminal penalties, and will be prosecuted to the maximum extent possible under law.
+
+[INI]
+Filename: "{app}\PumpUpdate.ini"; Section: "DATABASE"; Key: "OSQLPATH"; String: OSQL_PATH; Check: IsInstallType('B');
 
 [Code]
 
@@ -929,6 +936,26 @@ begin
   end
   else begin
     Result:=False;
+  end;
+end;
+
+function isSDK_OPTIONSempty():boolean;
+begin
+  if SDK_OPTIONS = '' then begin
+    Result := true;
+  end
+  else begin
+    Result := False;
+  end;
+end;
+
+function isNotSDK_OPTIONSempty():boolean;
+begin
+  if SDK_OPTIONS <> '' then begin
+    Result := true;
+  end
+  else begin
+    Result := False;
   end;
 end;
 
@@ -2561,7 +2588,6 @@ var
   SERVER:String;  
   progressPage: TOutputProgressWizardPage;
 Begin
-
   Exec('net.exe', 'localgroup /add EnablerAdministrators', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
   if SILENT = false then begin
     try
@@ -2578,6 +2604,15 @@ Begin
 
   LOGTIME := GetDateTimeString('dd/mm/yyyy hh:nn:ss', '-', ':');
   Log(Format('Start of setting permissions %s', [LOGTIME]));
+
+  if COMPONENTS = 'B' then begin
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\enbkick.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\vsql.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\fcman.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + OSQL_PATH +' /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + OSQL_PATH +' /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/service psrvr4 /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  End;
 
   Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{sys}')+'\eventvwr.msc /grant='+BUILTIN_USERS_GROUP+'= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
   Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{sys}')+'\config\Enabler.evt /grant='+BUILTIN_USERS_GROUP+'= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
@@ -2604,19 +2639,282 @@ Begin
     end;
   end;
 
-  if COMPONENTS = 'B' then Begin
-    MsgBox('Skip', mbinformation, mb_OK);
+  if pos('B',COMPONENTS)<>0 then Begin
+    //SERVER INSTALLATION
+
+    //We modify this component size to allow for the space needed to create the EnablerDB 
+    Log('Installing or Updating EnablerDB');
+    
+    //Register the Pump Server
+    if SILENT = false then begin
+      try
+        progressPage := CreateOutputProgressPage('Progress Stage',APPTITLE);
+        progressPage.SetProgress(0, 0);
+        progressPage.Show;
+      finally
+        progressPage.Hide;
+      end;
+    end;
+    Exec(ExpandConstant('{app}') + '\bin\psrvr4.exe', '/service', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\enbweb.exe', '/install', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Log('Update Services Start timout setting');
+    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control', 'ServicesPipeTimeout', '180000');
+    if SILENT = false then begin
+      try
+        progressPage := CreateOutputProgressPage('Progress Stage','');
+        progressPage.SetProgress(0, 0);
+        progressPage.Show;
+      finally
+        progressPage.Hide;
+      end;
+    end;
+
+    //==========================
+    //CONFIRM SQL SERVER RUNNING
+    //==========================
+    If SQL_INSTANCE = '' then begin
+      Log('Confirming MSSQLSERVER service is running');
+      //check service MSSQLSERVER
+      Exec('CMD.EXE','sc query "MSSQLSERVER" | findstr "RUNNING"','', SW_SHOW, ewWaitUntilTerminated, ResultCode)
+    end
+    else begin
+      Log('Confirming MSSQL$%SQL_INSTANCE% service is running');
+      //check service MSSQL$%SQL_INSTANCE%
+      Exec('CMD.EXE','sc query "MSSQL'+'SQL_INSTANCE"'+' | findstr "RUNNING"','', SW_SHOW, ewWaitUntilTerminated, ResultCode)
+    end;
+    Log(Format('SQLServer Status: %s', [SQLSERVER_STARTED]));
+    if pos('Running',SQLSERVER_STARTED)<>0 then begin
+      Log('ERROR: SQLServer is not Running');
+      if SILENT = false then begin
+        try
+          progressPage := CreateOutputProgressPage('Progress Stage','Installation Stopped');
+          progressPage.SetProgress(0, 0);
+          progressPage.Show;
+        finally
+          progressPage.Hide;
+        end;
+      end;
+      Abort();
+    end;
+    
+    // Setup ODBC Data source and Windows users, info for event logs 
+    if SQL_INSTANCE = '' then begin
+      Exec(ExpandConstant('{app}') + '\bin\odbcnfg.exe', '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      if OS = 64 then begin
+        Exec(ExpandConstant('{app}') + '\bin\odbcnfg64.exe', '/install', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      end;
+    end
+    else begin
+      Exec(ExpandConstant('{app}') + '\bin\odbcnfg.exe', '/i '+SQL_INSTANCE, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      if OS = 64 then begin
+        Exec(ExpandConstant('{app}') + '\bin\odbcnfg.exe', '/install', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      end;
+    end;
+
+    //Run the Nightly.bat script if the user has ticked the checkbox
+    if pos('A',PRE_UPGRADE_BACKUP) <> 0 then begin
+      if SILENT = false then begin
+        try
+          progressPage := CreateOutputProgressPage('Progress Stage','The Enabler');
+          progressPage.SetProgress(0, 0);
+          progressPage.Show;
+        finally
+          progressPage.Hide;
+        end;
+      end;
+      Log('A pre upgrade backup will be performed (Nightly.bat)');
+      if SILENT = false then begin
+        try
+          progressPage := CreateOutputProgressPage('Progress Stage','The Enabler');
+          progressPage.SetProgress(0, 0);
+          progressPage.Show;
+        finally
+          progressPage.Hide;
+        end;
+      end;      
+    end;
+
+    CreateDir(DBDIR);
+    Log(Format('Passing %s to DBInstall',[OSQL_PATH]));
+    // We're supposed to be able to run BAT files directly, but it doesn't seem to work on WinNT
+    Exec('CMD.EXE','/C '+ExpandConstant('{app}')+ '\DBInstall.bat "'+DBDIR+'" "'+ExpandConstant('{app}')+'" "'+ExpandConstant('{app}')+'\install.log" "'+OSQL_PATH+'" '+SQLQUERY, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+
+    //We can now check for DBINSTALL_OK and MKUPGRADE_OK files to see if the db install/upgrade worked
+    if FileExists(ExpandConstant('{app}')+'\DBINSTALL_OK') = false then begin
+      if UNATTENDED = '0' then begin
+        try
+          progressPage := CreateOutputProgressPage('Progress Stage','Enabler Database Install Failed');
+          progressPage.SetProgress(0, 0);
+          progressPage.Show;
+        finally
+          progressPage.Hide; 
+        end;         
+      end;
+      Log('ERROR: Enabler DBInstall.bat Failed');
+      Abort();
+    end;
+    
+    if FileExists(ExpandConstant('{app}')+'\DBUPGRADE_OK') = false then begin
+      if UNATTENDED = '0' then begin
+        try
+          progressPage := CreateOutputProgressPage('Progress Stage','Enabler Database Upgrade Failed');
+          progressPage.SetProgress(0, 0);
+          progressPage.Show;
+        finally
+          progressPage.Hide;
+        end;          
+      end;
+      Log('ERROR: Enabler Database Upgrade Failed');
+      Abort();
+    end;
+
+    //Remove autoupgrade.bat to prevent anyone manually running it later on
+    DeleteFile(ExpandConstant('{app}')+'\autoupgrade.bat');
+
+    if SDK_OPTIONS <> '' then begin
+      //Install schema documentation into database
+      if SILENT = false then begin
+        try
+          progressPage := CreateOutputProgressPage('Progress Stage',' ');
+          progressPage.SetProgress(0, 0);
+          progressPage.Show;
+        finally
+          progressPage.Hide;
+        end;
+      end;  
+      Exec(OSQL_PATH+'\OSQL>EXE','-b -d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{app}')+ '\EnablerDBdoc.sql" -o '+ExpandConstant('{app}')+'\EnablerDBdoc.log', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    end;
+    
+    if SILENT = false then begin
+      try
+        progressPage := CreateOutputProgressPage('Progress Stage',APPTITLE);
+        progressPage.SetProgress(0, 0);
+        progressPage.Show;
+      finally
+        progressPage.Hide;
+      end;
+    end;
+
+    if SILENT = false then begin
+      try
+        progressPage := CreateOutputProgressPage('Progress Stage','Forecourt Interface Update');
+        progressPage.SetProgress(0, 0);
+        progressPage.Show;
+      finally
+        progressPage.Hide;
+      end;
+    end;
+
+    // For clean installs we need to pass the path to OSQL to PumpUpdate but Wise doesn't seem to cope with spaces, so we put the path in ...
+    Log(Format('INFO: Putting OSQL path (%s) into PumpUpdate.INI',[OSQL_PATH]));
+    Log(Format('INFO: SQL_INSTANCE variable set to %s',[SQL_INSTANCE]));
+    if SQL_INSTANCE = '' then begin
+      Log('INFO: Running PumpUpdate for default instance');
+      Exec(ExpandConstant('{app}')+'\PumpUpdate.exe','/S /D /OSQL','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    end
+    else begin
+      Log(Format('INFO: Running PumpUpdate for named instance %s',[SQL_INSTANCE]));
+      Exec(ExpandConstant('{app}')+'\PumpUpdate.exe','/S /D /OSQL /INSTANCE:'+SQL_INSTANCE,'', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    end;
+
+    if SILENT = false then begin
+      try
+        progressPage := CreateOutputProgressPage('Progress Stage','Display Progress Message "Forecourt Interface Drivers"');
+        progressPage.SetProgress(0, 0);
+        progressPage.Show;
+      finally
+        progressPage.Hide;
+      end;
+    end;
+    Log(format('Pump Update install result %s',[ResultCode]));
+
+    //Add support for EnbEvent.DLL to the registry
+    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Services\EventLog\Application\Psrvr', 'EventMessageFile', ExpandConstant('{app}')+'\bin\EnablerEvent.dll');
+    RegWriteDWordValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Services\EventLog\Application\Psrvr', 'TypesSupported', 1);
+
+    if SILENT = false then begin
+      try
+        progressPage := CreateOutputProgressPage('Progress Stage','');
+        progressPage.SetProgress(0, 0);
+        progressPage.Show;
+      finally
+        progressPage.Hide;
+      end;
+    end;
+
+    //SDK options
+    if SDK_OPTIONS = '' then begin
+      //delete Sim, MPP driver if SDK option is not selected
+      Exec(OSQL_PATH+'\OSQL.EXE','-d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{app}')+'\UninstallSim.sql" -o '+ ExpandConstant('{app}')+ 'SimInstall.log','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    end
+    else begin
+      //install Sim, MPP driver if SDK option is selected
+      Exec(OSQL_PATH+'\OSQL.EXE','-d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{app}')+'\IninstallSim.sql" -o '+ ExpandConstant('{app}')+ 'SimInstall.log','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    end;
+
+    //===================================================
+    //Remove old registry license for v4.0 Beta customers
+    //===================================================
+    Exec(ExpandConstant('{app}')+'\ConvertV4BetaLicense.exe','/r','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    if ResultCode = 0 then begin
+      Log('v4.0 Beta registry license removed');
+    end;
+    DeleteFile(ExpandConstant('{app}')+'\ConvertV4BetaLicense.exe');
+
+    // Ok now start the Pump Server and Webhost
+    if NOSTART = false then begin
+      //Start Service psrvr
+      //Start Service enbweb
+      Exec('CMD.EXE','sc start psrvr','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec('CMD.EXE','sc start enbweb','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    end;
+
+    // Add some extra entries to the Wise log - so temporary or generated files are removed at uninstall
+    Log(format('File Tree: %s\sleep.exe',[{app}]));
+    Log(format('File Tree: %s\InstallUtil.InstallLog',[{app}]));
+    Log(format('File Tree: %s\Autoupgrade.*',[{app}]));
+    Log(format('File Tree: %s\SetVersion.*',[{app}]));
+    Log(format('File Tree: %s\config70.log',[{app}]));
+    Log(format('File Tree: %s\DBU*.log',[{app}]));
+    Log(format('File Tree: %s\DBU*.sql',[{app}]));
+    Log(format('File Tree: %s\EnablerDBdoc.log',[{app}]));
+    Log(format('File Tree: %s\PumpUpdate.sql',[{app}]));
+    Log(format('File Tree: %s\pumpupdate.log',[{app}]));
+    Log(format('File Tree: %s\WISE_UPDATE.LOG',[{app}]));
+    Log(format('File Tree: %s\enabler.log',[{app}]));
+    Log(format('File Tree: %s\load.log',[{app}]));
+    Log(format('File Tree: %s\*.bat',[{app}]));
+    Log(format('File Tree: %s\*.oca',[{app}]));
+    Log(format('File Tree: %s\*.nxe',[{app}]));
+    Log(format('File Tree: %s\*.nei',[{app}]));
+    Log(format('File Tree: %s\bin\*.dll',[{app}]));
+    Log(format('File Tree: %s\*.dll',[{app}]));
+    Log(format('File Tree: %s\*OK',[{app}]));
+    Log(format('File Tree: %s\www\Parameters.xml',[{app}]));
+    Log(format('File Tree: %s\PumpUpdate.log',[{app}]));
+    Log(format('File Tree: %s\PumpUpdate.sql',[{app}]));
+    Log(format('File Tree: %s\State\*',[{app}]));
+    Log(format('File Tree: %s\Driver\*',[{app}]));
+    Log(format('File Tree: %s\bin\EnbWeb.InstallLog',[{app}]));
+
+    //Add entries to the Wise log to stop and remove services
+    Log(format('Execute path: %s\scutil.exe /STOP enbweb',[{app}]));
+    Log(format('Execute path: %s\scutil.exe /STOP psrvr',[{app}]));
+    Log(format('Execute path: %s\bin\psrvr4.exe /UNREGSERVER',[{app}]));
+    Log(format('Execute path: %s\bin\enbweb.exe /uninstall',[{app}]));
+
   End
   Else Begin
     if SILENT = false then begin
-    try
-      progressPage := CreateOutputProgressPage('Progress Stage',APPTITLE);
-      progressPage.SetProgress(0, 0);
-      progressPage.Show;
-    finally
-      progressPage.Hide;
+      try
+        progressPage := CreateOutputProgressPage('Progress Stage',APPTITLE);
+        progressPage.SetProgress(0, 0);
+        progressPage.Show;
+      finally
+        progressPage.Hide;
+      end;
     end;
-  end;
+ 
     Log('Registering Enabler objects');
     Exec('rsgsvr32.exe', '/s '+ExpandConstant('{app}')+'\EnbSessionX2.OCX', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
     if embedded = false then begin
@@ -2642,23 +2940,21 @@ Begin
     End;
 
     if SILENT = false then begin
-    try
-      progressPage := CreateOutputProgressPage('Progress Stage','');
-      progressPage.SetProgress(0, 0);
-      progressPage.Show;
-    finally
-      progressPage.Hide;
-    end;
-  end;
+      try
+        progressPage := CreateOutputProgressPage('Progress Stage','');
+        progressPage.SetProgress(0, 0);
+        progressPage.Show;
+      finally
+        progressPage.Hide;
+      end;
+    end;   
   End;
-
 End;
   
 //=======================================================================
 //Reboot system to disable fast startup and change system power settings
 //This should be the last thing to do.
 //=========================================================================
-
 function NeedRestart():Boolean;
 begin
   if RESTART_DECISION then begin
