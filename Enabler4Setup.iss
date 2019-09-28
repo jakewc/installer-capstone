@@ -1722,6 +1722,62 @@ begin
   end;
 end;
 
+
+
+//===========================
+// Install Server Components
+//=========================== 
+
+
+procedure InstallServerComponents();
+  var
+    TRUSTED_CONNECTION: integer;
+    INSTALL_RESULT: integer;
+  begin
+    if pos('B',components) <> 0 then
+      begin
+         if not SQL_NEEDED then                             
+            begin
+               SQLQUERY := PC_NAME + '\' + SQL_INSTANCE;
+               Log('SQLQUERY = ' + SQLQUERY);
+
+               //TRUSTED CONNECTION
+               TRUSTED_CONNECTION := 1;
+               Log('About to query sysobjects ' + OSQL_PATH + ' with Trusted Connection');
+               Exec(OSQL_PATH + '\OSQL.EXE', '-b -d master -E -S' + SQLQUERY +  ' -Q ' +  '"select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+               if INSTALL_RESULT = 0 then begin
+                  Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C osql -b -d master -E -S' + SQLQUERY +  ' -Q ' +  '"select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+                  if INSTALL_RESULT = 0 then begin
+                    Log('Trusted Connection Succeed !!!');
+                  end
+                  else begin
+                    TRUSTED_CONNECTION := 0;
+                  end;
+               end
+               else begin
+                  TRUSTED_CONNECTION := 0;
+               end;
+               
+               if TRUSTED_CONNECTION = 0 then begin
+                 if not SILENT then begin
+                   MsgBox('Installation failed', mbInformation, MB_OK);
+                 end;
+                 Log('Trusted Connection Failed ! SQL server might not have installed correctly. Or the Named instance was incorrect rc='+IntToStr(INSTALL_RESULT));
+                 Abort();
+               end;
+
+               //DetectVersionSQLServersInstalled();
+               //IsThereAnExistingEnablerInstall();
+
+            end
+          else begin
+            //SQLServerIsRequired();
+          end
+      end
+  end;
+
+
+
 //======================
 //Blank password checks
 //====================== 
