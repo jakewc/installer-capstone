@@ -90,6 +90,6 @@ begin
     if SILENT = false then begin
       MsgBox('Could not install', mbinformation, mb_ok);
     end;
-    ExitProcess(0);
+    Abort();
     end;
 end;
