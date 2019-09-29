@@ -1,0 +1,30 @@
+﻿2019-09-30 11:14:42.966   Log opened. (Time zone: UTC+13:00)
+2019-09-30 11:14:42.969   Setup version: Inno Setup version 6.0.2 (u)
+2019-09-30 11:14:42.972   Original Setup EXE: C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe
+2019-09-30 11:14:42.974   Setup command line: /SL5="$607F4,39990240,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$207F2 /NOTIFYWND=$8E07E2 /DEBUGWND=$10452 
+2019-09-30 11:14:42.977   Windows version: 10.0.18362  (NT platform: Yes)
+2019-09-30 11:14:42.978   64-bit Windows: Yes
+2019-09-30 11:14:42.980   Processor architecture: x64
+2019-09-30 11:14:42.981   User privileges: Administrative
+2019-09-30 11:14:42.985   Administrative install mode: Yes
+2019-09-30 11:14:42.987   Install mode root key: HKEY_LOCAL_MACHINE
+2019-09-30 11:14:42.988   64-bit install mode: No
+2019-09-30 11:14:42.994   Created temporary directory: C:\Users\JACOBC~1\AppData\Local\Temp\is-SCSVK.tmp
+2019-09-30 11:14:43.004   -- DLL function import --
+2019-09-30 11:14:43.007   Function name: ExitProcess
+2019-09-30 11:14:43.010   DLL name: kernel32.dll
+2019-09-30 11:14:43.013   Dest DLL name: kernel32.dll
+2019-09-30 11:14:43.016   Importing the DLL function.
+2019-09-30 11:14:43.019   Successfully imported the DLL function. Delay loaded? No
+2019-09-30 11:14:43.027   Initialising variables.
+2019-09-30 11:14:43.281   Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10
+2019-09-30 11:14:43.291   Installing Enabler V4.6.3.6087 on Windows V10.00.18362 64bit (Version 10)
+2019-09-30 11:14:43.328   CMD 
+2019-09-30 11:14:43.364   IE Location C:\Program Files\Internet Explorer;
+2019-09-30 11:14:43.384   IE VERSION: 9.11.18362.0
+2019-09-30 11:14:43.405   Warning: A Newer Version of IE is required to display release notes
+2019-09-30 11:14:43.425   Message box (OK):
+                          A newer Internet Explorer is required
+2019-09-30 11:14:44.691   User chose OK.
+2019-09-30 11:14:44.695   User chose to exit install
+2019-09-30 11:14:44.763   Unable to delete log file C:\Users\JACOBC~1\AppData\Local\Temp\Setup Log 2019-09-30 #011.txt

@@ -1217,7 +1217,7 @@ begin
     Log('IE VERSION: ' + IEXPLORE_VERSION);
   end;
 
-  if (strtoint(IEXPLORE_VERSION) < 5) then begin
+  if (strtoint(Copy(IEXPLORE_VERSION,1,1)) < 5) then begin
   //We require IE 5 or later
     SHOW_IE_WARNING:= false;
     if FileExists(ExpandConstant('{src}')+'\Release Notes.htm') then begin
@@ -3100,7 +3100,7 @@ Begin
     Exec('CMD.EXE','/C '+ExpandConstant('{app}')+ '\DBInstall.bat "'+DBDIR+'" "'+ExpandConstant('{app}')+'" "'+ExpandConstant('{app}')+'\install.log" "'+OSQL_PATH+'" '+SQLQUERY, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
 
     //We can now check for DBINSTALL_OK and MKUPGRADE_OK files to see if the db install/upgrade worked
-    if FileExists(ExpandConstant('{app}')+'\DBINSTALL_OK') = false then begin
+    if dirExists(ExpandConstant('{app}')+'\DBINSTALL_OK') = false then begin
       if UNATTENDED = '0' then begin
         try
           progressPage := CreateOutputProgressPage('Progress Stage','Enabler Database Install Failed');
@@ -3478,8 +3478,7 @@ begin
     //this is commented out for now due to a bug in this module
     //saveConfig();
     installNet3Point5();
-    installNet4();
-    installServerFiles(); 
+    installNet4();     
     checkSP();
   end;
   if CurStep = ssPostInstall then begin
@@ -3488,6 +3487,7 @@ begin
     removeRegistryVars();
     installEnablerFiles();
     createLicense();
+    installServerFiles();
 
     setupEnvVars();
     basicPDFFiles();
