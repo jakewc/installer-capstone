@@ -1729,6 +1729,73 @@ end;
 //=========================== 
 
 
+procedure DetectVersionSQLServersInstalled();
+var 
+  TEMP : string;
+  SQLINFO : string;
+  INSTALL_RESULT : integer;
+  CREATE_TEMP_FILE_RESULT : boolean; 
+  LINE : AnsiString;
+
+begin
+ (*Find out the version of SQL installed.block
+  SQL 2000 and newer support the following method of getting the version
+  Older versions do not. The Microsoft documentation for this method is at the link below
+  http://support.microsoft.com/default.aspx?scid=kb;en-us;321185#3
+  Create a temporary file to store the SQL results in.  *)
+  TEMP := GetTempDir();
+  SQLINFO := '\SQLINFO';
+  SaveStringToFile(TEMP+SQLINFO, '', False);
+
+  if not SILENT then begin
+       MsgBox('SQL Version', mbInformation, MB_OK);
+  end;
+
+  //Execute the sql to get the SQL version of a default instance or the instance name passed by the command line.
+  // Make sure OSQL_PATH does not end in '\'
+  Log('Query database for version using server and instance name ' + SQLQUERY);
+  Exec(OSQL_PATH + '\OSQL.EXE', '-b -E -S' + SQLQUERY + ' -dmaster -h-1 -Q"select SERVERPROPERTY(''productversion'')" -o ' + TEMP + SQLINFO, '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+  if INSTALL_RESULT <> 0 then begin
+    if not SILENT then begin
+       MsgBox('SQL VERSION', mbInformation, MB_OK);
+       MsgBox('OSQL failed to execute', mbError, MB_OK);
+    end;
+    Log(SQLQUERY + ' SQL server is not configured correctly the osql query failed');
+    Abort();
+  end;
+
+//       //Read each line of the SQL query results
+//       LoadStringFromFile(TEMP + SQLINFO, LINE);
+//       if SQLVER_MAJOR = '' then
+//           begin
+//              SQLVER_MAJOR := LINE;
+//           end;
+//       //Is SQL Server major revision greator than or equal to the number 8 (version 2000)
+//       if StrToFloat(SQLVER_MAJOR) >= 8 then
+//         begin
+//           Log('SQL Version found ' + SQLVER_MAJOR );
+//         end
+//       else
+//         //If the line read is greator than or equal to the number it is 2000 or newe
+//         begin
+//            if StrToFloat(LINE) >= 8 then
+//               begin
+//                  Log('SQL Version found ' + LINE);
+//               end
+//            else
+//               begin
+//                  //Display the message to exit
+//                  if not SILENT then
+//                     begin
+//                        MsgBox('A newer SQL Server is required', mbInformation, MB_OK);
+//                        Log('Exiting installation as Enabler requires newer version than ' + SQLVER_MAJOR + ' of SQL Server');
+//                        Abort();
+//                     end
+//               end
+//         end
+end;
+
+
 procedure InstallServerComponents();
   var
     TRUSTED_CONNECTION: integer;
