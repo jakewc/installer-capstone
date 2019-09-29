@@ -179,11 +179,8 @@ Source: "{#SourcePath}\Input\scripts\InstallSim.sql"; DestDir:"{app}"; Check: is
 
 
 ; for modules not worked on yet
-Source: "{#SourcePath}\ClientInstallInput\bin\EnablerEvent.dll"; DestDir: "{app}\bin"; Check: IsInstallType('A');
-Source: "{#SourcePath}\ClientInstallInput\Extra\PDFViewer.exe"; DestDir: "{app}\bin"; Check: IsInstallType('A');
-Source: "{#SourcePath}\ClientInstallInput\CreateRegKeyEvent.bat"; DestDir: "{app}"; Check: IsInstallType('A');
-Source: "{#SourcePath}\ClientInstallInput\scripts\Instances.bat"; DestDir: "{app}"; Check: IsInstallType('A');
-Source: "{#SourcePath}\ClientInstallInput\EnbSecurityController.exe"; DestDir: "{app}"; Check: IsInstallType('A');
+Source: "{#SourcePath}\Input\scripts\Instances.bat"; DestDir: "{app}";
+Source: "{#SourcePath}\Input\EnbSecurityController.exe"; DestDir: "{app}";
 
 //====================
 //Install Server files
