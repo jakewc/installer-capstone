@@ -1,1 +1,15 @@
 Output/Win/DotNetFX/3.5/DotNetFx35setup.exe
+
+Output\SQL2008R2\32\SQLEXPR.exe
+
+Output\SQL2008R2\64\SQLEXPR.exe
+
+Output\SQL2012\64\SQLEXPR.exe
+
+Output\SQL2012\32\SQLEXPR.exe
+
+Output\SQL2014\32\SQLEXPR.exe
+
+Output\SQL2014\64\SQLEXPR.exe
+
+Output\SQL2016\64\SQLEXPR.exe

@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+  <dpinst>
+	<suppressWizard/>
+	<forceIfDriverIsNotBetter/>
+	<suppressAddRemovePrograms/>
+	<search>
+		<subDirectory>*</subDirectory>
+	</search>
+  </dpinst>

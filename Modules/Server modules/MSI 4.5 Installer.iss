@@ -1,11 +1,19 @@
 [Code]
 
+//========================
+//Check MSI4.5 Install
+//========================
+
+const
+  MinMSIVersionMS= (4 shl 16) or 50;
+  MinMSIVersionLS= (0 shl 16) or 0;
+
 function CheckInstallMSI: Boolean;
+
 var
   MSIVersionMS: Cardinal;
   MSIVersionLS: Cardinal;
-  MinMSIVersionMS = (4 shl 16) or 50;
-  MinMSIVersionLS = (0 shl 16) or 0;
+
 begin
   Result := True;
 
@@ -40,7 +48,7 @@ begin
         end;
         Log('Installing MSI 4.5');
         
-        if OPERATING_SYSTEM = 5.1 then begin
+        if OPERATING_SYSTEM = '5.1' then begin
           //5.1 = Windows XP
           if OS = 32 then begin
             Exec('CMD.exe', '/C '+ExpandConstant('{src}\Win\MSI\4.5\WindowsXP-KB942288-v3-x86.exe') + ' /quiet /passive /norestart', '', SW_SHOW, ewwaituntilterminated, ResultCode);
@@ -50,7 +58,7 @@ begin
           end;
         end;
 
-        if OPERATING_SYSTEM = 5.2 then begin
+        if OPERATING_SYSTEM = '5.2' then begin
           //5.2 = Windows 2003
           if OS = 32 then begin
             Exec('CMD.exe', '/C '+ExpandConstant('{src}\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x86.exe') + ' /quiet /passive /norestart', '', SW_SHOW, ewwaituntilterminated, ResultCode);
@@ -60,7 +68,7 @@ begin
           end;
         end;
 
-        if OPERATING_SYSTEM = 6.0 then begin
+        if OPERATING_SYSTEM = '6.0' then begin
           //6.0 = Windows Vista or Server 2008
           //msu files do not support /passive
           if OS = 32 then begin
@@ -71,7 +79,7 @@ begin
           end;
         end;
 
-        if OPERATING_SYSTEM >= 6.1 then begin
+        if OPERATING_SYSTEM >= '6.1' then begin
           //6.1 = Windows 7 and Windows 2008 R2
           Log('Found either Windows 7, Windows Server 2008 or Later Windows - so don''t need a newer version of MSI installed');
         end;
@@ -100,7 +108,7 @@ begin
             //As windows requires the runonce key to be present to install drivers
             RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\Microsoft\Windows\CurrentVersion\RunOnce', 'Enabler Install', ExpandConstant('{src}')+'\Enabler4Setup.exe');
             Log('MSI 4.5 Installed - reboot pending');
-            NeedRestart(true);
+            RESTART_DECISION:=TRUE;
             Abort();
           end;
           //1603 means Windows OS platform is not supported.
@@ -121,7 +129,7 @@ begin
         end;
       end
       else begin
-        Log('The version of MSI is OK - ' + MSI_VERSION);
+        Log('The version of MSI is OK');
       end;
     end;
   end;
