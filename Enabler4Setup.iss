@@ -1803,6 +1803,25 @@ begin
 end;
 
 
+procedure IsThereAnExistingEnablerInstall();
+var
+  INSTALL_RESULT : integer;
+begin
+  //Does the enabler database already exist?    
+  if PRE_UPGRADE_BACKUP = 'A' then begin
+    Exec(OSQL_PATH + '\OSQL.EXE', '-d EnablerDB -E -S' + SQLQUERY + ' -Q"select count(*) from global_settings" -b', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+    if INSTALL_RESULT = 0 then begin
+      Log('Preupgrade backup check for Enabler DB: Database FOUND');
+    end
+    else begin
+      Log('Preupgrade backup check for Enabler DB: Database NOT found');
+      PRE_UPGRADE_BACKUP := '';
+    end;
+  end;
+end;
+
+
+
 procedure InstallServerComponents();
   var
     TRUSTED_CONNECTION: integer;
@@ -1841,7 +1860,7 @@ procedure InstallServerComponents();
                end;
 
                DetectVersionSQLServersInstalled();
-               //IsThereAnExistingEnablerInstall();
+               IsThereAnExistingEnablerInstall();
 
             end
           else begin
