@@ -1,0 +1,42 @@
+﻿2019-09-30 15:53:57.405   Log opened. (Time zone: UTC+13:00)
+2019-09-30 15:53:57.412   Setup version: Inno Setup version 6.0.2 (u)
+2019-09-30 15:53:57.418   Original Setup EXE: C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe
+2019-09-30 15:53:57.421   Setup command line: /SL5="$220816,39990240,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$B0790 /NOTIFYWND=$2A0778 /DEBUGWND=$1007F4 
+2019-09-30 15:53:57.426   Windows version: 10.0.18362  (NT platform: Yes)
+2019-09-30 15:53:57.432   64-bit Windows: Yes
+2019-09-30 15:53:57.445   Processor architecture: x64
+2019-09-30 15:53:57.453   User privileges: Administrative
+2019-09-30 15:53:57.471   Administrative install mode: Yes
+2019-09-30 15:53:57.478   Install mode root key: HKEY_LOCAL_MACHINE
+2019-09-30 15:53:57.484   64-bit install mode: No
+2019-09-30 15:53:57.504   Created temporary directory: C:\Users\JACOBC~1\AppData\Local\Temp\is-5NLMA.tmp
+2019-09-30 15:53:57.571   -- DLL function import --
+2019-09-30 15:53:57.578   Function name: ExitProcess
+2019-09-30 15:53:57.585   DLL name: kernel32.dll
+2019-09-30 15:53:57.592   Dest DLL name: kernel32.dll
+2019-09-30 15:53:57.599   Importing the DLL function.
+2019-09-30 15:53:57.605   Successfully imported the DLL function. Delay loaded? No
+2019-09-30 15:53:57.620   Initialising variables.
+2019-09-30 15:53:58.332   Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10
+2019-09-30 15:53:58.353   Installing Enabler V4.6.3.6087 on Windows V10.00.18362 64bit (Version 10)
+2019-09-30 15:53:58.402   CMD 
+2019-09-30 15:53:58.472   IE Location C:\Program Files\Internet Explorer;
+2019-09-30 15:53:58.516   IE VERSION: 9.11.18362.0
+2019-09-30 15:53:58.572   Installing from C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output drive.
+2019-09-30 15:53:59.668   Windows product type: 1
+2019-09-30 15:53:59.751   Location of OSQL.EXE is  (Initial Checks)
+2019-09-30 15:53:59.799   SQL2014 folder found, this will be installed.
+2019-09-30 15:53:59.818   SQL server folders parsed, SQL server to install=SQL2014, Architecture=64, Windows version=10.00.18362, OS ver=10
+2019-09-30 15:53:59.853   SQLEXPRESSNAME = SQL2014
+2019-09-30 15:54:00.029   Checking disk space
+2019-09-30 15:54:00.815   B
+2019-09-30 15:54:09.728   Calling RestartManager's RmGetList.
+2019-09-30 15:54:09.784   RmGetList finished successfully.
+2019-09-30 15:54:09.790   RestartManager found no applications using one of our files.
+2019-09-30 15:54:09.902   Server was chosen
+2019-09-30 15:54:10.359   SQL2008R2 requires MSI 4.5 and .NET 3.5 SP1 - MSI will be installed and will require a reboot.
+2019-09-30 15:54:10.384   Message box (OK):
+                          MSI 4.5 Installer failed
+2019-09-30 15:54:11.873   User chose OK.
+2019-09-30 15:54:11.882   Missing MSI 4.5 Installer
+2019-09-30 15:54:12.006   Unable to delete log file C:\Users\JACOBC~1\AppData\Local\Temp\Setup Log 2019-09-30 #025.txt

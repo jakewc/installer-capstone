@@ -34,7 +34,7 @@ begin
       if not CheckInstallMSI() then begin
         Log('SQL2008R2 requires MSI 4.5 and .NET 3.5 SP1 - MSI will be installed and will require a reboot.');
         //Check if we need to install the latest MSI 4.5 Installer 914 
-        if not dirExists(ExpandCOnstant('{src}\Win\MSI\WindowsXP-KB942288-v3-x86.exe')) then begin
+        if not fileExists(ExpandCOnstant('{src}\Win\MSI\4.5\WindowsXP-KB942288-v3-x86.exe')) then begin
           if SILENT = false then begin
             MsgBox('MSI 4.5 Installer failed', mbinformation, MB_OK);
           end;

@@ -1685,6 +1685,66 @@ begin
   end;
 end;
 
+//=============================================
+//save configuration settings in case of reboot
+//=============================================
+procedure saveConfig();
+var
+  ResultCode:integer;
+  INSTALL_RESULT:integer;
+begin
+  //Save install options selected by the user so we can re-load these if the installer is restarted
+
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'Applications', APPLICATIONS);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'Backup', PRE_UPGRADE_BACKUP);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'Components', COMPONENTS);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'EnbWebDomain', ENBWEB_DOMAIN);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'EnbWebPort', ENBWEB_PORT);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'InstanceName', SQL_INSTANCE);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'SA', SA_PASSWORD);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'SDK', SDK);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'UnattendedInstall', UNATTENDED);
+
+  //set client install variable
+  if COMPONENTS = 'B' then begin
+    Log('Server was chosen');
+    //Checking to see if the C: drive is compressed. SQL server doesn't like the EnablerDB files in a compressed location
+    if strtoint(OPERATING_SYSTEM) >= 5.1 then begin
+      if ((strtoint(OPERATING_SYSTEM) >= 6) and (OS=64)) then begin
+        Exec('C:\WINDOWS\Sysnative\CMD.EXE', ' /C '+ExpandConstant('{app}')+'\bin\DriveCompressed.exe', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        INSTALL_RESULT:=ResultCode;
+      end
+      else begin
+        Exec('CMD.EXE', ' /C '+ExpandConstant('{app}')+'\bin\DriveCompressed.exe', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        INSTALL_RESULT:=ResultCode;
+      end;
+      
+      // A 0 means it is not compressed, 1 is compressed, -1 is an error occured during the application 
+
+      //!!!NOTE: This section is BUGGED.
+      //Running DriveCompressed.exe on my C: drive by itself returns 0, but innosetup gets 1 for some reason
+
+      (*if INSTALL_RESULT = 1 then begin
+        if SILENT = false then begin
+          MsgBox('C: drive compressed, which is not supported. Installation exiting.', mbINFORMATION, MB_OK);
+        end;
+        Log('Result Code = ' +inttostr(INSTALL_RESULT)+', C: drive is compressed, which is not supported');
+        Abort();
+      end
+      else if INSTALL_RESULT < 0 then begin
+        Log('Error running DriveCompressed utility, continuing install');
+      end
+      else begin
+        Log('C: drive is not compressed');
+      end;*)
+    end;
+  end
+  else begin
+    Log('Client was chosen');
+  end;
+end;
+
+
 //========================
 //Check MSI4.5 Install
 //========================
@@ -1718,8 +1778,8 @@ begin
       // Check the version of MSI installed - .NET3.5 requires 4.5 
       if not CheckInstallMSI() then begin
         Log('SQL2008R2 requires MSI 4.5 and .NET 3.5 SP1 - MSI will be installed and will require a reboot.');
-        //Check if we need to install the latest MSI 4.5 Installer 914 
-        if not dirExists(ExpandCOnstant('{src}\Win\MSI\WindowsXP-KB942288-v3-x86.exe')) then begin
+        //Check if we need to install the latest MSI 4.5 Installer 914
+        if not fileExists(ExpandCOnstant('{src}\Win\MSI\4.5\WindowsXP-KB942288-v3-x86.exe')) then begin
           if SILENT = false then begin
             MsgBox('MSI 4.5 Installer failed', mbinformation, MB_OK);
           end;
@@ -3433,7 +3493,6 @@ begin
   checkWindowsVersion();
   checkFileSystem();
   checkDiskSpace();
-  MSIInstaller();
 
   Result := True; // Inno setup doesn't proceed to next step if true is not returned.  
 end;
@@ -3476,7 +3535,8 @@ begin
 
   if CurStep = ssInstall then begin
     //this is commented out for now due to a bug in this module
-    //saveConfig();
+    saveConfig();
+    MSIInstaller();
     installNet3Point5();
     installNet4();     
     checkSP();
