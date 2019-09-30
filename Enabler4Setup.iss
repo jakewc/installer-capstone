@@ -1736,6 +1736,7 @@ var
   INSTALL_RESULT : integer;
   CREATE_TEMP_FILE_RESULT : boolean; 
   LINE : AnsiString;
+  progressPage: TOutputProgressWizardPage;
 
 begin
  (*Find out the version of SQL installed.block
@@ -1748,7 +1749,14 @@ begin
   SaveStringToFile(TEMP+SQLINFO, '', False);
 
   if not SILENT then begin
-       MsgBox('SQL Version', mbInformation, MB_OK);
+    try
+      progressPage := CreateOutputProgressPage('SQL Version','');
+      progressPage.SetText('Determining pre installed SQL Server version','');
+      progressPage.SetProgress(0, 0);
+      progressPage.Show;
+    finally
+    
+    end;
   end;
 
   //Execute the sql to get the SQL version of a default instance or the instance name passed by the command line.
@@ -1764,35 +1772,34 @@ begin
     Abort();
   end;
 
-//       //Read each line of the SQL query results
-//       LoadStringFromFile(TEMP + SQLINFO, LINE);
-//       if SQLVER_MAJOR = '' then
-//           begin
-//              SQLVER_MAJOR := LINE;
-//           end;
-//       //Is SQL Server major revision greator than or equal to the number 8 (version 2000)
-//       if StrToFloat(SQLVER_MAJOR) >= 8 then
-//         begin
-//           Log('SQL Version found ' + SQLVER_MAJOR );
-//         end
-//       else
-//         //If the line read is greator than or equal to the number it is 2000 or newe
-//         begin
-//            if StrToFloat(LINE) >= 8 then
-//               begin
-//                  Log('SQL Version found ' + LINE);
-//               end
-//            else
-//               begin
-//                  //Display the message to exit
-//                  if not SILENT then
-//                     begin
-//                        MsgBox('A newer SQL Server is required', mbInformation, MB_OK);
-//                        Log('Exiting installation as Enabler requires newer version than ' + SQLVER_MAJOR + ' of SQL Server');
-//                        Abort();
-//                     end
-//               end
-//         end
+  //Read each line of the SQL query results
+  LoadStringFromFile(TEMP + SQLINFO, LINE);
+  if SQLVER_MAJOR = '' then begin
+    SQLVER_MAJOR := LINE;
+  end;
+
+  //Is SQL Server major revision greater than or equal to the number 8 (version 2000)
+  if StrToFloat(SQLVER_MAJOR) >= 8 then begin
+    Log('SQL Version found ' + SQLVER_MAJOR );
+  end
+  else begin
+    //If the line read is greater than or equal to the number it is 2000 or newer
+    if StrToFloat(LINE) >= 8 then begin
+      Log('SQL Version found ' + LINE);
+    end
+    else begin
+      //Display the message to exit
+      if not SILENT then begin
+        MsgBox('A newer SQL Server is required', mbInformation, MB_OK);
+      end;
+      Log('Exiting installation as Enabler requires newer version than ' + SQLVER_MAJOR + ' of SQL Server');
+      Abort();
+    end;
+  end;
+
+  if not SILENT then begin
+    progressPage.Hide;
+  end;
 end;
 
 
@@ -1833,14 +1840,14 @@ procedure InstallServerComponents();
                  Abort();
                end;
 
-               //DetectVersionSQLServersInstalled();
+               DetectVersionSQLServersInstalled();
                //IsThereAnExistingEnablerInstall();
 
             end
           else begin
             //SQLServerIsRequired();
-          end
-      end
+          end;
+      end;
   end;
 
 
