@@ -2102,6 +2102,260 @@ begin
   end;
 end;
 
+//=========================================
+//INSTALL SQL SERVER or CHECK SA LOGIN
+//=========================================
+function GetRegKeyValue(): Integer;
+external'GetRegKeyValue@files:EnablerInstall.dll stdcall';
+
+procedure InstallSqlServer();
+var
+  INST_DRIVE:String;
+  USER_DOMAIN: string;
+  USER_NAME: string;
+  SQL_SYSADMIN_USER: string;
+  ResultCode: integer;
+  REG_KEY_IN: string;
+  SUB_KEY_IN: string;
+  REGKEY: integer;
+  POSQL_PATH: string;
+Begin
+  if pos('B',COMPONENTS) <> 0 then begin
+    if SQL_NEEDED = '1' then begin
+      INST_DRIVE:= '{app}';
+      INST_DRIVE := INST_DRIVE + ':';
+      CreateDir(MAINDIR);
+      if SQLEXPRESSNAME = 'MSDE2000' then begin
+        //=====================
+        //MSDE2000 Installation
+        //=====================
+        FileCopy('{app}\scripts\MSDEInstall.bat', MAINDIR + '\MSDEInstall.bat', False);
+        if SILENT = false then begin
+          try
+            progressPage := CreateOutputProgressPage('Progress Stage','Installing SQL Server (MSDE2000)');
+            progressPage.SetProgress(0, 0);
+            progressPage.Show;
+          finally
+            progressPage.Hide;
+          end;  
+        end;
+        Log(Format('Starting MEDE2000 install from %s\MSDE2000',['{app}']));
+        Exec('CMD.EXE', '/C '+MAINDIR+'\MSDEInstall.bat '+INST_DRIVE+ '"{app}\MSDE2000" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        if DirExists(MAINDIR+'\MSDE_REBOOT_PENDING') OR FileExists(MAINDIR+'\MSDE_REBOOT_PENDING') then begin
+          if UNATTENDED = '0' then
+            MsgBox('Rebooting', mbInformation, MB_OK);
+          end;
+          Log('MSDE installed - reboot pending');
+          Abort();
+        end;
+      end
+      else begin
+        //============================
+        //SQL2016 / 2014 / 2008 / 2005
+        //============================
+        USER_DOMAIN:= GetEnv('USERDOMAIN');
+        USER_NAME:= GetEnv('USERNAME');
+        SQL_SYSADMIN_USER:=USER_DOMIAN + '\' + USER_NAME;
+        Log(Format('Assigning system adminstrator privileges to %s',[SQL_SYSADMIN_USER]));
+      
+        //Install the SQLInstall batch file.
+        FileCopy('{app}\scripts\SQLInstall.bat', MAINDIR + '\SQLInstall.bat', False);  
+        if SILENT = false then begin
+          try
+            progressPage := CreateOutputProgressPage('Progress Stage','Installing SQL Server (MSDE2000)');
+            progressPage.SetProgress(0, 0);
+            progressPage.Show;
+          finally
+            progressPage.Hide;
+          end;  
+        end;
+        Log(format('Starting %s install from %s\%s',[SQLEXPRESSNAME,'{app}',SQLEXPRESSNAME]));
+        
+        if SQLEXPRESSNAME = 'SQL2016' then begin
+          
+          //Extra checks for SQL2016 - Must be 64 bit and Windows greater than Windows 7
+          if strtoint(OPERATING_SYSTEM) < 6.2 then begin
+            if UNATTENDED = '0' then
+              MsgBox(SQLEXPRESSFULLNAME+'Install', mbInformation, MB_OK);
+            end;
+            Log(Format('ERROR: %s not supported on Windows 7 or earlier',[SQLEXPRESSFULLNAME]));
+            Abort();
+          end;
+          if OS <> 64 then begin
+            if UNATTENDED = '0' then begin
+              MsgBox(SQLEXPRESSFULLNAME+'Install', mbInformation, MB_OK);
+            end;
+            Log(Format('ERROR: %s not supported on 32 bit installs',[SQLEXPRESSFULLNAME]));
+            Abort();
+          end;
+          //=======================
+          //SQL2016 Express Install
+          //=======================
+          Exec('CMD.EXE', '/C '+MAINDIR+'\SQLInstall.bat '+INST_DRIVE+ '"{app}\SQL2016\'+OS+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2016', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        end        
+        else if SQLEXPRESSNAME = 'SQL2014' then Begin
+          //=======================
+          //SQL2014 Express Install
+          //=======================
+          Exec('CMD.EXE', '/C '+MAINDIR+'\SQLInstall.bat '+INST_DRIVE+ '"{app}\SQL2014\'+OS+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2014', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        end
+        else if SQLEXPERSSNAME = 'SQL2012' then begin
+          //=======================
+          //SQL2012 Express Install
+          //======================= 
+          Exec('CMD.EXE', '/C '+MAINDIR+'\SQLInstall.bat '+INST_DRIVE+ '"{app}\SQL2012\'+OS+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2012', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        end
+        else if SQLEXPRESSNAME = 'SQL2008R2' then begin
+          //=======================
+          //SQL2008 Express Install
+          //=======================   
+          Exec('CMD.EXE', '/C '+MAINDIR+'\SQLInstall.bat '+INST_DRIVE+ '"{app}\SQL2008R2\'+OS+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);          
+        end
+        else begin
+          //=======================
+          //SQL2005 Express Install
+          //======================= 
+          Exec('CMD.EXE', '/C '+MAINDIR+'\SQLInstall.bat '+INST_DRIVE+ '"{app}\SQL2005\'+'" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);            
+        end;
+      end;
+    
+      Log(format('Result of SqlInstall %s',[INSTALL_RESULT]));
+    
+      //Error 1 - Password not strong
+      if INSTALL_RESULT = 1 then begin
+        if UNATTENDED = '0' then begin
+          MsgBox(SQLEXPRESSFULLNAME+'Install', mbInformation, MB_OK);
+        end;
+        Log(Format('ERROR: %s install failed due to SQL password not strong',[SQLEXPRESSFULLNAME]));
+        Abort();
+      end;
+      
+      //Make sure the SQL Server doesn't need a reboot
+      If INSTALL_RESULT = 2 then begin
+        if SILENT = false then begin
+          MsgBox('Reboot required', mbInformation, MB_OK);
+        end;
+        //Add Registry Keys before rebooting
+        RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler', 'Restart', 'True');
+        RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'Enabler Install', '"'+ExpandConstant('{app}')+'\Enabler4Setup.exe"');
+        Log(Format('%s installed - reboot pending',[SQLEXPRESSFULLNAME]));
+        if MsgBox('Reboot system?', mbConfirmation, MB_YESNO) = IDYES then begin
+          NeedRestart();
+          //EXIT Installation;
+        end;
+        Abort();
+      end;
+
+      //Error3 - Updates required
+      if INSTALL_RESULT = 3 then begin
+        if UNATTENDED = '0' then begin
+          MsgBox(SQLEXPRESSFULLNAME+'Install', mbInformation, MB_OK);
+        end;
+        Log(Format('ERROR: %s install failed, updates are required',[SQLEXPRESSFULLNAME]));
+        Abort();
+      end;
+      
+      //Error 4 or any other error - Failed Install
+      //Make sure the SQL Server was installed
+      if INSTALL_RESULT <> 0 then begin
+        if UNATTENDED = '0' then begin
+          MsgBox(SQLEXPRESSFULLNAME+'Install', mbInformation, MB_OK);
+        end;
+        Log(Format('ERROR: %s install failed',[SQLEXPRESSFULLNAME]));
+        Abort();
+      end;
+      
+      //Make sure the SQL Server engine is running
+      Exec('CMD.EXE','sc start mssqlserver','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      if SILENT = false then begin
+        try
+          progressPage := CreateOutputProgressPage('Progress Stage',' ');
+          progressPage.SetProgress(0, 0);
+          progressPage.Show;
+        finally
+          progressPage.Hide;
+        end;  
+      end;
+      
+      //Set up Registry Key for SQL version client Setup 
+      if SQLEXPRESSNAME = 'SQL2016' then begin
+        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\130\\Tools\\ClientSetup';
+      end
+      else if SQLEXPRESSNAME = 'SQL2014' then begin
+        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\120\\Tools\\ClientSetup';
+      end
+      else if SQLEXPRESSNAME = 'SQL2012' then begin
+        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\110\\Tools\\ClientSetup';
+      end
+      else if SQLEXPRESSNAME = 'SQL2008R2' then begin
+        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\100\\Tools\\ClientSetup';
+      end;
+      
+      //If we get here must send the full path to OSQL.EXE to DBInstall to make sure it can run properly
+      if REG_KEY_IN <> '' then begin
+        // Locate OSQL for 2008R2, 2012, 2014, 2016
+        //=============================================================================================================================
+        //=== We are using a custom built DLL to get the registry key value from the windows registry
+        //=== if installing on a 64-bit OS the DLL will get the key from the 64-bit side of the registry.
+        //=== This is required because this installer (which is a 32-bit app) would otherwise incorrectly retrieve keys from the 32-...
+        //=== FYI - - - On a 64-bit system there would be a \Program Files\ folder for 64-bit apps
+        //=== FYI - - - ...and a \Program Files (x86)\ folder for 32-bit apps
+        //==============================================================================================================================
+        if OS = 64 then begin
+          SUB_KEY_IN:= GetEnv('PATH'); 
+          Log('64-bit OS therefore copying EnablerInstall.dll');
+          FileCopy('{app}\bin\enablerinstall.dll', MAINDIR + '\bin\EnablerInstall.dll', False);
+          REGKEY:=GetRegKeyValue();
+          Log('The path to OSQL.EXE for this 64-bit install of SQL Server is: ' + IntToStr(REGKEY));
+          OSQL_PATH:= IntToStr(REGKEY);
+          Log('OSQL_PATH is currently set to ' + OSQL_PATH);
+        end
+        else if OS = 32 then begin
+          Log('32-bit OS therefore will use standard WISE way to get key from registry');
+          RegQueryStringValue('HKEY_AUTO', REG_KEY_IN, 'Default', OSQL_PATH);
+          Log('OSQL_PATH is ' + OSQL_PATH);
+        end;
+        Log('Processor bit size (e.g. 32/64 bit), the variable OS is ' + IntToStr(OS));
+      end
+      else begin
+        RegQueryStringValue('HKEY_AUTO', 'Software\Microsoft\Windows\CurrentVersion', 'Default', POSQL_PATH);
+        OSQL_PATH := POSQL_PATH+ '\Microsoft SQLServer\90\Tools\Binn';
+        if FileExists(OSQL_PATH +'\OSQL.EXE')=False then begin
+          OSQL_PATH := POSQL_PATH+ '\Microsoft SQLServer\80\Tools\Binn';
+        end;
+        Log(Format('Location of OSQL.EXE is %s (SQL2005 Installation in progress)',[OSQL_PATH]));
+      end;
+
+      //In case we can't find OSQL.EXE anywhere
+      if FileExists(OSQL_PATH +'\OSQL.EXE')=False then begin
+        Log('ERROR: Cannot find OSQL.EXE');
+        Abort();
+      end;
+
+      //OSQL should work now, we will test it now to make sure.
+      Log(Format('Making sure that OSQL works %s',[OSQL_PATH]));
+      Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+' -Q "select count(*) from sysobjects"'+INST_DRIVE+ '"{app}\SQL2016\'+OS+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2016', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      if ResultCode = 0 then begin
+        
+      end
+      else begin
+      
+      end
+
+
+
+    end;
+  end;
+end;
+
+
+
+
+
+
+
+
+
 
 //=============================
 //INSTALL ENABLER FILES
