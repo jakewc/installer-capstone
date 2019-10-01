@@ -46,7 +46,8 @@ WizardStyle=modern
 AppId={{95EC957B-DB36-4EDD-9C7C-B19F896CC37D}
 AppPublisher=Integration Technologies Limited
 AppPublisherURL=https://integration.co.nz/
-DefaultDirName={commonpf}\Enabler4
+DefaultDirName=C:\Enabler4
+UsePreviousAppDir=no
 OutputBaseFilename=Enabler4Setup
 SetupLogging=yes
 DisableWelcomePage=no
@@ -498,10 +499,6 @@ Name: "{app}\SDK\Doc\VisualStudio";
 Name: "{app}\SDK"; 
 Name: "{app}\SDK\Samples"; 
 Name: "{group}\SDK\";
-
-[Run]
-; Test the running of an executable file if a server installation is selected in the wizard.
-Filename: "{#SourcePath}\ForTestPurposesOnly\SqlServerMockInstall.exe"; Check: IsInstallType('B');
 
 [Messages]
 ;Change the message on the standard welcome page
