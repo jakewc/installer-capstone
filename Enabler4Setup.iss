@@ -489,8 +489,8 @@ Source:"{#SourcePath}\Input\glazedlists-1.8.0_java15.jar"; DestDir:"{app}"; Chec
 Source:"{#SourcePath}\Input\icu4j-49_1.jar"; DestDir:"{app}"; Check: IsSDK_OPTIONS('B');
 Source:"{#SourcePath}\Input\miglayout15-swing.jar"; DestDir:"{app}"; Check: IsSDK_OPTIONS('B');
 
-
-
+//This file is for call dll file in the Install SQL Server
+Source:"{#SourcePath}\Input\bin\EnablerInstall.dll"; Flags:dontcopy;
 
 [Dirs]
 ; deleteafterinstall ONLY DELETES if folder empty at end of install
@@ -2159,6 +2159,336 @@ begin
   end;
 end;
 
+//=========================================
+//INSTALL SQL SERVER or CHECK SA LOGIN
+//=========================================
+function GetRegKeyValue(): Integer;
+external 'GetRegKeyValue@files:EnablerInstall.dll stdcall';
+
+procedure InstallSqlServer();
+var
+  progressPage: TOutputProgressWizardPage;
+  INST_DRIVE:String;
+  USER_DOMAIN: string;
+  USER_NAME: string;
+  SQL_SYSADMIN_USER: string;
+  ResultCode: Integer;
+  ResultCode2: Integer;
+  REG_KEY_IN: string;
+  SUB_KEY_IN: string;
+  REGKEY: integer;
+  POSQL_PATH: string;
+Begin
+  if pos('B',COMPONENTS) <> 0 then begin
+    if SQL_NEEDED = true then begin
+      INST_DRIVE:= '{app}';
+      INST_DRIVE := INST_DRIVE + ':';
+      CreateDir(ExpandConstant('{app}'));
+      if SQLEXPRESSNAME = 'MSDE2000' then begin
+        //=====================
+        //MSDE2000 Installation
+        //=====================
+        FileCopy('{app}\scripts\MSDEInstall.bat', ExpandConstant('{app}')+ '\MSDEInstall.bat', False);
+        if SILENT = false then begin
+          try
+            progressPage := CreateOutputProgressPage('Progress Stage','Installing SQL Server (MSDE2000)');
+            progressPage.SetProgress(0, 0);
+            progressPage.Show;
+          finally
+            progressPage.Hide;
+          end;  
+        end;
+        Log(Format('Starting MEDE2000 install from %s\MSDE2000',['{app}']));
+        Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\MSDEInstall.bat '+INST_DRIVE+ '"{app}\MSDE2000" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode2);
+        if DirExists(ExpandConstant('{app}')+'\MSDE_REBOOT_PENDING') OR FileExists(ExpandConstant('{app}')+'\MSDE_REBOOT_PENDING') then begin
+          if UNATTENDED = '0' then begin
+            MsgBox('Rebooting', mbInformation, MB_OK);
+          end;
+          Log('MSDE installed - reboot pending');
+          Abort();
+        end;
+      end
+      else begin
+        //============================
+        //SQL2016 / 2014 / 2008 / 2005
+        //============================
+        USER_DOMAIN:= GetEnv('USERDOMAIN');
+        USER_NAME:= GetEnv('USERNAME');
+        SQL_SYSADMIN_USER:=USER_DOMAIN + '\' + USER_NAME;
+        Log(Format('Assigning system adminstrator privileges to %s',[SQL_SYSADMIN_USER]));
+      
+        //Install the SQLInstall batch file.
+        FileCopy('{app}\scripts\SQLInstall.bat', ExpandConstant('{app}')+ '\SQLInstall.bat', False);  
+        if SILENT = false then begin
+          try
+            progressPage := CreateOutputProgressPage('Progress Stage','Installing SQL Server (MSDE2000)');
+            progressPage.SetProgress(0, 0);
+            progressPage.Show;
+          finally
+            progressPage.Hide;
+          end;  
+        end;
+        Log(format('Starting %s install from %s\%s',[SQLEXPRESSNAME,'{app}',SQLEXPRESSNAME]));
+        
+        if SQLEXPRESSNAME = 'SQL2016' then begin
+          
+          //Extra checks for SQL2016 - Must be 64 bit and Windows greater than Windows 7
+          if strtoint(OPERATING_SYSTEM) < 6.2 then begin
+            if UNATTENDED = '0' then begin
+              MsgBox(SQLEXPRESSFULLNAME+'Install', mbInformation, MB_OK);
+            end;
+            Log(Format('ERROR: %s not supported on Windows 7 or earlier',[SQLEXPRESSFULLNAME]));
+            Abort();
+          end;
+          if OS <> 64 then begin
+            if UNATTENDED = '0' then begin
+              MsgBox(SQLEXPRESSFULLNAME+'Install', mbInformation, MB_OK);
+            end;
+            Log(Format('ERROR: %s not supported on 32 bit installs',[SQLEXPRESSFULLNAME]));
+            Abort();
+          end;
+          //=======================
+          //SQL2016 Express Install
+          //=======================
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{app}\SQL2014\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        end        
+        else if SQLEXPRESSNAME = 'SQL2014' then Begin
+          //=======================
+          //SQL2014 Express Install
+          //=======================
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{app}\SQL2014\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        end
+        else if SQLEXPRESSNAME = 'SQL2012' then begin
+          //=======================
+          //SQL2012 Express Install
+          //======================= 
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{app}\SQL2012\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        end
+        else if SQLEXPRESSNAME = 'SQL2008R2' then begin
+          //=======================
+          //SQL2008 Express Install
+          //=======================   
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{app}\SQL2008R2\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);          
+        end
+        else begin
+          //=======================
+          //SQL2005 Express Install
+          //======================= 
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+INST_DRIVE+ '"{app}\SQL2005\'+'" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);            
+        end;
+      end;
+    
+      Log(format('Result of SqlInstall %d',[ResultCode]));
+    
+      //Error 1 - Password not strong
+      if ResultCode = 1 then begin
+        if UNATTENDED = '0' then begin
+          MsgBox(SQLEXPRESSFULLNAME+'Install', mbInformation, MB_OK);
+        end;
+        Log(Format('ERROR: %s install failed due to SQL password not strong',[SQLEXPRESSFULLNAME]));
+        Abort();
+      end;
+      
+      //Make sure the SQL Server doesn't need a reboot
+      If ResultCode = 2 then begin
+        if SILENT = false then begin
+          MsgBox('Reboot required', mbInformation, MB_OK);
+        end;
+        //Add Registry Keys before rebooting
+        RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler', 'Restart', 'True');
+        RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'Enabler Install', '"'+ExpandConstant('{app}')+'\Enabler4Setup.exe"');
+        Log(Format('%s installed - reboot pending',[SQLEXPRESSFULLNAME]));
+        if MsgBox('Reboot system?', mbConfirmation, MB_YESNO) = IDYES then begin
+          RESTART_DECISION:=TRUE;
+          //EXIT Installation;
+        end;
+        Abort();
+      end;
+
+      //Error3 - Updates required
+      if ResultCode = 3 then begin
+        if UNATTENDED = '0' then begin
+          MsgBox(SQLEXPRESSFULLNAME+'Install', mbInformation, MB_OK);
+        end;
+        Log(Format('ERROR: %s install failed, updates are required',[SQLEXPRESSFULLNAME]));
+        Abort();
+      end;
+      
+      //Error 4 or any other error - Failed Install
+      //Make sure the SQL Server was installed
+      if ResultCode <> 0 then begin
+        if UNATTENDED = '0' then begin
+          MsgBox(SQLEXPRESSFULLNAME+'Install', mbInformation, MB_OK);
+        end;
+        Log(Format('ERROR: %s install failed',[SQLEXPRESSFULLNAME]));
+        Abort();
+      end;
+      
+      //Make sure the SQL Server engine is running
+      Exec('CMD.EXE','sc start mssqlserver','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      if SILENT = false then begin
+        try
+          progressPage := CreateOutputProgressPage('Progress Stage',' ');
+          progressPage.SetProgress(0, 0);
+          progressPage.Show;
+        finally
+          progressPage.Hide;
+        end;  
+      end;
+      
+      //Set up Registry Key for SQL version client Setup 
+      if SQLEXPRESSNAME = 'SQL2016' then begin
+        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\130\\Tools\\ClientSetup';
+      end
+      else if SQLEXPRESSNAME = 'SQL2014' then begin
+        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\120\\Tools\\ClientSetup';
+      end
+      else if SQLEXPRESSNAME = 'SQL2012' then begin
+        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\110\\Tools\\ClientSetup';
+      end
+      else if SQLEXPRESSNAME = 'SQL2008R2' then begin
+        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\100\\Tools\\ClientSetup';
+      end;
+      
+      //If we get here must send the full path to OSQL.EXE to DBInstall to make sure it can run properly
+      if REG_KEY_IN <> '' then begin
+        // Locate OSQL for 2008R2, 2012, 2014, 2016
+        //=============================================================================================================================
+        //=== We are using a custom built DLL to get the registry key value from the windows registry
+        //=== if installing on a 64-bit OS the DLL will get the key from the 64-bit side of the registry.
+        //=== This is required because this installer (which is a 32-bit app) would otherwise incorrectly retrieve keys from the 32-...
+        //=== FYI - - - On a 64-bit system there would be a \Program Files\ folder for 64-bit apps
+        //=== FYI - - - ...and a \Program Files (x86)\ folder for 32-bit apps
+        //==============================================================================================================================
+        if OS = 64 then begin
+          SUB_KEY_IN:= GetEnv('PATH'); 
+          Log('64-bit OS therefore copying EnablerInstall.dll');
+          FileCopy('{app}\bin\enablerinstall.dll', ExpandConstant('{app}')+ '\bin\EnablerInstall.dll', False);
+          REGKEY:= GetRegKeyValue();
+          Log('The path to OSQL.EXE for this 64-bit install of SQL Server is: ' + IntToStr(REGKEY));
+          OSQL_PATH:= IntToStr(REGKEY);
+          Log('OSQL_PATH is currently set to ' + OSQL_PATH);
+        end
+        else if OS = 32 then begin
+          Log('32-bit OS therefore will use standard WISE way to get key from registry');
+          RegQueryStringValue('HKEY_AUTO', REG_KEY_IN, 'Default', OSQL_PATH);
+          Log('OSQL_PATH is ' + OSQL_PATH);
+        end;
+        Log('Processor bit size (e.g. 32/64 bit), the variable OS is ' + IntToStr(OS));
+      end
+      else begin
+        RegQueryStringValue('HKEY_AUTO', 'Software\Microsoft\Windows\CurrentVersion', 'Default', POSQL_PATH);
+        OSQL_PATH := POSQL_PATH+ '\Microsoft SQLServer\90\Tools\Binn';
+        if FileExists(OSQL_PATH +'\OSQL.EXE')=False then begin
+          OSQL_PATH := POSQL_PATH+ '\Microsoft SQLServer\80\Tools\Binn';
+        end;
+        Log(Format('Location of OSQL.EXE is %s (SQL2005 Installation in progress)',[OSQL_PATH]));
+      end;
+
+      //In case we can't find OSQL.EXE anywhere
+      if FileExists(OSQL_PATH +'\OSQL.EXE')=False then begin
+        Log('ERROR: Cannot find OSQL.EXE');
+        Abort();
+      end;
+
+      //OSQL should work now, we will test it now to make sure.
+      Log(Format('Making sure that OSQL works %s',[OSQL_PATH]));
+      Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S%SQLQUERY% -Q "select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      if ResultCode = 0 then begin
+        RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler', 'InstallComponents', '');
+        RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler', 'UnattendedInstall', '');
+        //Stop adding this entry to the Log file. This stops this being doing on uninstall.
+        //If the RunOnce key is deleted on uninstall and then Enabler is reinstalled the driver will fail its install
+        //As windows requires the runonce key to be present to install drivers
+        RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'Enabler Install', '');
+        Log('OSQL working OK!');
+      end
+      else begin
+        if UNATTENDED = '0' then begin
+          MsgBox(APPTITLE, mbInformation, MB_OK);
+        end;
+        Log('OSQL not working rebooting...');
+        RESTART_DECISION:=TRUE;
+        Abort();
+      end
+    end
+    else begin
+      if SQL_INSTANCE = '' then begin
+        Exec('CMD.EXE','sc start MSSQLSERVER','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      end
+      else begin
+        Exec('CMD.EXE', 'sc start '+SQL_INSTANCE,'', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      end;
+    end;
+
+    //==================================
+    //INSTALL WINDOWS DRIVER FOR ENABLER
+    //==================================
+    if DirExists('{app}\Driver') then begin
+      if SILENT = false then begin
+        try
+          progressPage := CreateOutputProgressPage('Progress Stage',' ');
+          progressPage.SetProgress(0, 0);
+          progressPage.Show;
+        finally
+          progressPage.Hide;
+        end;  
+      end;
+      //Delete All Drivers before copy the latest
+      DelTree(ExpandConstant('{app}')+'\Driver\*', False, True, True);
+      //Copy Installation files across
+      FileCopy('{app}\Driver\DriverInstaller.exe', ExpandConstant('{app}')+'\Driver\DriverInstaller.exe', False);
+      if OS = 64 then begin
+        FileCopy('{app}\Driver\x64\EnablerPCI.inf', ExpandConstant('{app}')+'\Driver\EnablerPCI.inf', False);
+        FileCopy('{app}\Driver\x64\Enbx64.sys', ExpandConstant('{app}')+'\Driver\Enbx64.sys', False);
+        FileCopy('{app}\Driver\x64\enbamd64.cat', ExpandConstant('{app}')+'\Driver\enbamd64.cat', False);
+        FileCopy('{app}\Driver\x64\DPInst.exe', ExpandConstant('{app}')+'\Driver\DPInst.exe', False);
+        FileCopy('{app}\Driver\x64\DPInst.xml', ExpandConstant('{app}')+'\Driver\DPInst.xml', False);
+        FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressamd64.cat', ExpandConstant('{app}')+'\Driver\EnablerExpressamd64.cat', False);
+        FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressx64.inf', ExpandConstant('{app}')+'\Driver\EnablerExpressx64.inf', False);
+        FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressx64.sys', ExpandConstant('{app}')+'\Driver\EnablerExpressx64.sys', False);
+      end
+      else begin
+        FileCopy('{app}\Driver\x86\EnablerPCI.inf', ExpandConstant('{app}')+'\Driver\EnablerPCI.inf', False);
+        FileCopy('{app}\Driver\x86\Enbx32.sys', ExpandConstant('{app}')+'\Driver\Enbx32.sys', False);
+        FileCopy('{app}\Driver\x86\enbx86.cat', ExpandConstant('{app}')+'\Driver\enbx86.cat', False);
+        FileCopy('{app}\Driver\x86\DPInst.xml', ExpandConstant('{app}')+'\Driver\DPInst.xml', False);
+        FileCopy('{app}\Driver\x86\DPInst.exe', ExpandConstant('{app}')+'\Driver\DPInst.exe', False);
+        FileCopy('{app}\Driver\x64\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx32.inf', ExpandConstant('{app}')+'\Driver\EnablerExpressx32.inf', False);
+        FileCopy('{app}\Driver\x64\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx86.cat', ExpandConstant('{app}')+'\Driver\EnablerExpressx86.cat', False);
+        FileCopy('{app}\Driver\x64\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx32.sys', ExpandConstant('{app}')+'\Driver\EnablerExpressx32.sys', False);
+      end;
+      //Check that the RunOnce Key is present and create it if it doesn't
+      RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', '{Default}', '');
+      Exec(ExpandConstant('{app}')+'\Driver\DriverInstaller.exe','','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Log(Format('Driver Installer return code %s',[Resultcode]));
+      if ResultCode = 1 then begin
+        DRIVERCODE:=1;
+      end
+      else if ResultCode = 2 then begin
+        DRIVERCODE:=2;
+      end
+      else if ResultCode = 3 then begin
+        DRIVERCODE:=3;
+      end
+      else begin
+        DRIVERCODE:=0;
+      end;
+      if SILENT = false then begin
+        try
+          progressPage := CreateOutputProgressPage('Progress Stage',' ');
+          progressPage.SetProgress(0, 0);
+          progressPage.Show;
+        finally
+          progressPage.Hide;
+        end;  
+      end;
+    end
+    else begin
+      MsgBox('Unable to Install Driver', mbInformation, MB_OK);
+    end;
+  end;
+end;
 
 //=============================
 //INSTALL ENABLER FILES
@@ -3542,6 +3872,7 @@ begin
     blankPasswordChecks();
     //cplusplus();
     removeRegistryVars();
+    InstallSqlServer();
     installEnablerFiles();
     createLicense();
     installServerFiles();
