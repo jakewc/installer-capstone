@@ -2208,7 +2208,7 @@ var
 Begin
   if pos('B',COMPONENTS) <> 0 then begin
     if SQL_NEEDED = true then begin
-      INST_DRIVE:= '{app}';
+      INST_DRIVE:= '{src}';
       INST_DRIVE := INST_DRIVE + ':';
       CreateDir(ExpandConstant('{app}'));
       if SQLEXPRESSNAME = 'MSDE2000' then begin
@@ -2225,8 +2225,8 @@ Begin
             progressPage.Hide;
           end;  
         end;
-        Log(Format('Starting MEDE2000 install from %s\MSDE2000',['{app}']));
-        Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\MSDEInstall.bat '+INST_DRIVE+ '"{app}\MSDE2000" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode2);
+        Log(Format('Starting MEDE2000 install from %s\MSDE2000',[ExpandConstant('{src}')]));
+        Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\MSDEInstall.bat '+INST_DRIVE+ '"{src}\MSDE2000" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode2);
         if DirExists(ExpandConstant('{app}')+'\MSDE_REBOOT_PENDING') OR FileExists(ExpandConstant('{app}')+'\MSDE_REBOOT_PENDING') then begin
           if UNATTENDED = '0' then begin
             MsgBox('Rebooting', mbInformation, MB_OK);
@@ -2245,7 +2245,7 @@ Begin
         Log(Format('Assigning system adminstrator privileges to %s',[SQL_SYSADMIN_USER]));
       
         //Install the SQLInstall batch file.
-        FileCopy('{app}\scripts\SQLInstall.bat', ExpandConstant('{app}')+ '\SQLInstall.bat', False);  
+        FileCopy('{src}\scripts\SQLInstall.bat', ExpandConstant('{app}')+ '\SQLInstall.bat', False);  
         if SILENT = false then begin
           try
             progressPage := CreateOutputProgressPage('Progress Stage','Installing SQL Server (MSDE2000)');
@@ -2255,7 +2255,7 @@ Begin
             progressPage.Hide;
           end;  
         end;
-        Log(format('Starting %s install from %s\%s',[SQLEXPRESSNAME,'{app}',SQLEXPRESSNAME]));
+        Log(format('Starting %s install from %s\%s',[SQLEXPRESSNAME,'{src}',SQLEXPRESSNAME]));
         
         if SQLEXPRESSNAME = 'SQL2016' then begin
           
@@ -2277,31 +2277,31 @@ Begin
           //=======================
           //SQL2016 Express Install
           //=======================
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{app}\SQL2014\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{src}\SQL2014\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
         end        
         else if SQLEXPRESSNAME = 'SQL2014' then Begin
           //=======================
           //SQL2014 Express Install
           //=======================
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{app}\SQL2014\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{src}\SQL2014\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
         end
         else if SQLEXPRESSNAME = 'SQL2012' then begin
           //=======================
           //SQL2012 Express Install
           //======================= 
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{app}\SQL2012\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{src}\SQL2012\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
         end
         else if SQLEXPRESSNAME = 'SQL2008R2' then begin
           //=======================
           //SQL2008 Express Install
           //=======================   
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{app}\SQL2008R2\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);          
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{src}\SQL2008R2\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);          
         end
         else begin
           //=======================
           //SQL2005 Express Install
           //======================= 
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+INST_DRIVE+ '"{app}\SQL2005\'+'" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);            
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+INST_DRIVE+ '"{src}\SQL2005\'+'" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);            
         end;
       end;
     
@@ -2323,7 +2323,7 @@ Begin
         end;
         //Add Registry Keys before rebooting
         RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler', 'Restart', 'True');
-        RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'Enabler Install', '"'+ExpandConstant('{app}')+'\Enabler4Setup.exe"');
+        RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'Enabler Install', '"'+ExpandConstant('{src}')+'\Enabler4Setup.exe"');
         Log(Format('%s installed - reboot pending',[SQLEXPRESSFULLNAME]));
         if MsgBox('Reboot system?', mbConfirmation, MB_YESNO) = IDYES then begin
           RESTART_DECISION:=TRUE;
@@ -2451,7 +2451,7 @@ Begin
     //==================================
     //INSTALL WINDOWS DRIVER FOR ENABLER
     //==================================
-    if DirExists('{app}\Driver') then begin
+    if DirExists('{src}\Driver') then begin
       if SILENT = false then begin
         try
           progressPage := CreateOutputProgressPage('Progress Stage',' ');
@@ -2462,28 +2462,28 @@ Begin
         end;  
       end;
       //Delete All Drivers before copy the latest
-      DelTree(ExpandConstant('{app}')+'\Driver\*', False, True, True);
+      DelTree(ExpandConstant('{src}')+'\Driver\*', False, True, True);
       //Copy Installation files across
       FileCopy('{app}\Driver\DriverInstaller.exe', ExpandConstant('{app}')+'\Driver\DriverInstaller.exe', False);
       if OS = 64 then begin
-        FileCopy('{app}\Driver\x64\EnablerPCI.inf', ExpandConstant('{app}')+'\Driver\EnablerPCI.inf', False);
-        FileCopy('{app}\Driver\x64\Enbx64.sys', ExpandConstant('{app}')+'\Driver\Enbx64.sys', False);
-        FileCopy('{app}\Driver\x64\enbamd64.cat', ExpandConstant('{app}')+'\Driver\enbamd64.cat', False);
-        FileCopy('{app}\Driver\x64\DPInst.exe', ExpandConstant('{app}')+'\Driver\DPInst.exe', False);
-        FileCopy('{app}\Driver\x64\DPInst.xml', ExpandConstant('{app}')+'\Driver\DPInst.xml', False);
-        FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressamd64.cat', ExpandConstant('{app}')+'\Driver\EnablerExpressamd64.cat', False);
-        FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressx64.inf', ExpandConstant('{app}')+'\Driver\EnablerExpressx64.inf', False);
-        FileCopy('{app}\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressx64.sys', ExpandConstant('{app}')+'\Driver\EnablerExpressx64.sys', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x64\EnablerPCI.inf', ExpandConstant('{app}')+'\Driver\EnablerPCI.inf', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x64\Enbx64.sys', ExpandConstant('{app}')+'\Driver\Enbx64.sys', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x64\enbamd64.cat', ExpandConstant('{app}')+'\Driver\enbamd64.cat', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x64\DPInst.exe', ExpandConstant('{app}')+'\Driver\DPInst.exe', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x64\DPInst.xml', ExpandConstant('{app}')+'\Driver\DPInst.xml', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressamd64.cat', ExpandConstant('{app}')+'\Driver\EnablerExpressamd64.cat', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressx64.inf', ExpandConstant('{app}')+'\Driver\EnablerExpressx64.inf', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x64\d5c4eb30-04db-4831-9b5c-6b4c1bfdd34c\EnablerExpressx64.sys', ExpandConstant('{app}')+'\Driver\EnablerExpressx64.sys', False);
       end
       else begin
-        FileCopy('{app}\Driver\x86\EnablerPCI.inf', ExpandConstant('{app}')+'\Driver\EnablerPCI.inf', False);
-        FileCopy('{app}\Driver\x86\Enbx32.sys', ExpandConstant('{app}')+'\Driver\Enbx32.sys', False);
-        FileCopy('{app}\Driver\x86\enbx86.cat', ExpandConstant('{app}')+'\Driver\enbx86.cat', False);
-        FileCopy('{app}\Driver\x86\DPInst.xml', ExpandConstant('{app}')+'\Driver\DPInst.xml', False);
-        FileCopy('{app}\Driver\x86\DPInst.exe', ExpandConstant('{app}')+'\Driver\DPInst.exe', False);
-        FileCopy('{app}\Driver\x64\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx32.inf', ExpandConstant('{app}')+'\Driver\EnablerExpressx32.inf', False);
-        FileCopy('{app}\Driver\x64\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx86.cat', ExpandConstant('{app}')+'\Driver\EnablerExpressx86.cat', False);
-        FileCopy('{app}\Driver\x64\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx32.sys', ExpandConstant('{app}')+'\Driver\EnablerExpressx32.sys', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x86\EnablerPCI.inf', ExpandConstant('{app}')+'\Driver\EnablerPCI.inf', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x86\Enbx32.sys', ExpandConstant('{app}')+'\Driver\Enbx32.sys', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x86\enbx86.cat', ExpandConstant('{app}')+'\Driver\enbx86.cat', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x86\DPInst.xml', ExpandConstant('{app}')+'\Driver\DPInst.xml', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x86\DPInst.exe', ExpandConstant('{app}')+'\Driver\DPInst.exe', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x64\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx32.inf', ExpandConstant('{app}')+'\Driver\EnablerExpressx32.inf', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x64\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx86.cat', ExpandConstant('{app}')+'\Driver\EnablerExpressx86.cat', False);
+        FileCopy(ExpandConstant('{src}')+'\Driver\x64\dd6f1c9a-e12e-4635-ad02-38e3553533bf\EnablerExpressx32.sys', ExpandConstant('{app}')+'\Driver\EnablerExpressx32.sys', False);
       end;
       //Check that the RunOnce Key is present and create it if it doesn't
       RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', '{Default}', '');

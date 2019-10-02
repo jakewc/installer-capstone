@@ -1,0 +1,36 @@
+﻿2019-10-02 15:43:10.285   Log opened. (Time zone: UTC+13:00)
+2019-10-02 15:43:10.297   Setup version: Inno Setup version 6.0.2 (u)
+2019-10-02 15:43:10.301   Original Setup EXE: D:\Capstone\installer-capstone\Output\Enabler4Setup.exe
+2019-10-02 15:43:10.305   Setup command line: /SL5="$69032C,40003364,721408,D:\Capstone\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$FE103E /NOTIFYWND=$1C0F08 /DEBUGWND=$4B0284 
+2019-10-02 15:43:10.309   Windows version: 10.0.18362  (NT platform: Yes)
+2019-10-02 15:43:10.313   64-bit Windows: Yes
+2019-10-02 15:43:10.313   Processor architecture: x64
+2019-10-02 15:43:10.313   User privileges: Administrative
+2019-10-02 15:43:10.321   Administrative install mode: Yes
+2019-10-02 15:43:10.325   Install mode root key: HKEY_LOCAL_MACHINE
+2019-10-02 15:43:10.325   64-bit install mode: No
+2019-10-02 15:43:10.333   Created temporary directory: C:\Users\dell\AppData\Local\Temp\is-L8OV6.tmp
+2019-10-02 15:43:10.345   -- DLL function import --
+2019-10-02 15:43:10.345   Function name: ExitProcess
+2019-10-02 15:43:10.349   DLL name: kernel32.dll
+2019-10-02 15:43:10.357   Dest DLL name: kernel32.dll
+2019-10-02 15:43:10.359   Importing the DLL function.
+2019-10-02 15:43:10.360   Successfully imported the DLL function. Delay loaded? No
+2019-10-02 15:43:10.363   -- DLL function import --
+2019-10-02 15:43:10.363   Function name: GetRegKeyValue
+2019-10-02 15:43:10.367   DLL name: files:EnablerInstall.dll
+2019-10-02 15:43:10.371   Extracting temporary file: C:\Users\dell\AppData\Local\Temp\is-L8OV6.tmp\EnablerInstall.dll
+2019-10-02 15:43:10.375   Dest DLL name: C:\Users\dell\AppData\Local\Temp\is-L8OV6.tmp\EnablerInstall.dll
+2019-10-02 15:43:10.379   Importing the DLL function.
+2019-10-02 15:43:10.383   Successfully imported the DLL function. Delay loaded? No
+2019-10-02 15:43:10.391   Initialising variables.
+2019-10-02 15:43:11.042   Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10
+2019-10-02 15:43:11.058   Installing Enabler V4.6.3.6087 on Windows V10.00.18362 64bit (Version 10)
+2019-10-02 15:43:11.090   CMD 
+2019-10-02 15:43:11.138   IE Location C:\Program Files\Internet Explorer;
+2019-10-02 15:43:11.158   IE VERSION: 9.11.18362.0
+2019-10-02 15:43:11.194   Installing from D:\Capstone\installer-capstone\Output drive.
+2019-10-02 15:43:11.707   Windows product type: 1
+2019-10-02 15:43:11.775   Location of OSQL.EXE is  (Initial Checks)
+2019-10-02 15:43:11.811   "ERROR: MSDE not found - cannot install server without SQL (Expected in folder {src}\MSDE2000
+2019-10-02 15:43:11.875   Unable to delete log file C:\Users\dell\AppData\Local\Temp\Setup Log 2019-10-02 #014.txt
