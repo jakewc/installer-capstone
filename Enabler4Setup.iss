@@ -1061,9 +1061,16 @@ end;
 //==========================
 
 procedure parseCommandLineOptions();
+var
+  ClientName: string;
+  Password: string;
+  Instance: string;
 begin
-  //CMDLINEUPPER:= GetCmdTail;
-  CMDLINEUPPER:= ExpandConstant('{param:CMDLINEVAL|}');  //  NOTE!!! You need /CMDLINEVAL='' to specify a command line command
+  CMDLINEUPPER:= GetCmdTail;
+  //CMDLINEUPPER:= ExpandConstant('{param:CMDLINEVAL|}'); <-- Less elegant implementation
+  ClientName:= ExpandConstant('{param:CLIENTNAME|}');
+  Password:= ExpandConstant('{param:PASSWORDPARAMETER|}');
+  Instance:= ExpandConstant('{param:INSTANCENAME|}');
   if (CMDLINEUPPER <> '') or WizardSilent then begin  // If command line values or the native parameter /SILENT has been specified.
     CMDOPTION:= CMDLINEUPPER;
     CMDUPPER:= CMDLINEUPPER;
@@ -1124,32 +1131,37 @@ begin
         Abort()
       end;
 
-      //THESE THREE OPTIONS WITH PARAMETERS (/CLIENT:servername) MUST BE ENTERED WITHOUT A SPACE
-      if pos('/CLIENT:', CMDUPPER) <> 0 then begin
-        JUNK:=copy(CMDUPPER, 9, Length(CMDUPPER)-1)
-        SERVER_NAME:=copy(CMDUPPER, 9, Length(CMDUPPER)-1)
+      //THESE THREE OPTIONS WITH PARAMETERS MUST BE ENTERED AS /CLIENTNAME=testName, /PASSWORDPARAMETER=testPassword, /INSTANCENAME=testInst
+      //!!!!THIS IS CASE-SENSITIVE!!!!
+      if ClientName <> '' then begin
+        JUNK:=ClientName;
+        SERVER_NAME:=ClientName;
         Log('Enabler Server name has been entered: '+SERVER_NAME)
       end;
     end;
+
     //Get SA password (used for Server installs with pre-existing SQL server)
-    if pos('/PASSWORD:', CMDUPPER) <> 0 then begin
-      JUNK:=copy(CMDUPPER, 11, Length(CMDUPPER)-1)
-      SA_PASSWORD:=copy(CMDUPPER, 11, Length(CMDUPPER)-1)
-      //this could be a problem but the .wse says this is literally the string '*****'
-      CMDUPPER:='/PASSWORD:*****'
-      Log('PASSWORD for SA has been entered')
+    if Password <> '' then begin
+      JUNK:=Password;
+      SA_PASSWORD:=Password;
+      //The .wse says this is literally the string '*****', this is to remove the password from the variable as soon as possible
+      CMDUPPER:='/PASSWORD:*****';
+      Log('PASSWORD for SA has been entered');
     end;
+
     //get the sql instance name
-    if pos('/INSTANCE:', CMDUPPER) <> 0 then begin
-      JUNK:=copy(CMDUPPER, 11, Length(CMDUPPER)-1)
-      SQL_INSTANCE:=copy(CMDUPPER, 11, Length(CMDUPPER)-1)
+    if Instance <> '' then begin
+      JUNK:=Instance;
+      SQL_INSTANCE:=Instance;
       //'*****' string appears here too
-      CMDUPPER:= '/INSTANCE:*****'
-      Log('SQL Named Instance - ' + SQL_INSTANCE)
+      CMDUPPER:= '/INSTANCE:*****';
+      Log('SQL Named Instance - ' + SQL_INSTANCE);
       CMD_INSTANCE:=true;
       //Configure SQL query for the default instance or the instance name passed in the command line
       SQLQUERY:= PC_NAME + '\' + SQL_INSTANCE;
     end;
+
+
     //The APPS option is no longer supported
     if pos('/APPS:', CMDUPPER) <> 0 then begin
       Log('The /APPS option was ignored - this option no longer supported.')
@@ -1184,11 +1196,16 @@ begin
     end;
   end;
 
+
+  //The old Wise script had functionality here to stop the install to show usage
+  //Innosetup cannot show any wizard pages other than the progress bar (using /SILENT) or nothing at all (/VERYSILENT) during a silent install
+
+
   if (SHOW_USAGE) then begin
     Log('WARNING: Install stopped to show usage.');    
-    //TODO - create dialog box "INSTALL USAGE"
-    MsgBox('Install stopped to show usage', mbinformation, MB_OK);
-    Abort();
+    //create dialog box "INSTALL USAGE"
+    //MsgBox('Install stopped to show usage', mbinformation, MB_OK);
+    //Abort();
   end;
   Log('CMD ' + CMDLINE_LOG)
 end;
