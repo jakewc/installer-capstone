@@ -746,6 +746,9 @@ var
   domainName: String;
   lblPort:TLabel;
 
+  //Ready Page
+  BackupCheckbox:TNewCheckBox;
+
 //========================================
 //installer-wide functions
 //========================================
@@ -930,6 +933,21 @@ begin
       Result := False;
     end;
   end;
+
+  //ready page database backup checkbox
+  if CurPageID = wpReady then begin
+     // is the checkbox checked?
+    if BackupCheckBox.Checked then begin
+      Log('Backup checkbox checked, will backup');
+      PRE_UPGRADE_BACKUP:='A';
+    end
+    else begin
+      // the checkbox is not checked
+      Log('Backup checkbox not checked or there is no existing database, will not backup.');
+      PRE_UPGRADE_BACKUP:='';
+    end;
+  end;
+
 end;
 
 //========================================
@@ -2142,8 +2160,6 @@ begin
   end;
 end;
 
-
-
 //===========================================
 //uninstall previous enablerAPI.msi if exists
 //===========================================
@@ -2162,6 +2178,7 @@ begin
   end;
 end;
 
+
 //Install server components
 
 
@@ -2169,7 +2186,7 @@ end;
 //Blank password checks
 //====================== 
 
-//It should be impossible to get here, Innosetup checks the password field is not blank
+//It should be impossible to get to the abort statement, Innosetup checks the password field is not blank
 procedure blankPasswordChecks();
 begin
   if COMPONENTS = 'B' then begin
@@ -2708,7 +2725,8 @@ end;
 //!!!The installer DOES NOT INSTALL ENABLER API !!!
 
 //Possibly due to the call to MAINDIR\Log\APIInstall.log which is not created by our installer anywhere
-//Therefore the Abort(); statement is commented out;
+//Therefore the Abort(); statement is commented out
+
 //the API installer still works fine if run separately
 
 procedure installAPIMSI();
@@ -3948,6 +3966,24 @@ begin
     createNoServerInstalledPage();
     createSAPasswordPage();
     createNetworkPortPage();
+    WizardForm.ReadyMemo.Height := WizardForm.ReadyMemo.Height - ScaleY(100);
+    BackupCheckbox := TNewCheckBox.Create(WizardForm);
+
+    if (COMPONENTS = 'B') and (PRE_BACKUP) then begin
+
+      // create the backup checkbox on the ready page
+      
+      with BackupCheckbox do
+        begin
+          Parent := WizardForm.ReadyMemo.Parent;
+          Left := WizardForm.ReadyMemo.Left;
+          Top := WizardForm.ReadyMemo.Top + WizardForm.ReadyMemo.Height + WizardForm.ReadyMemo.Height;
+          Height := ScaleY(Height);
+          Width := WizardForm.ReadyMemo.Width;
+          Caption := 'Backup Existing Database?';
+        end;
+      
+    end;
 end;
 
 
