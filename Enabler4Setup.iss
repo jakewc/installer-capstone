@@ -64,14 +64,14 @@ Name: "Server"; Description: "Server"
 ;=========================
 ; install Third-Party DLLs
 ;=========================
-Source: "{#SourcePath}\Input\Extra\comdlg32.ocx"; DestDir: "{app}";
-Source: "{#SourcePath}\Input\Extra\comct232.ocx"; DestDir: "{app}";
-Source: "{#SourcePath}\Input\Extra\comctl32.ocx"; DestDir: "{app}";
-Source: "{#SourcePath}\Input\Extra\Mscomm32.ocx"; DestDir: "{app}";
-Source: "{#SourcePath}\Input\Extra\Msflxgrd.ocx"; DestDir: "{app}";
-Source: "{#SourcePath}\Input\Extra\Msrdc20.ocx"; DestDir: "{app}";
-Source: "{#SourcePath}\Input\Extra\Msrdo20.dll"; DestDir: "{app}";
-Source: "{#SourcePath}\Input\Extra\Msvcp60.dll"; DestDir: "{app}";
+Source: "{#SourcePath}\Input\Extra\comdlg32.ocx"; DestDir: "{app}"; Flags: regserver;
+Source: "{#SourcePath}\Input\Extra\comct232.ocx"; DestDir: "{app}"; Flags: regserver;
+Source: "{#SourcePath}\Input\Extra\comctl32.ocx"; DestDir: "{app}"; Flags: regserver;
+Source: "{#SourcePath}\Input\Extra\Mscomm32.ocx"; DestDir: "{app}"; Flags: regserver;
+Source: "{#SourcePath}\Input\Extra\Msflxgrd.ocx"; DestDir: "{app}"; Flags: regserver;
+Source: "{#SourcePath}\Input\Extra\Msrdc20.ocx"; DestDir: "{app}";  Flags: regserver;
+Source: "{#SourcePath}\Input\Extra\Msrdo20.dll"; DestDir: "{app}";  Flags: regserver;
+Source: "{#SourcePath}\Input\Extra\Msvcp60.dll"; DestDir: "{app}";  
 
 //===============
 //Enabler Files
@@ -82,8 +82,8 @@ Source:"{#SourcePath}\Input\bin\scutil.exe";DestDir: "{app}"; Check: IsInstallTy
 ; Security components
 ;==================
 Source: "{#SourcePath}\Input\EnbSecurityController.exe"; DestDir: "{app}"; Flags: skipifsourcedoesntexist;
-Source: "{#SourcePath}\Input\SecurityModule.dll"; DestDir: "{app}"; Flags: skipifsourcedoesntexist;
-Source: "{#SourcePath}\Input\AuditTrail.dll"; DestDir: "{app}"; Flags: skipifsourcedoesntexist;
+Source: "{#SourcePath}\Input\SecurityModule.dll"; DestDir: "{app}"; Flags: skipifsourcedoesntexist regserver;
+Source: "{#SourcePath}\Input\AuditTrail.dll"; DestDir: "{app}"; Flags: skipifsourcedoesntexist regserver;
 Source: "{#SourcePath}\Input\itl.ico"; DestDir: "{app}";
 
 //====================
@@ -101,12 +101,12 @@ Source: "{#SourcePath}\Input\ConvertV4BetaLicense.exe"; DestDir: "{app}";
 //Source: "{#SourcePath}\Input\API\ActiveX\EnbPumpX.ocx"; DestDir: "{app}";
 
 //Only include ActiveX2 controls if they're in the source directory (this wasn't actually the case in the Wise script, they just get installed with no checks)
-Source: "{#SourcePath}\Input\API\ActiveX\EnbSessionX2.ocx"; DestDir: "{app}";
-Source: "{#SourcePath}\Input\EnablerSoundEvents.reg"; DestDir: "{app}";
-Source: "{#SourcePath}\Input\API\ActiveX\EnbAttendantX2.ocx"; DestDir: "{app}";
-Source: "{#SourcePath}\Input\API\ActiveX\EnbPumpX2.ocx"; DestDir: "{app}";
+Source: "{#SourcePath}\Input\API\ActiveX\EnbSessionX2.ocx"; DestDir: "{app}"; Flags: regserver;
+Source: "{#SourcePath}\Input\EnablerSoundEvents.reg"; DestDir: "{app}"; 
+Source: "{#SourcePath}\Input\API\ActiveX\EnbAttendantX2.ocx"; DestDir: "{app}"; Flags: regserver;
+Source: "{#SourcePath}\Input\API\ActiveX\EnbPumpX2.ocx"; DestDir: "{app}";   Flags: regserver;
 //include EnbConfigX if available - this one DOES get checked
-Source: "{#SourcePath}\Input\API\ActiveX\EnbConfigX.ocx"; DestDir: "{app}"; Flags: skipifsourcedoesntexist;
+Source: "{#SourcePath}\Input\API\ActiveX\EnbConfigX.ocx"; DestDir: "{app}"; Flags: skipifsourcedoesntexist regserver;
 
 //java assemblies
 Source: "{#SourcePath}\Input\Extra\joda-time-LICENSE.txt"; DestDir: "{app}";
@@ -123,8 +123,8 @@ Source: "{#SourcePath}\Input\API\NET\InstallEnablerApi.msi"; DestDir: "{app}";
 
 //Enabler 2 WPF Controls for .NET API
 Source: "{#SourcePath}\Input\API\NET\ITL.Enabler.WPFControls.dll"; DestDir: "{app}";
-Source: "{#SourcePath}\Input\API\NET\System.Windows.Controls.DataVisualization.Toolkit.dll"; DestDir: "{app}";
-Source: "{#SourcePath}\Input\API\NET\WPFToolkit.dll"; DestDir: "{app}";
+Source: "{#SourcePath}\Input\API\NET\System.Windows.Controls.DataVisualization.Toolkit.dll"; DestDir: "{app}"; 
+Source: "{#SourcePath}\Input\API\NET\WPFToolkit.dll"; DestDir: "{app}"; 
 
 //===================
 //startup processing
@@ -140,9 +140,9 @@ Source: "{#SourcePath}\Input\release.txt"; DestDir:"{tmp}" ;
 //====================
 Source: "{#SourcePath}\Input\bin\setx64.exe"; DestDir: "{app}\bin"; Check: IsOS(64);
 Source: "{#SourcePath}\Input\bin\setx32.exe"; DestDir: "{app}\bin"; Check: IsOS(32);
-Source: "{#SourcePath}\Input\Extra\ATL.dll"; DestDir: "{app}"; Check: IsWindowsVersion(5);
-Source: "{#SourcePath}\Input\Extra\mfc42.dll"; DestDir: "{app}"; Check: IsWindowsVersion(5);
-Source: "{#SourcePath}\Input\Extra\mfc42u.dll"; DestDir: "{app}"; Check: IsWindowsVersion(5);
+Source: "{#SourcePath}\Input\Extra\ATL.dll"; DestDir: "{app}"; Check: IsWindowsVersion(5); Flags: regserver;
+Source: "{#SourcePath}\Input\Extra\mfc42.dll"; DestDir: "{app}"; Check: IsWindowsVersion(5);  Flags: regserver;
+Source: "{#SourcePath}\Input\Extra\mfc42u.dll"; DestDir: "{app}"; Check: IsWindowsVersion(5);   Flags: regserver;
 Source: "{#SourcePath}\Input\Release Notes.htm"; DestDir: "{app}"; Flags: skipifsourcedoesntexist;
 Source: "{#SourcePath}\Input\Update\PumpUpdate.htm"; DestDir: "{app}"; Flags: skipifsourcedoesntexist;
 Source: "{#SourcePath}\Input\bin\atutil.exe"; DestDir: "{app}";
@@ -160,7 +160,7 @@ Source:"{#SourcePath}\Input\bin\DriveCompressed.exe";DestDir:"{app}\bin";
 //==========
 Source:"{#SourcePath}\Input\Extra\InnovaHxReg.exe"; DestDir:"{app}\SDK\Doc\VisualStudio"; Flags: dontcopy;
 Source:"{#SourcePath}\Input\bin\enbclient.exe"; DestDir: "{app}";
-Source:"{#SourcePath}\Input\bin\Interop.IWshRuntimeLibrary.dll"; DestDir: "{app}";
+Source:"{#SourcePath}\Input\bin\Interop.IWshRuntimeLibrary.dll"; DestDir: "{app}"; 
 
 //===========
 //C++ redists
@@ -229,44 +229,44 @@ Source: "{#SourcePath}\Input\EicGX.inf"; DestDir: "{app}"; Check: IsInstallType(
 Source: "{#SourcePath}\Input\EicMain2.hex"; DestDir: "{app}"; Check: IsInstallType('B');
 
 //Web Server files and assemblies
-Source: "{#SourcePath}\Input\bin\OpenNETCF.SSL.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\OpenNETCF.web.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\OpenNETCF.web.html.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\Utilities.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\Newtonsoft.Json.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
+Source: "{#SourcePath}\Input\bin\OpenNETCF.SSL.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
+Source: "{#SourcePath}\Input\bin\OpenNETCF.web.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');  Flags: regserver;
+Source: "{#SourcePath}\Input\bin\OpenNETCF.web.html.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');  Flags: regserver;
+Source: "{#SourcePath}\Input\bin\Utilities.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
+Source: "{#SourcePath}\Input\bin\Newtonsoft.Json.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
 //SSL Files
 Source: "{#SourcePath}\Input\bin\openssl.exe"; DestDir: "{app}\bin"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\libeay32.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\ssleay32.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
+Source: "{#SourcePath}\Input\bin\libeay32.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
+Source: "{#SourcePath}\Input\bin\ssleay32.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
 Source: "{#SourcePath}\Input\bin\openssl.cnf"; DestDir: "{app}\bin"; Check: IsInstallType('B');
 Source: "{#SourcePath}\Input\bin\openssl-license.txt"; DestDir: "{app}\bin"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\SecureBlackbox.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\SecureBlackbox.SSLCommon.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\SecureBlackbox.SSLServer.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\SecureBlackbox.Mail.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\SecureBlackbox.MIME.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
+Source: "{#SourcePath}\Input\bin\SecureBlackbox.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
+Source: "{#SourcePath}\Input\bin\SecureBlackbox.SSLCommon.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
+Source: "{#SourcePath}\Input\bin\SecureBlackbox.SSLServer.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');  Flags: regserver;
+Source: "{#SourcePath}\Input\bin\SecureBlackbox.Mail.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');  Flags: regserver;
+Source: "{#SourcePath}\Input\bin\SecureBlackbox.MIME.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
 
 Source: "{#SourcePath}\Input\bin\enbweb.exe"; DestDir: "{app}\bin"; Check: IsInstallType('B');
 Source: "{#SourcePath}\Input\bin\enbweb.exe.config"; DestDir: "{app}\bin"; Check: IsInstallType('B');
 
 //Assembly containing English resource strings
-Source: "{#SourcePath}\Input\www\bin\WebPages.dll"; DestDir: "{app}\www\bin"; Check: IsInstallType('B');
+Source: "{#SourcePath}\Input\www\bin\WebPages.dll"; DestDir: "{app}\www\bin"; Check: IsInstallType('B');Flags: regserver;
 
 //Assembly containing RestData API
-Source: "{#SourcePath}\Input\bin\RESTData.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
+Source: "{#SourcePath}\Input\bin\RESTData.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');Flags: regserver;
 
 //Assembly containing English resource strings
-Source: "{#SourcePath}\Input\bin\PageResources.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
+Source: "{#SourcePath}\Input\bin\PageResources.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');Flags: regserver;
 //Satellite assemblies for specific languages
-Source: "{#SourcePath}\Input\bin\es\PageResources.resources.dll"; DestDir: "{app}\bin\es"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\fr\PageResources.resources.dll"; DestDir: "{app}\bin\fr"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\id\PageResources.resources.dll"; DestDir: "{app}\bin\id"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\it-IT\PageResources.resources.dll"; DestDir: "{app}\bin\it-IT"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\pt-BR\PageResources.resources.dll"; DestDir: "{app}\bin\pt-BR"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\ru\PageResources.resources.dll"; DestDir: "{app}\bin\ru"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\sl\PageResources.resources.dll"; DestDir: "{app}\bin\sl"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\th\PageResources.resources.dll"; DestDir: "{app}\bin\th"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\zh-CHS\PageResources.resources.dll"; DestDir: "{app}\bin\zh-CHS"; Check: IsInstallType('B');
+Source: "{#SourcePath}\Input\bin\es\PageResources.resources.dll"; DestDir: "{app}\bin\es"; Check: IsInstallType('B');Flags: regserver;
+Source: "{#SourcePath}\Input\bin\fr\PageResources.resources.dll"; DestDir: "{app}\bin\fr"; Check: IsInstallType('B'); Flags: regserver;
+Source: "{#SourcePath}\Input\bin\id\PageResources.resources.dll"; DestDir: "{app}\bin\id"; Check: IsInstallType('B');  Flags: regserver;
+Source: "{#SourcePath}\Input\bin\it-IT\PageResources.resources.dll"; DestDir: "{app}\bin\it-IT"; Check: IsInstallType('B'); Flags: regserver;
+Source: "{#SourcePath}\Input\bin\pt-BR\PageResources.resources.dll"; DestDir: "{app}\bin\pt-BR"; Check: IsInstallType('B'); Flags: regserver;
+Source: "{#SourcePath}\Input\bin\ru\PageResources.resources.dll"; DestDir: "{app}\bin\ru"; Check: IsInstallType('B');Flags: regserver;
+Source: "{#SourcePath}\Input\bin\sl\PageResources.resources.dll"; DestDir: "{app}\bin\sl"; Check: IsInstallType('B'); Flags: regserver;
+Source: "{#SourcePath}\Input\bin\th\PageResources.resources.dll"; DestDir: "{app}\bin\th"; Check: IsInstallType('B'); Flags: regserver;
+Source: "{#SourcePath}\Input\bin\zh-CHS\PageResources.resources.dll"; DestDir: "{app}\bin\zh-CHS"; Check: IsInstallType('B');Flags: regserver;
 
 //Web Files
 Source: "{#SourcePath}\Input\www\css\Enabler.css"; DestDir: "{app}\www\css"; Check: IsInstallType('B');
@@ -468,7 +468,7 @@ Source: "{#SourcePath}\Input\update\PumpUpdate.exe"; DestDir: "{app}"; Check: Is
 Source: "{#SourcePath}\Input\update\PumpUpdate.ini"; DestDir: "{app}"; Check: IsInstallType('B');
 
 // Install the DLL that contanis the message ids for the Enabler Windows custom log
-Source:"{#SourcePath}\Input\bin\EnablerEvent.dll"; DestDir: "{app}\bin";
+Source:"{#SourcePath}\Input\bin\EnablerEvent.dll"; DestDir: "{app}\bin"; 
 // These files are needed later so install them here
 Source:"{#SourcePath}\Input\bin\subinacl.exe"; DestDir:"{app}\bin" ;
 Source:"{#SourcePath}\Input\CreateRegKeyEvent.bat"; DestDir:"{app}";
@@ -477,7 +477,7 @@ Source:"{#SourcePath}\Input\Extra\PDFViewer.exe"; DestDir:"{app}\bin";
 //Install the SDK applications (based on client/server install)
 //Install MPPSIM and Driver DLL
 Source:"{#SourcePath}\Input\MPPSim.exe"; DestDir:"{app}"; Check: IsSDK_OPTIONS('A');
-Source:"{#SourcePath}\Input\ITLMPPSim.dll"; DestDir:"{app}"; Check: IsInstallType('B');
+Source:"{#SourcePath}\Input\ITLMPPSim.dll"; DestDir:"{app}"; Check: IsInstallType('B');Flags: regserver;
 //Install Pumpdemo
 Source:"{#SourcePath}\Input\pumpdemo.exe"; DestDir:"{app}"; Check: IsSDK_OPTIONS('B');
 Source:"{#SourcePath}\Input\PumpDemoWPF.exe"; DestDir:"{app}"; Check: IsSDK_OPTIONS('B');
@@ -3302,11 +3302,17 @@ end;
 
 //================================
 //update system config
-//================================
+//================================ 
 
-//TODO - whatever this is?
 //All OCX/DLL/EXE files that are self-registered
 //Self-Register OCXs/DLLs/EXEs
+
+//^ Old Wise script registered all OCX/DLL/EXE files here ^
+//The .wse indicates this was actually just OCX/DLLs and not EXEs
+//I have replicated this by adding a regserver flag to all DLLs and OCX files in the [Files] section
+//There are a handful of DLLs that caused failure when a regserver flag was present
+//This process is opaque in the .wse, so I have assumed these failure DLLs are not 'self-registered' and removed their regserver flags
+//This was the most difficult command in the old .wse to understand
 
 //Enabler v4 configure default regsitry key for Client Username and Password
 procedure updateSystemConfig();
@@ -3861,7 +3867,6 @@ begin
   
 
   if CurStep = ssInstall then begin
-    //this is commented out for now due to a bug in this module
     saveConfig();
     MSIInstaller();
     installNet3Point5();
