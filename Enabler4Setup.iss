@@ -2177,6 +2177,7 @@ begin
   end;
 end;
 
+
 //===========================================
 //uninstall previous enablerAPI.msi if exists
 //===========================================
@@ -2196,7 +2197,194 @@ begin
 end;
 
 
-//Install server components
+
+//===========================
+// Install Server Components
+//=========================== 
+
+procedure DetectVersionSQLServersInstalled();
+var 
+  TEMP : string;
+  SQLINFO : string;
+  INSTALL_RESULT : integer;
+  CREATE_TEMP_FILE_RESULT : boolean; 
+  LINE : AnsiString;
+  progressPage: TOutputProgressWizardPage;
+
+begin
+ (*Find out the version of SQL installed.block
+  SQL 2000 and newer support the following method of getting the version
+  Older versions do not. The Microsoft documentation for this method is at the link below
+  http://support.microsoft.com/default.aspx?scid=kb;en-us;321185#3
+  Create a temporary file to store the SQL results in.  *)
+  TEMP := GetTempDir();
+  SQLINFO := '\SQLINFO';
+  SaveStringToFile(TEMP+SQLINFO, '', False);
+
+  if not SILENT then begin
+    try
+      progressPage := CreateOutputProgressPage('SQL Version','');
+      progressPage.SetText('Determining pre installed SQL Server version','');
+      progressPage.SetProgress(0, 0);
+      progressPage.Show;
+    finally
+    
+    end;
+  end;
+
+  //Execute the sql to get the SQL version of a default instance or the instance name passed by the command line.
+  // Make sure OSQL_PATH does not end in '\'
+  Log('Query database for version using server and instance name ' + SQLQUERY);
+  Exec(OSQL_PATH + '\OSQL.EXE', '-b -E -S' + SQLQUERY + ' -dmaster -h-1 -Q"select SERVERPROPERTY(''productversion'')" -o ' + TEMP + SQLINFO, '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+  if INSTALL_RESULT <> 0 then begin
+    if not SILENT then begin
+       MsgBox('SQL VERSION', mbInformation, MB_OK);
+       MsgBox('OSQL failed to execute', mbError, MB_OK);
+    end;
+    Log(SQLQUERY + ' SQL server is not configured correctly the osql query failed');
+    Abort();
+  end;
+
+  //Read each line of the SQL query results
+  LoadStringFromFile(TEMP + SQLINFO, LINE);
+  if SQLVER_MAJOR = '' then begin
+    SQLVER_MAJOR := LINE;
+  end;
+
+  //Is SQL Server major revision greater than or equal to the number 8 (version 2000)
+  if StrToFloat(SQLVER_MAJOR) >= 8 then begin
+    Log('SQL Version found ' + SQLVER_MAJOR );
+  end
+  else begin
+    //If the line read is greater than or equal to the number it is 2000 or newer
+    if StrToFloat(LINE) >= 8 then begin
+      Log('SQL Version found ' + LINE);
+    end
+    else begin
+      //Display the message to exit
+      if not SILENT then begin
+        MsgBox('A newer SQL Server is required', mbInformation, MB_OK);
+      end;
+      Log('Exiting installation as Enabler requires newer version than ' + SQLVER_MAJOR + ' of SQL Server');
+      Abort();
+    end;
+  end;
+
+  if not SILENT then begin
+    progressPage.Hide;
+  end;
+end;
+
+
+procedure IsThereAnExistingEnablerInstall();
+var
+  INSTALL_RESULT : integer;
+begin
+  //Does the enabler database already exist?    
+  if PRE_UPGRADE_BACKUP = 'A' then begin
+    Exec(OSQL_PATH + '\OSQL.EXE', '-d EnablerDB -E -S' + SQLQUERY + ' -Q"select count(*) from global_settings" -b', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+    if INSTALL_RESULT = 0 then begin
+      Log('Preupgrade backup check for Enabler DB: Database FOUND');
+    end
+    else begin
+      Log('Preupgrade backup check for Enabler DB: Database NOT found');
+      PRE_UPGRADE_BACKUP := '';
+    end;
+  end;
+end;
+
+
+procedure SQLServerIsRequired();
+//SQL SERVER IS REQUIRED
+var
+  MSI_VERSION : string;
+  DOTNET_VERSION : string;
+  MDAC_VERSION : string;
+  IEXPLORE_VERSION : double;
+
+begin
+  //We know what if SQLServer is required and what version will be installed, so that optionally install MSI 4.5 and .NET
+  if UNATTENDED = '0' then begin
+    //SQL2005 PREREQUISITES
+    if SQLEXPRESSNAME = 'SQL2005' then begin
+      Log('SQLServer2005 Express will be installed');
+
+      //Check SQL EXPRESS 2005 required components before SQL installation
+      //Fetch MSI version, .NET version information and MDAC version
+      GetVersionNumbersString(GetSystemDir+'\msi.dll', MSI_VERSION);
+      RegQueryStringValue('HKEY_LOCAL_MACHINE', 'SOFTWARE\Microsoft\.NETFramework\policy\v2.0\', '50727', DOTNET_VERSION);
+      RegQueryStringValue('HKEY_LOCAL_MACHINE', 'SOFTWARE\Microsoft\DataAccess', 'FullInstallVer', MDAC_VERSION);
+      
+      //MDAC 2.8?
+      if StrToFloat(MDAC_VERSION) < StrToFloat('2.80.1022.3') then begin
+         if not SILENT then begin
+           MsgBox('MDAC 2.8 Required by SQL2005', mbInformation, MB_OK);
+         end;
+         Abort();
+      end;
+
+      //IE6 SP1?
+      if IEXPLORE_VERSION < StrToFloat('6.0.2800.1106') then begin
+        if not SILENT then begin
+          MsgBox('IE 6.0 Service Pack 1 Required by SQL2005', mbInformation, MB_OK);
+        end;
+        Log('IE 6.0 SP1 Required for SQL2005 Express');
+        Abort();      
+      end;
+
+    end;
+  end;
+end;
+
+
+procedure InstallServerComponents();
+var
+  TRUSTED_CONNECTION: integer;
+  INSTALL_RESULT: integer;
+begin
+  if pos('B',components) <> 0 then begin
+    if not SQL_NEEDED then begin
+       SQLQUERY := PC_NAME + '\' + SQL_INSTANCE;
+       Log('SQLQUERY = ' + SQLQUERY);
+
+       //TRUSTED CONNECTION
+       TRUSTED_CONNECTION := 1;
+       Log('About to query sysobjects ' + OSQL_PATH + ' with Trusted Connection');
+       Exec(OSQL_PATH + '\OSQL.EXE', '-b -d master -E -S' + SQLQUERY +  ' -Q"select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+       if INSTALL_RESULT = 0 then begin
+          Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C osql -b -d master -E -S' + SQLQUERY +  ' -Q ' +  '"select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+          if INSTALL_RESULT = 0 then begin
+            Log('Trusted Connection Succeed !!!');
+          end
+          else begin
+            TRUSTED_CONNECTION := 0;
+          end;
+       end
+       else begin
+          TRUSTED_CONNECTION := 0;
+       end;
+       
+       if TRUSTED_CONNECTION = 0 then begin
+         if not SILENT then begin
+           MsgBox('Installation failed', mbInformation, MB_OK);
+         end;
+         Log('Trusted Connection Failed ! SQL server might not have installed correctly. Or the Named instance was incorrect rc='+IntToStr(INSTALL_RESULT));
+         Abort();
+       end;
+
+       DetectVersionSQLServersInstalled();
+       IsThereAnExistingEnablerInstall();
+
+    end
+    else begin
+      SQLServerIsRequired();
+    end;
+  end
+  else begin
+    SQL_INSTANCE := CLIENT_SQL_INSTANCE;
+  end;
+end;
+
 
 
 //======================
