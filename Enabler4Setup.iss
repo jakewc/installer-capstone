@@ -1821,53 +1821,97 @@ begin
 end;
 
 
+procedure SQLServerIsRequired();
+//SQL SERVER IS REQUIRED
+var
+  MSI_VERSION : string;
+  DOTNET_VERSION : string;
+  MDAC_VERSION : string;
+  IEXPLORE_VERSION : double;
+
+begin
+  //We know what if SQLServer is required and what version will be installed, so that optionally install MSI 4.5 and .NET
+  if UNATTENDED = '0' then begin
+    //SQL2005 PREREQUISITES
+    if SQLEXPRESSNAME = 'SQL2005' then begin
+      Log('SQLServer2005 Express will be installed');
+
+      //Check SQL EXPRESS 2005 required components before SQL installation
+      //Fetch MSI version, .NET version information and MDAC version
+      GetVersionNumbersString(GetSystemDir+'\msi.dll', MSI_VERSION);
+      RegQueryStringValue('HKEY_LOCAL_MACHINE', 'SOFTWARE\Microsoft\.NETFramework\policy\v2.0\', '50727', DOTNET_VERSION);
+      RegQueryStringValue('HKEY_LOCAL_MACHINE', 'SOFTWARE\Microsoft\DataAccess', 'FullInstallVer', MDAC_VERSION);
+      
+      //MDAC 2.8?
+      if StrToFloat(MDAC_VERSION) < StrToFloat('2.80.1022.3') then begin
+         if not SILENT then begin
+           MsgBox('MDAC 2.8 Required by SQL2005', mbInformation, MB_OK);
+         end;
+         Abort();
+      end;
+
+      //IE6 SP1?
+      if IEXPLORE_VERSION < StrToFloat('6.0.2800.1106') then begin
+        if not SILENT then begin
+          MsgBox('IE 6.0 Service Pack 1 Required by SQL2005', mbInformation, MB_OK);
+        end;
+        Log('IE 6.0 SP1 Required for SQL2005 Express');
+        Abort();      
+      end;
+
+    end;
+  end;
+end;
+
+
 
 procedure InstallServerComponents();
-  var
-    TRUSTED_CONNECTION: integer;
-    INSTALL_RESULT: integer;
-  begin
-    if pos('B',components) <> 0 then
-      begin
-         if not SQL_NEEDED then                             
-            begin
-               SQLQUERY := PC_NAME + '\' + SQL_INSTANCE;
-               Log('SQLQUERY = ' + SQLQUERY);
+var
+  TRUSTED_CONNECTION: integer;
+  INSTALL_RESULT: integer;
+begin
+  if pos('B',components) <> 0 then begin
+    if not SQL_NEEDED then begin
+       SQLQUERY := PC_NAME + '\' + SQL_INSTANCE;
+       Log('SQLQUERY = ' + SQLQUERY);
 
-               //TRUSTED CONNECTION
-               TRUSTED_CONNECTION := 1;
-               Log('About to query sysobjects ' + OSQL_PATH + ' with Trusted Connection');
-               Exec(OSQL_PATH + '\OSQL.EXE', '-b -d master -E -S' + SQLQUERY +  ' -Q ' +  '"select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
-               if INSTALL_RESULT = 0 then begin
-                  Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C osql -b -d master -E -S' + SQLQUERY +  ' -Q ' +  '"select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
-                  if INSTALL_RESULT = 0 then begin
-                    Log('Trusted Connection Succeed !!!');
-                  end
-                  else begin
-                    TRUSTED_CONNECTION := 0;
-                  end;
-               end
-               else begin
-                  TRUSTED_CONNECTION := 0;
-               end;
-               
-               if TRUSTED_CONNECTION = 0 then begin
-                 if not SILENT then begin
-                   MsgBox('Installation failed', mbInformation, MB_OK);
-                 end;
-                 Log('Trusted Connection Failed ! SQL server might not have installed correctly. Or the Named instance was incorrect rc='+IntToStr(INSTALL_RESULT));
-                 Abort();
-               end;
-
-               DetectVersionSQLServersInstalled();
-               IsThereAnExistingEnablerInstall();
-
-            end
+       //TRUSTED CONNECTION
+       TRUSTED_CONNECTION := 1;
+       Log('About to query sysobjects ' + OSQL_PATH + ' with Trusted Connection');
+       Exec(OSQL_PATH + '\OSQL.EXE', '-b -d master -E -S' + SQLQUERY +  ' -Q"select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+       if INSTALL_RESULT = 0 then begin
+          Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C osql -b -d master -E -S' + SQLQUERY +  ' -Q ' +  '"select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+          if INSTALL_RESULT = 0 then begin
+            Log('Trusted Connection Succeed !!!');
+          end
           else begin
-            //SQLServerIsRequired();
+            TRUSTED_CONNECTION := 0;
           end;
-      end;
+       end
+       else begin
+          TRUSTED_CONNECTION := 0;
+       end;
+       
+       if TRUSTED_CONNECTION = 0 then begin
+         if not SILENT then begin
+           MsgBox('Installation failed', mbInformation, MB_OK);
+         end;
+         Log('Trusted Connection Failed ! SQL server might not have installed correctly. Or the Named instance was incorrect rc='+IntToStr(INSTALL_RESULT));
+         Abort();
+       end;
+
+       DetectVersionSQLServersInstalled();
+       IsThereAnExistingEnablerInstall();
+
+    end
+    else begin
+      SQLServerIsRequired();
+    end;
+  end
+  else begin
+    SQL_INSTANCE := CLIENT_SQL_INSTANCE;
   end;
+end;
 
 
 
