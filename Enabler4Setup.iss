@@ -229,44 +229,44 @@ Source: "{#SourcePath}\Input\EicGX.inf"; DestDir: "{app}"; Check: IsInstallType(
 Source: "{#SourcePath}\Input\EicMain2.hex"; DestDir: "{app}"; Check: IsInstallType('B');
 
 //Web Server files and assemblies
-Source: "{#SourcePath}\Input\bin\OpenNETCF.SSL.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
-Source: "{#SourcePath}\Input\bin\OpenNETCF.web.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');  Flags: regserver;
-Source: "{#SourcePath}\Input\bin\OpenNETCF.web.html.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');  Flags: regserver;
-Source: "{#SourcePath}\Input\bin\Utilities.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
-Source: "{#SourcePath}\Input\bin\Newtonsoft.Json.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
+Source: "{#SourcePath}\Input\bin\OpenNETCF.SSL.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
+Source: "{#SourcePath}\Input\bin\OpenNETCF.web.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
+Source: "{#SourcePath}\Input\bin\OpenNETCF.web.html.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); 
+Source: "{#SourcePath}\Input\bin\Utilities.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
+Source: "{#SourcePath}\Input\bin\Newtonsoft.Json.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
 //SSL Files
 Source: "{#SourcePath}\Input\bin\openssl.exe"; DestDir: "{app}\bin"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\libeay32.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
-Source: "{#SourcePath}\Input\bin\ssleay32.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
+Source: "{#SourcePath}\Input\bin\libeay32.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
+Source: "{#SourcePath}\Input\bin\ssleay32.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
 Source: "{#SourcePath}\Input\bin\openssl.cnf"; DestDir: "{app}\bin"; Check: IsInstallType('B');
 Source: "{#SourcePath}\Input\bin\openssl-license.txt"; DestDir: "{app}\bin"; Check: IsInstallType('B');
-Source: "{#SourcePath}\Input\bin\SecureBlackbox.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
-Source: "{#SourcePath}\Input\bin\SecureBlackbox.SSLCommon.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
-Source: "{#SourcePath}\Input\bin\SecureBlackbox.SSLServer.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');  Flags: regserver;
-Source: "{#SourcePath}\Input\bin\SecureBlackbox.Mail.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');  Flags: regserver;
-Source: "{#SourcePath}\Input\bin\SecureBlackbox.MIME.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); Flags: regserver;
+Source: "{#SourcePath}\Input\bin\SecureBlackbox.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); 
+Source: "{#SourcePath}\Input\bin\SecureBlackbox.SSLCommon.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); 
+Source: "{#SourcePath}\Input\bin\SecureBlackbox.SSLServer.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');  
+Source: "{#SourcePath}\Input\bin\SecureBlackbox.Mail.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');  
+Source: "{#SourcePath}\Input\bin\SecureBlackbox.MIME.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B'); 
 
 Source: "{#SourcePath}\Input\bin\enbweb.exe"; DestDir: "{app}\bin"; Check: IsInstallType('B');
 Source: "{#SourcePath}\Input\bin\enbweb.exe.config"; DestDir: "{app}\bin"; Check: IsInstallType('B');
 
 //Assembly containing English resource strings
-Source: "{#SourcePath}\Input\www\bin\WebPages.dll"; DestDir: "{app}\www\bin"; Check: IsInstallType('B');Flags: regserver;
+Source: "{#SourcePath}\Input\www\bin\WebPages.dll"; DestDir: "{app}\www\bin"; Check: IsInstallType('B');
 
 //Assembly containing RestData API
-Source: "{#SourcePath}\Input\bin\RESTData.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');Flags: regserver;
+Source: "{#SourcePath}\Input\bin\RESTData.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
 
 //Assembly containing English resource strings
-Source: "{#SourcePath}\Input\bin\PageResources.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');Flags: regserver;
+Source: "{#SourcePath}\Input\bin\PageResources.dll"; DestDir: "{app}\bin"; Check: IsInstallType('B');
 //Satellite assemblies for specific languages
-Source: "{#SourcePath}\Input\bin\es\PageResources.resources.dll"; DestDir: "{app}\bin\es"; Check: IsInstallType('B');Flags: regserver;
-Source: "{#SourcePath}\Input\bin\fr\PageResources.resources.dll"; DestDir: "{app}\bin\fr"; Check: IsInstallType('B'); Flags: regserver;
-Source: "{#SourcePath}\Input\bin\id\PageResources.resources.dll"; DestDir: "{app}\bin\id"; Check: IsInstallType('B');  Flags: regserver;
-Source: "{#SourcePath}\Input\bin\it-IT\PageResources.resources.dll"; DestDir: "{app}\bin\it-IT"; Check: IsInstallType('B'); Flags: regserver;
-Source: "{#SourcePath}\Input\bin\pt-BR\PageResources.resources.dll"; DestDir: "{app}\bin\pt-BR"; Check: IsInstallType('B'); Flags: regserver;
-Source: "{#SourcePath}\Input\bin\ru\PageResources.resources.dll"; DestDir: "{app}\bin\ru"; Check: IsInstallType('B');Flags: regserver;
-Source: "{#SourcePath}\Input\bin\sl\PageResources.resources.dll"; DestDir: "{app}\bin\sl"; Check: IsInstallType('B'); Flags: regserver;
-Source: "{#SourcePath}\Input\bin\th\PageResources.resources.dll"; DestDir: "{app}\bin\th"; Check: IsInstallType('B'); Flags: regserver;
-Source: "{#SourcePath}\Input\bin\zh-CHS\PageResources.resources.dll"; DestDir: "{app}\bin\zh-CHS"; Check: IsInstallType('B');Flags: regserver;
+Source: "{#SourcePath}\Input\bin\es\PageResources.resources.dll"; DestDir: "{app}\bin\es"; Check: IsInstallType('B');
+Source: "{#SourcePath}\Input\bin\fr\PageResources.resources.dll"; DestDir: "{app}\bin\fr"; Check: IsInstallType('B'); 
+Source: "{#SourcePath}\Input\bin\id\PageResources.resources.dll"; DestDir: "{app}\bin\id"; Check: IsInstallType('B');  
+Source: "{#SourcePath}\Input\bin\it-IT\PageResources.resources.dll"; DestDir: "{app}\bin\it-IT"; Check: IsInstallType('B');
+Source: "{#SourcePath}\Input\bin\pt-BR\PageResources.resources.dll"; DestDir: "{app}\bin\pt-BR"; Check: IsInstallType('B'); 
+Source: "{#SourcePath}\Input\bin\ru\PageResources.resources.dll"; DestDir: "{app}\bin\ru"; Check: IsInstallType('B');
+Source: "{#SourcePath}\Input\bin\sl\PageResources.resources.dll"; DestDir: "{app}\bin\sl"; Check: IsInstallType('B'); 
+Source: "{#SourcePath}\Input\bin\th\PageResources.resources.dll"; DestDir: "{app}\bin\th"; Check: IsInstallType('B'); 
+Source: "{#SourcePath}\Input\bin\zh-CHS\PageResources.resources.dll"; DestDir: "{app}\bin\zh-CHS"; Check: IsInstallType('B');
 
 //Web Files
 Source: "{#SourcePath}\Input\www\css\Enabler.css"; DestDir: "{app}\www\css"; Check: IsInstallType('B');
@@ -747,112 +747,6 @@ var
   lblPort:TLabel;
 
 //========================================
-//Variable initialisation.
-//======================================== 
-
-procedure variableInitialisation ();
-var 
-  osResultCode: Integer;
-begin
-  Log('Initialising variables.');
-
-  // Get registry key values.
-  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','Components',COMPONENTS);  // Initialise Components variable
-  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','Applications',APPLICATIONS);  // Initialise Applications variable
-
-  // Get the environment variables to determine OS.
-  OS_ARCHITECTURE := GetEnv('PROCESSOR_ARCHITECTURE');
-  OS_ARCHITEW6432 := GetEnv('PROCESSOR_ARCHITEW6432');
-
-  if OS_ARCHITECTURE ='AMD64' then begin
-    OS:=64;
-  end
-  else if OS_ARCHITECTURE ='IA64' then begin
-      OS:=64;
-  end
-  else if OS_ARCHITECTURE ='x86' then begin
-    if OS_ARCHITEW6432 = 'AMD64' then begin
-      OS:=64;   // Installing driver from 32-bit installer on 64-bit OS (WOW64).
-    end
-    else begin
-      OS:=32;   // Installing driver from 32-bit installer on 32-bit OS.
-    end;
-  end;
-
-  // We will set this variable according to the 'Windows Current Version' Registry Key
-  // NOTE: The Registry Key is: \\HKLM\Software\Microsoft\Windows NT\CurrentVersion\(CurrentVersion) - it contains a number.
-  // NOTE: Windows 10 returns a value of 6.3 for backwards compatibility. Indicates its Windows 8.1
-  RegQueryStringValue(HKEY_LOCAL_MACHINE,'Software\Microsoft\Windows NT\CurrentVersion','CurrentVersion',OPERATING_SYSTEM);
-
-  DRIVERCODE:=0;   // Driver Installation code.
-  APPNAME := '{#SetupSetting("AppName")}';
-  OUTPUTBASEFILENAME := '{#SetupSetting("OutputBaseFileName")}';
-  APPTITLE:='The Enabler';  // APPTITLE is the application title of the installation.
-  GROUP:='The Enabler';   // GROUP is the variable that holds the Program Files Group that shortcuts will be placed on the Windows Start Menu.
-  DISABLED:='!';  // DISABLED variable is initialized for backward compatability.
-  
-  //MAINDIR:='C:\Enabler';   // MAINDIR is the variable that holds the default destination directory.    
-  //BACKUP:=MAINDIR+'\BACKUP';   // BACKUP is the variable that holds the path that all backup files will be copied to when overwritten
-  DOBACKUP:='B';   // DOBACKUP determines if a backup will be performed. The possible values are A (do backup) or B (do not do backup).
-  DBDIR:=' C:\EnablerDB';   // DBDIR specifies the location of the Enabler database files.
-
-  // SQL Named Instance name.
-  PC_NAME:=GetEnv('COMPUTERNAME');
-  INSTANCE_NAME_NEEDED:=True;
-  INSTANCE_NAME_LIST:=False;
-  ENV_COMPUTERNAME:=GetEnv('COMPUTERNAME');
-
-  PRE_BACKUP:=False;   //Variable to determine if the BAckup up checkbox option should be shown or not
-  CHECKED:='A';  // Initialise Checked variable this stops applications variable resetting in the wizard loop.
-
-  // Set variables for an SDK build. SDK checked, SDK_APPS if present.
-  SDK_APPS:=0;
-  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','SDK',SDK);
-
-  // Variables with defaults for ENBWEB port & domain.
-  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','EnbWebDomain',ENBWEB_DOMAIN);
-  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','EnbWebPort',ENBWEB_PORT);
-  
-  // Initialise icons variable. A is desktop icons, B is start menu icons.
-  ICONS:='B';
-
-  // Set variables to start apps or restart computer on finish.
-  NOSTART:=False;
-
-  // Initialise unattended variables.
-  UNATTENDED:='0';
-  SILENT:=False;
-  PHASE2:=False;
-
-  // Initialise fast startup variables.
-  FAST_STARTUP:='0';
-
-  // Initialise variables for detecting Adminstrator and User group.
-  BUILTIN_USERS_GROUP:='S-1-5-32-545';
-  BUILTIN_ADMINISTRATORS_GROUP:='S-1-5-32-544';
-
-  // SHOW_USAGE indicates whether we should display a dialog describing the installer command-line usage.
-  SHOW_USAGE:=False;
-
-  // Get the windows version installed.
-  MIN_WINDOWS_VERSION:=3; // The minimum Windows version required. Version 3 is Windows NT.
-  WINDOWS_VERSION:=GetWindowsVersionString;     // Eg. 10.00.1856
-  WINDOWS_BASE_VERSION:=StrToInt(Copy(WINDOWS_VERSION, 1, Pos('.', WINDOWS_VERSION)-1));    // Eg. 10
-
-  // Set the Enabler version.
-  ENB_VERSION:='{#SetupSetting("AppVersion")}'; // This variable was never initialised in the wise script. Initialised with a value here to enable compiler to run.
-  
-  // Check if operating system is Windows 10.
-  if Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C ver | find /i "Version 10."', '', SW_SHOW, ewWaitUntilTerminated, osResultCode) then begin
-    OPERATING_SYSTEM:='10';
-    Log('Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10');
-  end;
-  
-  Log('Installing Enabler V' + ENB_VERSION + ' on Windows V' + WINDOWS_VERSION + ' ' + IntToStr(OS) + 'bit (Version ' + OPERATING_SYSTEM + ')');
-                       
-end;
-
-//========================================
 //installer-wide functions
 //========================================
 
@@ -1036,6 +930,112 @@ begin
       Result := False;
     end;
   end;
+end;
+
+//========================================
+//Variable initialisation.
+//======================================== 
+
+procedure variableInitialisation ();
+var 
+  osResultCode: Integer;
+begin
+  Log('Initialising variables.');
+
+  // Get registry key values.
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','Components',COMPONENTS);  // Initialise Components variable
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','Applications',APPLICATIONS);  // Initialise Applications variable
+
+  // Get the environment variables to determine OS.
+  OS_ARCHITECTURE := GetEnv('PROCESSOR_ARCHITECTURE');
+  OS_ARCHITEW6432 := GetEnv('PROCESSOR_ARCHITEW6432');
+
+  if OS_ARCHITECTURE ='AMD64' then begin
+    OS:=64;
+  end
+  else if OS_ARCHITECTURE ='IA64' then begin
+      OS:=64;
+  end
+  else if OS_ARCHITECTURE ='x86' then begin
+    if OS_ARCHITEW6432 = 'AMD64' then begin
+      OS:=64;   // Installing driver from 32-bit installer on 64-bit OS (WOW64).
+    end
+    else begin
+      OS:=32;   // Installing driver from 32-bit installer on 32-bit OS.
+    end;
+  end;
+
+  // We will set this variable according to the 'Windows Current Version' Registry Key
+  // NOTE: The Registry Key is: \\HKLM\Software\Microsoft\Windows NT\CurrentVersion\(CurrentVersion) - it contains a number.
+  // NOTE: Windows 10 returns a value of 6.3 for backwards compatibility. Indicates its Windows 8.1
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'Software\Microsoft\Windows NT\CurrentVersion','CurrentVersion',OPERATING_SYSTEM);
+
+  DRIVERCODE:=0;   // Driver Installation code.
+  APPNAME := '{#SetupSetting("AppName")}';
+  OUTPUTBASEFILENAME := '{#SetupSetting("OutputBaseFileName")}';
+  APPTITLE:='The Enabler';  // APPTITLE is the application title of the installation.
+  GROUP:='The Enabler';   // GROUP is the variable that holds the Program Files Group that shortcuts will be placed on the Windows Start Menu.
+  DISABLED:='!';  // DISABLED variable is initialized for backward compatability.
+  
+  //MAINDIR:='C:\Enabler';   // MAINDIR is the variable that holds the default destination directory.    
+  //BACKUP:=MAINDIR+'\BACKUP';   // BACKUP is the variable that holds the path that all backup files will be copied to when overwritten
+  DOBACKUP:='B';   // DOBACKUP determines if a backup will be performed. The possible values are A (do backup) or B (do not do backup).
+  DBDIR:=' C:\EnablerDB';   // DBDIR specifies the location of the Enabler database files.
+
+  // SQL Named Instance name.
+  PC_NAME:=GetEnv('COMPUTERNAME');
+  INSTANCE_NAME_NEEDED:=True;
+  INSTANCE_NAME_LIST:=False;
+  ENV_COMPUTERNAME:=GetEnv('COMPUTERNAME');
+
+  PRE_BACKUP:=False;   //Variable to determine if the BAckup up checkbox option should be shown or not
+  CHECKED:='A';  // Initialise Checked variable this stops applications variable resetting in the wizard loop.
+
+  // Set variables for an SDK build. SDK checked, SDK_APPS if present.
+  SDK_APPS:=0;
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','SDK',SDK);
+
+  // Variables with defaults for ENBWEB port & domain.
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','EnbWebDomain',ENBWEB_DOMAIN);
+  RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\ITL\Enabler','EnbWebPort',ENBWEB_PORT);
+  
+  // Initialise icons variable. A is desktop icons, B is start menu icons.
+  ICONS:='B';
+
+  // Set variables to start apps or restart computer on finish.
+  NOSTART:=False;
+
+  // Initialise unattended variables.
+  UNATTENDED:='0';
+  SILENT:=False;
+  PHASE2:=False;
+
+  // Initialise fast startup variables.
+  FAST_STARTUP:='0';
+
+  // Initialise variables for detecting Adminstrator and User group.
+  BUILTIN_USERS_GROUP:='S-1-5-32-545';
+  BUILTIN_ADMINISTRATORS_GROUP:='S-1-5-32-544';
+
+  // SHOW_USAGE indicates whether we should display a dialog describing the installer command-line usage.
+  SHOW_USAGE:=False;
+
+  // Get the windows version installed.
+  MIN_WINDOWS_VERSION:=3; // The minimum Windows version required. Version 3 is Windows NT.
+  WINDOWS_VERSION:=GetWindowsVersionString;     // Eg. 10.00.1856
+  WINDOWS_BASE_VERSION:=StrToInt(Copy(WINDOWS_VERSION, 1, Pos('.', WINDOWS_VERSION)-1));    // Eg. 10
+
+  // Set the Enabler version.
+  ENB_VERSION:='{#SetupSetting("AppVersion")}'; // This variable was never initialised in the wise script. Initialised with a value here to enable compiler to run.
+  
+  // Check if operating system is Windows 10.
+  if Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C ver | find /i "Version 10."', '', SW_SHOW, ewWaitUntilTerminated, osResultCode) then begin
+    OPERATING_SYSTEM:='10';
+    Log('Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10');
+  end;
+  
+  Log('Installing Enabler V' + ENB_VERSION + ' on Windows V' + WINDOWS_VERSION + ' ' + IntToStr(OS) + 'bit (Version ' + OPERATING_SYSTEM + ')');
+                       
 end;
 
 //==========================
@@ -1607,6 +1607,7 @@ begin
   end;
 end;
 
+//Wizard Loop went here in .wse
 
 //=============================
 //Check Windows version.
@@ -1682,6 +1683,7 @@ begin
   end;
 end;
 
+
 //=============================================
 //save configuration settings in case of reboot
 //=============================================
@@ -1716,9 +1718,11 @@ begin
         INSTALL_RESULT:=ResultCode;
       end;
       
-      // A 0 means it is not compressed, 1 is compressed, -1 is an error occured during the application 
 
-      //!!!NOTE: This section is BUGGED.
+      //!!!NOTE: This section is BUGGED. !!!
+      //!! The installer DOES NOT CHECK IF THE DRIVE IS COMPRESSED !!!
+
+      //A 0 means it is not compressed, 1 is compressed, -1 is an error occured during the application 
       //Running DriveCompressed.exe on my C: drive by itself returns 0, but innosetup gets 1 for some reason
 
       (*if INSTALL_RESULT = 1 then begin
@@ -1876,7 +1880,6 @@ begin
     end;
   end;
 end;
-
 
 //=============================
 //INSTALL .NET 3.5
@@ -2139,6 +2142,29 @@ begin
   end;
 end;
 
+
+
+//===========================================
+//uninstall previous enablerAPI.msi if exists
+//===========================================
+
+//happens BEFORE install
+
+procedure uninstallAPIMSI();
+var
+  ResultCode:integer;
+begin
+  if (FileExists(ExpandConstant('{app}\InstallEnablerAPI.msi'))) then begin
+    Exec(ExpandConstant('{sys}\msiexec.exe'), '/quiet /L+* '+ExpandConstant('{app}\log\APIInstall.log')+' /uninstall {30876486-DB1A-41CE-95D0-58F1EEA13AE8}', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    if ResultCode <> 0 then begin
+      Log('INFO: Could not uninstall existing enabler API - ERRORLEVEL = ' + inttostr(ResultCode));
+    end;
+  end;
+end;
+
+//Install server components
+
+
 //======================
 //Blank password checks
 //====================== 
@@ -2158,6 +2184,7 @@ begin
     end;
   end;
 end;
+
 
 //=========================================
 //INSTALL SQL SERVER or CHECK SA LOGIN
@@ -2491,6 +2518,72 @@ Begin
 end;
 
 //=============================
+//Install 2008 SP1 C++ Redistributables
+//=============================
+
+procedure cplusplus();
+var
+  ResultCode:integer;
+begin
+  if SILENT = false then begin
+    //MsgBox('Installing VS C++ 2008 SP1 Redistributables', mbinformation, mb_OK);
+  end;
+
+  Exec(ExpandConstant('{app}\MsiQueryProduct.exe'), '{9A25302D-30C0-39D9-BD6F-21E6EC160475}', '', SW_SHOW, ewwaituntilterminated, ResultCode);
+
+  if ResultCode = 5 then begin
+    Log('INFO: Skipping VS C++ 2008 SP1 runtime - already installed');
+  end
+  else begin
+    //try to install the runtime
+    Log('Installing VS C++ SP1 Redistributables');
+    Exec('CMD.exe', '/C ' + ExpandConstant('{app}\vcredist_x86.exe') + ' /q', '', SW_SHOW, ewwaituntilterminated, ResultCode);
+    if ResultCode <> 0 then begin
+      if ResultCode <> 3010 then begin
+        if SILENT = false then begin
+          MsgBox('VS C++ SP1 Redistributables install failed with result code '+inttostr(ResultCode), mbinformation, MB_OK);
+        end;
+      Log('ERROR: VS C++ SP1 Redistributables install failed with result code '+inttostr(ResultCode));
+      Abort();
+      end
+      else begin
+        Log('INFO: VS C++ SP1 Redistributables Installation reported error 3010, Reboot pending');
+      end;
+    end;    
+  end;
+end;
+
+//old Wise script had a section 'INSTALL VS 2015 C++ REDISTRIBUTABLES' here, but it was entirely commented out
+
+//===================================
+//remove variables in windows registry
+//===================================
+procedure removeRegistryVars();
+begin
+  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler\Applications');
+  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler\Backup');
+  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler\Components');
+  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler\SA');
+  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler\SDK');
+  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler\UnattendedInstall');
+
+
+  //When the BACKUP feature is enabled, the BACKUPDIR is initialized
+  If DOBACKUP = 'A' then begin
+    BACKUPDIR:=BACKUP;
+  end;
+
+  //COMMENT LINES IN .WSE - WE ALREADY HAVE A FUNCTION TO CHECK DISK SPACE:
+
+  //Check free disk space calculates free disk space as well as component sizes.
+  //It should be located before all Install File actions.
+  //Check free disk space
+
+  //Remove ATL.DLL hook if preset to prevent automatic activation of MSDE setup
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\Classes\CLSID\{44EC053A-400F-11D0-9DCD-00A0C90391D3}\InprocServer32', '(Default)', ')1pFEf=hI=DBiz@GgPxz>w.''b9VZqf(g6u.Q(31aR');
+end;
+
+//=============================
 //INSTALL ENABLER FILES
 //=============================
 
@@ -2557,303 +2650,85 @@ begin
   end;
 end;
 
-//===================================
-//remove variables in windows registry
-//===================================
-procedure removeRegistryVars();
-begin
-  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler\Applications');
-  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler\Backup');
-  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler\Components');
-  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler\SA');
-  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler\SDK');
-  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler\UnattendedInstall');
-
-
-  //When the BACKUP feature is enabled, the BACKUPDIR is initialized
-  If DOBACKUP = 'A' then begin
-    BACKUPDIR:=BACKUP;
-  end;
-
-  //COMMENT LINES IN .WSE - WE ALREADY HAVE A FUNCTION TO CHECK DISK SPACE:
-
-  //Check free disk space calculates free disk space as well as component sizes.
-  //It should be located before all Install File actions.
-  //Check free disk space
-
-  //Remove ATL.DLL hook if preset to prevent automatic activation of MSDE setup
-  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\Classes\CLSID\{44EC053A-400F-11D0-9DCD-00A0C90391D3}\InprocServer32', '(Default)', ')1pFEf=hI=DBiz@GgPxz>w.''b9VZqf(g6u.Q(31aR');
-end;
-
-//=======================================
-//Add uninstall items to the Install Log
-//=======================================
-
-procedure logUninstallItems();
+//====================
+//create Beta License
+//====================
+procedure createLicense();
 var
   ResultCode:integer;
 begin
-  //Uninstall the API
-  Log('Execute path: '+ExpandConstant('{sys}')+'\msiexec.exe /quiet /L+* '+ExpandConstant('{app}')+'\log\APIInstall.log /uninstall ' +ExpandConstant('{app}')+'\InstallEnablerAPI.msi');
-
-  //Embed the Enabler product version - used to determine which version is installed
-  Log('EnablerVersion: '+ENB_VERSION);
-
-  //These lines reset COMMON and MAINDIR to short filenames. This is for backwards compatibility
-  COMMON:=ExpandConstant('{commonpf}');
-  MAINDIR:=ExpandConstant('{app}');
-
-  //Add some extra entries to the Wise log - so temporary or generated files are removed at uninstall
-  Log('Execute path: '+ExpandConstant('{sys}')+'\msiexec.exe /quiet /L+* '+ExpandConstant('{app}')+'\log\APIInstall.log /X '+ ExpandConstant('{app}')+'\InstallEnablerAPI.msi');
-
-  //Run an optional integrators sql file
-  if COMPONENTS = 'B' then begin
-    Log('Checking for '+ExpandConstant('{src}')+'ServerHook.sql ');
-    if FileExists(ExpandConstant('{src}')+'ServerHook.sql') then begin
-      Log('Running '+ExpandConstant('{src}') +'ServerHook.sql (osql '+OSQL_PATH+')');
-      Exec(OSQL_PATH+'OSQL.EXE', '-b -d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{src}')+'ServerHook.sql" -o ' + ExpandConstant('{app}')+'ServerHook.log', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-      Log('Completed ServerHook (return code '+inttostr(ResultCode)+ ')');
+  Log('Check for V4 Beta License');
+  if Exec(WizardDirValue+'\ConvertV4BetaLicense.exe', '/c', '',SW_SHOW, ewWaitUntilTerminated, ResultCode) then begin
+    Log('Result code from COnvertV4BetaLicense was '+inttostr(ResultCode));
+    if ResultCode = 0 then begin
+      Log('v4.0 Beta License converted');
     end;
-    //check service psrvr
   end;
-
-  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER\Client', 'Applications', APPLICATIONS);
-  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'Components', COMPONENTS);
-  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'SDK', SDK);
 end;
 
-//========================================
-//functions for Read Me/Release Notes page
-//========================================
+//=============================================
+//Setup Environment Variables and Registry Keys
+//==============================================
 
-procedure OpenBrowser(Url:String);
+procedure setupEnvVars();
 var
-  ErrorCode:Integer;
+  ResultCOde:integer;
 begin
-  ShellExec('open', Url, '','', SW_SHOWNORMAL, ewNoWait, ErrorCode);
-end; 
-
-procedure releaseNotesButtonOnClick(Sender:TObject);
-begin
-  OpenBrowser('{#SourcePath}\Input\Release Notes.htm');
-end; 
-
-procedure createReadMePage();
-  
-begin
-  readMePage:=CreateOutputMsgMemoPage(wpInfoBefore, 'ReadMe File', 'Please read the following important information before continuing.',
-  'When you are ready to continue with Setup, click Next.',
-  'Enabler V4.6.3.6087'#13#10 #13#10'1) If you are upgrading from an Enabler version prior to V3.4x, we suggest you remove the previous installation using Add/Remove Programs before installing this software.'#13#10 #13#10'2) The installation will now automatically install the SQL Server Express Edition when installing on systems without an SQL Server installed.'#13#10 #13#10'3) Check for newer pump drivers on our website http://www.integration.co.nz/'#13#10 #13#10'4) Where possible we have documented known issues in the Release Notes document.');
-  releaseNotesButton:=TNewButton.Create(readMePage);
-  releaseNotesButton.Parent:=readMePage.Surface;
-  releaseNotesButton.Caption:='View Release Notes';
-  releaseNotesButton.Left := readMePage.SurfaceWidth - ScaleX(500);
-  releaseNotesButton.Top := readMePage.SurfaceHeight - ScaleY(40);
-  releaseNotesButton.Width := ScaleX(150);
-  releaseNotesButton.Height := ScaleY(23);
-  releaseNotesButton.Anchors := [akRight, akBottom]
-  releaseNotesButton.onclick:=@releaseNotesButtonOnClick;  
-end;
-
-//========================================
-//functions for install type selection page
-//========================================
-
-procedure RadioClientClicked(Sender: TObject);
-begin
-  components := 'A';  // Client install.
-  Log(components);
-end; 
-
-procedure RadioServerClicked(Sender: TObject);
-begin
-  components := 'B';  // Server install.
-  Log(components);
-end;
-
-procedure SDKOptionClicked(Sender: TObject);
-begin
-  sdk:='A';
-end;
-
-procedure createPageInstallType();
-  
-begin
-  pageInstallType := CreateCustomPage(wpSelectComponents, 'Select Installation Type', 'Select the type of install you would like from the radio buttons. SDK is optional.');
-
-  radioClient := TRadioButton.Create(pageInstallType);
-  radioClient.Parent := pageInstallType.Surface;
-  radioClient.Caption := 'Client Install';
-  radioClient.OnClick := @RadioClientClicked;
-
-  CHECKED:= 'A';
-  if APPLICATIONS = '' then begin
-    //set default applications setting
-    if COMPONENTS = 'A' then begin
-      APPLICATIONS:='B';
+    if OS = 64 then begin
+      SETX_PATH:=ExpandConstant('{app}')+'\bin\setx64.exe'
     end
     else begin
-      APPLICATIONS:='ABCDE';
+      SETX_PATH:=ExpandConstant('{app}')+'\bin\setx32.exe';
     end;
-  end;
-  
-  //COMMENT THIS OUT OR DELETE IT ONCE STARTUPPROCESSING() IS ADDED!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //components:='A';  
 
-  lblClient := TLabel.Create(pageInstallType);
-  lblClient.Parent := pageInstallType.Surface;
-  lblClient.Caption := 'Install the Enabler Client components to connect to connect to an Enabler Server, Enabler Server Desktop or Enabler Embedded.';
-  lblClient.Top := radioClient.Top+20;
-  lblClient.Left := 20;
-  lblClient.Height := 40;
-  lblClient.Width := 500;
-  lblClient.WordWrap := True;
+    Exec(SETX_PATH, ENABLER_ROOT+ ' ' + ExpandCOnstant('{app}')+ ' -M', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(SETX_PATH, ENABLER_LOG+ ' ' + ExpandCOnstant('{app}')+ '\Log -M', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(SETX_PATH, ENABLER_DB_INSTANCE_NAME + ' ' + SQL_INSTANCE + ' -M', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
 
-  radioServer := TRadioButton.Create(pageInstallType);
-  radioServer.Parent := pageInstallType.Surface;
-  radioServer.Caption := 'Server Install';
-  radioServer.Top := lblClient.Top+50;
-  radioServer.OnClick := @RadioServerClicked;
-  //see which radio button should be selected by deafult based on startupProcessing()
-  if COMPONENTS = 'A' then begin
-    radioClient.Checked := True;
-    end
-  else begin
-    radioServer.Checked := True;
-  end;
+    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'DatabaseInstanceName', SQL_INSTANCE);
+    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'Enabler_Log', ExpandConstant('{app}')+'Log');
+    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'Root', ExpandConstant('{app}'));
 
-  lblServer := TLabel.Create(pageInstallType);
-  lblServer.Parent := pageInstallType.Surface;
-  lblServer.Caption := 'Install the Enabler Server Desktop - Enabler Card REQUIRED. SQL Server will be installed if none found.';
-  lblServer.Top := radioServer.Top+20;
-  lblServer.Left := 20;
-  lblServer.Height := 40;
-  lblServer.Width := 500;
-  lblServer.WordWrap := True;
-
-  sdkCheckBox:=TNewCheckBox.Create(pageInstallType);
-  sdkCheckBox.Parent:=pageInstallType.Surface;
-  sdkCheckBox.Caption:= 'SDK Add-ons';
-  sdkCheckBox.Top := lblServer.Top+50;
-  sdkCheckBox.Left := 0;
-  sdkCheckBox.Height := 40;
-  sdkCheckBox.Width := 500;
-  sdkCheckBox.onClick:= @SDKOptionClicked;  
-
-  lblSDK := TLabel.Create(pageInstallType);
-  lblSDK.Parent := pageInstallType.Surface;
-  lblSDK.Caption := 'Install the Enabler SDK Documents, Tools (MPPSim, PumpDemo, etc). If UNTICKED, previous SDK will be removed.';
-  lblSDK.Top := sdkCheckBox.Top+40;
-  lblSDK.Left := 0;
-  lblSDK.Height := 40;
-  lblSDK.Width := 500;
-  lblSDK.WordWrap := True;
-end;
-
-//========================================
-//functions for Enabler Server Name page
-//========================================
-
-procedure EmbeddedOptionClicked(Sender: TObject);
-begin
-  embedded:=true;
-end;
-
-procedure createClientSelectedPage();  
-begin
-  serverNameEntryPage:= CreateInputQueryPage(pageInstallType.ID, 'Enter the Name or IP Address of the Enabler Server System',
-  '', 'The Enabler Client you are installing will access an Enabler Server (Enabler Server Desktop or Enabler Embedded) during operation.'#13#10 #13#10'Please enter the name or IP Address of the Enabler Server System this Client should connect to.' #13#10 #13#10'Tick Embedded if the Enabler Server is an Enabler Embedded system.' #13#10 #13#10 'Name can be left blank, but refer to the Enabler documentation on how to change the Enabler Server System Name or IP Address setting later.'); 
-  serverNameEntryPage.Add('Enabler Server Name:', False);
-  serverName:=serverNameEntryPage.Values[0];
-
-  embeddedCheckBox:=TNewCheckBox.Create(serverNameEntryPage);
-  embeddedCheckBox.Parent:=serverNameEntryPage.Surface;
-  embeddedCheckBox.Caption:= 'Embedded?';
-  embeddedCheckBox.Top := 225;
-  embeddedCheckBox.Left := 0;
-  embeddedCheckBox.Height := 40;
-  embeddedCheckBox.Width := 500;
-  embeddedCheckBox.onClick:= @EmbeddedOptionClicked; 
-end;
-
-//========================================
-//functions for Instance Name page
-//========================================
-
-procedure createInstanceNamePage();
-begin
-  instanceNamePage:= CreateInputQueryPage(serverNameEntryPage.ID, 'Enabler Server SQL Instance Name',
-  '', 'For Enabler installations using a non-default SQL Server instance name, please enter the Instance name below, otherwise leave the field blank and select Next.'); 
-  instanceNamePage.Add('Instance Name:', False);
-  instanceName:=instanceNamePage.Values[0];
-
-  if not CMD_INSTANCE then begin
-    CLIENT_SQL_INSTANCE:=SQL_INSTANCE;
-  end;
-end;
-
-//========================================
-//functions for install warning page
-//========================================
-
-function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo, MemoComponentsInfo, MemoGroupInfo, MemoTasksInfo: String): String; 
-begin
-  if SQL_NEEDED then begin
-    if COMPONENTS = 'B' then begin
-      if SQLEXPRESSNAME = 'SQL2005' then begin
-        SQLTITLE:= ' and SQL Server 2005 Express';
-      end;
-      if SQLEXPRESSNAME = 'SQL2008R2' then begin
-        SQLTITLE:= ' and SQL Server 2008 Express';
-      end;
+    //and now the files
+    if WINDOWS_BASE_VERSION < 5 then begin
+      //should we install these to SYSTEM32?
+      Log('Installing on Windows '+ WINDOWS_VERSION + ' installing extra DLLs');
     end;
-  end;
-  Result:='You are now ready to install The Enabler.'#13#10#13#10'Click the Install button to begin the installation,'#13#10'or the Back button to change your Installation options.'#13#10#13#10'If you have an existing Enabler installation you can select the database backup checkbox below'#13#10'to back up Enabler as part of the installation.';
+
+    DeleteFile(ExpandConstant('{app}')+'Release Notes.html');   
 end;
 
-//========================================
-//functions for No Microsoft SQL Server Installed page
-//========================================
+//============================================
+//install new enablerAPI.msi
+//============================================
 
-procedure createNoServerInstalledPage();
+//happens AFTER install
+
+//!!! This module is BUGGED !!!
+//!!!The installer DOES NOT INSTALL ENABLER API !!!
+
+//Possibly due to the call to MAINDIR\Log\APIInstall.log which is not created by our installer anywhere
+//Therefore the Abort(); statement is commented out;
+//the API installer still works fine if run separately
+
+procedure installAPIMSI();
+var
+  ResultCode:integer;
 begin
-  noServerInstalledPage:=CreateOutputMsgPage(instanceNamePage.ID,'No Microsoft SQL Server is installed.'#13#10'Install the default SQL Server (SQL2104 Express)?', '', 'Your install selection of the Enabler Server requires an SQL Database.'#13#10#13#10'If you continue, the Default SQL Server (SQL2014 Express) will be installed before installing the Enabler software.'#13#10#13#10'If you do not want the Enabler to use the SQL2014 Express Database Server, you MUST EXIT NOW and install your preferred Microsoft Database Server before re-running this setup.');
+  Exec(ExpandConstant('{sys}\msiexec.exe'), '/quiet /L+* '+ExpandConstant('{app}\log\APIInstall.log')+' /package '+ExpandConstant('{app}\InstallEnablerAPI.msi'), '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  if ResultCode <> 0 then begin
+    Log('INFO: Could not install enabler API - ERRORLEVEL = ' + inttostr(ResultCode));   
+    
+    //if SILENT = false then begin
+      //MsgBox('Could not install', mbinformation, mb_ok);
+    //end;
+    //Abort();
+
+    end;
 end;
 
-//========================================
-//functions for Server Password page
-//========================================
+//Security Components
 
-procedure createSAPasswordPage();
-begin
-  SAPasswordPage:=CreateInputQueryPage(noServerInstalledPage.ID, 'To install the SQL Server SQL2014Express, SA password is required.', '','To install the SQL Server SQL2014Express, SA password is required. Please choose a strong password and keep it for future reference.');
-  SAPasswordPage.Add(SetupMessage(msgPasswordEditLabel),True);
-  SAPasswordPage.Add('Re-enter password:',True);
-  //SA_PASSWORD:=SAPasswordPage.Edits[0].Text;
-end;
-
-//========================================
-//functions for Network Port/Domain page
-//========================================
-
-procedure createNetworkPortPage();   
-begin
-  portPage:= CreateInputQueryPage(SAPasswordPage.ID, 'Confirm the Network Port and Domain for Enabler Web Server.', '', '');
-  portPage.Add('Port', False);
-  portPage.Add('Network Domain', False);
-  lblPort := TLabel.Create(portPage);
-  lblPort.Parent := portPage.Surface;
-  lblPort.Caption := 'Default port is 8081.'#13#10#13#10'Use your local domain if you have one.'#13#10#13#10'Depending on your network and firewall configuration, you may need to change the port number here to Ensure Enabler Web Server uses an available port.'#13#10#13#10'NOTE: Refer to the installation instructions for information about firewall configuration.';
-  lblPort.Top := sdkCheckBox.Top+20;
-  lblPort.Left := 0;
-  lblPort.Height := 40;
-  lblPort.Width := 500;
-  lblPort.WordWrap := True;
-  portPage.Values[0] := '8081';
-  portPage.Values[1] := 'mydomain.com';
-  portNum:= portPage.Values[0];
-  domainName:= portPage.Values[1];
-end;
 
 //========================================
 //Install Server Files
@@ -3252,54 +3127,6 @@ begin
   end;
 end;
 
-//====================
-//create Beta License
-//====================
-procedure createLicense();
-var
-  ResultCode:integer;
-begin
-  Log('Check for V4 Beta License');
-  if Exec(WizardDirValue+'\ConvertV4BetaLicense.exe', '/c', '',SW_SHOW, ewWaitUntilTerminated, ResultCode) then begin
-    Log('Result code from COnvertV4BetaLicense was '+inttostr(ResultCode));
-    if ResultCode = 0 then begin
-      Log('v4.0 Beta License converted');
-    end;
-  end;
-end;
-
-//=============================================
-//Setup Environment Variables and Registry Keys
-//==============================================
-
-procedure setupEnvVars();
-var
-  ResultCOde:integer;
-begin
-    if OS = 64 then begin
-      SETX_PATH:=ExpandConstant('{app}')+'\bin\setx64.exe'
-    end
-    else begin
-      SETX_PATH:=ExpandConstant('{app}')+'\bin\setx32.exe';
-    end;
-
-    Exec(SETX_PATH, ENABLER_ROOT+ ' ' + ExpandCOnstant('{app}')+ ' -M', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(SETX_PATH, ENABLER_LOG+ ' ' + ExpandCOnstant('{app}')+ '\Log -M', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(SETX_PATH, ENABLER_DB_INSTANCE_NAME + ' ' + SQL_INSTANCE + ' -M', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-
-    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'DatabaseInstanceName', SQL_INSTANCE);
-    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'Enabler_Log', ExpandConstant('{app}')+'Log');
-    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'Root', ExpandConstant('{app}'));
-
-    //and now the files
-    if WINDOWS_BASE_VERSION < 5 then begin
-      //should we install these to SYSTEM32?
-      Log('Installing on Windows '+ WINDOWS_VERSION + ' installing extra DLLs');
-    end;
-
-    DeleteFile(ExpandConstant('{app}')+'Release Notes.html');   
-end;
-
 //================================
 //update system config
 //================================ 
@@ -3310,9 +3137,8 @@ end;
 //^ Old Wise script registered all OCX/DLL/EXE files here ^
 //The .wse indicates this was actually just OCX/DLLs and not EXEs
 //I have replicated this by adding a regserver flag to all DLLs and OCX files in the [Files] section
-//There are a handful of DLLs that caused failure when a regserver flag was present
+//There just as many DLLs that caused failure when a regserver flag was present as were successful
 //This process is opaque in the .wse, so I have assumed these failure DLLs are not 'self-registered' and removed their regserver flags
-//This was the most difficult command in the old .wse to understand
 
 //Enabler v4 configure default regsitry key for Client Username and Password
 procedure updateSystemConfig();
@@ -3328,7 +3154,6 @@ begin
     RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\ENABLER\Client', 'Password', 'Default');
   end;
 end;
-
 
 //=====================================================
 // Setup Access Permission
@@ -3703,7 +3528,46 @@ Begin
     end;   
   End;
 End;
-  
+
+
+
+//=======================================
+//Add uninstall items to the Install Log
+//=======================================
+
+procedure logUninstallItems();
+var
+  ResultCode:integer;
+begin
+  //Uninstall the API
+  Log('Execute path: '+ExpandConstant('{sys}')+'\msiexec.exe /quiet /L+* '+ExpandConstant('{app}')+'\log\APIInstall.log /uninstall ' +ExpandConstant('{app}')+'\InstallEnablerAPI.msi');
+
+  //Embed the Enabler product version - used to determine which version is installed
+  Log('EnablerVersion: '+ENB_VERSION);
+
+  //These lines reset COMMON and MAINDIR to short filenames. This is for backwards compatibility
+  COMMON:=ExpandConstant('{commonpf}');
+  MAINDIR:=ExpandConstant('{app}');
+
+  //Add some extra entries to the Wise log - so temporary or generated files are removed at uninstall
+  Log('Execute path: '+ExpandConstant('{sys}')+'\msiexec.exe /quiet /L+* '+ExpandConstant('{app}')+'\log\APIInstall.log /X '+ ExpandConstant('{app}')+'\InstallEnablerAPI.msi');
+
+  //Run an optional integrators sql file
+  if COMPONENTS = 'B' then begin
+    Log('Checking for '+ExpandConstant('{src}')+'ServerHook.sql ');
+    if FileExists(ExpandConstant('{src}')+'ServerHook.sql') then begin
+      Log('Running '+ExpandConstant('{src}') +'ServerHook.sql (osql '+OSQL_PATH+')');
+      Exec(OSQL_PATH+'OSQL.EXE', '-b -d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{src}')+'ServerHook.sql" -o ' + ExpandConstant('{app}')+'ServerHook.log', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Log('Completed ServerHook (return code '+inttostr(ResultCode)+ ')');
+    end;
+    //check service psrvr
+  end;
+
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER\Client', 'Applications', APPLICATIONS);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'Components', COMPONENTS);
+  RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'SDK', SDK);
+end;
+
 //=======================================================================
 //Reboot system to disable fast startup and change system power settings
 //This should be the last thing to do.
@@ -3811,6 +3675,248 @@ begin
   end;
 end;
 
+
+
+//==============================
+//==============================
+//FUNCTIONS FOR WIZARD
+//==============================
+//==============================
+
+
+//========================================
+//functions for Read Me/Release Notes page
+//========================================
+
+procedure OpenBrowser(Url:String);
+var
+  ErrorCode:Integer;
+begin
+  ShellExec('open', Url, '','', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+end; 
+
+procedure releaseNotesButtonOnClick(Sender:TObject);
+begin
+  OpenBrowser('{#SourcePath}\Input\Release Notes.htm');
+end; 
+
+procedure createReadMePage();
+  
+begin
+  readMePage:=CreateOutputMsgMemoPage(wpInfoBefore, 'ReadMe File', 'Please read the following important information before continuing.',
+  'When you are ready to continue with Setup, click Next.',
+  'Enabler V4.6.3.6087'#13#10 #13#10'1) If you are upgrading from an Enabler version prior to V3.4x, we suggest you remove the previous installation using Add/Remove Programs before installing this software.'#13#10 #13#10'2) The installation will now automatically install the SQL Server Express Edition when installing on systems without an SQL Server installed.'#13#10 #13#10'3) Check for newer pump drivers on our website http://www.integration.co.nz/'#13#10 #13#10'4) Where possible we have documented known issues in the Release Notes document.');
+  releaseNotesButton:=TNewButton.Create(readMePage);
+  releaseNotesButton.Parent:=readMePage.Surface;
+  releaseNotesButton.Caption:='View Release Notes';
+  releaseNotesButton.Left := readMePage.SurfaceWidth - ScaleX(500);
+  releaseNotesButton.Top := readMePage.SurfaceHeight - ScaleY(40);
+  releaseNotesButton.Width := ScaleX(150);
+  releaseNotesButton.Height := ScaleY(23);
+  releaseNotesButton.Anchors := [akRight, akBottom]
+  releaseNotesButton.onclick:=@releaseNotesButtonOnClick;  
+end;
+
+//========================================
+//functions for install type selection page
+//========================================
+
+procedure RadioClientClicked(Sender: TObject);
+begin
+  components := 'A';  // Client install.
+  Log(components);
+end; 
+
+procedure RadioServerClicked(Sender: TObject);
+begin
+  components := 'B';  // Server install.
+  Log(components);
+end;
+
+procedure SDKOptionClicked(Sender: TObject);
+begin
+  sdk:='A';
+end;
+
+procedure createPageInstallType();
+  
+begin
+  pageInstallType := CreateCustomPage(wpSelectComponents, 'Select Installation Type', 'Select the type of install you would like from the radio buttons. SDK is optional.');
+
+  radioClient := TRadioButton.Create(pageInstallType);
+  radioClient.Parent := pageInstallType.Surface;
+  radioClient.Caption := 'Client Install';
+  radioClient.OnClick := @RadioClientClicked;
+
+  CHECKED:= 'A';
+  if APPLICATIONS = '' then begin
+    //set default applications setting
+    if COMPONENTS = 'A' then begin
+      APPLICATIONS:='B';
+    end
+    else begin
+      APPLICATIONS:='ABCDE';
+    end;
+  end;
+  
+  //COMMENT THIS OUT OR DELETE IT ONCE STARTUPPROCESSING() IS ADDED!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  //components:='A';  
+
+  lblClient := TLabel.Create(pageInstallType);
+  lblClient.Parent := pageInstallType.Surface;
+  lblClient.Caption := 'Install the Enabler Client components to connect to connect to an Enabler Server, Enabler Server Desktop or Enabler Embedded.';
+  lblClient.Top := radioClient.Top+20;
+  lblClient.Left := 20;
+  lblClient.Height := 40;
+  lblClient.Width := 500;
+  lblClient.WordWrap := True;
+
+  radioServer := TRadioButton.Create(pageInstallType);
+  radioServer.Parent := pageInstallType.Surface;
+  radioServer.Caption := 'Server Install';
+  radioServer.Top := lblClient.Top+50;
+  radioServer.OnClick := @RadioServerClicked;
+  //see which radio button should be selected by deafult based on startupProcessing()
+  if COMPONENTS = 'A' then begin
+    radioClient.Checked := True;
+    end
+  else begin
+    radioServer.Checked := True;
+  end;
+
+  lblServer := TLabel.Create(pageInstallType);
+  lblServer.Parent := pageInstallType.Surface;
+  lblServer.Caption := 'Install the Enabler Server Desktop - Enabler Card REQUIRED. SQL Server will be installed if none found.';
+  lblServer.Top := radioServer.Top+20;
+  lblServer.Left := 20;
+  lblServer.Height := 40;
+  lblServer.Width := 500;
+  lblServer.WordWrap := True;
+
+  sdkCheckBox:=TNewCheckBox.Create(pageInstallType);
+  sdkCheckBox.Parent:=pageInstallType.Surface;
+  sdkCheckBox.Caption:= 'SDK Add-ons';
+  sdkCheckBox.Top := lblServer.Top+50;
+  sdkCheckBox.Left := 0;
+  sdkCheckBox.Height := 40;
+  sdkCheckBox.Width := 500;
+  sdkCheckBox.onClick:= @SDKOptionClicked;  
+
+  lblSDK := TLabel.Create(pageInstallType);
+  lblSDK.Parent := pageInstallType.Surface;
+  lblSDK.Caption := 'Install the Enabler SDK Documents, Tools (MPPSim, PumpDemo, etc). If UNTICKED, previous SDK will be removed.';
+  lblSDK.Top := sdkCheckBox.Top+40;
+  lblSDK.Left := 0;
+  lblSDK.Height := 40;
+  lblSDK.Width := 500;
+  lblSDK.WordWrap := True;
+end;
+
+//========================================
+//functions for Enabler Server Name page
+//========================================
+
+procedure EmbeddedOptionClicked(Sender: TObject);
+begin
+  embedded:=true;
+end;
+
+procedure createClientSelectedPage();  
+begin
+  serverNameEntryPage:= CreateInputQueryPage(pageInstallType.ID, 'Enter the Name or IP Address of the Enabler Server System',
+  '', 'The Enabler Client you are installing will access an Enabler Server (Enabler Server Desktop or Enabler Embedded) during operation.'#13#10 #13#10'Please enter the name or IP Address of the Enabler Server System this Client should connect to.' #13#10 #13#10'Tick Embedded if the Enabler Server is an Enabler Embedded system.' #13#10 #13#10 'Name can be left blank, but refer to the Enabler documentation on how to change the Enabler Server System Name or IP Address setting later.'); 
+  serverNameEntryPage.Add('Enabler Server Name:', False);
+  serverName:=serverNameEntryPage.Values[0];
+
+  embeddedCheckBox:=TNewCheckBox.Create(serverNameEntryPage);
+  embeddedCheckBox.Parent:=serverNameEntryPage.Surface;
+  embeddedCheckBox.Caption:= 'Embedded?';
+  embeddedCheckBox.Top := 225;
+  embeddedCheckBox.Left := 0;
+  embeddedCheckBox.Height := 40;
+  embeddedCheckBox.Width := 500;
+  embeddedCheckBox.onClick:= @EmbeddedOptionClicked; 
+end;
+
+//========================================
+//functions for Instance Name page
+//========================================
+
+procedure createInstanceNamePage();
+begin
+  instanceNamePage:= CreateInputQueryPage(serverNameEntryPage.ID, 'Enabler Server SQL Instance Name',
+  '', 'For Enabler installations using a non-default SQL Server instance name, please enter the Instance name below, otherwise leave the field blank and select Next.'); 
+  instanceNamePage.Add('Instance Name:', False);
+  instanceName:=instanceNamePage.Values[0];
+
+  if not CMD_INSTANCE then begin
+    CLIENT_SQL_INSTANCE:=SQL_INSTANCE;
+  end;
+end;
+
+//========================================
+//functions for install warning page
+//========================================
+
+function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo, MemoComponentsInfo, MemoGroupInfo, MemoTasksInfo: String): String; 
+begin
+  if SQL_NEEDED then begin
+    if COMPONENTS = 'B' then begin
+      if SQLEXPRESSNAME = 'SQL2005' then begin
+        SQLTITLE:= ' and SQL Server 2005 Express';
+      end;
+      if SQLEXPRESSNAME = 'SQL2008R2' then begin
+        SQLTITLE:= ' and SQL Server 2008 Express';
+      end;
+    end;
+  end;
+  Result:='You are now ready to install The Enabler.'#13#10#13#10'Click the Install button to begin the installation,'#13#10'or the Back button to change your Installation options.'#13#10#13#10'If you have an existing Enabler installation you can select the database backup checkbox below'#13#10'to back up Enabler as part of the installation.';
+end;
+
+//========================================
+//functions for No Microsoft SQL Server Installed page
+//========================================
+
+procedure createNoServerInstalledPage();
+begin
+  noServerInstalledPage:=CreateOutputMsgPage(instanceNamePage.ID,'No Microsoft SQL Server is installed.'#13#10'Install the default SQL Server (SQL2104 Express)?', '', 'Your install selection of the Enabler Server requires an SQL Database.'#13#10#13#10'If you continue, the Default SQL Server (SQL2014 Express) will be installed before installing the Enabler software.'#13#10#13#10'If you do not want the Enabler to use the SQL2014 Express Database Server, you MUST EXIT NOW and install your preferred Microsoft Database Server before re-running this setup.');
+end;
+
+//========================================
+//functions for Server Password page
+//========================================
+
+procedure createSAPasswordPage();
+begin
+  SAPasswordPage:=CreateInputQueryPage(noServerInstalledPage.ID, 'To install the SQL Server SQL2014Express, SA password is required.', '','To install the SQL Server SQL2014Express, SA password is required. Please choose a strong password and keep it for future reference.');
+  SAPasswordPage.Add(SetupMessage(msgPasswordEditLabel),True);
+  SAPasswordPage.Add('Re-enter password:',True);
+  //SA_PASSWORD:=SAPasswordPage.Edits[0].Text;
+end;
+
+//========================================
+//functions for Network Port/Domain page
+//========================================
+
+procedure createNetworkPortPage();   
+begin
+  portPage:= CreateInputQueryPage(SAPasswordPage.ID, 'Confirm the Network Port and Domain for Enabler Web Server.', '', '');
+  portPage.Add('Port', False);
+  portPage.Add('Network Domain', False);
+  lblPort := TLabel.Create(portPage);
+  lblPort.Parent := portPage.Surface;
+  lblPort.Caption := 'Default port is 8081.'#13#10#13#10'Use your local domain if you have one.'#13#10#13#10'Depending on your network and firewall configuration, you may need to change the port number here to Ensure Enabler Web Server uses an available port.'#13#10#13#10'NOTE: Refer to the installation instructions for information about firewall configuration.';
+  lblPort.Top := sdkCheckBox.Top+20;
+  lblPort.Left := 0;
+  lblPort.Height := 40;
+  lblPort.Width := 500;
+  lblPort.WordWrap := True;
+  portPage.Values[0] := '8081';
+  portPage.Values[1] := 'mydomain.com';
+  portNum:= portPage.Values[0];
+  domainName:= portPage.Values[1];
+end;   
+
 //========================================
 //initialize setup
 //========================================
@@ -3854,6 +3960,7 @@ begin
   MAINDIR:=ExpandConstant('{app}');
   BACKUP:=MAINDIR+'\BACKUP';
   SA_PASSWORD:=SAPasswordPage.Edits[0].Text;
+  
 
 end;
 
@@ -3862,9 +3969,7 @@ end;
 //================================================================
 
 procedure CurStepChanged(CurStep:TSetupStep);
-begin
-  
-  
+begin  
 
   if CurStep = ssInstall then begin
     saveConfig();
@@ -3872,17 +3977,19 @@ begin
     installNet3Point5();
     installNet4();     
     checkSP();
+    uninstallAPIMSI();
+    blankPasswordChecks();
   end;
   if CurStep = ssPostInstall then begin
-    blankPasswordChecks();
-    //cplusplus();
-    removeRegistryVars();
     InstallSqlServer();
+    cplusplus();
+    removeRegistryVars();    
     installEnablerFiles();
     createLicense();
-    installServerFiles();
-
     setupEnvVars();
+    installAPIMSI();
+    installServerFiles(); 
+        
     basicPDFFiles();
     SDKFiles();   
     
@@ -3898,7 +4005,6 @@ end;
 //========================================
 procedure DeinitializeSetup();
 begin
-  basicPDFFiles();
   MoveLogFile();
 end;
 
