@@ -494,7 +494,9 @@ Source:"{#SourcePath}\Input\bin\EnablerInstall.dll"; Flags:dontcopy;
 
 //install SQLInstall batch file
 Source:"{#SourcePath}\Input\scripts\SQLInstall.bat"; DestDir:"{app}"; Check: IsInstallType('B'); 
+Source:"{#SourcePath}\Input\scripts\MSDEInstall.bat"; DestDir:"{app}"; Check: IsInstallType('B');
 
+Source:"{#SourcePath}\Input\bin\enablerinstall.dll"; DestDir:"{app}\bin"; Check: IsInstallType('B');
 
 [Dirs]
 ; deleteafterinstall ONLY DELETES if folder empty at end of install
@@ -2441,7 +2443,6 @@ Begin
         //=====================
         //MSDE2000 Installation
         //=====================
-        FileCopy('{app}\scripts\MSDEInstall.bat', ExpandConstant('{app}')+ '\MSDEInstall.bat', False);
         if SILENT = false then begin
           try
             progressPage := CreateOutputProgressPage('Progress Stage','Installing SQL Server (MSDE2000)');
@@ -2471,8 +2472,7 @@ Begin
         Log(USER_NAME);
         SQL_SYSADMIN_USER:=USER_DOMAIN + '\' + USER_NAME;
         Log(Format('Assigning system adminstrator privileges to %s',[SQL_SYSADMIN_USER]));
-      
-        //Install the SQLInstall batch file.
+
         if SILENT = false then begin
           try
             progressPage := CreateOutputProgressPage('Progress Stage','Installing SQL Server (MSDE2000)');
@@ -2617,7 +2617,6 @@ Begin
         if OS = 64 then begin
           SUB_KEY_IN:= GetEnv('PATH'); 
           Log('64-bit OS therefore copying EnablerInstall.dll');
-          FileCopy('{app}\bin\enablerinstall.dll', ExpandConstant('{app}')+ '\bin\EnablerInstall.dll', False);
           REGKEY:= GetRegKeyValue();
           Log('The path to OSQL.EXE for this 64-bit install of SQL Server is: ' + IntToStr(REGKEY));
           OSQL_PATH:= IntToStr(REGKEY);
