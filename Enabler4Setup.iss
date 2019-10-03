@@ -2414,8 +2414,8 @@ end;
 //=========================================
 //INSTALL SQL SERVER or CHECK SA LOGIN
 //=========================================
-function GetRegKeyValue(REGKEY: Integer): Integer;
-external 'GetRegKeyValue@files:EnablerInstall.dll stdcall';
+//function GetRegKeyValue(REGKEY: Integer): Integer;
+//external 'GetRegKeyValue@files:enablerinstall.dll stdcall';
 
 procedure InstallSqlServer();
 var
@@ -2433,6 +2433,7 @@ Begin
   if pos('B',COMPONENTS) <> 0 then begin
     if SQL_NEEDED = true then begin
       INST_DRIVE:= copy(ExpandConstant('{src}'),1,1);
+      Log(INST_DRIVE);
       INST_DRIVE := INST_DRIVE + ':';
       CreateDir(ExpandConstant('{app}'));
       if SQLEXPRESSNAME = 'MSDE2000' then begin
@@ -2500,7 +2501,7 @@ Begin
           //=======================
           //SQL2016 Express Install
           //=======================
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2016\'+inttostr(OS)+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2016', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+          //Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2016\'+inttostr(OS)+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2016', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
         end        
         else if SQLEXPRESSNAME = 'SQL2014' then Begin
           //=======================
@@ -2588,16 +2589,16 @@ Begin
       
       //Set up Registry Key for SQL version client Setup 
       if SQLEXPRESSNAME = 'SQL2016' then begin
-        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\130\\Tools\\ClientSetup';
+        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQL Server\\130\\Tools\\ClientSetup';
       end
       else if SQLEXPRESSNAME = 'SQL2014' then begin
-        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\120\\Tools\\ClientSetup';
+        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQL Server\\120\\Tools\\ClientSetup';
       end
       else if SQLEXPRESSNAME = 'SQL2012' then begin
-        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\110\\Tools\\ClientSetup';
+        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQL Server\\110\\Tools\\ClientSetup';
       end
       else if SQLEXPRESSNAME = 'SQL2008R2' then begin
-        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQLServer\\100\\Tools\\ClientSetup';
+        REG_KEY_IN:= 'SOFTWARE\\Microsoft\\Microsoft SQL Server\\100\\Tools\\ClientSetup';
       end;
       
       //If we get here must send the full path to OSQL.EXE to DBInstall to make sure it can run properly
@@ -2611,24 +2612,24 @@ Begin
         //=== FYI - - - ...and a \Program Files (x86)\ folder for 32-bit apps
         //==============================================================================================================================
         if OS = 64 then begin
-          SUB_KEY_IN:= GetEnv('PATH'); 
-          Log('64-bit OS therefore copying EnablerInstall.dll');
-          GetRegKeyValue(REGKEY);
-          Log('The path to OSQL.EXE for this 64-bit install of SQL Server is: ' + IntToStr(REGKEY));
-          OSQL_PATH:= IntToStr(REGKEY);
+          //SUB_KEY_IN:= GetEnv('PATH'); 
+          //Log('64-bit OS therefore copying EnablerInstall.dll');
+          //GetRegKeyValue(REGKEY);
+          RegQueryStringValue('HKEY_AUTO', REG_KEY_IN, 'Path', OSQL_PATH);
+          Log('The path to OSQL.EXE for this 64-bit install of SQL Server is: ' + OSQL_PATH);
           Log('OSQL_PATH is currently set to ' + OSQL_PATH);
         end
         else if OS = 32 then begin
           Log('32-bit OS therefore will use standard WISE way to get key from registry');
-          RegQueryStringValue('HKEY_AUTO', REG_KEY_IN, 'Default', OSQL_PATH);
+          RegQueryStringValue('HKEY_AUTO', REG_KEY_IN, 'Path', OSQL_PATH);
           Log('OSQL_PATH is ' + OSQL_PATH);
         end;
         Log('Processor bit size (e.g. 32/64 bit), the variable OS is ' + IntToStr(OS));
       end
       else begin
-        RegQueryStringValue('HKEY_AUTO', 'Software\Microsoft\Windows\CurrentVersion', 'Default', POSQL_PATH);
+        RegQueryStringValue('HKEY_AUTO', 'Software\Microsoft\Windows\CurrentVersion', 'ProgramFilesDir', POSQL_PATH);
         OSQL_PATH := POSQL_PATH+ '\Microsoft SQLServer\90\Tools\Binn';
-        if FileExists(OSQL_PATH +'\OSQL.EXE')=False then begin
+        if not FileExists(OSQL_PATH +'\OSQL.EXE') then begin
           OSQL_PATH := POSQL_PATH+ '\Microsoft SQLServer\80\Tools\Binn';
         end;
         Log(Format('Location of OSQL.EXE is %s (SQL2005 Installation in progress)',[OSQL_PATH]));
