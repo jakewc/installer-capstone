@@ -2428,7 +2428,6 @@ var
   USER_NAME: string;
   SQL_SYSADMIN_USER: string;
   ResultCode: Integer;
-  ResultCode2: Integer;
   REG_KEY_IN: string;
   SUB_KEY_IN: string;
   REGKEY: integer;
@@ -2453,7 +2452,7 @@ Begin
           end;  
         end;
         Log(Format('Starting MEDE2000 install from %s\MSDE2000',[ExpandConstant('{src}')]));
-        Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\MSDEInstall.bat '+INST_DRIVE+ '"{src}\MSDE2000" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode2);
+        Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\MSDEInstall.bat '+INST_DRIVE+ '"'+ExpandConstant('{src}')+'\MSDE2000" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
         if DirExists(ExpandConstant('{app}')+'\MSDE_REBOOT_PENDING') OR FileExists(ExpandConstant('{app}')+'\MSDE_REBOOT_PENDING') then begin
           if UNATTENDED = '0' then begin
             MsgBox('Rebooting', mbInformation, MB_OK);
@@ -2690,7 +2689,7 @@ Begin
       //Delete All Drivers before copy the latest
       DelTree(ExpandConstant('{src}')+'\Driver\*', False, True, True);
       //Copy Installation files across
-      FileCopy('{app}\Driver\DriverInstaller.exe', ExpandConstant('{app}')+'\Driver\DriverInstaller.exe', False);
+      FileCopy(ExpandConstant('{app}')+'\Driver\DriverInstaller.exe', ExpandConstant('{app}')+'\Driver\DriverInstaller.exe', False);
       if OS = 64 then begin
         FileCopy(ExpandConstant('{src}')+'\Driver\x64\EnablerPCI.inf', ExpandConstant('{app}')+'\Driver\EnablerPCI.inf', False);
         FileCopy(ExpandConstant('{src}')+'\Driver\x64\Enbx64.sys', ExpandConstant('{app}')+'\Driver\Enbx64.sys', False);
