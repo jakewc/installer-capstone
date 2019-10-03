@@ -46,7 +46,7 @@ WizardStyle=modern
 AppId={{95EC957B-DB36-4EDD-9C7C-B19F896CC37D}
 AppPublisher=Integration Technologies Limited
 AppPublisherURL=https://integration.co.nz/
-DefaultDirName=C:\Enabler4
+DefaultDirName=C:\Enabler
 UsePreviousAppDir=no
 OutputBaseFilename=Enabler4Setup
 SetupLogging=yes
@@ -488,9 +488,6 @@ Source:"{#SourcePath}\Input\forms-1.3.0.jar"; DestDir:"{app}"; Check: IsSDK_OPTI
 Source:"{#SourcePath}\Input\glazedlists-1.8.0_java15.jar"; DestDir:"{app}"; Check: IsSDK_OPTIONS('B');
 Source:"{#SourcePath}\Input\icu4j-49_1.jar"; DestDir:"{app}"; Check: IsSDK_OPTIONS('B');
 Source:"{#SourcePath}\Input\miglayout15-swing.jar"; DestDir:"{app}"; Check: IsSDK_OPTIONS('B');
-
-//This file is for call dll file in the Install SQL Server
-Source:"{#SourcePath}\Input\bin\EnablerInstall.dll"; DestDir:"{app}\bin"; Flags:dontcopy;
 
 //install SQLInstall batch file
 Source:"{#SourcePath}\Input\scripts\SQLInstall.bat"; DestDir:"{app}"; Check: IsInstallType('B'); 
@@ -2417,7 +2414,7 @@ end;
 //=========================================
 //INSTALL SQL SERVER or CHECK SA LOGIN
 //=========================================
-function GetRegKeyValue(): Integer;
+function GetRegKeyValue(REGKEY: Integer): Integer;
 external 'GetRegKeyValue@files:EnablerInstall.dll stdcall';
 
 procedure InstallSqlServer();
@@ -2578,7 +2575,7 @@ Begin
       end;
       
       //Make sure the SQL Server engine is running
-      Exec('CMD.EXE','sc start mssqlserver','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec('CMD.EXE','net start MSSQL$'+SQL_INSTANCE,'', SW_SHOW, ewWaitUntilTerminated, ResultCode);
       if SILENT = false then begin
         try
           progressPage := CreateOutputProgressPage('Progress Stage',' ');
@@ -2616,7 +2613,7 @@ Begin
         if OS = 64 then begin
           SUB_KEY_IN:= GetEnv('PATH'); 
           Log('64-bit OS therefore copying EnablerInstall.dll');
-          REGKEY:= GetRegKeyValue();
+          GetRegKeyValue(REGKEY);
           Log('The path to OSQL.EXE for this 64-bit install of SQL Server is: ' + IntToStr(REGKEY));
           OSQL_PATH:= IntToStr(REGKEY);
           Log('OSQL_PATH is currently set to ' + OSQL_PATH);
