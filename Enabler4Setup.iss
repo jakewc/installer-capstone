@@ -490,7 +490,7 @@ Source:"{#SourcePath}\Input\icu4j-49_1.jar"; DestDir:"{app}"; Check: IsSDK_OPTIO
 Source:"{#SourcePath}\Input\miglayout15-swing.jar"; DestDir:"{app}"; Check: IsSDK_OPTIONS('B');
 
 //This file is for call dll file in the Install SQL Server
-Source:"{#SourcePath}\Input\bin\EnablerInstall.dll"; Flags:dontcopy;
+Source:"{#SourcePath}\Input\bin\EnablerInstall.dll"; DestDir:"{app}\bin"; Flags:dontcopy;
 
 //install SQLInstall batch file
 Source:"{#SourcePath}\Input\scripts\SQLInstall.bat"; DestDir:"{app}"; Check: IsInstallType('B'); 
@@ -2676,7 +2676,7 @@ Begin
     //==================================
     //INSTALL WINDOWS DRIVER FOR ENABLER
     //==================================
-    if DirExists('{src}\Driver') then begin
+    if DirExists(ExpandConstant('{src}')+'\Driver') then begin
       if SILENT = false then begin
         try
           progressPage := CreateOutputProgressPage('Progress Stage',' ');
