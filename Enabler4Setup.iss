@@ -2575,7 +2575,7 @@ Begin
       end;
       
       //Make sure the SQL Server engine is running
-      Exec('CMD.EXE','net start MSSQL$'+SQL_INSTANCE,'', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec('CMD.EXE','net start MSSQLSERVER','', SW_SHOW, ewWaitUntilIdle, ResultCode);
       if SILENT = false then begin
         try
           progressPage := CreateOutputProgressPage('Progress Stage',' ');
