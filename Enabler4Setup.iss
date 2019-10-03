@@ -2432,7 +2432,7 @@ var
 Begin
   if pos('B',COMPONENTS) <> 0 then begin
     if SQL_NEEDED = true then begin
-      INST_DRIVE:= ExpandConstant('{src}');
+      INST_DRIVE:= copy(ExpandConstant('{src}'),1,1);
       INST_DRIVE := INST_DRIVE + ':';
       CreateDir(ExpandConstant('{app}'));
       if SQLEXPRESSNAME = 'MSDE2000' then begin

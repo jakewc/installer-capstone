@@ -1,0 +1,2740 @@
+﻿2019-10-04 11:39:15.751   Log opened. (Time zone: UTC+13:00)
+2019-10-04 11:39:15.754   Setup version: Inno Setup version 6.0.2 (u)
+2019-10-04 11:39:15.755   Original Setup EXE: C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe
+2019-10-04 11:39:15.756   Setup command line: /SL5="$B05FA,40006066,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$501EA /NOTIFYWND=$39042E /DEBUGWND=$304DE 
+2019-10-04 11:39:15.758   Windows version: 10.0.18362  (NT platform: Yes)
+2019-10-04 11:39:15.759   64-bit Windows: Yes
+2019-10-04 11:39:15.761   Processor architecture: x64
+2019-10-04 11:39:15.762   User privileges: Administrative
+2019-10-04 11:39:15.766   Administrative install mode: Yes
+2019-10-04 11:39:15.767   Install mode root key: HKEY_LOCAL_MACHINE
+2019-10-04 11:39:15.769   64-bit install mode: No
+2019-10-04 11:39:15.775   Created temporary directory: C:\Users\JACOBC~1\AppData\Local\Temp\is-0QD0J.tmp
+2019-10-04 11:39:15.791   -- DLL function import --
+2019-10-04 11:39:15.795   Function name: ExitProcess
+2019-10-04 11:39:15.797   DLL name: kernel32.dll
+2019-10-04 11:39:15.799   Dest DLL name: kernel32.dll
+2019-10-04 11:39:15.800   Importing the DLL function.
+2019-10-04 11:39:15.805   Successfully imported the DLL function. Delay loaded? No
+2019-10-04 11:39:15.807   -- DLL function import --
+2019-10-04 11:39:15.810   Function name: GetRegKeyValue
+2019-10-04 11:39:15.813   DLL name: files:EnablerInstall.dll
+2019-10-04 11:39:15.815   Extracting temporary file: C:\Users\JACOBC~1\AppData\Local\Temp\is-0QD0J.tmp\EnablerInstall.dll
+2019-10-04 11:39:15.826   Dest DLL name: C:\Users\JACOBC~1\AppData\Local\Temp\is-0QD0J.tmp\EnablerInstall.dll
+2019-10-04 11:39:15.828   Importing the DLL function.
+2019-10-04 11:39:15.867   Successfully imported the DLL function. Delay loaded? No
+2019-10-04 11:39:15.877   Initialising variables.
+2019-10-04 11:39:16.197   Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10
+2019-10-04 11:39:16.207   Installing Enabler V4.6.3.6087 on Windows V10.00.18362 64bit (Version 10)
+2019-10-04 11:39:16.239   Option = /SL5="$B05FA,40006066,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$501EA /NOTIFYWND=$39042E /DEBUGWND=$304DE 
+2019-10-04 11:39:16.288   CMD /SL5="$B05FA,40006066,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$501EA /NOTIFYWND=$39042E /DEBUGWND=$304DE 
+2019-10-04 11:39:16.308   IE Location C:\Program Files\Internet Explorer;
+2019-10-04 11:39:16.324   IE VERSION: 9.11.18362.0
+2019-10-04 11:39:16.348   Installing from C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output drive.
+2019-10-04 11:39:16.631   Windows product type: 1
+2019-10-04 11:39:16.666   Location of OSQL.EXE is  (Initial Checks)
+2019-10-04 11:39:16.694   SQL2014 folder found, this will be installed.
+2019-10-04 11:39:16.704   SQL server folders parsed, SQL server to install=SQL2014, Architecture=64, Windows version=10.00.18362, OS ver=10
+2019-10-04 11:39:16.727   SQLEXPRESSNAME = SQL2014
+2019-10-04 11:39:16.839   Checking disk space
+2019-10-04 11:39:17.133   B
+2019-10-04 11:39:20.044   Message box (Yes/No):
+                          The folder:
+                          
+                          C:\Enabler
+                          
+                          already exists. Would you like to install to that folder anyway?
+2019-10-04 11:39:20.897   User chose Yes.
+2019-10-04 11:39:24.722   Backup checkbox not checked or there is no existing database, will not backup.
+2019-10-04 11:39:24.881   Calling RestartManager's RmGetList.
+2019-10-04 11:39:25.185   RmGetList finished successfully.
+2019-10-04 11:39:25.187   RestartManager found no applications using one of our files.
+2019-10-04 11:39:25.247   Server was chosen
+2019-10-04 11:39:25.434   SQL2008R2 requires MSI 4.5 and .NET 3.5 SP1 - MSI will be installed and will require a reboot.
+2019-10-04 11:39:25.454   Installing MSI 4.5
+2019-10-04 11:39:25.494   MSI 4.5 already installed
+2019-10-04 11:39:25.577   Found .NET v3.5 runtime
+2019-10-04 11:39:25.651   Check Net 4 install slqexpressname = SQL2014, net 4 installed = 1
+2019-10-04 11:39:25.666   .NET 4 Framework already installed
+2019-10-04 11:39:25.896   INFO: Could not uninstall existing enabler API - ERRORLEVEL = 1605
+2019-10-04 11:39:25.973   Starting the installation process.
+2019-10-04 11:39:26.053   Directory for uninstall files: C:\Enabler
+2019-10-04 11:39:26.062   Will append to existing uninstall log: C:\Enabler\unins000.dat
+2019-10-04 11:39:26.071   -- File entry --
+2019-10-04 11:39:26.073   Dest filename: C:\Enabler\unins000.exe
+2019-10-04 11:39:26.078   Time stamp of our file: 2019-10-04 11:39:15.658
+2019-10-04 11:39:26.080   Dest file exists.
+2019-10-04 11:39:26.081   Time stamp of existing file: 2019-10-04 11:31:54.162
+2019-10-04 11:39:26.083   Version of our file: 51.1052.0.0
+2019-10-04 11:39:26.191   Version of existing file: 51.1052.0.0
+2019-10-04 11:39:26.193   Installing the file.
+2019-10-04 11:39:26.208   Leaving temporary file in place for now.
+2019-10-04 11:39:26.211   -- File entry --
+2019-10-04 11:39:26.219   Dest filename: C:\Enabler\comdlg32.ocx
+2019-10-04 11:39:26.222   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.223   Dest file exists.
+2019-10-04 11:39:26.225   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.227   Version of our file: 6.0.84.18
+2019-10-04 11:39:26.230   Version of existing file: 6.0.84.18
+2019-10-04 11:39:26.231   Same version. Skipping.
+2019-10-04 11:39:26.233   Will register the file (a DLL/OCX) later.
+2019-10-04 11:39:26.240   -- File entry --
+2019-10-04 11:39:26.246   Dest filename: C:\Enabler\comct232.ocx
+2019-10-04 11:39:26.249   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.251   Dest file exists.
+2019-10-04 11:39:26.253   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.255   Version of our file: 6.0.80.22
+2019-10-04 11:39:26.257   Version of existing file: 6.0.80.22
+2019-10-04 11:39:26.259   Same version. Skipping.
+2019-10-04 11:39:26.261   Will register the file (a DLL/OCX) later.
+2019-10-04 11:39:26.264   -- File entry --
+2019-10-04 11:39:26.271   Dest filename: C:\Enabler\comctl32.ocx
+2019-10-04 11:39:26.274   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.275   Dest file exists.
+2019-10-04 11:39:26.277   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.279   Version of our file: 6.0.81.5
+2019-10-04 11:39:26.282   Version of existing file: 6.0.81.5
+2019-10-04 11:39:26.284   Same version. Skipping.
+2019-10-04 11:39:26.286   Will register the file (a DLL/OCX) later.
+2019-10-04 11:39:26.289   -- File entry --
+2019-10-04 11:39:26.295   Dest filename: C:\Enabler\Mscomm32.ocx
+2019-10-04 11:39:26.297   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.299   Dest file exists.
+2019-10-04 11:39:26.301   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.303   Version of our file: 6.0.81.69
+2019-10-04 11:39:26.306   Version of existing file: 6.0.81.69
+2019-10-04 11:39:26.308   Same version. Skipping.
+2019-10-04 11:39:26.310   Will register the file (a DLL/OCX) later.
+2019-10-04 11:39:26.313   -- File entry --
+2019-10-04 11:39:26.321   Dest filename: C:\Enabler\Msflxgrd.ocx
+2019-10-04 11:39:26.324   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.326   Dest file exists.
+2019-10-04 11:39:26.328   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.330   Version of our file: 6.0.84.18
+2019-10-04 11:39:26.332   Version of existing file: 6.0.84.18
+2019-10-04 11:39:26.333   Same version. Skipping.
+2019-10-04 11:39:26.340   Will register the file (a DLL/OCX) later.
+2019-10-04 11:39:26.343   -- File entry --
+2019-10-04 11:39:26.350   Dest filename: C:\Enabler\Msrdc20.ocx
+2019-10-04 11:39:26.355   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.357   Dest file exists.
+2019-10-04 11:39:26.359   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.361   Version of our file: 6.0.84.18
+2019-10-04 11:39:26.363   Version of existing file: 6.0.84.18
+2019-10-04 11:39:26.365   Same version. Skipping.
+2019-10-04 11:39:26.367   Will register the file (a DLL/OCX) later.
+2019-10-04 11:39:26.370   -- File entry --
+2019-10-04 11:39:26.377   Dest filename: C:\Enabler\Msrdo20.dll
+2019-10-04 11:39:26.379   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.381   Dest file exists.
+2019-10-04 11:39:26.383   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.385   Version of our file: 6.0.88.62
+2019-10-04 11:39:26.388   Version of existing file: 6.0.88.62
+2019-10-04 11:39:26.390   Same version. Skipping.
+2019-10-04 11:39:26.392   Will register the file (a DLL/OCX) later.
+2019-10-04 11:39:26.394   -- File entry --
+2019-10-04 11:39:26.401   Dest filename: C:\Enabler\Msvcp60.dll
+2019-10-04 11:39:26.404   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.405   Dest file exists.
+2019-10-04 11:39:26.407   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.409   Version of our file: 6.0.8972.0
+2019-10-04 11:39:26.412   Version of existing file: 6.0.8972.0
+2019-10-04 11:39:26.414   Same version. Skipping.
+2019-10-04 11:39:26.416   -- File entry --
+2019-10-04 11:39:26.424   Dest filename: C:\Enabler\scutil.exe
+2019-10-04 11:39:26.426   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:26.428   Dest file exists.
+2019-10-04 11:39:26.430   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:26.432   Version of our file: 1.1.1.0
+2019-10-04 11:39:26.435   Version of existing file: 1.1.1.0
+2019-10-04 11:39:26.437   Same version. Skipping.
+2019-10-04 11:39:26.439   -- File entry --
+2019-10-04 11:39:26.447   Dest filename: C:\Enabler\EnbSecurityController.exe
+2019-10-04 11:39:26.449   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.452   Dest file exists.
+2019-10-04 11:39:26.456   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.458   Version of our file: 1.1.4.0
+2019-10-04 11:39:26.462   Version of existing file: 1.1.4.0
+2019-10-04 11:39:26.464   Same version. Skipping.
+2019-10-04 11:39:26.466   -- File entry --
+2019-10-04 11:39:26.477   Dest filename: C:\Enabler\SecurityModule.dll
+2019-10-04 11:39:26.481   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.483   Dest file exists.
+2019-10-04 11:39:26.488   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.490   Version of our file: 1.0.7.0
+2019-10-04 11:39:26.494   Version of existing file: 1.0.7.0
+2019-10-04 11:39:26.495   Same version. Skipping.
+2019-10-04 11:39:26.497   Will register the file (a DLL/OCX) later.
+2019-10-04 11:39:26.500   -- File entry --
+2019-10-04 11:39:26.509   Dest filename: C:\Enabler\itl.ico
+2019-10-04 11:39:26.512   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:26.514   Dest file exists.
+2019-10-04 11:39:26.516   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:26.518   Version of our file: (none)
+2019-10-04 11:39:26.524   Version of existing file: (none)
+2019-10-04 11:39:26.527   Installing the file.
+2019-10-04 11:39:26.533   Successfully installed the file.
+2019-10-04 11:39:26.536   -- File entry --
+2019-10-04 11:39:26.545   Dest filename: C:\Enabler\ConvertV4BetaLicense.exe
+2019-10-04 11:39:26.551   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.554   Dest file exists.
+2019-10-04 11:39:26.557   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.559   Version of our file: 1.0.1.0
+2019-10-04 11:39:26.563   Version of existing file: 1.0.1.0
+2019-10-04 11:39:26.565   Same version. Skipping.
+2019-10-04 11:39:26.567   -- File entry --
+2019-10-04 11:39:26.578   Dest filename: C:\Enabler\EnbSessionX2.ocx
+2019-10-04 11:39:26.581   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.584   Dest file exists.
+2019-10-04 11:39:26.586   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.589   Version of our file: 4.9.0.0
+2019-10-04 11:39:26.592   Version of existing file: 4.9.0.0
+2019-10-04 11:39:26.595   Same version. Skipping.
+2019-10-04 11:39:26.598   Will register the file (a DLL/OCX) later.
+2019-10-04 11:39:26.601   -- File entry --
+2019-10-04 11:39:26.611   Dest filename: C:\Enabler\EnablerSoundEvents.reg
+2019-10-04 11:39:26.614   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.616   Dest file exists.
+2019-10-04 11:39:26.623   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.625   Version of our file: (none)
+2019-10-04 11:39:26.635   Version of existing file: (none)
+2019-10-04 11:39:26.637   Installing the file.
+2019-10-04 11:39:26.644   Successfully installed the file.
+2019-10-04 11:39:26.647   -- File entry --
+2019-10-04 11:39:26.655   Dest filename: C:\Enabler\EnbAttendantX2.ocx
+2019-10-04 11:39:26.659   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.661   Dest file exists.
+2019-10-04 11:39:26.664   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.667   Version of our file: 4.2.0.0
+2019-10-04 11:39:26.672   Version of existing file: 4.2.0.0
+2019-10-04 11:39:26.675   Same version. Skipping.
+2019-10-04 11:39:26.677   Will register the file (a DLL/OCX) later.
+2019-10-04 11:39:26.680   -- File entry --
+2019-10-04 11:39:26.688   Dest filename: C:\Enabler\EnbPumpX2.ocx
+2019-10-04 11:39:26.692   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.694   Dest file exists.
+2019-10-04 11:39:26.696   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.699   Version of our file: 3.41.0.0
+2019-10-04 11:39:26.702   Version of existing file: 3.41.0.0
+2019-10-04 11:39:26.704   Same version. Skipping.
+2019-10-04 11:39:26.707   Will register the file (a DLL/OCX) later.
+2019-10-04 11:39:26.711   -- File entry --
+2019-10-04 11:39:26.720   Dest filename: C:\Enabler\joda-time-LICENSE.txt
+2019-10-04 11:39:26.723   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.725   Dest file exists.
+2019-10-04 11:39:26.727   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.729   Version of our file: (none)
+2019-10-04 11:39:26.739   Version of existing file: (none)
+2019-10-04 11:39:26.742   Installing the file.
+2019-10-04 11:39:26.749   Successfully installed the file.
+2019-10-04 11:39:26.752   -- File entry --
+2019-10-04 11:39:26.760   Dest filename: C:\Enabler\joda-time-NOTICE.txt
+2019-10-04 11:39:26.764   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.766   Dest file exists.
+2019-10-04 11:39:26.768   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.771   Version of our file: (none)
+2019-10-04 11:39:26.778   Version of existing file: (none)
+2019-10-04 11:39:26.782   Installing the file.
+2019-10-04 11:39:26.787   Successfully installed the file.
+2019-10-04 11:39:26.791   -- File entry --
+2019-10-04 11:39:26.799   Dest filename: C:\Enabler\enabler-api-1.0.jar
+2019-10-04 11:39:26.802   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.805   Dest file exists.
+2019-10-04 11:39:26.807   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.810   Version of our file: (none)
+2019-10-04 11:39:26.907   Version of existing file: (none)
+2019-10-04 11:39:26.909   Installing the file.
+2019-10-04 11:39:26.937   Successfully installed the file.
+2019-10-04 11:39:26.940   -- File entry --
+2019-10-04 11:39:26.948   Dest filename: C:\Enabler\joda-time-2.0.jar
+2019-10-04 11:39:26.951   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.954   Dest file exists.
+2019-10-04 11:39:26.956   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:26.958   Version of our file: (none)
+2019-10-04 11:39:27.732   Version of existing file: (none)
+2019-10-04 11:39:27.736   Installing the file.
+2019-10-04 11:39:27.789   Successfully installed the file.
+2019-10-04 11:39:27.791   -- File entry --
+2019-10-04 11:39:27.797   Dest filename: C:\Enabler\InstallEnablerApi.msi
+2019-10-04 11:39:27.799   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:27.801   Dest file exists.
+2019-10-04 11:39:27.805   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:27.807   Version of our file: (none)
+2019-10-04 11:39:27.813   Version of existing file: (none)
+2019-10-04 11:39:27.814   Installing the file.
+2019-10-04 11:39:27.872   Successfully installed the file.
+2019-10-04 11:39:27.875   -- File entry --
+2019-10-04 11:39:27.882   Dest filename: C:\Enabler\ITL.Enabler.WPFControls.dll
+2019-10-04 11:39:27.884   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:27.889   Dest file exists.
+2019-10-04 11:39:27.892   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:27.894   Version of our file: 1.2.0.0
+2019-10-04 11:39:27.897   Version of existing file: 1.2.0.0
+2019-10-04 11:39:27.899   Same version. Skipping.
+2019-10-04 11:39:27.901   -- File entry --
+2019-10-04 11:39:27.909   Dest filename: C:\Enabler\System.Windows.Controls.DataVisualization.Toolkit.dll
+2019-10-04 11:39:27.911   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:27.913   Dest file exists.
+2019-10-04 11:39:27.915   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:27.917   Version of our file: 3.5.0.0
+2019-10-04 11:39:27.921   Version of existing file: 3.5.0.0
+2019-10-04 11:39:27.922   Same version. Skipping.
+2019-10-04 11:39:27.925   -- File entry --
+2019-10-04 11:39:27.932   Dest filename: C:\Enabler\WPFToolkit.dll
+2019-10-04 11:39:27.936   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:27.938   Dest file exists.
+2019-10-04 11:39:27.940   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:27.941   Version of our file: 3.5.50211.1
+2019-10-04 11:39:27.944   Version of existing file: 3.5.50211.1
+2019-10-04 11:39:27.946   Same version. Skipping.
+2019-10-04 11:39:27.948   -- File entry --
+2019-10-04 11:39:27.958   Dest filename: C:\Users\JACOBC~1\AppData\Local\Temp\is-0QD0J.tmp\IsAdmin.exe
+2019-10-04 11:39:27.960   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:27.962   Installing the file.
+2019-10-04 11:39:27.974   Successfully installed the file.
+2019-10-04 11:39:27.976   -- File entry --
+2019-10-04 11:39:27.983   Dest filename: C:\Enabler\AutoSupport.exe
+2019-10-04 11:39:27.986   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:27.988   Dest file exists.
+2019-10-04 11:39:27.990   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:27.992   Version of our file: 2.9.1.0
+2019-10-04 11:39:27.995   Version of existing file: 2.9.1.0
+2019-10-04 11:39:27.997   Same version. Skipping.
+2019-10-04 11:39:28.000   -- File entry --
+2019-10-04 11:39:28.007   Dest filename: C:\Users\JACOBC~1\AppData\Local\Temp\is-0QD0J.tmp\release.txt
+2019-10-04 11:39:28.009   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.012   Installing the file.
+2019-10-04 11:39:28.016   Successfully installed the file.
+2019-10-04 11:39:28.018   -- File entry --
+2019-10-04 11:39:28.027   Dest filename: C:\Enabler\bin\setx64.exe
+2019-10-04 11:39:28.030   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.032   Dest file exists.
+2019-10-04 11:39:28.034   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.037   Version of our file: 6.0.6000.16386
+2019-10-04 11:39:28.041   Version of existing file: 6.0.6000.16386
+2019-10-04 11:39:28.042   Same version. Skipping.
+2019-10-04 11:39:28.046   -- File entry --
+2019-10-04 11:39:28.054   Dest filename: C:\Enabler\Release Notes.htm
+2019-10-04 11:39:28.056   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:28.058   Dest file exists.
+2019-10-04 11:39:28.060   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:28.062   Version of our file: (none)
+2019-10-04 11:39:28.072   Version of existing file: (none)
+2019-10-04 11:39:28.074   Installing the file.
+2019-10-04 11:39:28.083   Successfully installed the file.
+2019-10-04 11:39:28.085   -- File entry --
+2019-10-04 11:39:28.091   Dest filename: C:\Enabler\PumpUpdate.htm
+2019-10-04 11:39:28.095   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.096   Dest file exists.
+2019-10-04 11:39:28.098   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.099   Version of our file: (none)
+2019-10-04 11:39:28.110   Version of existing file: (none)
+2019-10-04 11:39:28.113   Installing the file.
+2019-10-04 11:39:28.122   Successfully installed the file.
+2019-10-04 11:39:28.124   -- File entry --
+2019-10-04 11:39:28.131   Dest filename: C:\Enabler\atutil.exe
+2019-10-04 11:39:28.133   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.135   Dest file exists.
+2019-10-04 11:39:28.139   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.141   Version of our file: 1.6.0.0
+2019-10-04 11:39:28.144   Version of existing file: 1.6.0.0
+2019-10-04 11:39:28.146   Same version. Skipping.
+2019-10-04 11:39:28.148   -- File entry --
+2019-10-04 11:39:28.157   Dest filename: C:\Enabler\odbcnfg.exe
+2019-10-04 11:39:28.161   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.164   Dest file exists.
+2019-10-04 11:39:28.166   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.168   Version of our file: 1.0.4.0
+2019-10-04 11:39:28.171   Version of existing file: 1.0.4.0
+2019-10-04 11:39:28.173   Same version. Skipping.
+2019-10-04 11:39:28.175   -- File entry --
+2019-10-04 11:39:28.183   Dest filename: C:\Enabler\odbcnfg64.exe
+2019-10-04 11:39:28.185   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.188   Dest file exists.
+2019-10-04 11:39:28.191   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.193   Version of our file: 1.0.4.0
+2019-10-04 11:39:28.196   Version of existing file: 1.0.4.0
+2019-10-04 11:39:28.198   Same version. Skipping.
+2019-10-04 11:39:28.201   -- File entry --
+2019-10-04 11:39:28.211   Dest filename: C:\Enabler\EnbKick.exe
+2019-10-04 11:39:28.213   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:28.215   Dest file exists.
+2019-10-04 11:39:28.218   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:28.220   Version of our file: 2.2.0.0
+2019-10-04 11:39:28.223   Version of existing file: 2.2.0.0
+2019-10-04 11:39:28.225   Same version. Skipping.
+2019-10-04 11:39:28.227   -- File entry --
+2019-10-04 11:39:28.236   Dest filename: C:\Enabler\bin\DriveCompressed.exe
+2019-10-04 11:39:28.238   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.240   Dest file exists.
+2019-10-04 11:39:28.242   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.244   Version of our file: (none)
+2019-10-04 11:39:28.246   Version of existing file: (none)
+2019-10-04 11:39:28.248   Installing the file.
+2019-10-04 11:39:28.263   Successfully installed the file.
+2019-10-04 11:39:28.265   -- File entry --
+2019-10-04 11:39:28.271   Dest filename: C:\Enabler\enbclient.exe
+2019-10-04 11:39:28.274   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.275   Dest file exists.
+2019-10-04 11:39:28.277   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.280   Version of our file: 1.2.0.0
+2019-10-04 11:39:28.284   Version of existing file: 1.2.0.0
+2019-10-04 11:39:28.286   Same version. Skipping.
+2019-10-04 11:39:28.288   -- File entry --
+2019-10-04 11:39:28.295   Dest filename: C:\Enabler\Interop.IWshRuntimeLibrary.dll
+2019-10-04 11:39:28.297   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.299   Dest file exists.
+2019-10-04 11:39:28.301   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.303   Version of our file: 1.0.0.0
+2019-10-04 11:39:28.306   Version of existing file: 1.0.0.0
+2019-10-04 11:39:28.308   Same version. Skipping.
+2019-10-04 11:39:28.311   -- File entry --
+2019-10-04 11:39:28.318   Dest filename: C:\Enabler\MsiQueryProduct.exe
+2019-10-04 11:39:28.321   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:28.323   Dest file exists.
+2019-10-04 11:39:28.324   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:28.328   Version of our file: (none)
+2019-10-04 11:39:28.332   Version of existing file: (none)
+2019-10-04 11:39:28.334   Installing the file.
+2019-10-04 11:39:28.344   Successfully installed the file.
+2019-10-04 11:39:28.346   -- File entry --
+2019-10-04 11:39:28.355   Dest filename: C:\Enabler\vcredist_x86.exe
+2019-10-04 11:39:28.359   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:28.361   Dest file exists.
+2019-10-04 11:39:28.364   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:28.366   Version of our file: 9.0.30729.17
+2019-10-04 11:39:28.370   Version of existing file: 9.0.30729.17
+2019-10-04 11:39:28.373   Same version. Skipping.
+2019-10-04 11:39:28.376   -- File entry --
+2019-10-04 11:39:28.385   Dest filename: C:\Enabler\bin\subinacl.exe
+2019-10-04 11:39:28.389   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.392   Dest file exists.
+2019-10-04 11:39:28.394   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.396   Version of our file: 5.2.3790.1180
+2019-10-04 11:39:28.400   Version of existing file: 5.2.3790.1180
+2019-10-04 11:39:28.402   Same version. Skipping.
+2019-10-04 11:39:28.406   -- File entry --
+2019-10-04 11:39:28.414   Dest filename: C:\Enabler\EnablerDBdoc.sql
+2019-10-04 11:39:28.417   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.421   Dest file exists.
+2019-10-04 11:39:28.424   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.426   Version of our file: (none)
+2019-10-04 11:39:28.440   Version of existing file: (none)
+2019-10-04 11:39:28.442   Installing the file.
+2019-10-04 11:39:28.450   Successfully installed the file.
+2019-10-04 11:39:28.456   -- File entry --
+2019-10-04 11:39:28.462   Dest filename: C:\Enabler\UninstallSim.sql
+2019-10-04 11:39:28.464   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.465   Dest file exists.
+2019-10-04 11:39:28.468   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.469   Version of our file: (none)
+2019-10-04 11:39:28.475   Version of existing file: (none)
+2019-10-04 11:39:28.477   Installing the file.
+2019-10-04 11:39:28.481   Successfully installed the file.
+2019-10-04 11:39:28.484   -- File entry --
+2019-10-04 11:39:28.491   Dest filename: C:\Enabler\Instances.bat
+2019-10-04 11:39:28.493   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.496   Dest file exists.
+2019-10-04 11:39:28.498   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.500   Version of our file: (none)
+2019-10-04 11:39:28.510   Version of existing file: (none)
+2019-10-04 11:39:28.512   Installing the file.
+2019-10-04 11:39:28.516   Successfully installed the file.
+2019-10-04 11:39:28.519   -- File entry --
+2019-10-04 11:39:28.525   Dest filename: C:\Enabler\DbInstall.bat
+2019-10-04 11:39:28.527   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.529   Dest file exists.
+2019-10-04 11:39:28.531   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.532   Version of our file: (none)
+2019-10-04 11:39:28.545   Version of existing file: (none)
+2019-10-04 11:39:28.547   Installing the file.
+2019-10-04 11:39:28.551   Successfully installed the file.
+2019-10-04 11:39:28.555   -- File entry --
+2019-10-04 11:39:28.562   Dest filename: C:\Enabler\DbUpgrade.bat
+2019-10-04 11:39:28.564   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.565   Dest file exists.
+2019-10-04 11:39:28.569   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.572   Version of our file: (none)
+2019-10-04 11:39:28.575   Version of existing file: (none)
+2019-10-04 11:39:28.577   Installing the file.
+2019-10-04 11:39:28.581   Successfully installed the file.
+2019-10-04 11:39:28.583   -- File entry --
+2019-10-04 11:39:28.592   Dest filename: C:\Enabler\AfterRestore.sql
+2019-10-04 11:39:28.594   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.595   Dest file exists.
+2019-10-04 11:39:28.597   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.599   Version of our file: (none)
+2019-10-04 11:39:28.608   Version of existing file: (none)
+2019-10-04 11:39:28.610   Installing the file.
+2019-10-04 11:39:28.614   Successfully installed the file.
+2019-10-04 11:39:28.616   -- File entry --
+2019-10-04 11:39:28.624   Dest filename: C:\Enabler\attach.sql
+2019-10-04 11:39:28.626   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.627   Dest file exists.
+2019-10-04 11:39:28.629   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.631   Version of our file: (none)
+2019-10-04 11:39:28.638   Version of existing file: (none)
+2019-10-04 11:39:28.639   Installing the file.
+2019-10-04 11:39:28.643   Successfully installed the file.
+2019-10-04 11:39:28.645   -- File entry --
+2019-10-04 11:39:28.652   Dest filename: C:\Enabler\checkdb.sql
+2019-10-04 11:39:28.655   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.658   Dest file exists.
+2019-10-04 11:39:28.660   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.662   Version of our file: (none)
+2019-10-04 11:39:28.668   Version of existing file: (none)
+2019-10-04 11:39:28.671   Installing the file.
+2019-10-04 11:39:28.675   Successfully installed the file.
+2019-10-04 11:39:28.678   -- File entry --
+2019-10-04 11:39:28.685   Dest filename: C:\Enabler\config70.sql
+2019-10-04 11:39:28.688   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.690   Dest file exists.
+2019-10-04 11:39:28.692   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.694   Version of our file: (none)
+2019-10-04 11:39:28.700   Version of existing file: (none)
+2019-10-04 11:39:28.702   Installing the file.
+2019-10-04 11:39:28.707   Successfully installed the file.
+2019-10-04 11:39:28.709   -- File entry --
+2019-10-04 11:39:28.717   Dest filename: C:\Enabler\DefaultData.sql
+2019-10-04 11:39:28.719   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.721   Dest file exists.
+2019-10-04 11:39:28.723   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.725   Version of our file: (none)
+2019-10-04 11:39:28.732   Version of existing file: (none)
+2019-10-04 11:39:28.734   Installing the file.
+2019-10-04 11:39:28.739   Successfully installed the file.
+2019-10-04 11:39:28.742   -- File entry --
+2019-10-04 11:39:28.750   Dest filename: C:\Enabler\enabler.sql
+2019-10-04 11:39:28.754   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.756   Dest file exists.
+2019-10-04 11:39:28.759   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.761   Version of our file: (none)
+2019-10-04 11:39:28.777   Version of existing file: (none)
+2019-10-04 11:39:28.782   Installing the file.
+2019-10-04 11:39:28.795   Successfully installed the file.
+2019-10-04 11:39:28.799   -- File entry --
+2019-10-04 11:39:28.812   Dest filename: C:\Enabler\eic.sql
+2019-10-04 11:39:28.817   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.820   Dest file exists.
+2019-10-04 11:39:28.823   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.827   Version of our file: (none)
+2019-10-04 11:39:28.838   Version of existing file: (none)
+2019-10-04 11:39:28.840   Installing the file.
+2019-10-04 11:39:28.846   Successfully installed the file.
+2019-10-04 11:39:28.851   -- File entry --
+2019-10-04 11:39:28.864   Dest filename: C:\Enabler\Load.sql
+2019-10-04 11:39:28.870   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.874   Dest file exists.
+2019-10-04 11:39:28.877   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.880   Version of our file: (none)
+2019-10-04 11:39:28.900   Version of existing file: (none)
+2019-10-04 11:39:28.905   Installing the file.
+2019-10-04 11:39:28.921   Successfully installed the file.
+2019-10-04 11:39:28.925   -- File entry --
+2019-10-04 11:39:28.936   Dest filename: C:\Enabler\mkUpgrade.sql
+2019-10-04 11:39:28.940   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.942   Dest file exists.
+2019-10-04 11:39:28.945   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.947   Version of our file: (none)
+2019-10-04 11:39:28.956   Version of existing file: (none)
+2019-10-04 11:39:28.959   Installing the file.
+2019-10-04 11:39:28.964   Successfully installed the file.
+2019-10-04 11:39:28.968   -- File entry --
+2019-10-04 11:39:28.979   Dest filename: C:\Enabler\populate.sql
+2019-10-04 11:39:28.982   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.986   Dest file exists.
+2019-10-04 11:39:28.990   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:28.993   Version of our file: (none)
+2019-10-04 11:39:29.005   Version of existing file: (none)
+2019-10-04 11:39:29.008   Installing the file.
+2019-10-04 11:39:29.015   Successfully installed the file.
+2019-10-04 11:39:29.019   -- File entry --
+2019-10-04 11:39:29.027   Dest filename: C:\Enabler\LOADEnbConfigX.sql
+2019-10-04 11:39:29.030   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.032   Dest file exists.
+2019-10-04 11:39:29.034   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.037   Version of our file: (none)
+2019-10-04 11:39:29.047   Version of existing file: (none)
+2019-10-04 11:39:29.049   Installing the file.
+2019-10-04 11:39:29.055   Successfully installed the file.
+2019-10-04 11:39:29.057   -- File entry --
+2019-10-04 11:39:29.065   Dest filename: C:\Enabler\dbfix.sql
+2019-10-04 11:39:29.067   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.070   Dest file exists.
+2019-10-04 11:39:29.072   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.074   Version of our file: (none)
+2019-10-04 11:39:29.077   Version of existing file: (none)
+2019-10-04 11:39:29.079   Installing the file.
+2019-10-04 11:39:29.084   Successfully installed the file.
+2019-10-04 11:39:29.091   -- File entry --
+2019-10-04 11:39:29.098   Dest filename: C:\Enabler\drop.sql
+2019-10-04 11:39:29.100   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.102   Dest file exists.
+2019-10-04 11:39:29.104   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.106   Version of our file: (none)
+2019-10-04 11:39:29.113   Version of existing file: (none)
+2019-10-04 11:39:29.116   Installing the file.
+2019-10-04 11:39:29.121   Successfully installed the file.
+2019-10-04 11:39:29.124   -- File entry --
+2019-10-04 11:39:29.132   Dest filename: C:\Enabler\nightly.bat
+2019-10-04 11:39:29.135   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.137   Dest file exists.
+2019-10-04 11:39:29.139   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.141   Version of our file: (none)
+2019-10-04 11:39:29.145   Version of existing file: (none)
+2019-10-04 11:39:29.147   Installing the file.
+2019-10-04 11:39:29.153   Successfully installed the file.
+2019-10-04 11:39:29.156   -- File entry --
+2019-10-04 11:39:29.166   Dest filename: C:\Enabler\nightly.sql
+2019-10-04 11:39:29.169   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.172   Dest file exists.
+2019-10-04 11:39:29.175   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.177   Version of our file: (none)
+2019-10-04 11:39:29.187   Version of existing file: (none)
+2019-10-04 11:39:29.190   Installing the file.
+2019-10-04 11:39:29.194   Successfully installed the file.
+2019-10-04 11:39:29.197   -- File entry --
+2019-10-04 11:39:29.206   Dest filename: C:\Enabler\EnablerRestore.bat
+2019-10-04 11:39:29.210   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.212   Dest file exists.
+2019-10-04 11:39:29.213   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.215   Version of our file: (none)
+2019-10-04 11:39:29.231   Version of existing file: (none)
+2019-10-04 11:39:29.233   Installing the file.
+2019-10-04 11:39:29.238   Successfully installed the file.
+2019-10-04 11:39:29.241   -- File entry --
+2019-10-04 11:39:29.249   Dest filename: C:\Enabler\sql70.bat
+2019-10-04 11:39:29.252   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.255   Dest file exists.
+2019-10-04 11:39:29.257   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.259   Version of our file: (none)
+2019-10-04 11:39:29.270   Version of existing file: (none)
+2019-10-04 11:39:29.274   Installing the file.
+2019-10-04 11:39:29.282   Successfully installed the file.
+2019-10-04 11:39:29.286   -- File entry --
+2019-10-04 11:39:29.297   Dest filename: C:\Enabler\ExpressUpdate.exe
+2019-10-04 11:39:29.304   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.308   Dest file exists.
+2019-10-04 11:39:29.314   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.317   Version of our file: 1.2.5.0
+2019-10-04 11:39:29.323   Version of existing file: 1.2.5.0
+2019-10-04 11:39:29.325   Same version. Skipping.
+2019-10-04 11:39:29.330   -- File entry --
+2019-10-04 11:39:29.344   Dest filename: C:\Enabler\ExpressUpdatex64.exe
+2019-10-04 11:39:29.348   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.352   Dest file exists.
+2019-10-04 11:39:29.355   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.358   Version of our file: 1.2.5.0
+2019-10-04 11:39:29.362   Version of existing file: 1.2.5.0
+2019-10-04 11:39:29.365   Same version. Skipping.
+2019-10-04 11:39:29.370   -- File entry --
+2019-10-04 11:39:29.381   Dest filename: C:\Enabler\PCIUpdate.exe
+2019-10-04 11:39:29.385   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.388   Dest file exists.
+2019-10-04 11:39:29.392   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.397   Version of our file: 2.7.0.0
+2019-10-04 11:39:29.401   Version of existing file: 2.7.0.0
+2019-10-04 11:39:29.406   Same version. Skipping.
+2019-10-04 11:39:29.411   -- File entry --
+2019-10-04 11:39:29.421   Dest filename: C:\Enabler\bin\psrvr4.exe
+2019-10-04 11:39:29.424   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.428   Dest file exists.
+2019-10-04 11:39:29.431   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.433   Version of our file: 4.5.1.0
+2019-10-04 11:39:29.438   Version of existing file: 4.5.1.0
+2019-10-04 11:39:29.441   Same version. Skipping.
+2019-10-04 11:39:29.446   -- File entry --
+2019-10-04 11:39:29.457   Dest filename: C:\Enabler\onmains.bat
+2019-10-04 11:39:29.460   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.463   Dest file exists.
+2019-10-04 11:39:29.466   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.472   Version of our file: (none)
+2019-10-04 11:39:29.480   Version of existing file: (none)
+2019-10-04 11:39:29.483   Installing the file.
+2019-10-04 11:39:29.489   Successfully installed the file.
+2019-10-04 11:39:29.492   -- File entry --
+2019-10-04 11:39:29.501   Dest filename: C:\Enabler\onbatt.bat
+2019-10-04 11:39:29.505   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.507   Dest file exists.
+2019-10-04 11:39:29.509   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.511   Version of our file: (none)
+2019-10-04 11:39:29.515   Version of existing file: (none)
+2019-10-04 11:39:29.517   Installing the file.
+2019-10-04 11:39:29.522   Successfully installed the file.
+2019-10-04 11:39:29.525   -- File entry --
+2019-10-04 11:39:29.534   Dest filename: C:\Enabler\Commslst.bat
+2019-10-04 11:39:29.537   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.539   Dest file exists.
+2019-10-04 11:39:29.541   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.543   Version of our file: (none)
+2019-10-04 11:39:29.547   Version of existing file: (none)
+2019-10-04 11:39:29.549   Installing the file.
+2019-10-04 11:39:29.554   Successfully installed the file.
+2019-10-04 11:39:29.557   -- File entry --
+2019-10-04 11:39:29.566   Dest filename: C:\Enabler\commsest.bat
+2019-10-04 11:39:29.569   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.571   Dest file exists.
+2019-10-04 11:39:29.574   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.579   Version of our file: (none)
+2019-10-04 11:39:29.586   Version of existing file: (none)
+2019-10-04 11:39:29.589   Installing the file.
+2019-10-04 11:39:29.594   Successfully installed the file.
+2019-10-04 11:39:29.598   -- File entry --
+2019-10-04 11:39:29.606   Dest filename: C:\Enabler\comlstbt.bat
+2019-10-04 11:39:29.608   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.610   Dest file exists.
+2019-10-04 11:39:29.613   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.615   Version of our file: (none)
+2019-10-04 11:39:29.622   Version of existing file: (none)
+2019-10-04 11:39:29.624   Installing the file.
+2019-10-04 11:39:29.629   Successfully installed the file.
+2019-10-04 11:39:29.631   -- File entry --
+2019-10-04 11:39:29.639   Dest filename: C:\Enabler\battlow.bat
+2019-10-04 11:39:29.642   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.643   Dest file exists.
+2019-10-04 11:39:29.646   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.648   Version of our file: (none)
+2019-10-04 11:39:29.655   Version of existing file: (none)
+2019-10-04 11:39:29.657   Installing the file.
+2019-10-04 11:39:29.662   Successfully installed the file.
+2019-10-04 11:39:29.665   -- File entry --
+2019-10-04 11:39:29.672   Dest filename: C:\Enabler\battgood.bat
+2019-10-04 11:39:29.675   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.677   Dest file exists.
+2019-10-04 11:39:29.679   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.681   Version of our file: (none)
+2019-10-04 11:39:29.686   Version of existing file: (none)
+2019-10-04 11:39:29.691   Installing the file.
+2019-10-04 11:39:29.697   Successfully installed the file.
+2019-10-04 11:39:29.701   -- File entry --
+2019-10-04 11:39:29.710   Dest filename: C:\Enabler\battflat.bat
+2019-10-04 11:39:29.714   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.716   Dest file exists.
+2019-10-04 11:39:29.719   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.722   Version of our file: (none)
+2019-10-04 11:39:29.726   Version of existing file: (none)
+2019-10-04 11:39:29.728   Installing the file.
+2019-10-04 11:39:29.733   Successfully installed the file.
+2019-10-04 11:39:29.737   -- File entry --
+2019-10-04 11:39:29.747   Dest filename: C:\Enabler\EicGX.inf
+2019-10-04 11:39:29.750   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:29.752   Dest file exists.
+2019-10-04 11:39:29.755   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:29.757   Version of our file: (none)
+2019-10-04 11:39:29.762   Version of existing file: (none)
+2019-10-04 11:39:29.765   Installing the file.
+2019-10-04 11:39:29.772   Successfully installed the file.
+2019-10-04 11:39:29.776   -- File entry --
+2019-10-04 11:39:29.787   Dest filename: C:\Enabler\EicMain2.hex
+2019-10-04 11:39:29.791   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:29.795   Dest file exists.
+2019-10-04 11:39:29.798   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:29.801   Version of our file: (none)
+2019-10-04 11:39:29.816   Version of existing file: (none)
+2019-10-04 11:39:29.819   Installing the file.
+2019-10-04 11:39:29.845   Successfully installed the file.
+2019-10-04 11:39:29.849   -- File entry --
+2019-10-04 11:39:29.860   Dest filename: C:\Enabler\bin\OpenNETCF.SSL.dll
+2019-10-04 11:39:29.864   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.867   Dest file exists.
+2019-10-04 11:39:29.871   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.874   Version of our file: 1.5.15265.0
+2019-10-04 11:39:29.885   Version of existing file: 1.5.15265.0
+2019-10-04 11:39:29.890   Same version. Skipping.
+2019-10-04 11:39:29.894   -- File entry --
+2019-10-04 11:39:29.905   Dest filename: C:\Enabler\bin\OpenNETCF.web.dll
+2019-10-04 11:39:29.910   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.913   Dest file exists.
+2019-10-04 11:39:29.917   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.921   Version of our file: 1.6.16171.6
+2019-10-04 11:39:29.926   Version of existing file: 1.6.16171.6
+2019-10-04 11:39:29.929   Same version. Skipping.
+2019-10-04 11:39:29.936   -- File entry --
+2019-10-04 11:39:29.947   Dest filename: C:\Enabler\bin\OpenNETCF.web.html.dll
+2019-10-04 11:39:29.952   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.955   Dest file exists.
+2019-10-04 11:39:29.958   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.961   Version of our file: 1.2.2.0
+2019-10-04 11:39:29.966   Version of existing file: 1.2.2.0
+2019-10-04 11:39:29.973   Same version. Skipping.
+2019-10-04 11:39:29.977   -- File entry --
+2019-10-04 11:39:29.987   Dest filename: C:\Enabler\bin\Utilities.dll
+2019-10-04 11:39:29.991   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:29.994   Dest file exists.
+2019-10-04 11:39:29.998   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.001   Version of our file: 1.4.34.0
+2019-10-04 11:39:30.005   Version of existing file: 1.4.34.0
+2019-10-04 11:39:30.008   Same version. Skipping.
+2019-10-04 11:39:30.011   -- File entry --
+2019-10-04 11:39:30.023   Dest filename: C:\Enabler\bin\Newtonsoft.Json.dll
+2019-10-04 11:39:30.026   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.029   Dest file exists.
+2019-10-04 11:39:30.031   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.034   Version of our file: 3.5.0.0
+2019-10-04 11:39:30.038   Version of existing file: 3.5.0.0
+2019-10-04 11:39:30.040   Same version. Skipping.
+2019-10-04 11:39:30.043   -- File entry --
+2019-10-04 11:39:30.052   Dest filename: C:\Enabler\bin\openssl.exe
+2019-10-04 11:39:30.055   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.058   Dest file exists.
+2019-10-04 11:39:30.060   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.063   Version of our file: (none)
+2019-10-04 11:39:30.066   Version of existing file: (none)
+2019-10-04 11:39:30.069   Installing the file.
+2019-10-04 11:39:30.100   Successfully installed the file.
+2019-10-04 11:39:30.103   -- File entry --
+2019-10-04 11:39:30.110   Dest filename: C:\Enabler\bin\libeay32.dll
+2019-10-04 11:39:30.113   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.115   Dest file exists.
+2019-10-04 11:39:30.117   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.119   Version of our file: 1.0.2.15
+2019-10-04 11:39:30.123   Version of existing file: 1.0.2.15
+2019-10-04 11:39:30.125   Same version. Skipping.
+2019-10-04 11:39:30.127   -- File entry --
+2019-10-04 11:39:30.135   Dest filename: C:\Enabler\bin\ssleay32.dll
+2019-10-04 11:39:30.137   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.139   Dest file exists.
+2019-10-04 11:39:30.142   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.144   Version of our file: 1.0.2.15
+2019-10-04 11:39:30.147   Version of existing file: 1.0.2.15
+2019-10-04 11:39:30.149   Same version. Skipping.
+2019-10-04 11:39:30.151   -- File entry --
+2019-10-04 11:39:30.163   Dest filename: C:\Enabler\bin\openssl.cnf
+2019-10-04 11:39:30.167   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.172   Dest file exists.
+2019-10-04 11:39:30.174   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.176   Version of our file: (none)
+2019-10-04 11:39:30.185   Version of existing file: (none)
+2019-10-04 11:39:30.189   Installing the file.
+2019-10-04 11:39:30.195   Successfully installed the file.
+2019-10-04 11:39:30.198   -- File entry --
+2019-10-04 11:39:30.207   Dest filename: C:\Enabler\bin\openssl-license.txt
+2019-10-04 11:39:30.209   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.212   Dest file exists.
+2019-10-04 11:39:30.214   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.216   Version of our file: (none)
+2019-10-04 11:39:30.225   Version of existing file: (none)
+2019-10-04 11:39:30.228   Installing the file.
+2019-10-04 11:39:30.233   Successfully installed the file.
+2019-10-04 11:39:30.236   -- File entry --
+2019-10-04 11:39:30.244   Dest filename: C:\Enabler\bin\SecureBlackbox.dll
+2019-10-04 11:39:30.247   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.249   Dest file exists.
+2019-10-04 11:39:30.252   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.254   Version of our file: 16.0.314.0
+2019-10-04 11:39:30.258   Version of existing file: 16.0.314.0
+2019-10-04 11:39:30.260   Same version. Skipping.
+2019-10-04 11:39:30.263   -- File entry --
+2019-10-04 11:39:30.271   Dest filename: C:\Enabler\bin\SecureBlackbox.SSLCommon.dll
+2019-10-04 11:39:30.274   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.277   Dest file exists.
+2019-10-04 11:39:30.280   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.282   Version of our file: 16.0.314.0
+2019-10-04 11:39:30.286   Version of existing file: 16.0.314.0
+2019-10-04 11:39:30.292   Same version. Skipping.
+2019-10-04 11:39:30.297   -- File entry --
+2019-10-04 11:39:30.307   Dest filename: C:\Enabler\bin\SecureBlackbox.SSLServer.dll
+2019-10-04 11:39:30.310   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.314   Dest file exists.
+2019-10-04 11:39:30.316   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.319   Version of our file: 16.0.314.0
+2019-10-04 11:39:30.324   Version of existing file: 16.0.314.0
+2019-10-04 11:39:30.328   Same version. Skipping.
+2019-10-04 11:39:30.333   -- File entry --
+2019-10-04 11:39:30.342   Dest filename: C:\Enabler\bin\SecureBlackbox.Mail.dll
+2019-10-04 11:39:30.344   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.346   Dest file exists.
+2019-10-04 11:39:30.349   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.351   Version of our file: 16.0.314.0
+2019-10-04 11:39:30.355   Version of existing file: 16.0.314.0
+2019-10-04 11:39:30.357   Same version. Skipping.
+2019-10-04 11:39:30.360   -- File entry --
+2019-10-04 11:39:30.366   Dest filename: C:\Enabler\bin\SecureBlackbox.MIME.dll
+2019-10-04 11:39:30.369   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.371   Dest file exists.
+2019-10-04 11:39:30.373   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.376   Version of our file: 16.0.314.0
+2019-10-04 11:39:30.379   Version of existing file: 16.0.314.0
+2019-10-04 11:39:30.380   Same version. Skipping.
+2019-10-04 11:39:30.383   -- File entry --
+2019-10-04 11:39:30.391   Dest filename: C:\Enabler\bin\enbweb.exe
+2019-10-04 11:39:30.393   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.395   Dest file exists.
+2019-10-04 11:39:30.397   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.399   Version of our file: 2.0.2.0
+2019-10-04 11:39:30.402   Version of existing file: 2.0.2.0
+2019-10-04 11:39:30.404   Same version. Skipping.
+2019-10-04 11:39:30.407   -- File entry --
+2019-10-04 11:39:30.413   Dest filename: C:\Enabler\bin\enbweb.exe.config
+2019-10-04 11:39:30.415   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.417   Dest file exists.
+2019-10-04 11:39:30.421   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.423   Version of our file: (none)
+2019-10-04 11:39:30.426   Version of existing file: (none)
+2019-10-04 11:39:30.428   Installing the file.
+2019-10-04 11:39:30.433   Successfully installed the file.
+2019-10-04 11:39:30.440   -- File entry --
+2019-10-04 11:39:30.446   Dest filename: C:\Enabler\www\bin\WebPages.dll
+2019-10-04 11:39:30.448   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.450   Dest file exists.
+2019-10-04 11:39:30.452   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.454   Version of our file: 2.0.2.0
+2019-10-04 11:39:30.457   Version of existing file: 2.0.2.0
+2019-10-04 11:39:30.459   Same version. Skipping.
+2019-10-04 11:39:30.462   -- File entry --
+2019-10-04 11:39:30.470   Dest filename: C:\Enabler\bin\RESTData.dll
+2019-10-04 11:39:30.472   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.474   Dest file exists.
+2019-10-04 11:39:30.476   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.478   Version of our file: 2.0.2.0
+2019-10-04 11:39:30.481   Version of existing file: 2.0.2.0
+2019-10-04 11:39:30.483   Same version. Skipping.
+2019-10-04 11:39:30.487   -- File entry --
+2019-10-04 11:39:30.494   Dest filename: C:\Enabler\bin\PageResources.dll
+2019-10-04 11:39:30.496   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.498   Dest file exists.
+2019-10-04 11:39:30.500   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.502   Version of our file: 2.0.2.0
+2019-10-04 11:39:30.505   Version of existing file: 2.0.2.0
+2019-10-04 11:39:30.507   Same version. Skipping.
+2019-10-04 11:39:30.510   -- File entry --
+2019-10-04 11:39:30.517   Dest filename: C:\Enabler\bin\es\PageResources.resources.dll
+2019-10-04 11:39:30.519   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.521   Dest file exists.
+2019-10-04 11:39:30.523   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.525   Version of our file: 2.0.2.0
+2019-10-04 11:39:30.528   Version of existing file: 2.0.2.0
+2019-10-04 11:39:30.530   Same version. Skipping.
+2019-10-04 11:39:30.532   -- File entry --
+2019-10-04 11:39:30.541   Dest filename: C:\Enabler\bin\fr\PageResources.resources.dll
+2019-10-04 11:39:30.545   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.547   Dest file exists.
+2019-10-04 11:39:30.548   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.550   Version of our file: 2.0.2.0
+2019-10-04 11:39:30.553   Version of existing file: 2.0.2.0
+2019-10-04 11:39:30.555   Same version. Skipping.
+2019-10-04 11:39:30.558   -- File entry --
+2019-10-04 11:39:30.565   Dest filename: C:\Enabler\bin\id\PageResources.resources.dll
+2019-10-04 11:39:30.567   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.570   Dest file exists.
+2019-10-04 11:39:30.572   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.574   Version of our file: 2.0.2.0
+2019-10-04 11:39:30.579   Version of existing file: 2.0.2.0
+2019-10-04 11:39:30.581   Same version. Skipping.
+2019-10-04 11:39:30.583   -- File entry --
+2019-10-04 11:39:30.594   Dest filename: C:\Enabler\bin\it-IT\PageResources.resources.dll
+2019-10-04 11:39:30.597   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.598   Dest file exists.
+2019-10-04 11:39:30.600   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.602   Version of our file: 2.0.2.0
+2019-10-04 11:39:30.606   Version of existing file: 2.0.2.0
+2019-10-04 11:39:30.608   Same version. Skipping.
+2019-10-04 11:39:30.611   -- File entry --
+2019-10-04 11:39:30.617   Dest filename: C:\Enabler\bin\pt-BR\PageResources.resources.dll
+2019-10-04 11:39:30.620   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.622   Dest file exists.
+2019-10-04 11:39:30.624   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.626   Version of our file: 2.0.2.0
+2019-10-04 11:39:30.629   Version of existing file: 2.0.2.0
+2019-10-04 11:39:30.631   Same version. Skipping.
+2019-10-04 11:39:30.634   -- File entry --
+2019-10-04 11:39:30.641   Dest filename: C:\Enabler\bin\ru\PageResources.resources.dll
+2019-10-04 11:39:30.645   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.646   Dest file exists.
+2019-10-04 11:39:30.648   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.650   Version of our file: 2.0.2.0
+2019-10-04 11:39:30.654   Version of existing file: 2.0.2.0
+2019-10-04 11:39:30.656   Same version. Skipping.
+2019-10-04 11:39:30.659   -- File entry --
+2019-10-04 11:39:30.665   Dest filename: C:\Enabler\bin\sl\PageResources.resources.dll
+2019-10-04 11:39:30.667   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.669   Dest file exists.
+2019-10-04 11:39:30.671   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.673   Version of our file: 2.0.2.0
+2019-10-04 11:39:30.676   Version of existing file: 2.0.2.0
+2019-10-04 11:39:30.678   Same version. Skipping.
+2019-10-04 11:39:30.680   -- File entry --
+2019-10-04 11:39:30.687   Dest filename: C:\Enabler\bin\th\PageResources.resources.dll
+2019-10-04 11:39:30.689   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.691   Dest file exists.
+2019-10-04 11:39:30.692   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.695   Version of our file: 2.0.2.0
+2019-10-04 11:39:30.698   Version of existing file: 2.0.2.0
+2019-10-04 11:39:30.700   Same version. Skipping.
+2019-10-04 11:39:30.703   -- File entry --
+2019-10-04 11:39:30.709   Dest filename: C:\Enabler\bin\zh-CHS\PageResources.resources.dll
+2019-10-04 11:39:30.712   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.714   Dest file exists.
+2019-10-04 11:39:30.716   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.719   Version of our file: 2.0.2.0
+2019-10-04 11:39:30.723   Version of existing file: 2.0.2.0
+2019-10-04 11:39:30.724   Same version. Skipping.
+2019-10-04 11:39:30.727   -- File entry --
+2019-10-04 11:39:30.734   Dest filename: C:\Enabler\www\css\Enabler.css
+2019-10-04 11:39:30.736   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.738   Dest file exists.
+2019-10-04 11:39:30.740   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.742   Version of our file: (none)
+2019-10-04 11:39:30.750   Version of existing file: (none)
+2019-10-04 11:39:30.752   Installing the file.
+2019-10-04 11:39:30.758   Successfully installed the file.
+2019-10-04 11:39:30.760   -- File entry --
+2019-10-04 11:39:30.766   Dest filename: C:\Enabler\www\css\EnablerPrintReport.css
+2019-10-04 11:39:30.769   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.771   Dest file exists.
+2019-10-04 11:39:30.773   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.774   Version of our file: (none)
+2019-10-04 11:39:30.783   Version of existing file: (none)
+2019-10-04 11:39:30.785   Installing the file.
+2019-10-04 11:39:30.789   Successfully installed the file.
+2019-10-04 11:39:30.793   -- File entry --
+2019-10-04 11:39:30.799   Dest filename: C:\Enabler\www\css\EnablerReport.css
+2019-10-04 11:39:30.801   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.803   Dest file exists.
+2019-10-04 11:39:30.805   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.807   Version of our file: (none)
+2019-10-04 11:39:30.811   Version of existing file: (none)
+2019-10-04 11:39:30.813   Installing the file.
+2019-10-04 11:39:30.817   Successfully installed the file.
+2019-10-04 11:39:30.824   -- File entry --
+2019-10-04 11:39:30.830   Dest filename: C:\Enabler\www\css\EnablerSiteMonitor.css
+2019-10-04 11:39:30.833   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.835   Dest file exists.
+2019-10-04 11:39:30.837   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.839   Version of our file: (none)
+2019-10-04 11:39:30.848   Version of existing file: (none)
+2019-10-04 11:39:30.850   Installing the file.
+2019-10-04 11:39:30.855   Successfully installed the file.
+2019-10-04 11:39:30.858   -- File entry --
+2019-10-04 11:39:30.864   Dest filename: C:\Enabler\www\css\EnablerTable.css
+2019-10-04 11:39:30.867   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.869   Dest file exists.
+2019-10-04 11:39:30.871   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.873   Version of our file: (none)
+2019-10-04 11:39:30.881   Version of existing file: (none)
+2019-10-04 11:39:30.883   Installing the file.
+2019-10-04 11:39:30.888   Successfully installed the file.
+2019-10-04 11:39:30.891   -- File entry --
+2019-10-04 11:39:30.897   Dest filename: C:\Enabler\www\css\Login.css
+2019-10-04 11:39:30.899   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.901   Dest file exists.
+2019-10-04 11:39:30.906   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.908   Version of our file: (none)
+2019-10-04 11:39:30.915   Version of existing file: (none)
+2019-10-04 11:39:30.917   Installing the file.
+2019-10-04 11:39:30.922   Successfully installed the file.
+2019-10-04 11:39:30.925   -- File entry --
+2019-10-04 11:39:30.931   Dest filename: C:\Enabler\www\css\menu.css
+2019-10-04 11:39:30.934   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.936   Dest file exists.
+2019-10-04 11:39:30.938   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.940   Version of our file: (none)
+2019-10-04 11:39:30.946   Version of existing file: (none)
+2019-10-04 11:39:30.948   Installing the file.
+2019-10-04 11:39:30.952   Successfully installed the file.
+2019-10-04 11:39:30.957   -- File entry --
+2019-10-04 11:39:30.963   Dest filename: C:\Enabler\www\images\bluecircle.png
+2019-10-04 11:39:30.965   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.967   Dest file exists.
+2019-10-04 11:39:30.969   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.971   Version of our file: (none)
+2019-10-04 11:39:30.974   Version of existing file: (none)
+2019-10-04 11:39:30.976   Installing the file.
+2019-10-04 11:39:30.980   Successfully installed the file.
+2019-10-04 11:39:30.985   -- File entry --
+2019-10-04 11:39:30.992   Dest filename: C:\Enabler\www\images\down.png
+2019-10-04 11:39:30.994   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:30.996   Dest file exists.
+2019-10-04 11:39:30.998   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.000   Version of our file: (none)
+2019-10-04 11:39:31.003   Version of existing file: (none)
+2019-10-04 11:39:31.005   Installing the file.
+2019-10-04 11:39:31.009   Successfully installed the file.
+2019-10-04 11:39:31.012   -- File entry --
+2019-10-04 11:39:31.018   Dest filename: C:\Enabler\www\images\flag_ar.jpg
+2019-10-04 11:39:31.021   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.023   Dest file exists.
+2019-10-04 11:39:31.024   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.026   Version of our file: (none)
+2019-10-04 11:39:31.032   Version of existing file: (none)
+2019-10-04 11:39:31.035   Installing the file.
+2019-10-04 11:39:31.040   Successfully installed the file.
+2019-10-04 11:39:31.042   -- File entry --
+2019-10-04 11:39:31.048   Dest filename: C:\Enabler\www\images\flag_au.jpg
+2019-10-04 11:39:31.050   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.052   Dest file exists.
+2019-10-04 11:39:31.054   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.056   Version of our file: (none)
+2019-10-04 11:39:31.062   Version of existing file: (none)
+2019-10-04 11:39:31.064   Installing the file.
+2019-10-04 11:39:31.068   Successfully installed the file.
+2019-10-04 11:39:31.073   -- File entry --
+2019-10-04 11:39:31.079   Dest filename: C:\Enabler\www\images\flag_bo.jpg
+2019-10-04 11:39:31.082   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.083   Dest file exists.
+2019-10-04 11:39:31.084   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.087   Version of our file: (none)
+2019-10-04 11:39:31.092   Version of existing file: (none)
+2019-10-04 11:39:31.094   Installing the file.
+2019-10-04 11:39:31.098   Successfully installed the file.
+2019-10-04 11:39:31.101   -- File entry --
+2019-10-04 11:39:31.108   Dest filename: C:\Enabler\www\images\flag_br.jpg
+2019-10-04 11:39:31.111   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.112   Dest file exists.
+2019-10-04 11:39:31.114   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.116   Version of our file: (none)
+2019-10-04 11:39:31.122   Version of existing file: (none)
+2019-10-04 11:39:31.124   Installing the file.
+2019-10-04 11:39:31.128   Successfully installed the file.
+2019-10-04 11:39:31.131   -- File entry --
+2019-10-04 11:39:31.137   Dest filename: C:\Enabler\www\images\flag_ca.jpg
+2019-10-04 11:39:31.140   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.142   Dest file exists.
+2019-10-04 11:39:31.144   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.146   Version of our file: (none)
+2019-10-04 11:39:31.152   Version of existing file: (none)
+2019-10-04 11:39:31.155   Installing the file.
+2019-10-04 11:39:31.158   Successfully installed the file.
+2019-10-04 11:39:31.162   -- File entry --
+2019-10-04 11:39:31.170   Dest filename: C:\Enabler\www\images\flag_cl.jpg
+2019-10-04 11:39:31.172   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.174   Dest file exists.
+2019-10-04 11:39:31.176   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.177   Version of our file: (none)
+2019-10-04 11:39:31.181   Version of existing file: (none)
+2019-10-04 11:39:31.183   Installing the file.
+2019-10-04 11:39:31.188   Successfully installed the file.
+2019-10-04 11:39:31.190   -- File entry --
+2019-10-04 11:39:31.198   Dest filename: C:\Enabler\www\images\flag_cn.jpg
+2019-10-04 11:39:31.202   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.204   Dest file exists.
+2019-10-04 11:39:31.206   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.208   Version of our file: (none)
+2019-10-04 11:39:31.214   Version of existing file: (none)
+2019-10-04 11:39:31.216   Installing the file.
+2019-10-04 11:39:31.221   Successfully installed the file.
+2019-10-04 11:39:31.223   -- File entry --
+2019-10-04 11:39:31.230   Dest filename: C:\Enabler\www\images\flag_el.jpg
+2019-10-04 11:39:31.232   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.235   Dest file exists.
+2019-10-04 11:39:31.239   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.241   Version of our file: (none)
+2019-10-04 11:39:31.247   Version of existing file: (none)
+2019-10-04 11:39:31.249   Installing the file.
+2019-10-04 11:39:31.253   Successfully installed the file.
+2019-10-04 11:39:31.256   -- File entry --
+2019-10-04 11:39:31.263   Dest filename: C:\Enabler\www\images\flag_es.jpg
+2019-10-04 11:39:31.266   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.267   Dest file exists.
+2019-10-04 11:39:31.272   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.273   Version of our file: (none)
+2019-10-04 11:39:31.280   Version of existing file: (none)
+2019-10-04 11:39:31.282   Installing the file.
+2019-10-04 11:39:31.287   Successfully installed the file.
+2019-10-04 11:39:31.290   -- File entry --
+2019-10-04 11:39:31.296   Dest filename: C:\Enabler\www\images\flag_fi.jpg
+2019-10-04 11:39:31.298   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.300   Dest file exists.
+2019-10-04 11:39:31.302   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.304   Version of our file: (none)
+2019-10-04 11:39:31.307   Version of existing file: (none)
+2019-10-04 11:39:31.310   Installing the file.
+2019-10-04 11:39:31.314   Successfully installed the file.
+2019-10-04 11:39:31.316   -- File entry --
+2019-10-04 11:39:31.325   Dest filename: C:\Enabler\www\images\flag_fr.jpg
+2019-10-04 11:39:31.327   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.329   Dest file exists.
+2019-10-04 11:39:31.330   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.332   Version of our file: (none)
+2019-10-04 11:39:31.336   Version of existing file: (none)
+2019-10-04 11:39:31.338   Installing the file.
+2019-10-04 11:39:31.343   Successfully installed the file.
+2019-10-04 11:39:31.345   -- File entry --
+2019-10-04 11:39:31.352   Dest filename: C:\Enabler\www\images\flag_gb.jpg
+2019-10-04 11:39:31.355   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.358   Dest file exists.
+2019-10-04 11:39:31.360   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.363   Version of our file: (none)
+2019-10-04 11:39:31.371   Version of existing file: (none)
+2019-10-04 11:39:31.374   Installing the file.
+2019-10-04 11:39:31.379   Successfully installed the file.
+2019-10-04 11:39:31.382   -- File entry --
+2019-10-04 11:39:31.393   Dest filename: C:\Enabler\www\images\flag_gu.jpg
+2019-10-04 11:39:31.396   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.398   Dest file exists.
+2019-10-04 11:39:31.400   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.403   Version of our file: (none)
+2019-10-04 11:39:31.408   Version of existing file: (none)
+2019-10-04 11:39:31.411   Installing the file.
+2019-10-04 11:39:31.416   Successfully installed the file.
+2019-10-04 11:39:31.420   -- File entry --
+2019-10-04 11:39:31.428   Dest filename: C:\Enabler\www\images\flag_hk.jpg
+2019-10-04 11:39:31.431   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.434   Dest file exists.
+2019-10-04 11:39:31.439   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.441   Version of our file: (none)
+2019-10-04 11:39:31.449   Version of existing file: (none)
+2019-10-04 11:39:31.453   Installing the file.
+2019-10-04 11:39:31.458   Successfully installed the file.
+2019-10-04 11:39:31.460   -- File entry --
+2019-10-04 11:39:31.469   Dest filename: C:\Enabler\www\images\flag_id.jpg
+2019-10-04 11:39:31.472   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.474   Dest file exists.
+2019-10-04 11:39:31.476   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.478   Version of our file: (none)
+2019-10-04 11:39:31.482   Version of existing file: (none)
+2019-10-04 11:39:31.485   Installing the file.
+2019-10-04 11:39:31.490   Successfully installed the file.
+2019-10-04 11:39:31.493   -- File entry --
+2019-10-04 11:39:31.502   Dest filename: C:\Enabler\www\images\flag_in.jpg
+2019-10-04 11:39:31.505   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.507   Dest file exists.
+2019-10-04 11:39:31.509   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.511   Version of our file: (none)
+2019-10-04 11:39:31.518   Version of existing file: (none)
+2019-10-04 11:39:31.520   Installing the file.
+2019-10-04 11:39:31.532   Successfully installed the file.
+2019-10-04 11:39:31.535   -- File entry --
+2019-10-04 11:39:31.543   Dest filename: C:\Enabler\www\images\flag_ir.jpg
+2019-10-04 11:39:31.545   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.547   Dest file exists.
+2019-10-04 11:39:31.549   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.552   Version of our file: (none)
+2019-10-04 11:39:31.559   Version of existing file: (none)
+2019-10-04 11:39:31.562   Installing the file.
+2019-10-04 11:39:31.567   Successfully installed the file.
+2019-10-04 11:39:31.572   -- File entry --
+2019-10-04 11:39:31.580   Dest filename: C:\Enabler\www\images\flag_it.jpg
+2019-10-04 11:39:31.583   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.585   Dest file exists.
+2019-10-04 11:39:31.590   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.592   Version of our file: (none)
+2019-10-04 11:39:31.599   Version of existing file: (none)
+2019-10-04 11:39:31.603   Installing the file.
+2019-10-04 11:39:31.608   Successfully installed the file.
+2019-10-04 11:39:31.610   -- File entry --
+2019-10-04 11:39:31.616   Dest filename: C:\Enabler\www\images\flag_ml.jpg
+2019-10-04 11:39:31.619   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.621   Dest file exists.
+2019-10-04 11:39:31.623   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.625   Version of our file: (none)
+2019-10-04 11:39:31.628   Version of existing file: (none)
+2019-10-04 11:39:31.630   Installing the file.
+2019-10-04 11:39:31.634   Successfully installed the file.
+2019-10-04 11:39:31.640   -- File entry --
+2019-10-04 11:39:31.646   Dest filename: C:\Enabler\www\images\flag_mx.jpg
+2019-10-04 11:39:31.648   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.650   Dest file exists.
+2019-10-04 11:39:31.652   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.654   Version of our file: (none)
+2019-10-04 11:39:31.660   Version of existing file: (none)
+2019-10-04 11:39:31.662   Installing the file.
+2019-10-04 11:39:31.666   Successfully installed the file.
+2019-10-04 11:39:31.670   -- File entry --
+2019-10-04 11:39:31.676   Dest filename: C:\Enabler\www\images\flag_nz.jpg
+2019-10-04 11:39:31.678   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.680   Dest file exists.
+2019-10-04 11:39:31.682   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.684   Version of our file: (none)
+2019-10-04 11:39:31.692   Version of existing file: (none)
+2019-10-04 11:39:31.694   Installing the file.
+2019-10-04 11:39:31.699   Successfully installed the file.
+2019-10-04 11:39:31.702   -- File entry --
+2019-10-04 11:39:31.709   Dest filename: C:\Enabler\www\images\flag_om.jpg
+2019-10-04 11:39:31.711   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.713   Dest file exists.
+2019-10-04 11:39:31.716   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.719   Version of our file: (none)
+2019-10-04 11:39:31.726   Version of existing file: (none)
+2019-10-04 11:39:31.728   Installing the file.
+2019-10-04 11:39:31.733   Successfully installed the file.
+2019-10-04 11:39:31.736   -- File entry --
+2019-10-04 11:39:31.744   Dest filename: C:\Enabler\www\images\flag_pe.jpg
+2019-10-04 11:39:31.747   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.748   Dest file exists.
+2019-10-04 11:39:31.750   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.752   Version of our file: (none)
+2019-10-04 11:39:31.756   Version of existing file: (none)
+2019-10-04 11:39:31.758   Installing the file.
+2019-10-04 11:39:31.762   Successfully installed the file.
+2019-10-04 11:39:31.764   -- File entry --
+2019-10-04 11:39:31.771   Dest filename: C:\Enabler\www\images\flag_ph.jpg
+2019-10-04 11:39:31.773   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.775   Dest file exists.
+2019-10-04 11:39:31.777   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.779   Version of our file: (none)
+2019-10-04 11:39:31.785   Version of existing file: (none)
+2019-10-04 11:39:31.787   Installing the file.
+2019-10-04 11:39:31.792   Successfully installed the file.
+2019-10-04 11:39:31.794   -- File entry --
+2019-10-04 11:39:31.800   Dest filename: C:\Enabler\www\images\flag_pk.jpg
+2019-10-04 11:39:31.803   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.805   Dest file exists.
+2019-10-04 11:39:31.806   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.808   Version of our file: (none)
+2019-10-04 11:39:31.815   Version of existing file: (none)
+2019-10-04 11:39:31.816   Installing the file.
+2019-10-04 11:39:31.821   Successfully installed the file.
+2019-10-04 11:39:31.824   -- File entry --
+2019-10-04 11:39:31.830   Dest filename: C:\Enabler\www\images\flag_ru.jpg
+2019-10-04 11:39:31.832   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.834   Dest file exists.
+2019-10-04 11:39:31.835   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.837   Version of our file: (none)
+2019-10-04 11:39:31.843   Version of existing file: (none)
+2019-10-04 11:39:31.845   Installing the file.
+2019-10-04 11:39:31.849   Successfully installed the file.
+2019-10-04 11:39:31.852   -- File entry --
+2019-10-04 11:39:31.859   Dest filename: C:\Enabler\www\images\flag_si.jpg
+2019-10-04 11:39:31.861   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.863   Dest file exists.
+2019-10-04 11:39:31.865   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.867   Version of our file: (none)
+2019-10-04 11:39:31.873   Version of existing file: (none)
+2019-10-04 11:39:31.875   Installing the file.
+2019-10-04 11:39:31.879   Successfully installed the file.
+2019-10-04 11:39:31.882   -- File entry --
+2019-10-04 11:39:31.889   Dest filename: C:\Enabler\www\images\flag_th.jpg
+2019-10-04 11:39:31.891   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.893   Dest file exists.
+2019-10-04 11:39:31.895   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.897   Version of our file: (none)
+2019-10-04 11:39:31.903   Version of existing file: (none)
+2019-10-04 11:39:31.905   Installing the file.
+2019-10-04 11:39:31.909   Successfully installed the file.
+2019-10-04 11:39:31.911   -- File entry --
+2019-10-04 11:39:31.918   Dest filename: C:\Enabler\www\images\flag_us.jpg
+2019-10-04 11:39:31.921   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.922   Dest file exists.
+2019-10-04 11:39:31.924   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.927   Version of our file: (none)
+2019-10-04 11:39:31.931   Version of existing file: (none)
+2019-10-04 11:39:31.933   Installing the file.
+2019-10-04 11:39:31.939   Successfully installed the file.
+2019-10-04 11:39:31.942   -- File entry --
+2019-10-04 11:39:31.949   Dest filename: C:\Enabler\www\images\flag_za.jpg
+2019-10-04 11:39:31.952   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.955   Dest file exists.
+2019-10-04 11:39:31.957   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.959   Version of our file: (none)
+2019-10-04 11:39:31.966   Version of existing file: (none)
+2019-10-04 11:39:31.969   Installing the file.
+2019-10-04 11:39:31.975   Successfully installed the file.
+2019-10-04 11:39:31.977   -- File entry --
+2019-10-04 11:39:31.986   Dest filename: C:\Enabler\www\images\folder.gif
+2019-10-04 11:39:31.989   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.991   Dest file exists.
+2019-10-04 11:39:31.993   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:31.995   Version of our file: (none)
+2019-10-04 11:39:32.000   Version of existing file: (none)
+2019-10-04 11:39:32.002   Installing the file.
+2019-10-04 11:39:32.006   Successfully installed the file.
+2019-10-04 11:39:32.009   -- File entry --
+2019-10-04 11:39:32.016   Dest filename: C:\Enabler\www\images\greenarrow.png
+2019-10-04 11:39:32.019   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.021   Dest file exists.
+2019-10-04 11:39:32.023   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.024   Version of our file: (none)
+2019-10-04 11:39:32.027   Version of existing file: (none)
+2019-10-04 11:39:32.029   Installing the file.
+2019-10-04 11:39:32.034   Successfully installed the file.
+2019-10-04 11:39:32.041   -- File entry --
+2019-10-04 11:39:32.048   Dest filename: C:\Enabler\www\images\greentick.png
+2019-10-04 11:39:32.050   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.052   Dest file exists.
+2019-10-04 11:39:32.056   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.058   Version of our file: (none)
+2019-10-04 11:39:32.062   Version of existing file: (none)
+2019-10-04 11:39:32.064   Installing the file.
+2019-10-04 11:39:32.068   Successfully installed the file.
+2019-10-04 11:39:32.077   -- File entry --
+2019-10-04 11:39:32.086   Dest filename: C:\Enabler\www\images\greenticksmall.png
+2019-10-04 11:39:32.090   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.092   Dest file exists.
+2019-10-04 11:39:32.095   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.097   Version of our file: (none)
+2019-10-04 11:39:32.101   Version of existing file: (none)
+2019-10-04 11:39:32.103   Installing the file.
+2019-10-04 11:39:32.109   Successfully installed the file.
+2019-10-04 11:39:32.111   -- File entry --
+2019-10-04 11:39:32.118   Dest filename: C:\Enabler\www\images\incompletesmall.png
+2019-10-04 11:39:32.123   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.125   Dest file exists.
+2019-10-04 11:39:32.127   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.128   Version of our file: (none)
+2019-10-04 11:39:32.132   Version of existing file: (none)
+2019-10-04 11:39:32.133   Installing the file.
+2019-10-04 11:39:32.138   Successfully installed the file.
+2019-10-04 11:39:32.140   -- File entry --
+2019-10-04 11:39:32.147   Dest filename: C:\Enabler\www\images\logo.png
+2019-10-04 11:39:32.150   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.152   Dest file exists.
+2019-10-04 11:39:32.156   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.158   Version of our file: (none)
+2019-10-04 11:39:32.162   Version of existing file: (none)
+2019-10-04 11:39:32.165   Installing the file.
+2019-10-04 11:39:32.171   Successfully installed the file.
+2019-10-04 11:39:32.174   -- File entry --
+2019-10-04 11:39:32.180   Dest filename: C:\Enabler\www\images\pumpx-animate.gif
+2019-10-04 11:39:32.182   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.184   Dest file exists.
+2019-10-04 11:39:32.189   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.191   Version of our file: (none)
+2019-10-04 11:39:32.194   Version of existing file: (none)
+2019-10-04 11:39:32.196   Installing the file.
+2019-10-04 11:39:32.200   Successfully installed the file.
+2019-10-04 11:39:32.207   -- File entry --
+2019-10-04 11:39:32.213   Dest filename: C:\Enabler\www\images\RedCross.png
+2019-10-04 11:39:32.215   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.218   Dest file exists.
+2019-10-04 11:39:32.222   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.224   Version of our file: (none)
+2019-10-04 11:39:32.227   Version of existing file: (none)
+2019-10-04 11:39:32.229   Installing the file.
+2019-10-04 11:39:32.233   Successfully installed the file.
+2019-10-04 11:39:32.238   -- File entry --
+2019-10-04 11:39:32.245   Dest filename: C:\Enabler\www\images\RedCrossSmall.png
+2019-10-04 11:39:32.248   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.249   Dest file exists.
+2019-10-04 11:39:32.251   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.253   Version of our file: (none)
+2019-10-04 11:39:32.257   Version of existing file: (none)
+2019-10-04 11:39:32.259   Installing the file.
+2019-10-04 11:39:32.263   Successfully installed the file.
+2019-10-04 11:39:32.265   -- File entry --
+2019-10-04 11:39:32.272   Dest filename: C:\Enabler\www\images\tools32.png
+2019-10-04 11:39:32.275   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.278   Dest file exists.
+2019-10-04 11:39:32.280   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.281   Version of our file: (none)
+2019-10-04 11:39:32.285   Version of existing file: (none)
+2019-10-04 11:39:32.287   Installing the file.
+2019-10-04 11:39:32.292   Successfully installed the file.
+2019-10-04 11:39:32.295   -- File entry --
+2019-10-04 11:39:32.302   Dest filename: C:\Enabler\www\images\tableft.gif
+2019-10-04 11:39:32.305   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.307   Dest file exists.
+2019-10-04 11:39:32.309   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.310   Version of our file: (none)
+2019-10-04 11:39:32.314   Version of existing file: (none)
+2019-10-04 11:39:32.316   Installing the file.
+2019-10-04 11:39:32.320   Successfully installed the file.
+2019-10-04 11:39:32.323   -- File entry --
+2019-10-04 11:39:32.330   Dest filename: C:\Enabler\www\images\tableft.jpg
+2019-10-04 11:39:32.332   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.334   Dest file exists.
+2019-10-04 11:39:32.336   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.338   Version of our file: (none)
+2019-10-04 11:39:32.342   Version of existing file: (none)
+2019-10-04 11:39:32.344   Installing the file.
+2019-10-04 11:39:32.349   Successfully installed the file.
+2019-10-04 11:39:32.351   -- File entry --
+2019-10-04 11:39:32.359   Dest filename: C:\Enabler\www\images\tableftactive.gif
+2019-10-04 11:39:32.361   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.362   Dest file exists.
+2019-10-04 11:39:32.364   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.366   Version of our file: (none)
+2019-10-04 11:39:32.369   Version of existing file: (none)
+2019-10-04 11:39:32.371   Installing the file.
+2019-10-04 11:39:32.376   Successfully installed the file.
+2019-10-04 11:39:32.379   -- File entry --
+2019-10-04 11:39:32.385   Dest filename: C:\Enabler\www\images\tableftactive.jpg
+2019-10-04 11:39:32.388   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.390   Dest file exists.
+2019-10-04 11:39:32.391   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.393   Version of our file: (none)
+2019-10-04 11:39:32.396   Version of existing file: (none)
+2019-10-04 11:39:32.398   Installing the file.
+2019-10-04 11:39:32.403   Successfully installed the file.
+2019-10-04 11:39:32.406   -- File entry --
+2019-10-04 11:39:32.413   Dest filename: C:\Enabler\www\images\tabright.gif
+2019-10-04 11:39:32.415   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.417   Dest file exists.
+2019-10-04 11:39:32.419   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.421   Version of our file: (none)
+2019-10-04 11:39:32.424   Version of existing file: (none)
+2019-10-04 11:39:32.426   Installing the file.
+2019-10-04 11:39:32.431   Successfully installed the file.
+2019-10-04 11:39:32.433   -- File entry --
+2019-10-04 11:39:32.441   Dest filename: C:\Enabler\www\images\tabright.jpg
+2019-10-04 11:39:32.443   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.445   Dest file exists.
+2019-10-04 11:39:32.447   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.449   Version of our file: (none)
+2019-10-04 11:39:32.457   Version of existing file: (none)
+2019-10-04 11:39:32.459   Installing the file.
+2019-10-04 11:39:32.465   Successfully installed the file.
+2019-10-04 11:39:32.469   -- File entry --
+2019-10-04 11:39:32.478   Dest filename: C:\Enabler\www\images\tabrightactive.gif
+2019-10-04 11:39:32.481   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.484   Dest file exists.
+2019-10-04 11:39:32.489   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.492   Version of our file: (none)
+2019-10-04 11:39:32.497   Version of existing file: (none)
+2019-10-04 11:39:32.499   Installing the file.
+2019-10-04 11:39:32.511   Successfully installed the file.
+2019-10-04 11:39:32.515   -- File entry --
+2019-10-04 11:39:32.524   Dest filename: C:\Enabler\www\images\tabrightactive.jpg
+2019-10-04 11:39:32.528   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.531   Dest file exists.
+2019-10-04 11:39:32.534   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.536   Version of our file: (none)
+2019-10-04 11:39:32.541   Version of existing file: (none)
+2019-10-04 11:39:32.543   Installing the file.
+2019-10-04 11:39:32.548   Successfully installed the file.
+2019-10-04 11:39:32.551   -- File entry --
+2019-10-04 11:39:32.560   Dest filename: C:\Enabler\www\images\text.gif
+2019-10-04 11:39:32.563   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.565   Dest file exists.
+2019-10-04 11:39:32.567   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.570   Version of our file: (none)
+2019-10-04 11:39:32.573   Version of existing file: (none)
+2019-10-04 11:39:32.575   Installing the file.
+2019-10-04 11:39:32.579   Successfully installed the file.
+2019-10-04 11:39:32.581   -- File entry --
+2019-10-04 11:39:32.589   Dest filename: C:\Enabler\www\images\textfolder.gif
+2019-10-04 11:39:32.591   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.593   Dest file exists.
+2019-10-04 11:39:32.596   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.598   Version of our file: (none)
+2019-10-04 11:39:32.601   Version of existing file: (none)
+2019-10-04 11:39:32.605   Installing the file.
+2019-10-04 11:39:32.610   Successfully installed the file.
+2019-10-04 11:39:32.614   -- File entry --
+2019-10-04 11:39:32.621   Dest filename: C:\Enabler\www\images\icons\critical.png
+2019-10-04 11:39:32.624   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.625   Dest file exists.
+2019-10-04 11:39:32.627   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.629   Version of our file: (none)
+2019-10-04 11:39:32.632   Version of existing file: (none)
+2019-10-04 11:39:32.634   Installing the file.
+2019-10-04 11:39:32.638   Successfully installed the file.
+2019-10-04 11:39:32.641   -- File entry --
+2019-10-04 11:39:32.648   Dest filename: C:\Enabler\www\images\icons\error.png
+2019-10-04 11:39:32.651   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.653   Dest file exists.
+2019-10-04 11:39:32.655   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.657   Version of our file: (none)
+2019-10-04 11:39:32.660   Version of existing file: (none)
+2019-10-04 11:39:32.662   Installing the file.
+2019-10-04 11:39:32.666   Successfully installed the file.
+2019-10-04 11:39:32.669   -- File entry --
+2019-10-04 11:39:32.676   Dest filename: C:\Enabler\www\images\icons\information.png
+2019-10-04 11:39:32.678   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.680   Dest file exists.
+2019-10-04 11:39:32.682   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.684   Version of our file: (none)
+2019-10-04 11:39:32.687   Version of existing file: (none)
+2019-10-04 11:39:32.689   Installing the file.
+2019-10-04 11:39:32.693   Successfully installed the file.
+2019-10-04 11:39:32.695   -- File entry --
+2019-10-04 11:39:32.702   Dest filename: C:\Enabler\www\images\icons\warning.png
+2019-10-04 11:39:32.705   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.707   Dest file exists.
+2019-10-04 11:39:32.709   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.710   Version of our file: (none)
+2019-10-04 11:39:32.714   Version of existing file: (none)
+2019-10-04 11:39:32.716   Installing the file.
+2019-10-04 11:39:32.721   Successfully installed the file.
+2019-10-04 11:39:32.723   -- File entry --
+2019-10-04 11:39:32.730   Dest filename: C:\Enabler\www\images\pump\authed.png
+2019-10-04 11:39:32.733   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.735   Dest file exists.
+2019-10-04 11:39:32.739   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.741   Version of our file: (none)
+2019-10-04 11:39:32.744   Version of existing file: (none)
+2019-10-04 11:39:32.747   Installing the file.
+2019-10-04 11:39:32.752   Successfully installed the file.
+2019-10-04 11:39:32.758   -- File entry --
+2019-10-04 11:39:32.766   Dest filename: C:\Enabler\www\images\pump\autheddisabled.png
+2019-10-04 11:39:32.768   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.771   Dest file exists.
+2019-10-04 11:39:32.773   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.775   Version of our file: (none)
+2019-10-04 11:39:32.779   Version of existing file: (none)
+2019-10-04 11:39:32.782   Installing the file.
+2019-10-04 11:39:32.788   Successfully installed the file.
+2019-10-04 11:39:32.792   -- File entry --
+2019-10-04 11:39:32.801   Dest filename: C:\Enabler\www\images\pump\calling.png
+2019-10-04 11:39:32.805   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.807   Dest file exists.
+2019-10-04 11:39:32.810   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.813   Version of our file: (none)
+2019-10-04 11:39:32.817   Version of existing file: (none)
+2019-10-04 11:39:32.820   Installing the file.
+2019-10-04 11:39:32.826   Successfully installed the file.
+2019-10-04 11:39:32.830   -- File entry --
+2019-10-04 11:39:32.840   Dest filename: C:\Enabler\www\images\pump\calling1.png
+2019-10-04 11:39:32.843   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.846   Dest file exists.
+2019-10-04 11:39:32.848   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.850   Version of our file: (none)
+2019-10-04 11:39:32.855   Version of existing file: (none)
+2019-10-04 11:39:32.859   Installing the file.
+2019-10-04 11:39:32.864   Successfully installed the file.
+2019-10-04 11:39:32.867   -- File entry --
+2019-10-04 11:39:32.876   Dest filename: C:\Enabler\www\images\pump\callingdisabled.png
+2019-10-04 11:39:32.879   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.881   Dest file exists.
+2019-10-04 11:39:32.884   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.886   Version of our file: (none)
+2019-10-04 11:39:32.890   Version of existing file: (none)
+2019-10-04 11:39:32.893   Installing the file.
+2019-10-04 11:39:32.898   Successfully installed the file.
+2019-10-04 11:39:32.902   -- File entry --
+2019-10-04 11:39:32.911   Dest filename: C:\Enabler\www\images\pump\deliveringdisabled.png
+2019-10-04 11:39:32.914   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.916   Dest file exists.
+2019-10-04 11:39:32.919   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.921   Version of our file: (none)
+2019-10-04 11:39:32.925   Version of existing file: (none)
+2019-10-04 11:39:32.928   Installing the file.
+2019-10-04 11:39:32.933   Successfully installed the file.
+2019-10-04 11:39:32.938   -- File entry --
+2019-10-04 11:39:32.945   Dest filename: C:\Enabler\www\images\pump\deliverying.png
+2019-10-04 11:39:32.948   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.951   Dest file exists.
+2019-10-04 11:39:32.956   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.959   Version of our file: (none)
+2019-10-04 11:39:32.963   Version of existing file: (none)
+2019-10-04 11:39:32.966   Installing the file.
+2019-10-04 11:39:32.972   Successfully installed the file.
+2019-10-04 11:39:32.976   -- File entry --
+2019-10-04 11:39:32.984   Dest filename: C:\Enabler\www\images\pump\error.png
+2019-10-04 11:39:32.987   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.989   Dest file exists.
+2019-10-04 11:39:32.991   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:32.992   Version of our file: (none)
+2019-10-04 11:39:32.996   Version of existing file: (none)
+2019-10-04 11:39:32.997   Installing the file.
+2019-10-04 11:39:33.003   Successfully installed the file.
+2019-10-04 11:39:33.007   -- File entry --
+2019-10-04 11:39:33.014   Dest filename: C:\Enabler\www\images\pump\errordelivery.png
+2019-10-04 11:39:33.016   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.018   Dest file exists.
+2019-10-04 11:39:33.022   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.024   Version of our file: (none)
+2019-10-04 11:39:33.027   Version of existing file: (none)
+2019-10-04 11:39:33.029   Installing the file.
+2019-10-04 11:39:33.033   Successfully installed the file.
+2019-10-04 11:39:33.040   -- File entry --
+2019-10-04 11:39:33.046   Dest filename: C:\Enabler\www\images\pump\invalidprice.png
+2019-10-04 11:39:33.048   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.050   Dest file exists.
+2019-10-04 11:39:33.052   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.054   Version of our file: (none)
+2019-10-04 11:39:33.057   Version of existing file: (none)
+2019-10-04 11:39:33.060   Installing the file.
+2019-10-04 11:39:33.064   Successfully installed the file.
+2019-10-04 11:39:33.067   -- File entry --
+2019-10-04 11:39:33.076   Dest filename: C:\Enabler\www\images\pump\MECHANICAL.png
+2019-10-04 11:39:33.078   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.080   Dest file exists.
+2019-10-04 11:39:33.082   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.083   Version of our file: (none)
+2019-10-04 11:39:33.087   Version of existing file: (none)
+2019-10-04 11:39:33.089   Installing the file.
+2019-10-04 11:39:33.094   Successfully installed the file.
+2019-10-04 11:39:33.096   -- File entry --
+2019-10-04 11:39:33.103   Dest filename: C:\Enabler\www\images\pump\notinstalled.png
+2019-10-04 11:39:33.106   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.108   Dest file exists.
+2019-10-04 11:39:33.110   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.112   Version of our file: (none)
+2019-10-04 11:39:33.115   Version of existing file: (none)
+2019-10-04 11:39:33.117   Installing the file.
+2019-10-04 11:39:33.122   Successfully installed the file.
+2019-10-04 11:39:33.126   -- File entry --
+2019-10-04 11:39:33.132   Dest filename: C:\Enabler\www\images\pump\nozout.png
+2019-10-04 11:39:33.135   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.137   Dest file exists.
+2019-10-04 11:39:33.139   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.141   Version of our file: (none)
+2019-10-04 11:39:33.144   Version of existing file: (none)
+2019-10-04 11:39:33.146   Installing the file.
+2019-10-04 11:39:33.150   Successfully installed the file.
+2019-10-04 11:39:33.152   -- File entry --
+2019-10-04 11:39:33.159   Dest filename: C:\Enabler\www\images\pump\nozzle.png
+2019-10-04 11:39:33.163   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.165   Dest file exists.
+2019-10-04 11:39:33.168   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.170   Version of our file: (none)
+2019-10-04 11:39:33.173   Version of existing file: (none)
+2019-10-04 11:39:33.175   Installing the file.
+2019-10-04 11:39:33.179   Successfully installed the file.
+2019-10-04 11:39:33.181   -- File entry --
+2019-10-04 11:39:33.188   Dest filename: C:\Enabler\www\images\pump\nozzledisabled.png
+2019-10-04 11:39:33.191   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.193   Dest file exists.
+2019-10-04 11:39:33.194   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.196   Version of our file: (none)
+2019-10-04 11:39:33.200   Version of existing file: (none)
+2019-10-04 11:39:33.202   Installing the file.
+2019-10-04 11:39:33.207   Successfully installed the file.
+2019-10-04 11:39:33.209   -- File entry --
+2019-10-04 11:39:33.216   Dest filename: C:\Enabler\www\images\pump\nozzleoutdisabled1.png
+2019-10-04 11:39:33.218   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.220   Dest file exists.
+2019-10-04 11:39:33.222   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.224   Version of our file: (none)
+2019-10-04 11:39:33.228   Version of existing file: (none)
+2019-10-04 11:39:33.230   Installing the file.
+2019-10-04 11:39:33.234   Successfully installed the file.
+2019-10-04 11:39:33.240   -- File entry --
+2019-10-04 11:39:33.247   Dest filename: C:\Enabler\www\images\pump\nozzleoutdisabled2.png
+2019-10-04 11:39:33.249   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.251   Dest file exists.
+2019-10-04 11:39:33.252   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.254   Version of our file: (none)
+2019-10-04 11:39:33.258   Version of existing file: (none)
+2019-10-04 11:39:33.259   Installing the file.
+2019-10-04 11:39:33.265   Successfully installed the file.
+2019-10-04 11:39:33.268   -- File entry --
+2019-10-04 11:39:33.276   Dest filename: C:\Enabler\www\images\pump\PREAUTHAUTH.png
+2019-10-04 11:39:33.279   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.280   Dest file exists.
+2019-10-04 11:39:33.282   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.284   Version of our file: (none)
+2019-10-04 11:39:33.288   Version of existing file: (none)
+2019-10-04 11:39:33.290   Installing the file.
+2019-10-04 11:39:33.294   Successfully installed the file.
+2019-10-04 11:39:33.296   -- File entry --
+2019-10-04 11:39:33.303   Dest filename: C:\Enabler\www\images\pump\preauthautheddisabled.png
+2019-10-04 11:39:33.306   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.307   Dest file exists.
+2019-10-04 11:39:33.310   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.311   Version of our file: (none)
+2019-10-04 11:39:33.315   Version of existing file: (none)
+2019-10-04 11:39:33.317   Installing the file.
+2019-10-04 11:39:33.321   Successfully installed the file.
+2019-10-04 11:39:33.324   -- File entry --
+2019-10-04 11:39:33.330   Dest filename: C:\Enabler\www\images\pump\preauthdel.png
+2019-10-04 11:39:33.333   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.335   Dest file exists.
+2019-10-04 11:39:33.339   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.340   Version of our file: (none)
+2019-10-04 11:39:33.344   Version of existing file: (none)
+2019-10-04 11:39:33.346   Installing the file.
+2019-10-04 11:39:33.350   Successfully installed the file.
+2019-10-04 11:39:33.352   -- File entry --
+2019-10-04 11:39:33.358   Dest filename: C:\Enabler\www\images\pump\preauthDeliveringDisabled.png
+2019-10-04 11:39:33.361   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.362   Dest file exists.
+2019-10-04 11:39:33.364   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.366   Version of our file: (none)
+2019-10-04 11:39:33.370   Version of existing file: (none)
+2019-10-04 11:39:33.372   Installing the file.
+2019-10-04 11:39:33.377   Successfully installed the file.
+2019-10-04 11:39:33.379   -- File entry --
+2019-10-04 11:39:33.386   Dest filename: C:\Enabler\www\images\pump\preauthres.png
+2019-10-04 11:39:33.388   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.390   Dest file exists.
+2019-10-04 11:39:33.392   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.393   Version of our file: (none)
+2019-10-04 11:39:33.397   Version of existing file: (none)
+2019-10-04 11:39:33.399   Installing the file.
+2019-10-04 11:39:33.403   Successfully installed the file.
+2019-10-04 11:39:33.405   -- File entry --
+2019-10-04 11:39:33.412   Dest filename: C:\Enabler\www\images\pump\preauthreserveddisabled.png
+2019-10-04 11:39:33.415   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.417   Dest file exists.
+2019-10-04 11:39:33.419   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.422   Version of our file: (none)
+2019-10-04 11:39:33.425   Version of existing file: (none)
+2019-10-04 11:39:33.427   Installing the file.
+2019-10-04 11:39:33.431   Successfully installed the file.
+2019-10-04 11:39:33.433   -- File entry --
+2019-10-04 11:39:33.442   Dest filename: C:\Enabler\www\images\pump\prepayauth.png
+2019-10-04 11:39:33.444   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.445   Dest file exists.
+2019-10-04 11:39:33.447   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.449   Version of our file: (none)
+2019-10-04 11:39:33.452   Version of existing file: (none)
+2019-10-04 11:39:33.454   Installing the file.
+2019-10-04 11:39:33.458   Successfully installed the file.
+2019-10-04 11:39:33.462   -- File entry --
+2019-10-04 11:39:33.468   Dest filename: C:\Enabler\www\images\pump\prepayautheddisabled.png
+2019-10-04 11:39:33.470   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.472   Dest file exists.
+2019-10-04 11:39:33.474   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.476   Version of our file: (none)
+2019-10-04 11:39:33.479   Version of existing file: (none)
+2019-10-04 11:39:33.481   Installing the file.
+2019-10-04 11:39:33.486   Successfully installed the file.
+2019-10-04 11:39:33.489   -- File entry --
+2019-10-04 11:39:33.496   Dest filename: C:\Enabler\www\images\pump\prepaydel.png
+2019-10-04 11:39:33.498   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.500   Dest file exists.
+2019-10-04 11:39:33.502   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.504   Version of our file: (none)
+2019-10-04 11:39:33.508   Version of existing file: (none)
+2019-10-04 11:39:33.510   Installing the file.
+2019-10-04 11:39:33.514   Successfully installed the file.
+2019-10-04 11:39:33.516   -- File entry --
+2019-10-04 11:39:33.524   Dest filename: C:\Enabler\www\images\pump\prepaydeliveringdisabled.png
+2019-10-04 11:39:33.526   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.528   Dest file exists.
+2019-10-04 11:39:33.529   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.531   Version of our file: (none)
+2019-10-04 11:39:33.535   Version of existing file: (none)
+2019-10-04 11:39:33.537   Installing the file.
+2019-10-04 11:39:33.541   Successfully installed the file.
+2019-10-04 11:39:33.543   -- File entry --
+2019-10-04 11:39:33.550   Dest filename: C:\Enabler\www\images\pump\prepayres.png
+2019-10-04 11:39:33.553   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.555   Dest file exists.
+2019-10-04 11:39:33.557   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.558   Version of our file: (none)
+2019-10-04 11:39:33.562   Version of existing file: (none)
+2019-10-04 11:39:33.564   Installing the file.
+2019-10-04 11:39:33.568   Successfully installed the file.
+2019-10-04 11:39:33.570   -- File entry --
+2019-10-04 11:39:33.577   Dest filename: C:\Enabler\www\images\pump\prepayreserveddisabled.png
+2019-10-04 11:39:33.579   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.581   Dest file exists.
+2019-10-04 11:39:33.583   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.585   Version of our file: (none)
+2019-10-04 11:39:33.588   Version of existing file: (none)
+2019-10-04 11:39:33.591   Installing the file.
+2019-10-04 11:39:33.595   Successfully installed the file.
+2019-10-04 11:39:33.598   -- File entry --
+2019-10-04 11:39:33.605   Dest filename: C:\Enabler\www\images\pump\pricechange.png
+2019-10-04 11:39:33.608   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.609   Dest file exists.
+2019-10-04 11:39:33.612   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.615   Version of our file: (none)
+2019-10-04 11:39:33.619   Version of existing file: (none)
+2019-10-04 11:39:33.622   Installing the file.
+2019-10-04 11:39:33.626   Successfully installed the file.
+2019-10-04 11:39:33.628   -- File entry --
+2019-10-04 11:39:33.635   Dest filename: C:\Enabler\www\images\pump\pumpbusy.png
+2019-10-04 11:39:33.638   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.639   Dest file exists.
+2019-10-04 11:39:33.641   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.643   Version of our file: (none)
+2019-10-04 11:39:33.647   Version of existing file: (none)
+2019-10-04 11:39:33.648   Installing the file.
+2019-10-04 11:39:33.653   Successfully installed the file.
+2019-10-04 11:39:33.656   -- File entry --
+2019-10-04 11:39:33.663   Dest filename: C:\Enabler\www\images\pump\refundlost.png
+2019-10-04 11:39:33.665   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.667   Dest file exists.
+2019-10-04 11:39:33.669   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.671   Version of our file: (none)
+2019-10-04 11:39:33.675   Version of existing file: (none)
+2019-10-04 11:39:33.677   Installing the file.
+2019-10-04 11:39:33.680   Successfully installed the file.
+2019-10-04 11:39:33.682   -- File entry --
+2019-10-04 11:39:33.689   Dest filename: C:\Enabler\www\images\pump\refundlostdisabled.png
+2019-10-04 11:39:33.692   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.693   Dest file exists.
+2019-10-04 11:39:33.695   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.697   Version of our file: (none)
+2019-10-04 11:39:33.700   Version of existing file: (none)
+2019-10-04 11:39:33.702   Installing the file.
+2019-10-04 11:39:33.706   Successfully installed the file.
+2019-10-04 11:39:33.709   -- File entry --
+2019-10-04 11:39:33.716   Dest filename: C:\Enabler\www\images\pump\stopped.png
+2019-10-04 11:39:33.719   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.721   Dest file exists.
+2019-10-04 11:39:33.723   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.725   Version of our file: (none)
+2019-10-04 11:39:33.729   Version of existing file: (none)
+2019-10-04 11:39:33.731   Installing the file.
+2019-10-04 11:39:33.736   Successfully installed the file.
+2019-10-04 11:39:33.738   -- File entry --
+2019-10-04 11:39:33.745   Dest filename: C:\Enabler\www\images\pump\stopped1.png
+2019-10-04 11:39:33.747   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.749   Dest file exists.
+2019-10-04 11:39:33.751   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.753   Version of our file: (none)
+2019-10-04 11:39:33.757   Version of existing file: (none)
+2019-10-04 11:39:33.759   Installing the file.
+2019-10-04 11:39:33.763   Successfully installed the file.
+2019-10-04 11:39:33.766   -- File entry --
+2019-10-04 11:39:33.775   Dest filename: C:\Enabler\www\images\pump\stopped1disabled.png
+2019-10-04 11:39:33.777   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.779   Dest file exists.
+2019-10-04 11:39:33.781   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.783   Version of our file: (none)
+2019-10-04 11:39:33.787   Version of existing file: (none)
+2019-10-04 11:39:33.789   Installing the file.
+2019-10-04 11:39:33.793   Successfully installed the file.
+2019-10-04 11:39:33.795   -- File entry --
+2019-10-04 11:39:33.802   Dest filename: C:\Enabler\www\images\pump\stopped2.png
+2019-10-04 11:39:33.804   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.806   Dest file exists.
+2019-10-04 11:39:33.808   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.810   Version of our file: (none)
+2019-10-04 11:39:33.814   Version of existing file: (none)
+2019-10-04 11:39:33.815   Installing the file.
+2019-10-04 11:39:33.820   Successfully installed the file.
+2019-10-04 11:39:33.822   -- File entry --
+2019-10-04 11:39:33.829   Dest filename: C:\Enabler\www\images\pump\stopped2disabled.png
+2019-10-04 11:39:33.831   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.833   Dest file exists.
+2019-10-04 11:39:33.835   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.837   Version of our file: (none)
+2019-10-04 11:39:33.841   Version of existing file: (none)
+2019-10-04 11:39:33.843   Installing the file.
+2019-10-04 11:39:33.848   Successfully installed the file.
+2019-10-04 11:39:33.852   -- File entry --
+2019-10-04 11:39:33.860   Dest filename: C:\Enabler\www\images\pump\stoppeddisabled.png
+2019-10-04 11:39:33.862   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.865   Dest file exists.
+2019-10-04 11:39:33.867   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.870   Version of our file: (none)
+2019-10-04 11:39:33.875   Version of existing file: (none)
+2019-10-04 11:39:33.878   Installing the file.
+2019-10-04 11:39:33.883   Successfully installed the file.
+2019-10-04 11:39:33.890   -- File entry --
+2019-10-04 11:39:33.898   Dest filename: C:\Enabler\www\images\pump\totalslost.png
+2019-10-04 11:39:33.902   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.906   Dest file exists.
+2019-10-04 11:39:33.908   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.911   Version of our file: (none)
+2019-10-04 11:39:33.915   Version of existing file: (none)
+2019-10-04 11:39:33.918   Installing the file.
+2019-10-04 11:39:33.926   Successfully installed the file.
+2019-10-04 11:39:33.929   -- File entry --
+2019-10-04 11:39:33.938   Dest filename: C:\Enabler\www\images\pump\undefinederror.png
+2019-10-04 11:39:33.942   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.945   Dest file exists.
+2019-10-04 11:39:33.947   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.950   Version of our file: (none)
+2019-10-04 11:39:33.956   Version of existing file: (none)
+2019-10-04 11:39:33.959   Installing the file.
+2019-10-04 11:39:33.965   Successfully installed the file.
+2019-10-04 11:39:33.968   -- File entry --
+2019-10-04 11:39:33.978   Dest filename: C:\Enabler\www\images\tankgauge\capacity.png
+2019-10-04 11:39:33.982   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.984   Dest file exists.
+2019-10-04 11:39:33.989   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:33.991   Version of our file: (none)
+2019-10-04 11:39:33.995   Version of existing file: (none)
+2019-10-04 11:39:33.998   Installing the file.
+2019-10-04 11:39:34.003   Successfully installed the file.
+2019-10-04 11:39:34.007   -- File entry --
+2019-10-04 11:39:34.016   Dest filename: C:\Enabler\www\images\tankgauge\ullage.png
+2019-10-04 11:39:34.018   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.021   Dest file exists.
+2019-10-04 11:39:34.023   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.025   Version of our file: (none)
+2019-10-04 11:39:34.029   Version of existing file: (none)
+2019-10-04 11:39:34.032   Installing the file.
+2019-10-04 11:39:34.037   Successfully installed the file.
+2019-10-04 11:39:34.041   -- File entry --
+2019-10-04 11:39:34.049   Dest filename: C:\Enabler\www\images\tankgauge\volume.png
+2019-10-04 11:39:34.053   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.055   Dest file exists.
+2019-10-04 11:39:34.058   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.061   Version of our file: (none)
+2019-10-04 11:39:34.065   Version of existing file: (none)
+2019-10-04 11:39:34.067   Installing the file.
+2019-10-04 11:39:34.071   Successfully installed the file.
+2019-10-04 11:39:34.075   -- File entry --
+2019-10-04 11:39:34.083   Dest filename: C:\Enabler\www\images\tankgauge\water.png
+2019-10-04 11:39:34.086   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.088   Dest file exists.
+2019-10-04 11:39:34.091   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.093   Version of our file: (none)
+2019-10-04 11:39:34.097   Version of existing file: (none)
+2019-10-04 11:39:34.099   Installing the file.
+2019-10-04 11:39:34.105   Successfully installed the file.
+2019-10-04 11:39:34.107   -- File entry --
+2019-10-04 11:39:34.115   Dest filename: C:\Enabler\www\reports\DailyTankReport.xsl
+2019-10-04 11:39:34.117   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.120   Dest file exists.
+2019-10-04 11:39:34.122   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.124   Version of our file: (none)
+2019-10-04 11:39:34.133   Version of existing file: (none)
+2019-10-04 11:39:34.136   Installing the file.
+2019-10-04 11:39:34.141   Successfully installed the file.
+2019-10-04 11:39:34.144   -- File entry --
+2019-10-04 11:39:34.153   Dest filename: C:\Enabler\www\scripts\ActivationScripts.js
+2019-10-04 11:39:34.156   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.157   Dest file exists.
+2019-10-04 11:39:34.159   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.161   Version of our file: (none)
+2019-10-04 11:39:34.177   Version of existing file: (none)
+2019-10-04 11:39:34.179   Installing the file.
+2019-10-04 11:39:34.184   Successfully installed the file.
+2019-10-04 11:39:34.191   -- File entry --
+2019-10-04 11:39:34.197   Dest filename: C:\Enabler\www\scripts\AttendantTotalsScripts.js
+2019-10-04 11:39:34.200   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.202   Dest file exists.
+2019-10-04 11:39:34.205   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.207   Version of our file: (none)
+2019-10-04 11:39:34.211   Version of existing file: (none)
+2019-10-04 11:39:34.213   Installing the file.
+2019-10-04 11:39:34.219   Successfully installed the file.
+2019-10-04 11:39:34.224   -- File entry --
+2019-10-04 11:39:34.231   Dest filename: C:\Enabler\www\scripts\BlockingScripts.js
+2019-10-04 11:39:34.234   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.237   Dest file exists.
+2019-10-04 11:39:34.239   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.241   Version of our file: (none)
+2019-10-04 11:39:34.244   Version of existing file: (none)
+2019-10-04 11:39:34.247   Installing the file.
+2019-10-04 11:39:34.251   Successfully installed the file.
+2019-10-04 11:39:34.257   -- File entry --
+2019-10-04 11:39:34.265   Dest filename: C:\Enabler\www\scripts\CommonScripts.js
+2019-10-04 11:39:34.268   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.270   Dest file exists.
+2019-10-04 11:39:34.272   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.274   Version of our file: (none)
+2019-10-04 11:39:34.289   Version of existing file: (none)
+2019-10-04 11:39:34.293   Installing the file.
+2019-10-04 11:39:34.298   Successfully installed the file.
+2019-10-04 11:39:34.301   -- File entry --
+2019-10-04 11:39:34.309   Dest filename: C:\Enabler\www\scripts\datepicker.js
+2019-10-04 11:39:34.311   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.313   Dest file exists.
+2019-10-04 11:39:34.315   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.316   Version of our file: (none)
+2019-10-04 11:39:34.330   Version of existing file: (none)
+2019-10-04 11:39:34.333   Installing the file.
+2019-10-04 11:39:34.340   Successfully installed the file.
+2019-10-04 11:39:34.344   -- File entry --
+2019-10-04 11:39:34.351   Dest filename: C:\Enabler\www\scripts\EventReportScripts.js
+2019-10-04 11:39:34.355   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.359   Dest file exists.
+2019-10-04 11:39:34.362   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.363   Version of our file: (none)
+2019-10-04 11:39:34.374   Version of existing file: (none)
+2019-10-04 11:39:34.376   Installing the file.
+2019-10-04 11:39:34.381   Successfully installed the file.
+2019-10-04 11:39:34.383   -- File entry --
+2019-10-04 11:39:34.393   Dest filename: C:\Enabler\www\scripts\FuelReconDataScripts.js
+2019-10-04 11:39:34.396   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.398   Dest file exists.
+2019-10-04 11:39:34.400   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.404   Version of our file: (none)
+2019-10-04 11:39:34.415   Version of existing file: (none)
+2019-10-04 11:39:34.418   Installing the file.
+2019-10-04 11:39:34.424   Successfully installed the file.
+2019-10-04 11:39:34.428   -- File entry --
+2019-10-04 11:39:34.436   Dest filename: C:\Enabler\www\scripts\FuelReconMeter.js
+2019-10-04 11:39:34.440   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.441   Dest file exists.
+2019-10-04 11:39:34.446   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.447   Version of our file: (none)
+2019-10-04 11:39:34.458   Version of existing file: (none)
+2019-10-04 11:39:34.462   Installing the file.
+2019-10-04 11:39:34.467   Successfully installed the file.
+2019-10-04 11:39:34.471   -- File entry --
+2019-10-04 11:39:34.478   Dest filename: C:\Enabler\www\scripts\FuelTransactionScripts.js
+2019-10-04 11:39:34.481   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.484   Dest file exists.
+2019-10-04 11:39:34.489   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.491   Version of our file: (none)
+2019-10-04 11:39:34.494   Version of existing file: (none)
+2019-10-04 11:39:34.497   Installing the file.
+2019-10-04 11:39:34.508   Successfully installed the file.
+2019-10-04 11:39:34.511   -- File entry --
+2019-10-04 11:39:34.519   Dest filename: C:\Enabler\www\scripts\GradesScripts.js
+2019-10-04 11:39:34.522   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.524   Dest file exists.
+2019-10-04 11:39:34.526   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.528   Version of our file: (none)
+2019-10-04 11:39:34.539   Version of existing file: (none)
+2019-10-04 11:39:34.542   Installing the file.
+2019-10-04 11:39:34.547   Successfully installed the file.
+2019-10-04 11:39:34.550   -- File entry --
+2019-10-04 11:39:34.558   Dest filename: C:\Enabler\www\scripts\GridSelector.js
+2019-10-04 11:39:34.561   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.563   Dest file exists.
+2019-10-04 11:39:34.565   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.567   Version of our file: (none)
+2019-10-04 11:39:34.579   Version of existing file: (none)
+2019-10-04 11:39:34.581   Installing the file.
+2019-10-04 11:39:34.585   Successfully installed the file.
+2019-10-04 11:39:34.589   -- File entry --
+2019-10-04 11:39:34.596   Dest filename: C:\Enabler\www\scripts\jquery.js
+2019-10-04 11:39:34.599   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.601   Dest file exists.
+2019-10-04 11:39:34.607   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.610   Version of our file: (none)
+2019-10-04 11:39:34.707   Version of existing file: (none)
+2019-10-04 11:39:34.710   Installing the file.
+2019-10-04 11:39:34.720   Successfully installed the file.
+2019-10-04 11:39:34.722   -- File entry --
+2019-10-04 11:39:34.729   Dest filename: C:\Enabler\www\scripts\PortScripts.js
+2019-10-04 11:39:34.732   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.734   Dest file exists.
+2019-10-04 11:39:34.736   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.738   Version of our file: (none)
+2019-10-04 11:39:34.741   Version of existing file: (none)
+2019-10-04 11:39:34.743   Installing the file.
+2019-10-04 11:39:34.748   Successfully installed the file.
+2019-10-04 11:39:34.751   -- File entry --
+2019-10-04 11:39:34.759   Dest filename: C:\Enabler\www\scripts\PumpScripts.js
+2019-10-04 11:39:34.762   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.764   Dest file exists.
+2019-10-04 11:39:34.766   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.768   Version of our file: (none)
+2019-10-04 11:39:34.782   Version of existing file: (none)
+2019-10-04 11:39:34.784   Installing the file.
+2019-10-04 11:39:34.792   Successfully installed the file.
+2019-10-04 11:39:34.796   -- File entry --
+2019-10-04 11:39:34.804   Dest filename: C:\Enabler\www\scripts\PumpTotalsScripts.js
+2019-10-04 11:39:34.807   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.809   Dest file exists.
+2019-10-04 11:39:34.811   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.813   Version of our file: (none)
+2019-10-04 11:39:34.816   Version of existing file: (none)
+2019-10-04 11:39:34.818   Installing the file.
+2019-10-04 11:39:34.821   Successfully installed the file.
+2019-10-04 11:39:34.825   -- File entry --
+2019-10-04 11:39:34.833   Dest filename: C:\Enabler\www\scripts\SiteConfigurationScripts.js
+2019-10-04 11:39:34.837   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.839   Dest file exists.
+2019-10-04 11:39:34.841   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.843   Version of our file: (none)
+2019-10-04 11:39:34.846   Version of existing file: (none)
+2019-10-04 11:39:34.848   Installing the file.
+2019-10-04 11:39:34.852   Successfully installed the file.
+2019-10-04 11:39:34.855   -- File entry --
+2019-10-04 11:39:34.862   Dest filename: C:\Enabler\www\scripts\SiteModesScripts.js
+2019-10-04 11:39:34.865   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.868   Dest file exists.
+2019-10-04 11:39:34.870   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.872   Version of our file: (none)
+2019-10-04 11:39:34.886   Version of existing file: (none)
+2019-10-04 11:39:34.889   Installing the file.
+2019-10-04 11:39:34.896   Successfully installed the file.
+2019-10-04 11:39:34.899   -- File entry --
+2019-10-04 11:39:34.908   Dest filename: C:\Enabler\www\scripts\sitemonitor.js
+2019-10-04 11:39:34.911   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.913   Dest file exists.
+2019-10-04 11:39:34.915   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.918   Version of our file: (none)
+2019-10-04 11:39:34.932   Version of existing file: (none)
+2019-10-04 11:39:34.935   Installing the file.
+2019-10-04 11:39:34.941   Successfully installed the file.
+2019-10-04 11:39:34.945   -- File entry --
+2019-10-04 11:39:34.952   Dest filename: C:\Enabler\www\scripts\TagControllersScripts.js
+2019-10-04 11:39:34.955   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.957   Dest file exists.
+2019-10-04 11:39:34.960   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.962   Version of our file: (none)
+2019-10-04 11:39:34.965   Version of existing file: (none)
+2019-10-04 11:39:34.967   Installing the file.
+2019-10-04 11:39:34.972   Successfully installed the file.
+2019-10-04 11:39:34.975   -- File entry --
+2019-10-04 11:39:34.982   Dest filename: C:\Enabler\www\scripts\TankGaugeScripts.js
+2019-10-04 11:39:34.986   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.989   Dest file exists.
+2019-10-04 11:39:34.991   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:34.993   Version of our file: (none)
+2019-10-04 11:39:34.996   Version of existing file: (none)
+2019-10-04 11:39:34.999   Installing the file.
+2019-10-04 11:39:35.003   Successfully installed the file.
+2019-10-04 11:39:35.006   -- File entry --
+2019-10-04 11:39:35.013   Dest filename: C:\Enabler\www\scripts\TankScripts.js
+2019-10-04 11:39:35.016   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.017   Dest file exists.
+2019-10-04 11:39:35.022   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.024   Version of our file: (none)
+2019-10-04 11:39:35.035   Version of existing file: (none)
+2019-10-04 11:39:35.037   Installing the file.
+2019-10-04 11:39:35.042   Successfully installed the file.
+2019-10-04 11:39:35.045   -- File entry --
+2019-10-04 11:39:35.051   Dest filename: C:\Enabler\www\scripts\TankTotalsScripts.js
+2019-10-04 11:39:35.054   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.056   Dest file exists.
+2019-10-04 11:39:35.057   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.059   Version of our file: (none)
+2019-10-04 11:39:35.062   Version of existing file: (none)
+2019-10-04 11:39:35.064   Installing the file.
+2019-10-04 11:39:35.069   Successfully installed the file.
+2019-10-04 11:39:35.073   -- File entry --
+2019-10-04 11:39:35.080   Dest filename: C:\Enabler\www\scripts\TerminalScripts.js
+2019-10-04 11:39:35.082   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.084   Dest file exists.
+2019-10-04 11:39:35.085   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.087   Version of our file: (none)
+2019-10-04 11:39:35.097   Version of existing file: (none)
+2019-10-04 11:39:35.099   Installing the file.
+2019-10-04 11:39:35.104   Successfully installed the file.
+2019-10-04 11:39:35.107   -- File entry --
+2019-10-04 11:39:35.113   Dest filename: C:\Enabler\www\scripts\UsersScripts.js
+2019-10-04 11:39:35.115   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.117   Dest file exists.
+2019-10-04 11:39:35.119   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.121   Version of our file: (none)
+2019-10-04 11:39:35.124   Version of existing file: (none)
+2019-10-04 11:39:35.127   Installing the file.
+2019-10-04 11:39:35.131   Successfully installed the file.
+2019-10-04 11:39:35.133   -- File entry --
+2019-10-04 11:39:35.139   Dest filename: C:\Enabler\www\scripts\WetstockPumpData.js
+2019-10-04 11:39:35.142   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.144   Dest file exists.
+2019-10-04 11:39:35.146   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.147   Version of our file: (none)
+2019-10-04 11:39:35.151   Version of existing file: (none)
+2019-10-04 11:39:35.157   Installing the file.
+2019-10-04 11:39:35.161   Successfully installed the file.
+2019-10-04 11:39:35.163   -- File entry --
+2019-10-04 11:39:35.171   Dest filename: C:\Enabler\www\scripts\WetstockTankData.js
+2019-10-04 11:39:35.174   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.175   Dest file exists.
+2019-10-04 11:39:35.177   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.179   Version of our file: (none)
+2019-10-04 11:39:35.189   Version of existing file: (none)
+2019-10-04 11:39:35.192   Installing the file.
+2019-10-04 11:39:35.195   Successfully installed the file.
+2019-10-04 11:39:35.200   -- File entry --
+2019-10-04 11:39:35.206   Dest filename: C:\Enabler\www\scripts\FuelReconDips.js
+2019-10-04 11:39:35.208   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.210   Dest file exists.
+2019-10-04 11:39:35.212   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.214   Version of our file: (none)
+2019-10-04 11:39:35.224   Version of existing file: (none)
+2019-10-04 11:39:35.227   Installing the file.
+2019-10-04 11:39:35.232   Successfully installed the file.
+2019-10-04 11:39:35.235   -- File entry --
+2019-10-04 11:39:35.241   Dest filename: C:\Enabler\www\scripts\GradePrices.js
+2019-10-04 11:39:35.243   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.245   Dest file exists.
+2019-10-04 11:39:35.248   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.250   Version of our file: (none)
+2019-10-04 11:39:35.261   Version of existing file: (none)
+2019-10-04 11:39:35.262   Installing the file.
+2019-10-04 11:39:35.267   Successfully installed the file.
+2019-10-04 11:39:35.272   -- File entry --
+2019-10-04 11:39:35.278   Dest filename: C:\Enabler\www\scripts\FuelReconMovements.js
+2019-10-04 11:39:35.282   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.283   Dest file exists.
+2019-10-04 11:39:35.285   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.287   Version of our file: (none)
+2019-10-04 11:39:35.312   Version of existing file: (none)
+2019-10-04 11:39:35.314   Installing the file.
+2019-10-04 11:39:35.320   Successfully installed the file.
+2019-10-04 11:39:35.323   -- File entry --
+2019-10-04 11:39:35.330   Dest filename: C:\Enabler\www\scripts\AttendantScripts.js
+2019-10-04 11:39:35.333   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.335   Dest file exists.
+2019-10-04 11:39:35.339   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.342   Version of our file: (none)
+2019-10-04 11:39:35.350   Version of existing file: (none)
+2019-10-04 11:39:35.354   Installing the file.
+2019-10-04 11:39:35.360   Successfully installed the file.
+2019-10-04 11:39:35.363   -- File entry --
+2019-10-04 11:39:35.370   Dest filename: C:\Enabler\www\favicon.ico
+2019-10-04 11:39:35.373   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.375   Dest file exists.
+2019-10-04 11:39:35.377   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.379   Version of our file: (none)
+2019-10-04 11:39:35.383   Version of existing file: (none)
+2019-10-04 11:39:35.385   Installing the file.
+2019-10-04 11:39:35.390   Successfully installed the file.
+2019-10-04 11:39:35.393   -- File entry --
+2019-10-04 11:39:35.399   Dest filename: C:\Enabler\www\Activate.aspx
+2019-10-04 11:39:35.402   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.404   Dest file exists.
+2019-10-04 11:39:35.407   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.408   Version of our file: (none)
+2019-10-04 11:39:35.416   Version of existing file: (none)
+2019-10-04 11:39:35.418   Installing the file.
+2019-10-04 11:39:35.427   Successfully installed the file.
+2019-10-04 11:39:35.429   -- File entry --
+2019-10-04 11:39:35.437   Dest filename: C:\Enabler\www\Attendants.aspx
+2019-10-04 11:39:35.439   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.441   Dest file exists.
+2019-10-04 11:39:35.443   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.445   Version of our file: (none)
+2019-10-04 11:39:35.449   Version of existing file: (none)
+2019-10-04 11:39:35.451   Installing the file.
+2019-10-04 11:39:35.456   Successfully installed the file.
+2019-10-04 11:39:35.459   -- File entry --
+2019-10-04 11:39:35.466   Dest filename: C:\Enabler\www\AttendantTotals.aspx
+2019-10-04 11:39:35.468   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.470   Dest file exists.
+2019-10-04 11:39:35.472   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.474   Version of our file: (none)
+2019-10-04 11:39:35.477   Version of existing file: (none)
+2019-10-04 11:39:35.479   Installing the file.
+2019-10-04 11:39:35.483   Successfully installed the file.
+2019-10-04 11:39:35.485   -- File entry --
+2019-10-04 11:39:35.494   Dest filename: C:\Enabler\www\Blocking.aspx
+2019-10-04 11:39:35.496   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.498   Dest file exists.
+2019-10-04 11:39:35.500   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.502   Version of our file: (none)
+2019-10-04 11:39:35.510   Version of existing file: (none)
+2019-10-04 11:39:35.512   Installing the file.
+2019-10-04 11:39:35.517   Successfully installed the file.
+2019-10-04 11:39:35.520   -- File entry --
+2019-10-04 11:39:35.527   Dest filename: C:\Enabler\www\BlockingStatus.aspx
+2019-10-04 11:39:35.530   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.531   Dest file exists.
+2019-10-04 11:39:35.533   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.535   Version of our file: (none)
+2019-10-04 11:39:35.539   Version of existing file: (none)
+2019-10-04 11:39:35.541   Installing the file.
+2019-10-04 11:39:35.545   Successfully installed the file.
+2019-10-04 11:39:35.547   -- File entry --
+2019-10-04 11:39:35.554   Dest filename: C:\Enabler\www\Cards.aspx
+2019-10-04 11:39:35.557   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.559   Dest file exists.
+2019-10-04 11:39:35.561   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.563   Version of our file: (none)
+2019-10-04 11:39:35.571   Version of existing file: (none)
+2019-10-04 11:39:35.572   Installing the file.
+2019-10-04 11:39:35.577   Successfully installed the file.
+2019-10-04 11:39:35.579   -- File entry --
+2019-10-04 11:39:35.586   Dest filename: C:\Enabler\www\Contacts.aspx
+2019-10-04 11:39:35.588   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.590   Dest file exists.
+2019-10-04 11:39:35.593   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.594   Version of our file: (none)
+2019-10-04 11:39:35.602   Version of existing file: (none)
+2019-10-04 11:39:35.606   Installing the file.
+2019-10-04 11:39:35.609   Successfully installed the file.
+2019-10-04 11:39:35.612   -- File entry --
+2019-10-04 11:39:35.620   Dest filename: C:\Enabler\www\DeliveryHistory.aspx
+2019-10-04 11:39:35.625   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.627   Dest file exists.
+2019-10-04 11:39:35.629   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.632   Version of our file: (none)
+2019-10-04 11:39:35.645   Version of existing file: (none)
+2019-10-04 11:39:35.648   Installing the file.
+2019-10-04 11:39:35.653   Successfully installed the file.
+2019-10-04 11:39:35.656   -- File entry --
+2019-10-04 11:39:35.666   Dest filename: C:\Enabler\www\Events.aspx
+2019-10-04 11:39:35.671   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.673   Dest file exists.
+2019-10-04 11:39:35.676   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.678   Version of our file: (none)
+2019-10-04 11:39:35.689   Version of existing file: (none)
+2019-10-04 11:39:35.692   Installing the file.
+2019-10-04 11:39:35.697   Successfully installed the file.
+2019-10-04 11:39:35.701   -- File entry --
+2019-10-04 11:39:35.710   Dest filename: C:\Enabler\www\Fallback.aspx
+2019-10-04 11:39:35.713   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.717   Dest file exists.
+2019-10-04 11:39:35.720   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.722   Version of our file: (none)
+2019-10-04 11:39:35.732   Version of existing file: (none)
+2019-10-04 11:39:35.735   Installing the file.
+2019-10-04 11:39:35.741   Successfully installed the file.
+2019-10-04 11:39:35.744   -- File entry --
+2019-10-04 11:39:35.752   Dest filename: C:\Enabler\www\FuelReconData.aspx
+2019-10-04 11:39:35.756   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.759   Dest file exists.
+2019-10-04 11:39:35.762   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.764   Version of our file: (none)
+2019-10-04 11:39:35.768   Version of existing file: (none)
+2019-10-04 11:39:35.771   Installing the file.
+2019-10-04 11:39:35.776   Successfully installed the file.
+2019-10-04 11:39:35.780   -- File entry --
+2019-10-04 11:39:35.788   Dest filename: C:\Enabler\www\FuelReconDips.aspx
+2019-10-04 11:39:35.791   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.794   Dest file exists.
+2019-10-04 11:39:35.797   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.799   Version of our file: (none)
+2019-10-04 11:39:35.803   Version of existing file: (none)
+2019-10-04 11:39:35.806   Installing the file.
+2019-10-04 11:39:35.812   Successfully installed the file.
+2019-10-04 11:39:35.815   -- File entry --
+2019-10-04 11:39:35.823   Dest filename: C:\Enabler\www\FuelReconMeters.aspx
+2019-10-04 11:39:35.826   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.828   Dest file exists.
+2019-10-04 11:39:35.830   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.832   Version of our file: (none)
+2019-10-04 11:39:35.841   Version of existing file: (none)
+2019-10-04 11:39:35.843   Installing the file.
+2019-10-04 11:39:35.848   Successfully installed the file.
+2019-10-04 11:39:35.851   -- File entry --
+2019-10-04 11:39:35.859   Dest filename: C:\Enabler\www\FuelReconMovements.aspx
+2019-10-04 11:39:35.861   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.862   Dest file exists.
+2019-10-04 11:39:35.864   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.865   Version of our file: (none)
+2019-10-04 11:39:35.873   Version of existing file: (none)
+2019-10-04 11:39:35.876   Installing the file.
+2019-10-04 11:39:35.881   Successfully installed the file.
+2019-10-04 11:39:35.883   -- File entry --
+2019-10-04 11:39:35.891   Dest filename: C:\Enabler\www\FuelTransactionHistory.aspx
+2019-10-04 11:39:35.893   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.895   Dest file exists.
+2019-10-04 11:39:35.897   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.898   Version of our file: (none)
+2019-10-04 11:39:35.907   Version of existing file: (none)
+2019-10-04 11:39:35.909   Installing the file.
+2019-10-04 11:39:35.913   Successfully installed the file.
+2019-10-04 11:39:35.916   -- File entry --
+2019-10-04 11:39:35.923   Dest filename: C:\Enabler\www\GradePricesScheduled.aspx
+2019-10-04 11:39:35.925   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.927   Dest file exists.
+2019-10-04 11:39:35.929   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.931   Version of our file: (none)
+2019-10-04 11:39:35.939   Version of existing file: (none)
+2019-10-04 11:39:35.941   Installing the file.
+2019-10-04 11:39:35.945   Successfully installed the file.
+2019-10-04 11:39:35.948   -- File entry --
+2019-10-04 11:39:35.955   Dest filename: C:\Enabler\www\GradePrices.aspx
+2019-10-04 11:39:35.957   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.959   Dest file exists.
+2019-10-04 11:39:35.961   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.963   Version of our file: (none)
+2019-10-04 11:39:35.971   Version of existing file: (none)
+2019-10-04 11:39:35.973   Installing the file.
+2019-10-04 11:39:35.978   Successfully installed the file.
+2019-10-04 11:39:35.982   -- File entry --
+2019-10-04 11:39:35.989   Dest filename: C:\Enabler\www\Grades.aspx
+2019-10-04 11:39:35.991   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.992   Dest file exists.
+2019-10-04 11:39:35.995   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:35.997   Version of our file: (none)
+2019-10-04 11:39:36.005   Version of existing file: (none)
+2019-10-04 11:39:36.007   Installing the file.
+2019-10-04 11:39:36.012   Successfully installed the file.
+2019-10-04 11:39:36.015   -- File entry --
+2019-10-04 11:39:36.022   Dest filename: C:\Enabler\www\Language.aspx
+2019-10-04 11:39:36.025   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.026   Dest file exists.
+2019-10-04 11:39:36.028   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.030   Version of our file: (none)
+2019-10-04 11:39:36.038   Version of existing file: (none)
+2019-10-04 11:39:36.040   Installing the file.
+2019-10-04 11:39:36.045   Successfully installed the file.
+2019-10-04 11:39:36.048   -- File entry --
+2019-10-04 11:39:36.055   Dest filename: C:\Enabler\www\Login.aspx
+2019-10-04 11:39:36.058   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.060   Dest file exists.
+2019-10-04 11:39:36.062   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.064   Version of our file: (none)
+2019-10-04 11:39:36.072   Version of existing file: (none)
+2019-10-04 11:39:36.074   Installing the file.
+2019-10-04 11:39:36.079   Successfully installed the file.
+2019-10-04 11:39:36.082   -- File entry --
+2019-10-04 11:39:36.089   Dest filename: C:\Enabler\www\Logoff.aspx
+2019-10-04 11:39:36.091   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.093   Dest file exists.
+2019-10-04 11:39:36.095   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.097   Version of our file: (none)
+2019-10-04 11:39:36.106   Version of existing file: (none)
+2019-10-04 11:39:36.108   Installing the file.
+2019-10-04 11:39:36.112   Successfully installed the file.
+2019-10-04 11:39:36.115   -- File entry --
+2019-10-04 11:39:36.122   Dest filename: C:\Enabler\www\MonitorState.aspx
+2019-10-04 11:39:36.125   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.126   Dest file exists.
+2019-10-04 11:39:36.128   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.130   Version of our file: (none)
+2019-10-04 11:39:36.139   Version of existing file: (none)
+2019-10-04 11:39:36.141   Installing the file.
+2019-10-04 11:39:36.145   Successfully installed the file.
+2019-10-04 11:39:36.148   -- File entry --
+2019-10-04 11:39:36.155   Dest filename: C:\Enabler\www\Ports.aspx
+2019-10-04 11:39:36.157   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.159   Dest file exists.
+2019-10-04 11:39:36.161   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.163   Version of our file: (none)
+2019-10-04 11:39:36.168   Version of existing file: (none)
+2019-10-04 11:39:36.171   Installing the file.
+2019-10-04 11:39:36.175   Successfully installed the file.
+2019-10-04 11:39:36.179   -- File entry --
+2019-10-04 11:39:36.188   Dest filename: C:\Enabler\www\Pumps.aspx
+2019-10-04 11:39:36.191   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.193   Dest file exists.
+2019-10-04 11:39:36.195   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.197   Version of our file: (none)
+2019-10-04 11:39:36.207   Version of existing file: (none)
+2019-10-04 11:39:36.209   Installing the file.
+2019-10-04 11:39:36.215   Successfully installed the file.
+2019-10-04 11:39:36.218   -- File entry --
+2019-10-04 11:39:36.226   Dest filename: C:\Enabler\www\PumpTotals.aspx
+2019-10-04 11:39:36.229   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.232   Dest file exists.
+2019-10-04 11:39:36.234   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.237   Version of our file: (none)
+2019-10-04 11:39:36.241   Version of existing file: (none)
+2019-10-04 11:39:36.243   Installing the file.
+2019-10-04 11:39:36.248   Successfully installed the file.
+2019-10-04 11:39:36.251   -- File entry --
+2019-10-04 11:39:36.260   Dest filename: C:\Enabler\www\SiteConfiguration.aspx
+2019-10-04 11:39:36.264   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.266   Dest file exists.
+2019-10-04 11:39:36.268   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.271   Version of our file: (none)
+2019-10-04 11:39:36.281   Version of existing file: (none)
+2019-10-04 11:39:36.283   Installing the file.
+2019-10-04 11:39:36.288   Successfully installed the file.
+2019-10-04 11:39:36.291   -- File entry --
+2019-10-04 11:39:36.299   Dest filename: C:\Enabler\www\SiteModes.aspx
+2019-10-04 11:39:36.302   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.306   Dest file exists.
+2019-10-04 11:39:36.308   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.310   Version of our file: (none)
+2019-10-04 11:39:36.319   Version of existing file: (none)
+2019-10-04 11:39:36.322   Installing the file.
+2019-10-04 11:39:36.329   Successfully installed the file.
+2019-10-04 11:39:36.331   -- File entry --
+2019-10-04 11:39:36.339   Dest filename: C:\Enabler\www\SiteModeChange.aspx
+2019-10-04 11:39:36.342   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.345   Dest file exists.
+2019-10-04 11:39:36.347   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.350   Version of our file: (none)
+2019-10-04 11:39:36.360   Version of existing file: (none)
+2019-10-04 11:39:36.362   Installing the file.
+2019-10-04 11:39:36.367   Successfully installed the file.
+2019-10-04 11:39:36.374   -- File entry --
+2019-10-04 11:39:36.382   Dest filename: C:\Enabler\www\SiteMonitor.aspx
+2019-10-04 11:39:36.385   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.389   Dest file exists.
+2019-10-04 11:39:36.391   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.393   Version of our file: (none)
+2019-10-04 11:39:36.400   Version of existing file: (none)
+2019-10-04 11:39:36.402   Installing the file.
+2019-10-04 11:39:36.409   Successfully installed the file.
+2019-10-04 11:39:36.412   -- File entry --
+2019-10-04 11:39:36.419   Dest filename: C:\Enabler\www\SiteSettings.aspx
+2019-10-04 11:39:36.421   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.423   Dest file exists.
+2019-10-04 11:39:36.424   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.426   Version of our file: (none)
+2019-10-04 11:39:36.433   Version of existing file: (none)
+2019-10-04 11:39:36.439   Installing the file.
+2019-10-04 11:39:36.443   Successfully installed the file.
+2019-10-04 11:39:36.445   -- File entry --
+2019-10-04 11:39:36.453   Dest filename: C:\Enabler\www\SystemStatus.aspx
+2019-10-04 11:39:36.455   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.457   Dest file exists.
+2019-10-04 11:39:36.459   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.461   Version of our file: (none)
+2019-10-04 11:39:36.468   Version of existing file: (none)
+2019-10-04 11:39:36.470   Installing the file.
+2019-10-04 11:39:36.474   Successfully installed the file.
+2019-10-04 11:39:36.477   -- File entry --
+2019-10-04 11:39:36.484   Dest filename: C:\Enabler\www\Tags.aspx
+2019-10-04 11:39:36.486   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.488   Dest file exists.
+2019-10-04 11:39:36.490   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.492   Version of our file: (none)
+2019-10-04 11:39:36.499   Version of existing file: (none)
+2019-10-04 11:39:36.501   Installing the file.
+2019-10-04 11:39:36.506   Successfully installed the file.
+2019-10-04 11:39:36.508   -- File entry --
+2019-10-04 11:39:36.514   Dest filename: C:\Enabler\www\TagControllers.aspx
+2019-10-04 11:39:36.518   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.520   Dest file exists.
+2019-10-04 11:39:36.523   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.524   Version of our file: (none)
+2019-10-04 11:39:36.528   Version of existing file: (none)
+2019-10-04 11:39:36.529   Installing the file.
+2019-10-04 11:39:36.534   Successfully installed the file.
+2019-10-04 11:39:36.540   -- File entry --
+2019-10-04 11:39:36.546   Dest filename: C:\Enabler\www\TankGauges.aspx
+2019-10-04 11:39:36.548   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.550   Dest file exists.
+2019-10-04 11:39:36.552   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.553   Version of our file: (none)
+2019-10-04 11:39:36.561   Version of existing file: (none)
+2019-10-04 11:39:36.563   Installing the file.
+2019-10-04 11:39:36.567   Successfully installed the file.
+2019-10-04 11:39:36.573   -- File entry --
+2019-10-04 11:39:36.579   Dest filename: C:\Enabler\www\TankTotals.aspx
+2019-10-04 11:39:36.581   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.582   Dest file exists.
+2019-10-04 11:39:36.584   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.586   Version of our file: (none)
+2019-10-04 11:39:36.590   Version of existing file: (none)
+2019-10-04 11:39:36.591   Installing the file.
+2019-10-04 11:39:36.595   Successfully installed the file.
+2019-10-04 11:39:36.597   -- File entry --
+2019-10-04 11:39:36.604   Dest filename: C:\Enabler\www\Tanks.aspx
+2019-10-04 11:39:36.607   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.608   Dest file exists.
+2019-10-04 11:39:36.610   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.612   Version of our file: (none)
+2019-10-04 11:39:36.616   Version of existing file: (none)
+2019-10-04 11:39:36.619   Installing the file.
+2019-10-04 11:39:36.623   Successfully installed the file.
+2019-10-04 11:39:36.626   -- File entry --
+2019-10-04 11:39:36.632   Dest filename: C:\Enabler\www\Terminals.aspx
+2019-10-04 11:39:36.634   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.639   Dest file exists.
+2019-10-04 11:39:36.641   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.642   Version of our file: (none)
+2019-10-04 11:39:36.652   Version of existing file: (none)
+2019-10-04 11:39:36.654   Installing the file.
+2019-10-04 11:39:36.658   Successfully installed the file.
+2019-10-04 11:39:36.660   -- File entry --
+2019-10-04 11:39:36.667   Dest filename: C:\Enabler\www\Users.aspx
+2019-10-04 11:39:36.670   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.672   Dest file exists.
+2019-10-04 11:39:36.673   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.675   Version of our file: (none)
+2019-10-04 11:39:36.683   Version of existing file: (none)
+2019-10-04 11:39:36.685   Installing the file.
+2019-10-04 11:39:36.690   Successfully installed the file.
+2019-10-04 11:39:36.693   -- File entry --
+2019-10-04 11:39:36.698   Dest filename: C:\Enabler\www\wetstockpumpdata.aspx
+2019-10-04 11:39:36.701   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.703   Dest file exists.
+2019-10-04 11:39:36.705   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.706   Version of our file: (none)
+2019-10-04 11:39:36.710   Version of existing file: (none)
+2019-10-04 11:39:36.711   Installing the file.
+2019-10-04 11:39:36.715   Successfully installed the file.
+2019-10-04 11:39:36.718   -- File entry --
+2019-10-04 11:39:36.726   Dest filename: C:\Enabler\www\wetstocktankdata.aspx
+2019-10-04 11:39:36.729   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.731   Dest file exists.
+2019-10-04 11:39:36.733   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.735   Version of our file: (none)
+2019-10-04 11:39:36.742   Version of existing file: (none)
+2019-10-04 11:39:36.744   Installing the file.
+2019-10-04 11:39:36.748   Successfully installed the file.
+2019-10-04 11:39:36.750   -- File entry --
+2019-10-04 11:39:36.759   Dest filename: C:\Enabler\PumpUpdate.exe
+2019-10-04 11:39:36.761   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.763   Dest file exists.
+2019-10-04 11:39:36.765   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.766   Version of our file: 2019.2.15.0
+2019-10-04 11:39:36.775   Version of existing file: 2019.2.15.0
+2019-10-04 11:39:36.776   Same version. Skipping.
+2019-10-04 11:39:36.778   -- File entry --
+2019-10-04 11:39:36.785   Dest filename: C:\Enabler\PumpUpdate.ini
+2019-10-04 11:39:36.788   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.789   Dest file exists.
+2019-10-04 11:39:36.791   Time stamp of existing file: 2019-10-04 11:32:15.186
+2019-10-04 11:39:36.794   Version of our file: (none)
+2019-10-04 11:39:36.797   Version of existing file: (none)
+2019-10-04 11:39:36.799   Installing the file.
+2019-10-04 11:39:36.802   Successfully installed the file.
+2019-10-04 11:39:36.807   -- File entry --
+2019-10-04 11:39:36.813   Dest filename: C:\Enabler\bin\EnablerEvent.dll
+2019-10-04 11:39:36.815   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.817   Dest file exists.
+2019-10-04 11:39:36.819   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.821   Version of our file: (none)
+2019-10-04 11:39:36.823   Version of existing file: (none)
+2019-10-04 11:39:36.826   Installing the file.
+2019-10-04 11:39:36.835   Successfully installed the file.
+2019-10-04 11:39:36.841   -- File entry --
+2019-10-04 11:39:36.849   Dest filename: C:\Enabler\bin\subinacl.exe
+2019-10-04 11:39:36.853   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.856   Dest file exists.
+2019-10-04 11:39:36.859   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:36.861   Version of our file: 5.2.3790.1180
+2019-10-04 11:39:36.864   Version of existing file: 5.2.3790.1180
+2019-10-04 11:39:36.867   Same version. Skipping.
+2019-10-04 11:39:36.871   -- File entry --
+2019-10-04 11:39:36.879   Dest filename: C:\Enabler\CreateRegKeyEvent.bat
+2019-10-04 11:39:36.883   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:36.886   Dest file exists.
+2019-10-04 11:39:36.891   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:36.893   Version of our file: (none)
+2019-10-04 11:39:36.901   Version of existing file: (none)
+2019-10-04 11:39:36.904   Installing the file.
+2019-10-04 11:39:36.909   Successfully installed the file.
+2019-10-04 11:39:36.911   -- File entry --
+2019-10-04 11:39:36.919   Dest filename: C:\Enabler\bin\PDFViewer.exe
+2019-10-04 11:39:36.922   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:36.923   Dest file exists.
+2019-10-04 11:39:36.925   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:36.928   Version of our file: (none)
+2019-10-04 11:39:36.931   Version of existing file: (none)
+2019-10-04 11:39:36.935   Installing the file.
+2019-10-04 11:39:37.090   Successfully installed the file.
+2019-10-04 11:39:37.094   -- File entry --
+2019-10-04 11:39:37.101   Dest filename: C:\Enabler\ITLMPPSim.dll
+2019-10-04 11:39:37.104   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:37.106   Dest file exists.
+2019-10-04 11:39:37.108   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-04 11:39:37.110   Version of our file: 2.1.1.0
+2019-10-04 11:39:37.119   Version of existing file: 2.1.1.0
+2019-10-04 11:39:37.121   Same version. Skipping.
+2019-10-04 11:39:37.125   Will register the file (a DLL/OCX) later.
+2019-10-04 11:39:37.131   -- File entry --
+2019-10-04 11:39:37.138   Dest filename: C:\Enabler\SQLInstall.bat
+2019-10-04 11:39:37.140   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:37.142   Dest file exists.
+2019-10-04 11:39:37.144   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:37.146   Version of our file: (none)
+2019-10-04 11:39:37.148   Version of existing file: (none)
+2019-10-04 11:39:37.150   Installing the file.
+2019-10-04 11:39:37.155   Successfully installed the file.
+2019-10-04 11:39:37.158   -- File entry --
+2019-10-04 11:39:37.166   Dest filename: C:\Enabler\MSDEInstall.bat
+2019-10-04 11:39:37.170   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:37.172   Dest file exists.
+2019-10-04 11:39:37.175   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:37.178   Version of our file: (none)
+2019-10-04 11:39:37.182   Version of existing file: (none)
+2019-10-04 11:39:37.184   Installing the file.
+2019-10-04 11:39:37.190   Successfully installed the file.
+2019-10-04 11:39:37.194   -- File entry --
+2019-10-04 11:39:37.203   Dest filename: C:\Enabler\bin\enablerinstall.dll
+2019-10-04 11:39:37.207   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:37.209   Dest file exists.
+2019-10-04 11:39:37.212   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-04 11:39:37.215   Version of our file: (none)
+2019-10-04 11:39:37.218   Version of existing file: (none)
+2019-10-04 11:39:37.221   Installing the file.
+2019-10-04 11:39:37.230   Successfully installed the file.
+2019-10-04 11:39:37.234   -- INI entry --
+2019-10-04 11:39:37.240   Dest filename: C:\Enabler\PumpUpdate.ini
+2019-10-04 11:39:37.242   Section: DATABASE
+2019-10-04 11:39:37.243   Entry: OSQLPATH
+2019-10-04 11:39:37.245   Value: OSQL_PATH
+2019-10-04 11:39:37.247   Updating the .INI file.
+2019-10-04 11:39:37.253   Successfully updated the .INI file.
+2019-10-04 11:39:37.264   Registering 32-bit DLL/OCX: C:\Enabler\comdlg32.ocx
+2019-10-04 11:39:37.273   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\comdlg32.ocx"
+2019-10-04 11:39:37.344   Registration successful.
+2019-10-04 11:39:37.346   Registering 32-bit DLL/OCX: C:\Enabler\comct232.ocx
+2019-10-04 11:39:37.351   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\comct232.ocx"
+2019-10-04 11:39:37.413   Registration successful.
+2019-10-04 11:39:37.415   Registering 32-bit DLL/OCX: C:\Enabler\comctl32.ocx
+2019-10-04 11:39:37.421   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\comctl32.ocx"
+2019-10-04 11:39:37.519   Registration successful.
+2019-10-04 11:39:37.521   Registering 32-bit DLL/OCX: C:\Enabler\Mscomm32.ocx
+2019-10-04 11:39:37.526   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\Mscomm32.ocx"
+2019-10-04 11:39:37.586   Registration successful.
+2019-10-04 11:39:37.589   Registering 32-bit DLL/OCX: C:\Enabler\Msflxgrd.ocx
+2019-10-04 11:39:37.594   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\Msflxgrd.ocx"
+2019-10-04 11:39:37.645   Registration successful.
+2019-10-04 11:39:37.647   Registering 32-bit DLL/OCX: C:\Enabler\Msrdc20.ocx
+2019-10-04 11:39:37.655   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\Msrdc20.ocx"
+2019-10-04 11:39:37.723   Registration successful.
+2019-10-04 11:39:37.725   Registering 32-bit DLL/OCX: C:\Enabler\Msrdo20.dll
+2019-10-04 11:39:37.729   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\Msrdo20.dll"
+2019-10-04 11:39:37.786   Registration successful.
+2019-10-04 11:39:37.788   Registering 32-bit DLL/OCX: C:\Enabler\SecurityModule.dll
+2019-10-04 11:39:37.793   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\SecurityModule.dll"
+2019-10-04 11:39:37.866   Registration successful.
+2019-10-04 11:39:37.869   Registering 32-bit DLL/OCX: C:\Enabler\EnbSessionX2.ocx
+2019-10-04 11:39:37.875   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\EnbSessionX2.ocx"
+2019-10-04 11:39:37.972   Registration successful.
+2019-10-04 11:39:37.974   Registering 32-bit DLL/OCX: C:\Enabler\EnbAttendantX2.ocx
+2019-10-04 11:39:37.978   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\EnbAttendantX2.ocx"
+2019-10-04 11:39:38.040   Registration successful.
+2019-10-04 11:39:38.042   Registering 32-bit DLL/OCX: C:\Enabler\EnbPumpX2.ocx
+2019-10-04 11:39:38.048   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\EnbPumpX2.ocx"
+2019-10-04 11:39:38.104   Registration successful.
+2019-10-04 11:39:38.107   Registering 32-bit DLL/OCX: C:\Enabler\ITLMPPSim.dll
+2019-10-04 11:39:38.111   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\ITLMPPSim.dll"
+2019-10-04 11:39:38.167   Registration successful.
+2019-10-04 11:39:38.173   Saving uninstall information.
+2019-10-04 11:39:38.175   Renaming uninstaller.
+2019-10-04 11:39:38.181   Deleting uninstall key left over from previous administrative 32-bit install.
+2019-10-04 11:39:38.182   Creating new uninstall key: HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Uninstall\{95EC957B-DB36-4EDD-9C7C-B19F896CC37D}_is1
+2019-10-04 11:39:38.184   Writing uninstall key values.
+2019-10-04 11:39:38.187   Detected previous non administrative install? No
+2019-10-04 11:39:38.189   Detected previous administrative 64-bit install? No
+2019-10-04 11:39:38.198   Installation process succeeded.
+2019-10-04 11:39:38.234   LAPTOP-SOCF9T0T
+2019-10-04 11:39:38.244   Jacob Copeland
+2019-10-04 11:39:38.255   Assigning system adminstrator privileges to LAPTOP-SOCF9T0T\Jacob Copeland
+2019-10-04 11:39:38.285   Starting SQL2014 install from C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\SQL2014
+2019-10-04 11:41:04.644   Result of SqlInstall 1
+2019-10-04 11:41:04.668   Message box (OK):
+                          SQL2014 ExpressInstall
+2019-10-04 11:41:14.735   User chose OK.
+2019-10-04 11:41:14.738   ERROR: SQL2014 Express install failed due to SQL password not strong
+2019-10-04 11:41:14.799   Unable to delete log file C:\Users\JACOBC~1\AppData\Local\Temp\Setup Log 2019-10-04 #025.txt
