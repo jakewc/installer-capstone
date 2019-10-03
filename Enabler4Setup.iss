@@ -492,6 +492,10 @@ Source:"{#SourcePath}\Input\miglayout15-swing.jar"; DestDir:"{app}"; Check: IsSD
 //This file is for call dll file in the Install SQL Server
 Source:"{#SourcePath}\Input\bin\EnablerInstall.dll"; Flags:dontcopy;
 
+//install SQLInstall batch file
+Source:"{#SourcePath}\Input\scripts\SQLInstall.bat"; DestDir:"{app}"; Check: IsInstallType('B'); 
+
+
 [Dirs]
 ; deleteafterinstall ONLY DELETES if folder empty at end of install
 Name: "{app}\Docs";
@@ -1081,25 +1085,25 @@ begin
     CMDEND:= CMDUPPER;
 
     //Check for /? or /h or -? or -h  - AT THE START OF THE STRING
-    if CMDSTART = '-H' then begin
+    if pos('-H', CMDSTART) <> 0 then begin
       Log('User requested usage -H')
       SHOW_USAGE:= true
     end;
-    if CMDSTART = '-?' then begin
+    if pos('-?', CMDSTART) <> 0 then begin
       Log('User requested usage -?')
       SHOW_USAGE:= true
     end;
-    if CMDSTART = '/H' then begin
+    if pos('/H', CMDSTART) <> 0 then begin
       Log('User requested usage /H')
       SHOW_USAGE:= true
     end;
-    if CMDSTART = '/?' then begin
+    if pos('/?', CMDSTART) <> 0 then begin
       Log('User requested usage /?')
       SHOW_USAGE:= true
     end;
 
     //Silent unattended install
-    if (pos('/S',CMDUPPER) <> 0) or WizardSilent then begin
+    if (pos('/S ',CMDUPPER) <> 0) or WizardSilent then begin
       Log('SILENT install selected')
       UNATTENDED:='1'
       SILENT:=true
@@ -2430,7 +2434,7 @@ var
 Begin
   if pos('B',COMPONENTS) <> 0 then begin
     if SQL_NEEDED = true then begin
-      INST_DRIVE:= '{src}';
+      INST_DRIVE:= ExpandConstant('{src}');
       INST_DRIVE := INST_DRIVE + ':';
       CreateDir(ExpandConstant('{app}'));
       if SQLEXPRESSNAME = 'MSDE2000' then begin
@@ -2462,12 +2466,13 @@ Begin
         //SQL2016 / 2014 / 2008 / 2005
         //============================
         USER_DOMAIN:= GetEnv('USERDOMAIN');
+        Log(USER_DOMAIN);
         USER_NAME:= GetEnv('USERNAME');
+        Log(USER_NAME);
         SQL_SYSADMIN_USER:=USER_DOMAIN + '\' + USER_NAME;
         Log(Format('Assigning system adminstrator privileges to %s',[SQL_SYSADMIN_USER]));
       
         //Install the SQLInstall batch file.
-        FileCopy('{src}\scripts\SQLInstall.bat', ExpandConstant('{app}')+ '\SQLInstall.bat', False);  
         if SILENT = false then begin
           try
             progressPage := CreateOutputProgressPage('Progress Stage','Installing SQL Server (MSDE2000)');
@@ -2477,7 +2482,7 @@ Begin
             progressPage.Hide;
           end;  
         end;
-        Log(format('Starting %s install from %s\%s',[SQLEXPRESSNAME,'{src}',SQLEXPRESSNAME]));
+        Log(format('Starting %s install from %s\%s',[SQLEXPRESSNAME,ExpandConstant('{src}'),SQLEXPRESSNAME]));
         
         if SQLEXPRESSNAME = 'SQL2016' then begin
           
@@ -2499,31 +2504,31 @@ Begin
           //=======================
           //SQL2016 Express Install
           //=======================
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{src}\SQL2014\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2016\'+inttostr(OS)+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2016', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
         end        
         else if SQLEXPRESSNAME = 'SQL2014' then Begin
           //=======================
           //SQL2014 Express Install
           //=======================
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{src}\SQL2014\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2014\'+inttostr(OS)+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2014', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
         end
         else if SQLEXPRESSNAME = 'SQL2012' then begin
           //=======================
           //SQL2012 Express Install
           //======================= 
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{src}\SQL2012\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2012\'+inttostr(OS)+'" " SQL2012'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2012', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
         end
         else if SQLEXPRESSNAME = 'SQL2008R2' then begin
           //=======================
           //SQL2008 Express Install
           //=======================   
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + '"{src}\SQL2008R2\{OS}" "{SA_PASSWORD}" "{SQL_SYSADMIN_USER}"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);          
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2008R2\'+inttostr(OS)+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
         end
         else begin
           //=======================
           //SQL2005 Express Install
           //======================= 
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+INST_DRIVE+ '"{src}\SQL2005\'+'" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);            
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}\SQL2005')+'" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
         end;
       end;
     
@@ -4220,6 +4225,7 @@ begin
     checkSP();
     uninstallAPIMSI();
     blankPasswordChecks();
+    InstallServerComponents();
   end;
   if CurStep = ssPostInstall then begin
     InstallSqlServer();

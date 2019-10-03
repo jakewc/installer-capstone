@@ -1,0 +1,50 @@
+﻿2019-10-03 15:15:53.083   Log opened. (Time zone: UTC+13:00)
+2019-10-03 15:15:53.084   Setup version: Inno Setup version 6.0.2 (u)
+2019-10-03 15:15:53.086   Original Setup EXE: C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe
+2019-10-03 15:15:53.087   Setup command line: /SL5="$130422,40003364,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$304B0 /NOTIFYWND=$404F4 /DEBUGWND=$50032 
+2019-10-03 15:15:53.089   Windows version: 10.0.18362  (NT platform: Yes)
+2019-10-03 15:15:53.090   64-bit Windows: Yes
+2019-10-03 15:15:53.093   Processor architecture: x64
+2019-10-03 15:15:53.095   User privileges: Administrative
+2019-10-03 15:15:53.099   Administrative install mode: Yes
+2019-10-03 15:15:53.102   Install mode root key: HKEY_LOCAL_MACHINE
+2019-10-03 15:15:53.103   64-bit install mode: No
+2019-10-03 15:15:53.110   Created temporary directory: C:\Users\JACOBC~1\AppData\Local\Temp\is-NE02H.tmp
+2019-10-03 15:15:53.135   -- DLL function import --
+2019-10-03 15:15:53.143   Function name: ExitProcess
+2019-10-03 15:15:53.145   DLL name: kernel32.dll
+2019-10-03 15:15:53.147   Dest DLL name: kernel32.dll
+2019-10-03 15:15:53.150   Importing the DLL function.
+2019-10-03 15:15:53.151   Successfully imported the DLL function. Delay loaded? No
+2019-10-03 15:15:53.153   -- DLL function import --
+2019-10-03 15:15:53.156   Function name: GetRegKeyValue
+2019-10-03 15:15:53.158   DLL name: files:EnablerInstall.dll
+2019-10-03 15:15:53.160   Extracting temporary file: C:\Users\JACOBC~1\AppData\Local\Temp\is-NE02H.tmp\EnablerInstall.dll
+2019-10-03 15:15:53.169   Dest DLL name: C:\Users\JACOBC~1\AppData\Local\Temp\is-NE02H.tmp\EnablerInstall.dll
+2019-10-03 15:15:53.173   Importing the DLL function.
+2019-10-03 15:15:53.208   Successfully imported the DLL function. Delay loaded? No
+2019-10-03 15:15:53.215   Initialising variables.
+2019-10-03 15:15:53.502   Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10
+2019-10-03 15:15:53.512   Installing Enabler V4.6.3.6087 on Windows V10.00.18362 64bit (Version 10)
+2019-10-03 15:15:53.553   Option = /SL5="$130422,40003364,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$304B0 /NOTIFYWND=$404F4 /DEBUGWND=$50032 
+2019-10-03 15:15:53.588   SILENT install selected
+2019-10-03 15:15:53.644   CMD /SL5="$130422,40003364,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$304B0 /NOTIFYWND=$404F4 /DEBUGWND=$50032 
+2019-10-03 15:15:53.681   IE Location C:\Program Files\Internet Explorer;
+2019-10-03 15:15:53.699   IE VERSION: 9.11.18362.0
+2019-10-03 15:15:53.729   Installing from C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output drive.
+2019-10-03 15:15:54.053   Windows product type: 1
+2019-10-03 15:15:54.100   Location of OSQL.EXE is  (Initial Checks)
+2019-10-03 15:15:54.131   SQL2014 folder found, this will be installed.
+2019-10-03 15:15:54.144   SQL server folders parsed, SQL server to install=SQL2014, Architecture=64, Windows version=10.00.18362, OS ver=10
+2019-10-03 15:15:54.167   SQLEXPRESSNAME = SQL2014
+2019-10-03 15:15:54.289   Checking disk space
+2019-10-03 15:15:54.608   B
+2019-10-03 15:16:24.613   Message box (Yes/No):
+                          Setup is not complete. If you exit now, the program will not be installed.
+                          
+                          You may run Setup again at another time to complete the installation.
+                          
+                          Exit Setup?
+2019-10-03 15:16:25.911   User chose Yes.
+2019-10-03 15:16:25.926   Deinitializing Setup.
+2019-10-03 15:16:26.074   Unable to delete log file C:\Users\JACOBC~1\AppData\Local\Temp\Setup Log 2019-10-03 #020.txt
