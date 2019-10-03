@@ -1060,13 +1060,34 @@ end;
 //parse command line options
 //==========================
 
+// Strips out all internal Inno Setup switches leaving just user command parameters.
+function GetUserCmdTail(S:string): string;
+var
+  I: Integer;
+begin
+  for I := 1 to ParamCount do
+  begin
+    S := ParamStr(I);
+    if (CompareText(Copy(S, 1, 5), '/SL5=') <> 0) and
+       (CompareText(Copy(S, 1, 10), '/DEBUGWND=') <> 0) and
+       (CompareText(Copy(S, 1, 10), '/SPAWNWND=') <> 0) and
+       (CompareText(Copy(S, 1, 11), '/NOTIFYWND=') <> 0) and
+       (CompareText(S, '/DETACHEDMSG') <> 0) and
+       (CompareText(S, '/DebugSpawnServer') <> 0) then
+    begin
+      Result := Result + AddQuotes(S) + ' ';
+    end;
+  end;
+end;
+
+
 procedure parseCommandLineOptions();
 var
   ClientName: string;
   Password: string;
   Instance: string;
 begin
-  CMDLINEUPPER:= GetCmdTail;
+  CMDLINEUPPER:= GetUserCmdTail(GetCmdTail);
   //CMDLINEUPPER:= ExpandConstant('{param:CMDLINEVAL|}'); <-- Less elegant implementation
   ClientName:= ExpandConstant('{param:CLIENTNAME|}');
   Password:= ExpandConstant('{param:PASSWORDPARAMETER|}');
@@ -4219,6 +4240,7 @@ begin
     installNet4();     
     checkSP();
     uninstallAPIMSI();
+    InstallServerComponents();
     blankPasswordChecks();
   end;
   if CurStep = ssPostInstall then begin
