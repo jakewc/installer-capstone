@@ -2451,12 +2451,13 @@ Begin
         end;
         Log(Format('Starting MEDE2000 install from %s\MSDE2000',[ExpandConstant('{src}')]));
         Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\MSDEInstall.bat '+INST_DRIVE+ '"'+ExpandConstant('{src}')+'\MSDE2000" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-        if DirExists(ExpandConstant('{app}')+'\MSDE_REBOOT_PENDING') OR FileExists(ExpandConstant('{app}')+'\MSDE_REBOOT_PENDING') then begin
+        if DirExists(ExpandConstant('{app}')+'\MSDE_REBOOT_PENDING') then begin
           if UNATTENDED = '0' then begin
             MsgBox('Rebooting', mbInformation, MB_OK);
           end;
           Log('MSDE installed - reboot pending');
-          Abort();
+          RESTART_DECISION:=true;
+          //Abort();
         end;
       end
       else begin
@@ -2501,7 +2502,7 @@ Begin
           //=======================
           //SQL2016 Express Install
           //=======================
-          //Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2016\'+inttostr(OS)+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2016', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2016\'+inttostr(OS)+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2016', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
         end        
         else if SQLEXPRESSNAME = 'SQL2014' then Begin
           //=======================
@@ -2553,7 +2554,7 @@ Begin
           RESTART_DECISION:=TRUE;
           //EXIT Installation;
         end;
-        Abort();
+        //Abort();
       end;
 
       //Error3 - Updates required
@@ -2615,19 +2616,22 @@ Begin
           //SUB_KEY_IN:= GetEnv('PATH'); 
           //Log('64-bit OS therefore copying EnablerInstall.dll');
           //GetRegKeyValue(REGKEY);
-          RegQueryStringValue('HKEY_AUTO', REG_KEY_IN, 'Path', OSQL_PATH);
+          RegQueryStringValue(HKEY_LOCAL_MACHINE, REG_KEY_IN, 'Path', OSQL_PATH);
           Log('The path to OSQL.EXE for this 64-bit install of SQL Server is: ' + OSQL_PATH);
+          if (pos(' (x86)', OSQL_PATH)) <> 0 then begin
+            Delete(OSQL_PATH, pos(' (x86)',OSQL_PATH), 6);
+          end;
           Log('OSQL_PATH is currently set to ' + OSQL_PATH);
         end
         else if OS = 32 then begin
           Log('32-bit OS therefore will use standard WISE way to get key from registry');
-          RegQueryStringValue('HKEY_AUTO', REG_KEY_IN, 'Path', OSQL_PATH);
+          RegQueryStringValue(HKEY_LOCAL_MACHINE, REG_KEY_IN, 'Path', OSQL_PATH);
           Log('OSQL_PATH is ' + OSQL_PATH);
         end;
         Log('Processor bit size (e.g. 32/64 bit), the variable OS is ' + IntToStr(OS));
       end
       else begin
-        RegQueryStringValue('HKEY_AUTO', 'Software\Microsoft\Windows\CurrentVersion', 'ProgramFilesDir', POSQL_PATH);
+        RegQueryStringValue(HKEY_LOCAL_MACHINE, 'Software\Microsoft\Windows\CurrentVersion', 'ProgramFilesDir', POSQL_PATH);
         OSQL_PATH := POSQL_PATH+ '\Microsoft SQLServer\90\Tools\Binn';
         if not FileExists(OSQL_PATH +'\OSQL.EXE') then begin
           OSQL_PATH := POSQL_PATH+ '\Microsoft SQLServer\80\Tools\Binn';
@@ -2636,14 +2640,14 @@ Begin
       end;
 
       //In case we can't find OSQL.EXE anywhere
-      if FileExists(OSQL_PATH +'\OSQL.EXE')=False then begin
+      if not FileExists(OSQL_PATH +'\OSQL.EXE') then begin
         Log('ERROR: Cannot find OSQL.EXE');
         Abort();
       end;
 
       //OSQL should work now, we will test it now to make sure.
       Log(Format('Making sure that OSQL works %s',[OSQL_PATH]));
-      Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S%SQLQUERY% -Q "select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+' -Q "select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
       if ResultCode = 0 then begin
         RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler', 'InstallComponents', '');
         RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler', 'UnattendedInstall', '');
@@ -2659,15 +2663,15 @@ Begin
         end;
         Log('OSQL not working rebooting...');
         RESTART_DECISION:=TRUE;
-        Abort();
+        //Abort();
       end
     end
     else begin
       if SQL_INSTANCE = '' then begin
-        Exec('CMD.EXE','sc start MSSQLSERVER','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        Exec('CMD.EXE','net start MSSQLSERVER','', SW_SHOW, ewWaitUntilIdle, ResultCode);
       end
       else begin
-        Exec('CMD.EXE', 'sc start '+SQL_INSTANCE,'', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        Exec('CMD.EXE', 'net start MSSQL$'+SQL_INSTANCE,'', SW_SHOW, ewWaitUntilIdle, ResultCode);
       end;
     end;
 
@@ -2685,9 +2689,9 @@ Begin
         end;  
       end;
       //Delete All Drivers before copy the latest
-      DelTree(ExpandConstant('{src}')+'\Driver\*', False, True, True);
+      DelTree(ExpandConstant('{app}')+'\Driver\*', False, True, True);
       //Copy Installation files across
-      FileCopy(ExpandConstant('{app}')+'\Driver\DriverInstaller.exe', ExpandConstant('{app}')+'\Driver\DriverInstaller.exe', False);
+      FileCopy(ExpandConstant('{src}')+'\Driver\DriverInstaller.exe', ExpandConstant('{app}')+'\Driver\DriverInstaller.exe', False);
       if OS = 64 then begin
         FileCopy(ExpandConstant('{src}')+'\Driver\x64\EnablerPCI.inf', ExpandConstant('{app}')+'\Driver\EnablerPCI.inf', False);
         FileCopy(ExpandConstant('{src}')+'\Driver\x64\Enbx64.sys', ExpandConstant('{app}')+'\Driver\Enbx64.sys', False);
@@ -2711,7 +2715,7 @@ Begin
       //Check that the RunOnce Key is present and create it if it doesn't
       RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', '{Default}', '');
       Exec(ExpandConstant('{app}')+'\Driver\DriverInstaller.exe','','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-      Log(Format('Driver Installer return code %s',[Resultcode]));
+      Log('Driver Installer return code: ' + inttostr(ResultCode));
       if ResultCode = 1 then begin
         DRIVERCODE:=1;
       end
