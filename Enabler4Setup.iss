@@ -3387,6 +3387,10 @@ end;
 //=====================================================
 // Setup Access Permission
 //=====================================================
+function GiveOSQLPath(const FileName, path: string): Boolean;
+begin
+  Result := SetIniString('DATABASE', 'OSQLPATH', path, FileName);
+end;
 procedure setupAccessPermission();
 var 
   LOGTIME:String;
@@ -3620,6 +3624,7 @@ Begin
     Log(Format('INFO: Putting OSQL path (%s) into PumpUpdate.INI',[OSQL_PATH]));
     //Edit INI file
     Log(Format('INFO: SQL_INSTANCE variable set to %s',[SQL_INSTANCE]));
+    GiveOSQLPath('PumpUpdate.ini', OSQL_PATH);
     if SQL_INSTANCE = '' then begin
       Log('INFO: Running PumpUpdate for default instance');
       Exec(ExpandConstant('{app}')+'\PumpUpdate.exe','/S /D /OSQL','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
