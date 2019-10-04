@@ -502,6 +502,7 @@ Name: "{app}\SDK\Doc\VisualStudio";
 Name: "{app}\SDK"; 
 Name: "{app}\SDK\Samples"; 
 Name: "{group}\SDK\";
+Name: "C:\EnablerDB";
 
 [Messages]
 ;Change the message on the standard welcome page
@@ -1001,7 +1002,7 @@ begin
   //MAINDIR:='C:\Enabler';   // MAINDIR is the variable that holds the default destination directory.    
   //BACKUP:=MAINDIR+'\BACKUP';   // BACKUP is the variable that holds the path that all backup files will be copied to when overwritten
   DOBACKUP:='B';   // DOBACKUP determines if a backup will be performed. The possible values are A (do backup) or B (do not do backup).
-  DBDIR:=' C:\EnablerDB';   // DBDIR specifies the location of the Enabler database files.
+  DBDIR:=' C:\EnablerDB\';   // DBDIR specifies the location of the Enabler database files.
 
   // SQL Named Instance name.
   PC_NAME:=GetEnv('COMPUTERNAME');
@@ -3405,8 +3406,8 @@ Begin
     end;
   end;
   Exec(ExpandConstant('{app}\CreateRegKeyEvent.bat'), '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  //Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=directoriesonly ' + ExpandConstant('{app}')+'\log /grant='+ BUILTIN_USERS_GROUP+ '=CRWD /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  //Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=filesonly ' + ExpandConstant('{app}')+'\log\*.* /grant='+ BUILTIN_USERS_GROUP+ '=CRWD /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=directoriesonly ' + ExpandConstant('{app}')+'\log /grant='+ BUILTIN_USERS_GROUP+ '=CRWD /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=filesonly ' + ExpandConstant('{app}')+'\log\*.* /grant='+ BUILTIN_USERS_GROUP+ '=CRWD /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
 
   LOGTIME := GetDateTimeString('dd/mm/yyyy hh:nn:ss', '-', ':');
   Log(Format('Start of setting permissions %s', [LOGTIME]));
@@ -3422,10 +3423,10 @@ Begin
 
   Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{sys}')+'\eventvwr.msc /grant='+BUILTIN_USERS_GROUP+'= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
   Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{sys}')+'\config\Enabler.evt /grant='+BUILTIN_USERS_GROUP+'= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  //Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\log /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  //Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\log\*.* /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\log /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\log\*.* /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
      
-  //Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\ /grant=EnablerAdministrators=F', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\ /grant=EnablerAdministrators=F', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
   Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{app}')+' /grant=EnablerAdministrators=F', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
 
   Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=filesonly'+ExpandConstant('{app}')+'\*.* /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
@@ -3481,14 +3482,14 @@ Begin
     If SQL_INSTANCE = '' then begin
       Log('Confirming MSSQLSERVER service is running');
       //check service MSSQLSERVER
-      Exec('CMD.EXE','sc query "MSSQLSERVER" | findstr "RUNNING"','', SW_SHOW, ewWaitUntilTerminated, ResultCode)
+      Exec('CMD.EXE','sc query MSSQLSERVER','', SW_SHOW, ewWaitUntilIdle, ResultCode)
     end
     else begin
-      Log('Confirming MSSQL$%SQL_INSTANCE% service is running');
+      Log('Confirming MSSQL$'+SQL_INSTANCE+' service is running');
       //check service MSSQL$%SQL_INSTANCE%
-      Exec('CMD.EXE','sc query "MSSQL'+'SQL_INSTANCE"'+' | findstr "RUNNING"','', SW_SHOW, ewWaitUntilTerminated, ResultCode)
+      Exec('CMD.EXE','sc query MSSQL$'+SQL_INSTANCE,'', SW_SHOW, ewWaitUntilIdle, ResultCode)
     end;
-    Log(Format('SQLServer Status: %s', [SQLSERVER_STARTED]));
+    (*Log(Format('SQLServer Status: %s', [SQLSERVER_STARTED]));
     if pos('Running',SQLSERVER_STARTED)<>0 then begin
       Log('ERROR: SQLServer is not Running');
       if SILENT = false then begin
@@ -3501,19 +3502,19 @@ Begin
         end;
       end;
       Abort();
-    end;
+    end;*)
     
     // Setup ODBC Data source and Windows users, info for event logs 
     if SQL_INSTANCE = '' then begin
       Exec(ExpandConstant('{app}') + '\bin\odbcnfg.exe', '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
       if OS = 64 then begin
-        Exec(ExpandConstant('{app}') + '\bin\odbcnfg64.exe', '/install', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        Exec(ExpandConstant('{app}') + '\bin\odbcnfg64.exe', '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
       end;
     end
     else begin
       Exec(ExpandConstant('{app}') + '\bin\odbcnfg.exe', '/i '+SQL_INSTANCE, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
       if OS = 64 then begin
-        Exec(ExpandConstant('{app}') + '\bin\odbcnfg.exe', '/install', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        Exec(ExpandConstant('{app}') + '\bin\odbcnfg.exe', '/i ' + SQL_INSTANCE, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
       end;
     end;
 
@@ -3529,6 +3530,7 @@ Begin
         end;
       end;
       Log('A pre upgrade backup will be performed (Nightly.bat)');
+      Exec('cmd.exe', '/C '+ExpandConstant('{app}\Nightly.bat')+ ' ' + SQLQUERY, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
       if SILENT = false then begin
         try
           progressPage := CreateOutputProgressPage('Progress Stage','The Enabler');
@@ -3540,13 +3542,16 @@ Begin
       end;      
     end;
 
-    CreateDir(DBDIR);
+    if not CreateDir(DBDIR) then begin
+      Log('Not created here');
+    end;
+    Log(DBDIR);
     Log(Format('Passing %s to DBInstall',[OSQL_PATH]));
     // We're supposed to be able to run BAT files directly, but it doesn't seem to work on WinNT
     Exec('CMD.EXE','/C '+ExpandConstant('{app}')+ '\DBInstall.bat "'+DBDIR+'" "'+ExpandConstant('{app}')+'" "'+ExpandConstant('{app}')+'\install.log" "'+OSQL_PATH+'" '+SQLQUERY, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
 
     //We can now check for DBINSTALL_OK and MKUPGRADE_OK files to see if the db install/upgrade worked
-    if dirExists(ExpandConstant('{app}')+'\DBINSTALL_OK') = false then begin
+    if not fileExists(ExpandConstant('{app}')+'\DBINSTALL_OK') then begin
       if UNATTENDED = '0' then begin
         try
           progressPage := CreateOutputProgressPage('Progress Stage','Enabler Database Install Failed');
@@ -3560,7 +3565,7 @@ Begin
       Abort();
     end;
     
-    if FileExists(ExpandConstant('{app}')+'\DBUPGRADE_OK') = false then begin
+    if not FileExists(ExpandConstant('{app}')+'\DBUPGRADE_OK') then begin
       if UNATTENDED = '0' then begin
         try
           progressPage := CreateOutputProgressPage('Progress Stage','Enabler Database Upgrade Failed');
@@ -3588,7 +3593,7 @@ Begin
           progressPage.Hide;
         end;
       end;  
-      Exec(OSQL_PATH+'\OSQL>EXE','-b -d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{app}')+ '\EnablerDBdoc.sql" -o '+ExpandConstant('{app}')+'\EnablerDBdoc.log', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(OSQL_PATH+'\OSQL.EXE','-b -d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{app}')+ '\EnablerDBdoc.sql" -o '+ExpandConstant('{app}')+'\EnablerDBdoc.log', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
     end;
     
     if SILENT = false then begin
@@ -3613,6 +3618,7 @@ Begin
 
     // For clean installs we need to pass the path to OSQL to PumpUpdate but Wise doesn't seem to cope with spaces, so we put the path in ...
     Log(Format('INFO: Putting OSQL path (%s) into PumpUpdate.INI',[OSQL_PATH]));
+    //Edit INI file
     Log(Format('INFO: SQL_INSTANCE variable set to %s',[SQL_INSTANCE]));
     if SQL_INSTANCE = '' then begin
       Log('INFO: Running PumpUpdate for default instance');
