@@ -510,7 +510,7 @@ WelcomeLabel1=Welcome to The Enabler Setup Program. %nThis Program will install 
 WelcomeLabel2=We Recommend that you exit all Windows programs before running this Setup Program. %n%nClick Cancel to quit Setup and close any programs you have running. Click Next to continue with the Setup program. %n%nWARNING: This program is protected by copyright law and international treaties. %n%nUnauthorized reproduction or distribution of this program, or any portion of it, may result in severe civil and criminal penalties, and will be prosecuted to the maximum extent possible under law.
 
 [INI]
-Filename: "{app}\PumpUpdate.ini"; Section: "DATABASE"; Key: "OSQLPATH"; String: OSQL_PATH; Check: IsInstallType('B');
+//Filename: "{app}\PumpUpdate.ini"; Section: "DATABASE"; Key: "OSQLPATH"; String: OSQL_PATH; Check: IsInstallType('B');
 
 [Code]
 
@@ -3624,7 +3624,7 @@ Begin
     Log(Format('INFO: Putting OSQL path (%s) into PumpUpdate.INI',[OSQL_PATH]));
     //Edit INI file
     Log(Format('INFO: SQL_INSTANCE variable set to %s',[SQL_INSTANCE]));
-    GiveOSQLPath('PumpUpdate.ini', OSQL_PATH);
+    GiveOSQLPath(ExpandConstant('{app}')+'\PumpUpdate.ini', OSQL_PATH);
     if SQL_INSTANCE = '' then begin
       Log('INFO: Running PumpUpdate for default instance');
       Exec(ExpandConstant('{app}')+'\PumpUpdate.exe','/S /D /OSQL','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
@@ -3643,7 +3643,7 @@ Begin
         progressPage.Hide;
       end;
     end;
-    Log(format('Pump Update install result %s',[ResultCode]));
+    Log(format('Pump Update install result %s',[inttostr(ResultCode)]));
 
     //Add support for EnbEvent.DLL to the registry
     RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Services\EventLog\Application\Psrvr', 'EventMessageFile', ExpandConstant('{app}')+'\bin\EnablerEvent.dll');
@@ -3682,43 +3682,43 @@ Begin
     if NOSTART = false then begin
       //Start Service psrvr
       //Start Service enbweb
-      Exec('CMD.EXE','sc start psrvr','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-      Exec('CMD.EXE','sc start enbweb','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec('CMD.EXE','net start psrvr','', SW_SHOW, ewWaitUntilIdle, ResultCode);
+      Exec('CMD.EXE','net start enbweb','', SW_SHOW, ewWaitUntilIdle, ResultCode);
     end;
 
     // Add some extra entries to the Wise log - so temporary or generated files are removed at uninstall
-    Log(format('File Tree: %s\sleep.exe',[{app}]));
-    Log(format('File Tree: %s\InstallUtil.InstallLog',[{app}]));
-    Log(format('File Tree: %s\Autoupgrade.*',[{app}]));
-    Log(format('File Tree: %s\SetVersion.*',[{app}]));
-    Log(format('File Tree: %s\config70.log',[{app}]));
-    Log(format('File Tree: %s\DBU*.log',[{app}]));
-    Log(format('File Tree: %s\DBU*.sql',[{app}]));
-    Log(format('File Tree: %s\EnablerDBdoc.log',[{app}]));
-    Log(format('File Tree: %s\PumpUpdate.sql',[{app}]));
-    Log(format('File Tree: %s\pumpupdate.log',[{app}]));
-    Log(format('File Tree: %s\WISE_UPDATE.LOG',[{app}]));
-    Log(format('File Tree: %s\enabler.log',[{app}]));
-    Log(format('File Tree: %s\load.log',[{app}]));
-    Log(format('File Tree: %s\*.bat',[{app}]));
-    Log(format('File Tree: %s\*.oca',[{app}]));
-    Log(format('File Tree: %s\*.nxe',[{app}]));
-    Log(format('File Tree: %s\*.nei',[{app}]));
-    Log(format('File Tree: %s\bin\*.dll',[{app}]));
-    Log(format('File Tree: %s\*.dll',[{app}]));
-    Log(format('File Tree: %s\*OK',[{app}]));
-    Log(format('File Tree: %s\www\Parameters.xml',[{app}]));
-    Log(format('File Tree: %s\PumpUpdate.log',[{app}]));
-    Log(format('File Tree: %s\PumpUpdate.sql',[{app}]));
-    Log(format('File Tree: %s\State\*',[{app}]));
-    Log(format('File Tree: %s\Driver\*',[{app}]));
-    Log(format('File Tree: %s\bin\EnbWeb.InstallLog',[{app}]));
+    Log(format('File Tree: %s\sleep.exe',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\InstallUtil.InstallLog',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\Autoupgrade.*',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\SetVersion.*',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\config70.log',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\DBU*.log',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\DBU*.sql',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\EnablerDBdoc.log',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\PumpUpdate.sql',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\pumpupdate.log',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\WISE_UPDATE.LOG',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\enabler.log',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\load.log',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\*.bat',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\*.oca',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\*.nxe',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\*.nei',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\bin\*.dll',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\*.dll',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\*OK',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\www\Parameters.xml',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\PumpUpdate.log',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\PumpUpdate.sql',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\State\*',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\Driver\*',[ExpandConstant('{app}')]));
+    Log(format('File Tree: %s\bin\EnbWeb.InstallLog',[ExpandConstant('{app}')]));
 
     //Add entries to the Wise log to stop and remove services
-    Log(format('Execute path: %s\scutil.exe /STOP enbweb',[{app}]));
-    Log(format('Execute path: %s\scutil.exe /STOP psrvr',[{app}]));
-    Log(format('Execute path: %s\bin\psrvr4.exe /UNREGSERVER',[{app}]));
-    Log(format('Execute path: %s\bin\enbweb.exe /uninstall',[{app}]));
+    Log(format('Execute path: %s\scutil.exe /STOP enbweb',[ExpandConstant('{app}')]));
+    Log(format('Execute path: %s\scutil.exe /STOP psrvr',[ExpandConstant('{app}')]));
+    Log(format('Execute path: %s\bin\psrvr4.exe /UNREGSERVER',[ExpandConstant('{app}')]));
+    Log(format('Execute path: %s\bin\enbweb.exe /uninstall',[ExpandConstant('{app}')]));
 
   End
   Else Begin
