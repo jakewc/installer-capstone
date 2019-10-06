@@ -1,38 +1,11 @@
-;===================================
-; EnablerSetup return codes:
-;===================================
+;==================
+; Enabler4Setup.iss
+;==================
 
-; 0 - Successful
-; 1 - Parameter error
-; 2 - new IE/new MDAC required
-; 3 - UNC(network) Install error
-; 4 - No Database Server/MSI/.NET components to install. (Can't add Start menu items)
-; 5 - SA Password error
-; 6 - MSDE/MSI requires reboot
-; 7 - MSDE/MSI/.NET installation error
-; 8 - OSQL not working after install. Reboot required.
-; 9 - DBInstall.bat error
-; 10 - Upgrade error
-; 11 - SQL Server not running
-; 12 - Windows OS not supported
-; 13 - UNUSED (was Device Driver Installation Failure)
-; 14 - UNUSED (was The Driver requires a restart to complete installation)
-; 15 - UNUSED (was The Device wasn't present after driver installation)
-; 16 - UNUSED (was File copy error)
-; 17 - Not admin
-; 18 - SQL Version not compatible
-; 19 - SQL Named Instance incorrect
-; 20 - not enough disk space
-; 21 - C: drive compressed
-; 22 - Installation of VC runtime failed
-; 23 - .NET 3.5 required but cannot be installed automatically (Windows Server 2008 only)
-; 24 - Enabler API install failed
-; 25 - 8dot3Name disabled 
- 
-; This variable forces applications to be installed even if the SDK options is not avaliable or selected
-; By including a letter in a varaible that application will be installed
+; The SDK variable forces applications to be installed even if the SDK options is not avaliable or selected
+; By including a letter in a variable that application will be installed
 ; Even if the SDK options is not avaliable or ticked
-; See the variable near the bottom to change what applications are installed when SDK is checked
+; See the SDK_OPTIONS variable to change what applications are installed when SDK is checked
 ; A - MMPSim
 ; B - Pumpdemo
 ; C - Documents (This includes all SDK documents)
@@ -51,7 +24,7 @@ UsePreviousAppDir=no
 OutputBaseFilename=Enabler4Setup
 SetupLogging=yes
 DisableWelcomePage=no
-WizardSmallImageFile=output\branding\logo-web.bmp
+//WizardSmallImageFile=output\branding\logo-web.bmp
 
 [Types]
 Name: "Client"; Description: "Client"
@@ -870,14 +843,14 @@ begin
   Result:=False;
 
   if PageID = serverFilesMissingPage.ID then begin
-    if SQLEXPRESSNAME <> '' then begin
+    if (SQLEXPRESSNAME <> '') or (OSQL_PATH <> '') then begin
       Result:=true;
     end;
   end;
 
   //pages exclusive to Server install
   if PageID = SAPasswordPage.ID then begin
-    if isInstallType('A') then begin
+    if (isInstallType('A')) or (OSQL_PATH <> '') then begin
       Result:=True;
     end;
   end;
@@ -1496,109 +1469,7 @@ begin
         end;
       end;
     end;
-  end
-  else begin
-    
-    //OSQL has been found, SQL server already installed
-
-    SQL_NEEDED := false; 
-    if SILENT = false then begin
-    //display progress message
-    end;
-
-    //If no instance has been passed by the command line 
-    if CMD_INSTANCE = false then begin
-      //GET LIST OF NAMED INSTANCES
-      //Server SQL settings
-
-      //Get temporary filename into INSTANCES
-      INSTANCES := 'temporary.tmp';
-      if (OS=64) and (strtoint(OPERATING_SYSTEM) >= 6) then begin
-        Exec('C:\WINDOWS\Sysnative\CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{tmp}\')+INSTANCES, '', SW_SHOW, ewwaituntilterminated,ResultCode);
-      end
-      else begin
-        Exec('CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{tmp}\')+INSTANCES, '', SW_SHOW, ewwaituntilterminated,ResultCode);
-      end;
-
-      if ResultCOde <> 0 then begin
-        Log('Unable to get SQL Instance Name registry key.' + inttostr(ResultCode));
-        INSTANCE_NAME_NEEDED := true;
-      end
-      else begin
-        LINE := '';
-        NAME := '';
-        SQL_INSTANCES := '';
-
-        LoadStringFromFile(ExpandConstant('{tmp}\'+INSTANCES), LINE);
-
-        NAME := LINE;
-
-        if (pos('MSSQLSERVER',NAME) <> 0) and (INSTANCE_NAME_NEEDED = true) then begin
-          INSTANCE_NAME_NEEDED := FALSE;
-        end
-        else begin
-          if (pos('SQLEXPRESS', NAME) <> 0) and (pos('MSSQLSERVER', NAME) <> 0) and (INSTANCE_NAME_NEEDED = true) then begin
-            SQL_INSTANCE := SQLEXPRESS;
-            SQLQUERY := PC_NAME+'\'+SQL_INSTANCE;
-            INSTANCE_NAME_NEEDED := FALSE;
-          end;
-          //Build list of instances names incase they need to be displayed
-          SQL_INSTANCES := NAME+'#13#10';
-        end;
-
-        Log('SQL Instance Names found '+'#13#10'+SQL_INSTANCES);
-
-        //Check if we found a known instance, if we haven't do we have a list of instances
-        if (INSTANCE_NAME_NEEDED = TRUE) AND (SQL_INSTANCES <> '') then begin
-          //We have fouind instance names, if we haven't found a default one we need to display the list
-          INSTANCE_NAME_LIST := TRUE;
-        END;
-      END;
-
-      if SQL_INSTANCES = '' then begin
-        Log('No SQL Instance names found');
-      end;
-
-      //if we found no available instances
-
-      if INSTANCE_NAME_LIST <> TRUE and INSTANCE_NAME_NEEDED = TRUE THEN BEGIN
-      
-      //OSQL DETECT DEFAULT SQL NAMED INSTANCES
-      //Execute the sql to get the verify the instance name of the default instance or the instance name passed by the command line
-
-      Log('Query database to check instance name '+SQLQUERY);
-      Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+ ' -Q "select count(*) from sysobjects"','',SW_SHOW,ewwaituntilterminated, ResultCode);
-
-      if ResultCode <> 0 then begin
-        Log(SQLQUERY+ ' database instance does not exist or the SQL server is not configured correctly the osql query failed.');
-        
-        //try again with a different instance name
-        
-        SQL_INSTANCE := SQLEXPRESS;
-        SQLQUERY := PC_NAME+'\'+SQL_INSTANCE;
-        Log('Query database to check instance name '+SQLQUERY);
-        Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+ ' -Q "select count(*) from sysobjects"','',SW_SHOW,ewwaituntilterminated, ResultCode);
- 
-        if ResultCode <> 0 then begin
-          SQL_INSTANCE := '';
-          Log(SQLQUERY+ ' database instance does not exist or the SQL server is not configured correctly the osql query failed.');
-          INSTANCE_NAME_NEEDED := TRUE;
-        end
-        else begin
-          INSTANCE_NAME_NEEDED := FALSE;
-        end;
-      end
-      else begin
-        INSTANCE_NAME_NEEDED := FALSE;
-      end;
-    end;
   end;
-
-  //Get available SQL servers for client install
-  //Wise script does not actually do this, it's commented out
-
-  end;
-
 
   //Check if the source media is located in a network drive
   if SQLEXPRESSNAME <> '' then begin
@@ -1609,6 +1480,127 @@ begin
       end;
       Log('Cannot install '+SQLEXPRESSNAME+'from UNC path');
       Abort();
+    end;
+  end;
+end;
+
+procedure OSQLPathFound();
+var
+  ResultCode:Integer;
+  INSTANCES:string;
+  LINE:ansistring;
+begin
+    if OSQL_PATH <> '' then begin
+    
+      //OSQL has been found, SQL server already installed
+
+      SQL_NEEDED := false; 
+      if SILENT = false then begin
+      //display progress message
+      end;
+
+      //If no instance has been passed by the command line 
+      if CMD_INSTANCE = false then begin
+        //GET LIST OF NAMED INSTANCES
+        //Server SQL settings
+
+        //Get temporary filename into INSTANCES
+        INSTANCES := 'temporary.tmp';
+        if (OS=64) and (strtoint(OPERATING_SYSTEM) >= 6) then begin
+          Exec('C:\WINDOWS\Sysnative\CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{tmp}\')+INSTANCES, '', SW_SHOW, ewwaituntilterminated,ResultCode);
+        end
+        else begin
+          Exec('CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{tmp}\')+INSTANCES, '', SW_SHOW, ewwaituntilterminated,ResultCode);
+        end;
+
+        if ResultCOde <> 0 then begin
+          Log('Unable to get SQL Instance Name registry key.' + inttostr(ResultCode));
+          INSTANCE_NAME_NEEDED := true;
+        end
+        else begin
+          LINE := '';
+          NAME := '';
+          SQL_INSTANCES := '';
+
+          LoadStringFromFile(ExpandConstant('{tmp}\'+INSTANCES), LINE);
+
+          NAME := LINE;
+
+          if (pos('MSSQLSERVER',NAME) <> 0) and (INSTANCE_NAME_NEEDED = true) then begin
+            INSTANCE_NAME_NEEDED := FALSE;
+          end
+          else begin
+            if (pos('SQLEXPRESS', NAME) <> 0) and (pos('MSSQLSERVER', NAME) <> 0) and (INSTANCE_NAME_NEEDED = true) then begin
+              SQL_INSTANCE := SQLEXPRESS;
+              SQLQUERY := PC_NAME+'\'+SQL_INSTANCE;
+              INSTANCE_NAME_NEEDED := FALSE;
+            end;
+            //Build list of instances names incase they need to be displayed
+            SQL_INSTANCES := NAME+'#13#10';
+          end;
+
+          Log('SQL Instance Names found '+'#13#10'+SQL_INSTANCES);
+
+          //Check if we found a known instance, if we haven't do we have a list of instances
+          if (INSTANCE_NAME_NEEDED = TRUE) AND (SQL_INSTANCES <> '') then begin
+            //We have fouind instance names, if we haven't found a default one we need to display the list
+            INSTANCE_NAME_LIST := TRUE;
+          END;
+        END;
+
+        if SQL_INSTANCES = '' then begin
+          Log('No SQL Instance names found');
+        end;
+
+        //if we found no available instances
+
+        if INSTANCE_NAME_LIST <> TRUE and INSTANCE_NAME_NEEDED = TRUE THEN BEGIN
+        
+          //OSQL DETECT DEFAULT SQL NAMED INSTANCES
+          //Execute the sql to get the verify the instance name of the default instance or the instance name passed by the command line
+
+          Log('Query database to check instance name '+SQLQUERY);
+          Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+ ' -Q "select count(*) from sysobjects"','',SW_SHOW,ewwaituntilterminated, ResultCode);
+
+          if ResultCode <> 0 then begin
+            Log(SQLQUERY+ ' database instance does not exist or the SQL server is not configured correctly the osql query failed.');
+            
+            //try again with a different instance name
+            
+            SQL_INSTANCE := SQLEXPRESS;
+            SQLQUERY := PC_NAME+'\'+SQL_INSTANCE;
+            Log('Query database to check instance name '+SQLQUERY);
+            Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+ ' -Q "select count(*) from sysobjects"','',SW_SHOW,ewwaituntilterminated, ResultCode);
+     
+            if ResultCode <> 0 then begin
+              SQL_INSTANCE := '';
+              Log(SQLQUERY+ ' database instance does not exist or the SQL server is not configured correctly the osql query failed.');
+              INSTANCE_NAME_NEEDED := TRUE;
+            end
+            else begin
+              INSTANCE_NAME_NEEDED := FALSE;
+            end;
+          end
+          else begin
+            INSTANCE_NAME_NEEDED := FALSE;
+          end;
+        end;
+      end;
+
+  //Get available SQL servers for client install
+  //Wise script does not actually do this, it's commented out
+
+
+    //Check if the source media is located in a network drive
+    if SQLEXPRESSNAME <> '' then begin
+      if INST_DRIVE = '\\' then begin
+        //If the installer is being run from a network location (UNC name) then we cannot install SQL2005
+        if UNATTENDED = '0' then begin
+          msgbox('Cannot install '+SQLEXPRESSNAME+'from UNC path',mbinformation,MB_OK);
+        end;
+        Log('Cannot install '+SQLEXPRESSNAME+'from UNC path');
+        Abort();
+      end;
     end;
   end;
 end;
@@ -2378,30 +2370,31 @@ begin
        //TRUSTED CONNECTION
        TRUSTED_CONNECTION := 1;
        Log('About to query sysobjects ' + OSQL_PATH + ' with Trusted Connection');
-       Exec(OSQL_PATH + '\OSQL.EXE', '-b -d master -E -S' + SQLQUERY +  ' -Q"select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
-       if INSTALL_RESULT = 0 then begin
-          Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C osql -b -d master -E -S' + SQLQUERY +  ' -Q ' +  '"select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+       Exec(OSQL_PATH + '\OSQL.EXE', '-b -d master -E -S' + SQLQUERY +  ' -Q "select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+       Log(inttostr(INSTALL_RESULT); 
+        if INSTALL_RESULT = 0 then begin
+          Exec(ExpandConstant('cmd.exe'), '/C osql -b -d master -E -S' + SQLQUERY +  ' -Q ' +  '"select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
           if INSTALL_RESULT = 0 then begin
             Log('Trusted Connection Succeed !!!');
           end
           else begin
             TRUSTED_CONNECTION := 0;
           end;
-       end
-       else begin
+        end
+        else begin
           TRUSTED_CONNECTION := 0;
-       end;
+        end;
        
-       if TRUSTED_CONNECTION = 0 then begin
-         if not SILENT then begin
-           MsgBox('Installation failed', mbInformation, MB_OK);
-         end;
-         Log('Trusted Connection Failed ! SQL server might not have installed correctly. Or the Named instance was incorrect rc='+IntToStr(INSTALL_RESULT));
-         Abort();
-       end;
+        if TRUSTED_CONNECTION = 0 then begin
+          if not SILENT then begin
+            MsgBox('Installation failed', mbInformation, MB_OK);
+          end;
+          Log('Trusted Connection Failed ! SQL server might not have installed correctly. Or the Named instance was incorrect rc='+IntToStr(INSTALL_RESULT));
+          Abort();
+        end;
 
-       DetectVersionSQLServersInstalled();
-       IsThereAnExistingEnablerInstall();
+        DetectVersionSQLServersInstalled();
+        IsThereAnExistingEnablerInstall();
 
     end
     else begin
@@ -2424,7 +2417,7 @@ procedure blankPasswordChecks();
 begin
   if COMPONENTS = 'B' then begin
     if SQLEXPRESSNAME <> 'MSDE2000' then begin
-      if SA_PASSWORD = '' then begin
+      if (SA_PASSWORD = '') and (OSQL_PATH = '') then begin
         Log('Blank passwords are not allowed for ' + SQLEXPRESSFULLNAME);
         if SILENT = false then begin
           Msgbox('Passwords blank, aborting install', mbinformation, MB_OK);
@@ -3134,9 +3127,7 @@ Begin
   End;
 
   //Create short cut
-  if pos('A',SDK) <> 0 then begin
-    SDK_OPTIONS := 'ABC'
-  End;
+  
 
   //Install the SDK applications (based on client/server install)
   //Install MPPSIM and Driver DLL
@@ -4259,8 +4250,9 @@ begin
   MAINDIR:=ExpandConstant('{app}');
   BACKUP:=MAINDIR+'\BACKUP';
   SA_PASSWORD:=SAPasswordPage.Edits[0].Text;
-  
-
+  if pos('A',SDK) <> 0 then begin
+    SDK_OPTIONS := 'ABC';
+  end;
 end;
 
 //================================================================
@@ -4281,6 +4273,7 @@ begin
     InstallServerComponents();
   end;
   if CurStep = ssPostInstall then begin
+    OSQLPathFound();
     InstallSqlServer();
     cplusplus();
     removeRegistryVars();    
