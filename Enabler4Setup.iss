@@ -150,8 +150,7 @@ Source: "{#SourcePath}\Input\bin\subinacl.exe"; DestDir: "{app}\bin";
 Source: "{#SourcePath}\Input\scripts\EnablerDBdoc.sql"; DestDir:"{app}"; Check: isSDK_OPTIONSempty(); 
 Source: "{#SourcePath}\Input\scripts\UninstallSim.sql"; DestDir:"{app}"; Check: isSDK_OPTIONSempty();
 Source: "{#SourcePath}\Input\scripts\InstallSim.sql"; DestDir:"{app}"; Check: isNotSDK_OPTIONSempty();
-
-
+ 
 // Install batch script to collect instance names
 Source: "{#SourcePath}\Input\scripts\Instances.bat"; DestDir: "{app}";
 
@@ -733,230 +732,15 @@ var
   //Ready Page
   BackupCheckbox:TNewCheckBox;
 
-//========================================
-//installer-wide functions
-//========================================
 
-//functions for logger
-
-procedure MoveLogFile();
-// Current log file location is the user's temp folder. eg. C:\Users\Jamie\AppData\Local\Temp\Setup Log 2019-08-05 #001.txt
-// The location or file name is not configurable so copy it to a new location with a new name and delete the old file.
-var
-  copyResult, deleteResult: boolean;
-  logFilePathName, logFileName, newFilePathName: string;
-begin
-  logFilePathName := ExpandConstant('{log}');
-  logFileName := appName + ' ' + ExtractFileName(logFilePathName);
-
-  // Set the new location as the directory where the installer .exe is being run from.
-  newFilePathName := ExpandConstant('{src}\') + logFileName;
-
-  // Can't move log file, so copying file to new location and deleting old one.
-  copyResult := FileCopy(logFilePathName, newFilePathName, false);
-  if copyResult = False then
-    Log('Unable to copy log file ' + logFilePathName)
-  else
-    deleteResult := DeleteFile(logFilePathName);
-    if deleteResult = False then
-      Log('Unable to delete log file ' + logFilePathName);
-      FileCopy(logFilePathName, newFilePathName, false);  // Copy log file again to include the 'unable to delete log file' entry.
-end;
- 
-//abort an install
-procedure ExitProcess(exitCode:integer);
-  external 'ExitProcess@kernel32.dll stdcall';
-
-procedure Abort();
-begin
-  moveLogFile();
-  ExitProcess(0);
-end;
-
-
-// Returns true if the installation type is the type passed to the function.
-function IsInstallType(installType: String): Boolean;
-begin
-  if components = installType then 
-    Result := true
-  else
-    Result := false;   
-end;
-
-//returns true if the OS type (32/64-bit) matches the passed parameter
-function isOS(OSNum:integer):boolean;
-begin
-  if OS = OSNum then begin
-    Result:=true;
-  end
-  else begin
-    Result:=false;
-  end;
-end;
-
-//returns true if Windows Version is less than parameter number version
-function isWindowsVersion(checkNum:integer):boolean;
-begin
-  if WINDOWS_BASE_VERSION < checkNum then begin
-    Result:=true;
-  end
-  else begin
-    Result:=False;
-  end;
-end;
-
-
-function isSDK_OPTIONS(checkString: String):boolean;
-begin
-  if pos(checkString,SDK_OPTIONS) <> 0 then begin
-    Result:=true;
-  end
-  else begin
-    Result:=False;
-  end;
-end;
-
-function isSDK_OPTIONSempty():boolean;
-begin
-  if SDK_OPTIONS = '' then begin
-    Result := true;
-  end
-  else begin
-    Result := False;
-  end;
-end;
-
-function isNotSDK_OPTIONSempty():boolean;
-begin
-  if SDK_OPTIONS <> '' then begin
-    Result := true;
-  end
-  else begin
-    Result := False;
-  end;
-end;
-
-//check which pages to skip/display depending on components selected
-
-function ShouldSkipPage(PageID:Integer):Boolean;
-begin
-  Result:=False;
-
-  if PageID = serverFilesMissingPage.ID then begin
-    if (SQLEXPRESSNAME <> '') or (OSQL_PATH <> '') then begin
-      Result:=true;
-    end;
-  end;
-
-  //pages exclusive to Server install
-  if PageID = SAPasswordPage.ID then begin
-    if (isInstallType('A')) or (OSQL_PATH <> '') then begin
-      Result:=True;
-    end;
-  end;
-  if PageID = portPage.ID then begin
-    if isInstallType('A') then begin
-      Result:=true;
-    end;
-  end;
-
-  //pages exclusive to Client install
-  if PageID = serverNameEntryPage.ID then begin
-    if IsInstallType('B') then begin
-      Result:= True;
-    end;
-  end;
-  if PageID = instanceNamePage.ID then begin
-    if IsInstallType('B') then begin
-      Result:= True;
-    end;
-  end;
-  if PageID = noServerInstalledPage.ID then begin
-    if isInstallType('A') then begin
-      Result:=true;
-    end
-    else if OSQL_PATH <> '' then begin
-      Result:=True;
-    end;
-  end;
-
-  if PageID = serverAlreadyExistsPage.ID then begin
-    if isInstallType('A') then begin
-      Result:=true;
-    end
-    else if OSQL_PATH = '' then begin
-      Result:=True;
-    end;
-  end;
-  
-
-end;
-
-//on pages that require user input, do not let them progress if something is wrong with their input
-
-function NextButtonClick(CurPageID:Integer):Boolean;
-begin
-  Result:=True;
-
-  //if passwords do not match
-  if CurPageID = SAPasswordPage.ID then begin
-    if SAPasswordPage.Edits[0].Text <> SAPasswordPage.Edits[1].Text then begin
-      MsgBox('The passwords do not match. Please re-enter.', mbError, MB_OK);
-      Result := False;
-    end;
-  end;
-
-  //if password field is empty
-  if CurPageID = SAPasswordPage.ID then begin
-    if SAPasswordPage.Edits[0].Text = '' then begin
-      MsgBox('The password field is empty. Please enter a password.', mbError, MB_OK);
-      Result := False;
-    end;
-  end;
-  if CurPageID = SAPasswordPage.ID then begin
-    if SAPasswordPage.Edits[1].Text = '' then begin
-      MsgBox('The re-enter password field is empty. Please re-enter the password to confirm.', mbError, MB_OK);
-      Result := False;
-    end;
-  end;
-
-  //if port number is empty
-  if CurPageID = portPage.ID then begin
-    if portPage.Edits[0].Text = '' then begin
-      MsgBox('The port number field is empty. Please enter a port number. 8081 is the default.', mbError, MB_OK);
-      Result := False;
-    end;
-  end;
-
-  //if domain name is empty
-  if CurPageID = portPage.ID then begin
-    if portPage.Edits[1].Text = '' then begin
-      MsgBox('The domain name is empty. Please enter a domain name. Use your local network domain if you have one, otherwise the default is mydomain.com.', mbError, MB_OK);
-      Result := False;
-    end;
-  end;
-
-  //ready page database backup checkbox
-  if CurPageID = wpReady then begin
-     // is the checkbox checked?
-    if BackupCheckBox.Checked then begin
-      Log('Backup checkbox checked, will backup');
-      PRE_UPGRADE_BACKUP:='A';
-    end
-    else begin
-      // the checkbox is not checked
-      Log('Backup checkbox not checked or there is no existing database, will not backup.');
-      PRE_UPGRADE_BACKUP:='';
-    end;
-  end;
-
-end;
 
 //========================================
 //Variable initialisation.
 //======================================== 
 
 procedure variableInitialisation ();
+
+//these types of vars are LOCAL to the function
 var 
   osResultCode: Integer;
 begin
@@ -1083,7 +867,7 @@ begin
     CMDEND:= CMDUPPER;
 
     //Check for /? or /h or -? or -h  - AT THE START OF THE STRING
-    if pos('-H', CMDSTART) <> 0 then begin
+    if pos('-Help', CMDSTART) <> 0 then begin
       Log('User requested usage -H')
       SHOW_USAGE:= true
     end;
@@ -1091,7 +875,7 @@ begin
       Log('User requested usage -?')
       SHOW_USAGE:= true
     end;
-    if pos('/H', CMDSTART) <> 0 then begin
+    if pos('/Help', CMDSTART) <> 0 then begin
       Log('User requested usage /H')
       SHOW_USAGE:= true
     end;
@@ -1502,8 +1286,10 @@ begin
       //If no instance has been passed by the command line 
       if CMD_INSTANCE = false then begin
         //GET LIST OF NAMED INSTANCES
+          //RegQueryMultiStringValue(HKLM, 'SOFTWARE\Microsoft\Microsoft SQL Server', 'InstalledInstances',INSTANCES);
+          //Log(INSTANCES);
         //Server SQL settings
-
+        //RegQueryMultiStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Microsoft SQL Server', 'InstalledInstances',INSTANCES)
         //Get temporary filename into INSTANCES
         INSTANCES := 'temporary.tmp';
         if (OS=64) and (strtoint(OPERATING_SYSTEM) >= 6) then begin
@@ -2255,10 +2041,10 @@ begin
   //Execute the sql to get the SQL version of a default instance or the instance name passed by the command line.
   // Make sure OSQL_PATH does not end in '\'
   Log('Query database for version using server and instance name ' + SQLQUERY);
-  Exec(OSQL_PATH + '\OSQL.EXE', '-b -E -S' + SQLQUERY + ' -dmaster -h-1 -Q"select SERVERPROPERTY(''productversion'')" -o ' + TEMP + SQLINFO, '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+  Exec(OSQL_PATH + '\OSQL.EXE', '-b -E -S' + SQLQUERY + ' -dmaster -h -1 -Q "select SERVERPROPERTY(''productversion'')" -o' + TEMP + SQLINFO, '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
   if INSTALL_RESULT <> 0 then begin
     if not SILENT then begin
-       MsgBox('SQL VERSION', mbInformation, MB_OK);
+       //MsgBox('SQL VERSION', mbInformation, MB_OK);
        MsgBox('OSQL failed to execute', mbError, MB_OK);
     end;
     Log(SQLQUERY + ' SQL server is not configured correctly the osql query failed');
@@ -2272,12 +2058,12 @@ begin
   end;
 
   //Is SQL Server major revision greater than or equal to the number 8 (version 2000)
-  if StrToFloat(SQLVER_MAJOR) >= 8 then begin
+  if StrToint(SQLVER_MAJOR) >= 8 then begin
     Log('SQL Version found ' + SQLVER_MAJOR );
   end
   else begin
     //If the line read is greater than or equal to the number it is 2000 or newer
-    if StrToFloat(LINE) >= 8 then begin
+    if StrToint(LINE) >= 8 then begin
       Log('SQL Version found ' + LINE);
     end
     else begin
@@ -2364,14 +2150,19 @@ var
 begin
   if pos('B',components) <> 0 then begin
     if not SQL_NEEDED then begin
-       SQLQUERY := PC_NAME + '\' + SQL_INSTANCE;
-       Log('SQLQUERY = ' + SQLQUERY);
+      if SQL_INSTANCE <> '' then begin
+        SQLQUERY := PC_NAME + '\' + SQL_INSTANCE;
+      end
+      else begin
+        SQLQUERY := 'MSSQLSERVER';
+      end;
+      Log('SQLQUERY = ' + SQLQUERY);
 
        //TRUSTED CONNECTION
        TRUSTED_CONNECTION := 1;
        Log('About to query sysobjects ' + OSQL_PATH + ' with Trusted Connection');
        Exec(OSQL_PATH + '\OSQL.EXE', '-b -d master -E -S' + SQLQUERY +  ' -Q "select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
-       Log(inttostr(INSTALL_RESULT); 
+       Log(inttostr(INSTALL_RESULT)); 
         if INSTALL_RESULT = 0 then begin
           Exec(ExpandConstant('cmd.exe'), '/C osql -b -d master -E -S' + SQLQUERY +  ' -Q ' +  '"select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
           if INSTALL_RESULT = 0 then begin
@@ -2973,7 +2764,8 @@ begin
     end;
 end;
 
-//Security Components
+
+//Security Components went here, they are now in the [Files] section
 
 
 //========================================
@@ -3216,9 +3008,9 @@ end;
     //Couldn't get the old installer to do this on my PC so I could see what's happening
 
 
-//================
+
 //install SDK docs
-//=================
+
 
 procedure DirectoryCopy(SourcePath, DestPath: string);
 var
@@ -3562,9 +3354,8 @@ Begin
     end;
 
     if not CreateDir(DBDIR) then begin
-      Log('Not created here');
     end;
-    Log(DBDIR);
+    Log('DB DIR is'+DBDIR);
     Log(Format('Passing %s to DBInstall',[OSQL_PATH]));
     // We're supposed to be able to run BAT files directly, but it doesn't seem to work on WinNT
     Exec('CMD.EXE','/C '+ExpandConstant('{app}')+ '\DBInstall.bat "'+DBDIR+'" "'+ExpandConstant('{app}')+'" "'+ExpandConstant('{app}')+'\install.log" "'+OSQL_PATH+'" '+SQLQUERY, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
@@ -3820,20 +3611,14 @@ begin
   RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER\Client', 'Applications', APPLICATIONS);
   RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'Components', COMPONENTS);
   RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'SDK', SDK);
+
 end;
 
 //=======================================================================
 //Reboot system to disable fast startup and change system power settings
 //This should be the last thing to do.
 //=========================================================================
-function NeedRestart():Boolean;
-begin
-  if RESTART_DECISION then begin
-    Result:=True;
-  end
-  else
-    Result:=False;
-end;
+
 
 procedure decideReboot();
 var
@@ -3979,12 +3764,14 @@ procedure RadioClientClicked(Sender: TObject);
 begin
   components := 'A';  // Client install.
   Log(components);
+  //ReadyMemo.BackupCheckbox.Enabled:=false;
 end; 
 
 procedure RadioServerClicked(Sender: TObject);
 begin
   components := 'B';  // Server install.
   Log(components);
+  //ReadyMemo.BackupCheckbox.Enabled:=true;
 end;
 
 procedure SDKOptionClicked(Sender: TObject);
@@ -4185,7 +3972,254 @@ begin
   portPage.Values[1] := 'mydomain.com';
   portNum:= portPage.Values[0];
   domainName:= portPage.Values[1];
-end;   
+end;
+
+//========================================
+//========================================
+//installer-wide functions
+//========================================
+//========================================
+
+//functions for logger
+
+procedure MoveLogFile();
+// Current log file location is the user's temp folder. eg. C:\Users\Jamie\AppData\Local\Temp\Setup Log 2019-08-05 #001.txt
+// The location or file name is not configurable so copy it to a new location with a new name and delete the old file.
+var
+  copyResult, deleteResult: boolean;
+  logFilePathName, logFileName, newFilePathName: string;
+begin
+  logFilePathName := ExpandConstant('{log}');
+  logFileName := appName + ' ' + ExtractFileName(logFilePathName);
+
+  // Set the new location as the directory where the installer .exe is being run from.
+  newFilePathName := ExpandConstant('{src}\') + logFileName;
+
+  // Can't move log file, so copying file to new location and deleting old one.
+  copyResult := FileCopy(logFilePathName, newFilePathName, false);
+  if copyResult = False then
+    Log('Unable to copy log file ' + logFilePathName)
+  else
+    deleteResult := DeleteFile(logFilePathName);
+    if deleteResult = False then
+      Log('Unable to delete log file ' + logFilePathName);
+      FileCopy(logFilePathName, newFilePathName, false);  // Copy log file again to include the 'unable to delete log file' entry.
+end;
+ 
+//abort an install
+procedure ExitProcess(exitCode:integer);
+  external 'ExitProcess@kernel32.dll stdcall';
+
+procedure Abort();
+begin
+  moveLogFile();
+  ExitProcess(0);
+end;
+
+
+// Returns true if the installation type is the type passed to the function.
+function IsInstallType(installType: String): Boolean;
+begin
+  if components = installType then 
+    Result := true
+  else
+    Result := false;   
+end;
+
+//returns true if the OS type (32/64-bit) matches the passed parameter
+function isOS(OSNum:integer):boolean;
+begin
+  if OS = OSNum then begin
+    Result:=true;
+  end
+  else begin
+    Result:=false;
+  end;
+end;
+
+//returns true if Windows Version is less than parameter number version
+function isWindowsVersion(checkNum:integer):boolean;
+begin
+  if WINDOWS_BASE_VERSION < checkNum then begin
+    Result:=true;
+  end
+  else begin
+    Result:=False;
+  end;
+end;
+
+
+function isSDK_OPTIONS(checkString: String):boolean;
+begin
+  if pos(checkString,SDK_OPTIONS) <> 0 then begin
+    Result:=true;
+  end
+  else begin
+    Result:=False;
+  end;
+end;
+
+function isSDK_OPTIONSempty():boolean;
+begin
+  if SDK_OPTIONS = '' then begin
+    Result := true;
+  end
+  else begin
+    Result := False;
+  end;
+end;
+
+function isNotSDK_OPTIONSempty():boolean;
+begin
+  if SDK_OPTIONS <> '' then begin
+    Result := true;
+  end
+  else begin
+    Result := False;
+  end;
+end;
+
+function NeedRestart():Boolean;
+begin
+  if RESTART_DECISION then begin
+    Result:=True;
+  end
+  else
+    Result:=False;
+end;
+
+//check which pages to skip/display depending on components selected
+
+function ShouldSkipPage(PageID:Integer):Boolean;
+begin
+  Result:=False;
+
+  if PageID = serverFilesMissingPage.ID then begin
+    if (SQLEXPRESSNAME <> '') or (OSQL_PATH <> '') then begin
+      Result:=true;
+    end;
+  end;
+
+  //pages exclusive to Server install
+  if PageID = SAPasswordPage.ID then begin
+    if (isInstallType('A')) or (OSQL_PATH <> '') then begin
+      Result:=True;
+    end;
+  end;
+  if PageID = portPage.ID then begin
+    if isInstallType('A') then begin
+      Result:=true;
+    end;
+  end;
+
+  //pages exclusive to Client install
+  if PageID = serverNameEntryPage.ID then begin
+    if IsInstallType('B') then begin
+      Result:= True;
+    end;
+  end;
+  if PageID = instanceNamePage.ID then begin
+    if IsInstallType('B') then begin
+      Result:= True;
+    end;
+  end;
+  if PageID = noServerInstalledPage.ID then begin
+    if isInstallType('A') then begin
+      Result:=true;
+    end
+    else if OSQL_PATH <> '' then begin
+      Result:=True;
+    end;
+  end;
+
+  if PageID = serverAlreadyExistsPage.ID then begin
+    if isInstallType('A') then begin
+      Result:=true;
+    end
+    else if OSQL_PATH = '' then begin
+      Result:=True;
+    end;
+  end;
+  
+
+end;
+
+//on pages that require user input, do not let them progress if something is wrong with their input
+
+function NextButtonClick(CurPageID:Integer):Boolean;
+begin
+  Result:=True;
+
+  //if passwords do not match
+  if CurPageID = SAPasswordPage.ID then begin
+    if SAPasswordPage.Edits[0].Text <> SAPasswordPage.Edits[1].Text then begin
+      MsgBox('The passwords do not match. Please re-enter.', mbError, MB_OK);
+      Result := False;
+    end;
+  end;
+
+  //if password field is empty
+  if CurPageID = SAPasswordPage.ID then begin
+    if SAPasswordPage.Edits[0].Text = '' then begin
+      MsgBox('The password field is empty. Please enter a password.', mbError, MB_OK);
+      Result := False;
+    end;
+  end;
+  if CurPageID = SAPasswordPage.ID then begin
+    if SAPasswordPage.Edits[1].Text = '' then begin
+      MsgBox('The re-enter password field is empty. Please re-enter the password to confirm.', mbError, MB_OK);
+      Result := False;
+    end;
+  end;
+
+  //if port number is empty
+  if CurPageID = portPage.ID then begin
+    if portPage.Edits[0].Text = '' then begin
+      MsgBox('The port number field is empty. Please enter a port number. 8081 is the default.', mbError, MB_OK);
+      Result := False;
+    end;
+  end;
+
+  //if domain name is empty
+  if CurPageID = portPage.ID then begin
+    if portPage.Edits[1].Text = '' then begin
+      MsgBox('The domain name is empty. Please enter a domain name. Use your local network domain if you have one, otherwise the default is mydomain.com.', mbError, MB_OK);
+      Result := False;
+    end;
+  end;
+
+  //ready page database backup checkbox
+  if CurPageID = wpReady then begin
+     // is the checkbox checked?
+    if BackupCheckBox.Checked then begin
+      Log('Backup checkbox checked, will backup');
+      PRE_UPGRADE_BACKUP:='A';
+    end
+    else begin
+      // the checkbox is not checked
+      Log('Backup checkbox not checked or there is no existing database, will not backup.');
+      PRE_UPGRADE_BACKUP:='';
+    end;
+  end;
+
+  if CurPageID = pageInstallType.ID then begin
+    if radioClient.checked then begin
+      backupcheckbox.checked:=false;
+      backupcheckbox.Enabled:=false;
+    end
+    else if radioserver.checked then begin
+      backupcheckbox.Enabled:=true;
+    end;
+  end;
+end;
+
+
+//=====================
+//=====================
+//FUNCTION CALLS
+//=====================
+//=====================
+   
 
 //========================================
 //initialize setup
@@ -4211,6 +4245,7 @@ end;
 //=========================
 procedure InitializeWizard();
 begin
+    BackupCheckbox := TNewCheckBox.Create(WizardForm);
     createReadMePage();
     createPageInstallType();
     createClientSelectedPage();
@@ -4221,9 +4256,9 @@ begin
     createSAPasswordPage();
     createNetworkPortPage();
     WizardForm.ReadyMemo.Height := WizardForm.ReadyMemo.Height - ScaleY(100);
-    BackupCheckbox := TNewCheckBox.Create(WizardForm);
+    
 
-    if (COMPONENTS = 'B') and (PRE_BACKUP) then begin
+    if (OSQL_PATH <> '') then begin
 
       // create the backup checkbox on the ready page
       
@@ -4235,8 +4270,7 @@ begin
           Height := ScaleY(Height);
           Width := WizardForm.ReadyMemo.Width;
           Caption := 'Backup Existing Database?';
-        end;
-      
+        end;      
     end;
 end;
 
@@ -4260,8 +4294,11 @@ end;
 //================================================================
 
 procedure CurStepChanged(CurStep:TSetupStep);
+var
+  INSTANCES:string;
 begin  
 
+//just before
   if CurStep = ssInstall then begin
     saveConfig();
     MSIInstaller();
@@ -4269,11 +4306,13 @@ begin
     installNet4();     
     checkSP();
     uninstallAPIMSI();
-    blankPasswordChecks();
-    InstallServerComponents();
+    blankPasswordChecks();    
   end;
+  //just after
   if CurStep = ssPostInstall then begin
+
     OSQLPathFound();
+    InstallServerComponents();
     InstallSqlServer();
     cplusplus();
     removeRegistryVars();    
@@ -4284,7 +4323,8 @@ begin
     installServerFiles(); 
         
     basicPDFFiles();
-    SDKFiles();   
+    SDKFiles();
+       
     
     updateSystemConfig();
     setupAccessPermission();
