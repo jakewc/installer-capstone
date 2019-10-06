@@ -1232,9 +1232,8 @@ begin
 
   if (SHOW_USAGE) then begin
     Log('WARNING: Install stopped to show usage.');    
-    //create dialog box "INSTALL USAGE"
-    //MsgBox('Install stopped to show usage', mbinformation, MB_OK);
-    //Abort();
+    MsgBox('HELP'#13#10#13#10'/FULL'#13#10'Automatically install Enabler Server (and SQL2008 R2 EXPRESS if required). Also installs all applications (see below) and manuals.'#13#10'/PASSWORD:<password>'#13#10'Please provide the SA password if you know there is no SQL Server pre-installed and you want to install the included SQL Server 2008 R2 Express. This password needs to be a strong one.'#13#10'/CLIENT:<servername>'#13#10'Automatically install Enabler Client components only. This will not verify the version of any SQL installations or if there are Named Instances.'#13#10'/S'#13#10'This option selects a completely silent installation (must be the first command-line option).'#13#10'/BACKUPDB'#13#10'Automatically performs a backup of the database before the database is upgraded (using Nightly.bat).'#13#10'/INSTANCE:<SQL Named Instance>'#13#10'To install Enabler on an existing SQL Name Instance you need to provide the Instance name using this parameter.'#13#10'/MPPSIM'#13#10'Install The ITL MPP Simulator and driver for test and demo systems.'#13#10'/PORT:<port number>'#13#10'To set the port number that Enabler Web Server should use. Default value is 8081'#13#10'/DOMAIN:<domain name>'#13#10'The security domain used by the Enabler Web Server which client browsers use to store login credentials. Default is mydomain.com.'#13#10'/NOSTART'#13#10'To install Enabler but not start services (PSRVR and ENBWEB). Useful if for installer that do system updates - before starting Enabler.'#13#10'EXAMPLE:'#13#10'To install The Enabler Server along with a fresh install of the SQL2008 R2 EXPRESS, SA password is required:'#13#10'Enabler4Setup.EXE /FULL /BACKUPDB /PASSWORD:<password>'#13#10'Note: Windows login of the admin level is required to install/upgrade the Enabler System.  SQL2008 Express will be installed if no SQL server is pre-installed, a strong SA password is required.',mbinformation, MB_OK);
+    Abort();
   end;
   Log('CMD ' + CMDLINE_LOG)
 end;
