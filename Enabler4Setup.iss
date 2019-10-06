@@ -508,9 +508,13 @@ Name: "C:\EnablerDB";
 ;Change the message on the standard welcome page
 WelcomeLabel1=Welcome to The Enabler Setup Program. %nThis Program will install The Enabler on your computer.
 WelcomeLabel2=We Recommend that you exit all Windows programs before running this Setup Program. %n%nClick Cancel to quit Setup and close any programs you have running. Click Next to continue with the Setup program. %n%nWARNING: This program is protected by copyright law and international treaties. %n%nUnauthorized reproduction or distribution of this program, or any portion of it, may result in severe civil and criminal penalties, and will be prosecuted to the maximum extent possible under law.
+ClickFinish =Windows Power Options have been reconfigured for the Enabler. Click finish to exit setup.
 
-[INI]
-//Filename: "{app}\PumpUpdate.ini"; Section: "DATABASE"; Key: "OSQLPATH"; String: OSQL_PATH; Check: IsInstallType('B');
+[Run]
+Filename: "{app}\pumpdemo.exe"; Description: "Start Pump Demo"; Flags: postinstall runascurrentuser; Check: isSDK_OPTIONS('B') and isInstallType('B'); 
+Filename: "{app}\mppsim.exe"; Description: "Start Pump Simulator"; Flags: postinstall runascurrentuser; Check: isSDK_OPTIONS('A') and isInstallType('B'); 
+Filename: "{app}\bin\enbweb.exe"; Description: "Start Enabler Web"; Flags: postinstall runascurrentuser; Check: isInstallType('B'); 
+
 
 [Code]
 
@@ -737,6 +741,8 @@ var
 
   //no server installed page
   noServerInstalledPage:TOutputMsgWizardPage;
+  serverAlreadyExistsPage:TOutputMsgWizardPage;
+  serverFilesMissingPage:TOutputMsgWizardPage;
 
   //SA Password page
   SAPasswordPage: TInputQueryWizardPage;
@@ -862,12 +868,13 @@ function ShouldSkipPage(PageID:Integer):Boolean;
 begin
   Result:=False;
 
-  //pages exclusive to Client install
-  if PageID = noServerInstalledPage.ID then begin
-    if IsInstallType('A') then begin
-      Result:=True;
+  if PageID = serverFilesMissingPage.ID then begin
+    if SQLEXPRESSNAME <> '' then begin
+      Result:=true;
     end;
   end;
+
+  //pages exclusive to Server install
   if PageID = SAPasswordPage.ID then begin
     if isInstallType('A') then begin
       Result:=True;
@@ -879,7 +886,7 @@ begin
     end;
   end;
 
-  //pages exclusive to Server install
+  //pages exclusive to Client install
   if PageID = serverNameEntryPage.ID then begin
     if IsInstallType('B') then begin
       Result:= True;
@@ -889,8 +896,25 @@ begin
     if IsInstallType('B') then begin
       Result:= True;
     end;
+  end;
+  if PageID = noServerInstalledPage.ID then begin
+    if isInstallType('A') then begin
+      Result:=true;
+    end
+    else if OSQL_PATH <> '' then begin
+      Result:=True;
+    end;
+  end;
 
-  end;  
+  if PageID = serverAlreadyExistsPage.ID then begin
+    if isInstallType('A') then begin
+      Result:=true;
+    end
+    else if OSQL_PATH = '' then begin
+      Result:=True;
+    end;
+  end;
+  
 
 end;
 
@@ -4122,6 +4146,22 @@ begin
 end;
 
 //========================================
+//functions for Server Already Exists page
+//========================================
+
+procedure createServerAlreadyExistsPage();
+begin
+  serverAlreadyExistsPage:=CreateOutputMsgPage(instanceNamePage.ID, 'Use the Microsoft SQL Server already installed?', '', 'Click Next to install the Enabler using your existing Microsoft SQL Database Server. '#13#10#13#10' You have selected an installation including the Enabler Server, which requires an SQL database. '#13#10#13#10' Click Cancel now if you do not want the Enabler to use this Database server. In this case you need to exit the install and remove the existing Database server. After this the Enabler setup will install a new SQL server for you.');
+end;
+
+//=======================================
+//functions for server files missing page
+//=======================================
+procedure createServerFilesMissingPage();
+begin
+  serverFilesMissingPage:=CreateOutputMsgPage(instanceNamePage.ID, 'The installer cannot continue - contact support', '', 'Installatio of the Enabler server requires a Microsoft SQL database to install, but'#13#10#13#10'Cannot find an existing server installation'#13#10#13#10'AND'#13#10#13#10'Cannot find the files required to install the default database. These files hould be in a folder located in the same location as this installer executable (Enabler4Setup.exe).'#13#10#13#10'If you want to install the Enabler client files, go back and uncheck the Server components on the Select Components page.');
+end;
+//========================================
 //functions for Server Password page
 //========================================
 
@@ -4185,6 +4225,8 @@ begin
     createClientSelectedPage();
     createInstanceNamePage();
     createNoServerInstalledPage();
+    createServerAlreadyExistsPage();
+    createServerFilesMissingPage();
     createSAPasswordPage();
     createNetworkPortPage();
     WizardForm.ReadyMemo.Height := WizardForm.ReadyMemo.Height - ScaleY(100);
