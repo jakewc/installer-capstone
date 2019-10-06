@@ -3,8 +3,7 @@
 ;==================
 
 ; The SDK variable forces applications to be installed even if the SDK options is not avaliable or selected
-; By including a letter in a variable that application will be installed
-; Even if the SDK options is not avaliable or ticked
+; By including a letter in the SDK_OPTIONS variable, that application will be installed even if the SDK options is not avaliable or ticked
 ; See the SDK_OPTIONS variable to change what applications are installed when SDK is checked
 ; A - MMPSim
 ; B - Pumpdemo
@@ -732,6 +731,245 @@ var
   //Ready Page
   BackupCheckbox:TNewCheckBox;
 
+  //========================================
+//========================================
+//installer-wide functions
+//========================================
+//========================================
+
+//functions for logger
+
+procedure MoveLogFile();
+// Current log file location is the user's temp folder. eg. C:\Users\Jamie\AppData\Local\Temp\Setup Log 2019-08-05 #001.txt
+// The location or file name is not configurable so copy it to a new location with a new name and delete the old file.
+var
+  copyResult, deleteResult: boolean;
+  logFilePathName, logFileName, newFilePathName: string;
+begin
+  logFilePathName := ExpandConstant('{log}');
+  logFileName := appName + ' ' + ExtractFileName(logFilePathName);
+
+  // Set the new location as the directory where the installer .exe is being run from.
+  newFilePathName := ExpandConstant('{src}\') + logFileName;
+
+  // Can't move log file, so copying file to new location and deleting old one.
+  copyResult := FileCopy(logFilePathName, newFilePathName, false);
+  if copyResult = False then
+    Log('Unable to copy log file ' + logFilePathName)
+  else
+    deleteResult := DeleteFile(logFilePathName);
+    if deleteResult = False then
+      Log('Unable to delete log file ' + logFilePathName);
+      FileCopy(logFilePathName, newFilePathName, false);  // Copy log file again to include the 'unable to delete log file' entry.
+end;
+ 
+//abort an install
+procedure ExitProcess(exitCode:integer);
+  external 'ExitProcess@kernel32.dll stdcall';
+
+procedure Abort();
+begin
+  moveLogFile();
+  ExitProcess(0);
+end;
+
+
+// Returns true if the installation type is the type passed to the function.
+function IsInstallType(installType: String): Boolean;
+begin
+  if components = installType then 
+    Result := true
+  else
+    Result := false;   
+end;
+
+//returns true if the OS type (32/64-bit) matches the passed parameter
+function isOS(OSNum:integer):boolean;
+begin
+  if OS = OSNum then begin
+    Result:=true;
+  end
+  else begin
+    Result:=false;
+  end;
+end;
+
+//returns true if Windows Version is less than parameter number version
+function isWindowsVersion(checkNum:integer):boolean;
+begin
+  if WINDOWS_BASE_VERSION < checkNum then begin
+    Result:=true;
+  end
+  else begin
+    Result:=False;
+  end;
+end;
+
+
+function isSDK_OPTIONS(checkString: String):boolean;
+begin
+  if pos(checkString,SDK_OPTIONS) <> 0 then begin
+    Result:=true;
+  end
+  else begin
+    Result:=False;
+  end;
+end;
+
+function isSDK_OPTIONSempty():boolean;
+begin
+  if SDK_OPTIONS = '' then begin
+    Result := true;
+  end
+  else begin
+    Result := False;
+  end;
+end;
+
+function isNotSDK_OPTIONSempty():boolean;
+begin
+  if SDK_OPTIONS <> '' then begin
+    Result := true;
+  end
+  else begin
+    Result := False;
+  end;
+end;
+
+function NeedRestart():Boolean;
+begin
+  if RESTART_DECISION then begin
+    Result:=True;
+  end
+  else
+    Result:=False;
+end;
+
+//check which pages to skip/display depending on components selected
+
+function ShouldSkipPage(PageID:Integer):Boolean;
+begin
+  Result:=False;
+
+  if PageID = serverFilesMissingPage.ID then begin
+    if (SQLEXPRESSNAME <> '') or (OSQL_PATH <> '') then begin
+      Result:=true;
+    end;
+  end;
+
+  //pages exclusive to Server install
+  if PageID = SAPasswordPage.ID then begin
+    if (isInstallType('A')) or (OSQL_PATH <> '') then begin
+      Result:=True;
+    end;
+  end;
+  if PageID = portPage.ID then begin
+    if isInstallType('A') then begin
+      Result:=true;
+    end;
+  end;
+
+  //pages exclusive to Client install
+  if PageID = serverNameEntryPage.ID then begin
+    if IsInstallType('B') then begin
+      Result:= True;
+    end;
+  end;
+  if PageID = instanceNamePage.ID then begin
+    if IsInstallType('B') then begin
+      Result:= True;
+    end;
+  end;
+  if PageID = noServerInstalledPage.ID then begin
+    if isInstallType('A') then begin
+      Result:=true;
+    end
+    else if OSQL_PATH <> '' then begin
+      Result:=True;
+    end;
+  end;
+
+  if PageID = serverAlreadyExistsPage.ID then begin
+    if isInstallType('A') then begin
+      Result:=true;
+    end
+    else if OSQL_PATH = '' then begin
+      Result:=True;
+    end;
+  end;
+  
+
+end;
+
+//on pages that require user input, do not let them progress if something is wrong with their input
+
+function NextButtonClick(CurPageID:Integer):Boolean;
+begin
+  Result:=True;
+
+  //if passwords do not match
+  if CurPageID = SAPasswordPage.ID then begin
+    if SAPasswordPage.Edits[0].Text <> SAPasswordPage.Edits[1].Text then begin
+      MsgBox('The passwords do not match. Please re-enter.', mbError, MB_OK);
+      Result := False;
+    end;
+  end;
+
+  //if password field is empty
+  if CurPageID = SAPasswordPage.ID then begin
+    if SAPasswordPage.Edits[0].Text = '' then begin
+      MsgBox('The password field is empty. Please enter a password.', mbError, MB_OK);
+      Result := False;
+    end;
+  end;
+  if CurPageID = SAPasswordPage.ID then begin
+    if SAPasswordPage.Edits[1].Text = '' then begin
+      MsgBox('The re-enter password field is empty. Please re-enter the password to confirm.', mbError, MB_OK);
+      Result := False;
+    end;
+  end;
+
+  //if port number is empty
+  if CurPageID = portPage.ID then begin
+    if portPage.Edits[0].Text = '' then begin
+      MsgBox('The port number field is empty. Please enter a port number. 8081 is the default.', mbError, MB_OK);
+      Result := False;
+    end;
+  end;
+
+  //if domain name is empty
+  if CurPageID = portPage.ID then begin
+    if portPage.Edits[1].Text = '' then begin
+      MsgBox('The domain name is empty. Please enter a domain name. Use your local network domain if you have one, otherwise the default is mydomain.com.', mbError, MB_OK);
+      Result := False;
+    end;
+  end;
+
+  //ready page database backup checkbox
+  if CurPageID = wpReady then begin
+     // is the checkbox checked?
+    if BackupCheckBox.Checked then begin
+      Log('Backup checkbox checked, will backup');
+      PRE_UPGRADE_BACKUP:='A';
+    end
+    else begin
+      // the checkbox is not checked
+      Log('Backup checkbox not checked or there is no existing database, will not backup.');
+      PRE_UPGRADE_BACKUP:='';
+    end;
+  end;
+
+  if CurPageID = pageInstallType.ID then begin
+    if radioClient.checked then begin
+      backupcheckbox.checked:=false;
+      backupcheckbox.Enabled:=false;
+    end
+    else if radioserver.checked then begin
+      backupcheckbox.Enabled:=true;
+    end;
+  end;
+end;
+
 
 
 //========================================
@@ -833,7 +1071,7 @@ begin
   ENB_VERSION:='{#SetupSetting("AppVersion")}'; // This variable was never initialised in the wise script. Initialised with a value here to enable compiler to run.
   
   // Check if operating system is Windows 10.
-  if Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C ver | find /i "Version 10."', '', SW_SHOW, ewWaitUntilTerminated, osResultCode) then begin
+  if Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C ver | find /i "Version 10."', '', SW_HIDE, ewWaitUntilTerminated, osResultCode) then begin
     OPERATING_SYSTEM:='10';
     Log('Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10');
   end;
@@ -1007,7 +1245,7 @@ var
 
 begin
 //check if the user is an admin
-  Exec(ExpandConstant('{tmp}')+'\IsAdmin.exe', '', '', SW_SHOW,
+  Exec(ExpandConstant('{tmp}')+'\IsAdmin.exe', '', '', SW_HIDE,
      ewWaitUntilTerminated, ResultCode)
   if ResultCode = 0 then begin
         if SILENT = false then begin
@@ -1074,7 +1312,7 @@ begin
   Log('Installing from '+INST_DRIVE+' drive.');
 
   //Figure out the windows OS product type
-  Exec('CMD.EXE', '/c wmic.exe os get producttype > ' + ExpandConstant('{tmp}')+'\WinProductType.txt', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec('CMD.EXE', '/c wmic.exe os get producttype > ' + ExpandConstant('{tmp}')+'\WinProductType.txt', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 
   //Search for file CMD.EXE in Path and place into Variable CMD_PATH
   CMD_PATH:=ExpandConstant('{cmd}');
@@ -1243,7 +1481,7 @@ begin
       if OS = 64 then begin
         if SQLEXPRESSNAME = 'SQL2016' then begin
           Log('Checking SQL2016 requirements for Windows 8.1 or Server 2012  64 bit');
-          Exec('C:\WINDOWS\Sysnative\CMD.EXE', '/C wmic qfe get HotFixId | find "KB2919355"', '', SW_SHOW, ewwaituntilterminated,ResultCode);
+          Exec('C:\WINDOWS\Sysnative\CMD.EXE', '/C wmic qfe get HotFixId | find "KB2919355"', '', SW_HIDE, ewwaituntilterminated,ResultCode);
           Log('Result of Windows update finds ' + inttostr(ResultCode));
           if ResultCode = 1 then begin
             MsgBox('Requirements for SQL2016 not met', mbinformation, MB_OK);
@@ -1293,10 +1531,10 @@ begin
         //Get temporary filename into INSTANCES
         INSTANCES := 'temporary.tmp';
         if (OS=64) and (strtoint(OPERATING_SYSTEM) >= 6) then begin
-          Exec('C:\WINDOWS\Sysnative\CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{tmp}\')+INSTANCES, '', SW_SHOW, ewwaituntilterminated,ResultCode);
+          Exec('C:\WINDOWS\Sysnative\CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{tmp}\')+INSTANCES, '', SW_HIDE, ewwaituntilterminated,ResultCode);
         end
         else begin
-          Exec('CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{tmp}\')+INSTANCES, '', SW_SHOW, ewwaituntilterminated,ResultCode);
+          Exec('CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{tmp}\')+INSTANCES, '', SW_HIDE, ewwaituntilterminated,ResultCode);
         end;
 
         if ResultCOde <> 0 then begin
@@ -1346,7 +1584,7 @@ begin
           //Execute the sql to get the verify the instance name of the default instance or the instance name passed by the command line
 
           Log('Query database to check instance name '+SQLQUERY);
-          Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+ ' -Q "select count(*) from sysobjects"','',SW_SHOW,ewwaituntilterminated, ResultCode);
+          Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+ ' -Q "select count(*) from sysobjects"','',SW_HIDE,ewwaituntilterminated, ResultCode);
 
           if ResultCode <> 0 then begin
             Log(SQLQUERY+ ' database instance does not exist or the SQL server is not configured correctly the osql query failed.');
@@ -1356,7 +1594,7 @@ begin
             SQL_INSTANCE := SQLEXPRESS;
             SQLQUERY := PC_NAME+'\'+SQL_INSTANCE;
             Log('Query database to check instance name '+SQLQUERY);
-            Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+ ' -Q "select count(*) from sysobjects"','',SW_SHOW,ewwaituntilterminated, ResultCode);
+            Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+ ' -Q "select count(*) from sysobjects"','',SW_HIDE,ewwaituntilterminated, ResultCode);
      
             if ResultCode <> 0 then begin
               SQL_INSTANCE := '';
@@ -1551,11 +1789,11 @@ begin
     //Checking to see if the C: drive is compressed. SQL server doesn't like the EnablerDB files in a compressed location
     if strtoint(OPERATING_SYSTEM) >= 5.1 then begin
       if ((strtoint(OPERATING_SYSTEM) >= 6) and (OS=64)) then begin
-        Exec('C:\WINDOWS\Sysnative\CMD.EXE', ' /C '+ExpandConstant('{app}')+'\bin\DriveCompressed.exe', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        Exec('C:\WINDOWS\Sysnative\CMD.EXE', ' /C '+ExpandConstant('{app}')+'\bin\DriveCompressed.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         INSTALL_RESULT:=ResultCode;
       end
       else begin
-        Exec('CMD.EXE', ' /C '+ExpandConstant('{app}')+'\bin\DriveCompressed.exe', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        Exec('CMD.EXE', ' /C '+ExpandConstant('{app}')+'\bin\DriveCompressed.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         INSTALL_RESULT:=ResultCode;
       end;
       
@@ -1638,20 +1876,20 @@ begin
         if OPERATING_SYSTEM = '5.1' then begin
           //5.1 = Windows XP
           if OS = 32 then begin
-            Exec('CMD.exe', '/C '+ExpandConstant('{src}\Win\MSI\4.5\WindowsXP-KB942288-v3-x86.exe') + ' /quiet /passive /norestart', '', SW_SHOW, ewwaituntilterminated, ResultCode);
+            Exec('CMD.exe', '/C '+ExpandConstant('{src}\Win\MSI\4.5\WindowsXP-KB942288-v3-x86.exe') + ' /quiet /passive /norestart', '', SW_HIDE, ewwaituntilterminated, ResultCode);
           end
           else begin
-            Exec('CMD.exe', '/C '+ExpandConstant('{src}\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x64.exe') + ' /quiet /passive /norestart', '', SW_SHOW, ewwaituntilterminated, ResultCode);
+            Exec('CMD.exe', '/C '+ExpandConstant('{src}\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x64.exe') + ' /quiet /passive /norestart', '', SW_HIDE, ewwaituntilterminated, ResultCode);
           end;
         end;
 
         if OPERATING_SYSTEM = '5.2' then begin
           //5.2 = Windows 2003
           if OS = 32 then begin
-            Exec('CMD.exe', '/C '+ExpandConstant('{src}\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x86.exe') + ' /quiet /passive /norestart', '', SW_SHOW, ewwaituntilterminated, ResultCode);
+            Exec('CMD.exe', '/C '+ExpandConstant('{src}\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x86.exe') + ' /quiet /passive /norestart', '', SW_HIDE, ewwaituntilterminated, ResultCode);
           end
           else begin
-            Exec('CMD.exe', '/C '+ExpandConstant('{src}\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x64.exe') + ' /quiet /passive /norestart', '', SW_SHOW, ewwaituntilterminated, ResultCode);
+            Exec('CMD.exe', '/C '+ExpandConstant('{src}\Win\MSI\4.5\WindowsServer2003-KB942288-v4-x64.exe') + ' /quiet /passive /norestart', '', SW_HIDE, ewwaituntilterminated, ResultCode);
           end;
         end;
 
@@ -1659,10 +1897,10 @@ begin
           //6.0 = Windows Vista or Server 2008
           //msu files do not support /passive
           if OS = 32 then begin
-            Exec('CMD.exe', '/C '+ExpandConstant('{src}\Win\MSI\4.5\Windows6.0-KB942288-v2-x86.msu') + ' /quiet /norestart', '', SW_SHOW, ewwaituntilterminated, ResultCode);
+            Exec('CMD.exe', '/C '+ExpandConstant('{src}\Win\MSI\4.5\Windows6.0-KB942288-v2-x86.msu') + ' /quiet /norestart', '', SW_HIDE, ewwaituntilterminated, ResultCode);
           end
           else begin
-            Exec('CMD.exe', '/C '+ExpandConstant('{src}\Win\MSI\4.5\Windows6.0-KB942288-v2-x64.msu') + ' /quiet /norestart', '', SW_SHOW, ewwaituntilterminated, ResultCode);
+            Exec('CMD.exe', '/C '+ExpandConstant('{src}\Win\MSI\4.5\Windows6.0-KB942288-v2-x64.msu') + ' /quiet /norestart', '', SW_HIDE, ewwaituntilterminated, ResultCode);
           end;
         end;
 
@@ -1824,7 +2062,7 @@ begin
     RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce','EnablerInstall',ExpandConstant('{src}')+'\'+OUTPUTBASEFILENAME+'.exe');
 
     Log('Installing .NET 3.5 Framework');
-    Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "'+ExpandConstant('{src}')+'\Win\DotNetFX\3.5\dotNetFx35setup.exe" /Q', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "'+ExpandConstant('{src}')+'\Win\DotNetFX\3.5\dotNetFx35setup.exe" /Q', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     
     if ResultCode = 3010 then begin
       Log('INFO: .NET 3.5 Framework Already Installed');
@@ -1910,14 +2148,14 @@ begin
       end;
 
       //  .Net 4 install will fail if windows update is running so stop doing install - Error 80240016
-      Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "net stop WuAuServ"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "net stop WuAuServ"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       Log('Stopping Windows update before installing .NET 4 Framework');
 
       Log('Installing .NET 4 Framework');
-      Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "'+ExpandConstant('{src}')+'\Win\DotNetFX\4\dotNetFx40_Full_x86_x64.exe"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "'+ExpandConstant('{src}')+'\Win\DotNetFX\4\dotNetFx40_Full_x86_x64.exe"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 
       Log('Restarting Windows update before installing .NET 4 Framework');
-      Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "net start WuAuServ"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "net start WuAuServ"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 
       if ResultCode = 1 then begin
         Log('.NET 4 Framework Installation return 1, Ok but reboot required');
@@ -1995,7 +2233,7 @@ var
   ResultCode:integer;
 begin
   if (FileExists(ExpandConstant('{app}\InstallEnablerAPI.msi'))) then begin
-    Exec(ExpandConstant('{sys}\msiexec.exe'), '/quiet /L+* '+ExpandConstant('{app}\log\APIInstall.log')+' /uninstall {30876486-DB1A-41CE-95D0-58F1EEA13AE8}', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{sys}\msiexec.exe'), '/quiet /L+* '+ExpandConstant('{app}\log\APIInstall.log')+' /uninstall {30876486-DB1A-41CE-95D0-58F1EEA13AE8}', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     if ResultCode <> 0 then begin
       Log('INFO: Could not uninstall existing enabler API - ERRORLEVEL = ' + inttostr(ResultCode));
     end;
@@ -2041,7 +2279,7 @@ begin
   //Execute the sql to get the SQL version of a default instance or the instance name passed by the command line.
   // Make sure OSQL_PATH does not end in '\'
   Log('Query database for version using server and instance name ' + SQLQUERY);
-  Exec(OSQL_PATH + '\OSQL.EXE', '-b -E -S' + SQLQUERY + ' -dmaster -h -1 -Q "select SERVERPROPERTY(''productversion'')" -o' + TEMP + SQLINFO, '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+  Exec(OSQL_PATH + '\OSQL.EXE', '-b -E -S' + SQLQUERY + ' -dmaster -h -1 -Q "select SERVERPROPERTY(''productversion'')" -o' + TEMP + SQLINFO, '', SW_HIDE, ewWaitUntilTerminated, INSTALL_RESULT);
   if INSTALL_RESULT <> 0 then begin
     if not SILENT then begin
        //MsgBox('SQL VERSION', mbInformation, MB_OK);
@@ -2088,7 +2326,7 @@ var
 begin
   //Does the enabler database already exist?    
   if PRE_UPGRADE_BACKUP = 'A' then begin
-    Exec(OSQL_PATH + '\OSQL.EXE', '-d EnablerDB -E -S' + SQLQUERY + ' -Q"select count(*) from global_settings" -b', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+    Exec(OSQL_PATH + '\OSQL.EXE', '-d EnablerDB -E -S' + SQLQUERY + ' -Q"select count(*) from global_settings" -b', '', SW_HIDE, ewWaitUntilTerminated, INSTALL_RESULT);
     if INSTALL_RESULT = 0 then begin
       Log('Preupgrade backup check for Enabler DB: Database FOUND');
     end
@@ -2161,10 +2399,10 @@ begin
        //TRUSTED CONNECTION
        TRUSTED_CONNECTION := 1;
        Log('About to query sysobjects ' + OSQL_PATH + ' with Trusted Connection');
-       Exec(OSQL_PATH + '\OSQL.EXE', '-b -d master -E -S' + SQLQUERY +  ' -Q "select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+       Exec(OSQL_PATH + '\OSQL.EXE', '-b -d master -E -S' + SQLQUERY +  ' -Q "select count(*) from sysobjects"', '', SW_HIDE, ewWaitUntilTerminated, INSTALL_RESULT);
        Log(inttostr(INSTALL_RESULT)); 
         if INSTALL_RESULT = 0 then begin
-          Exec(ExpandConstant('cmd.exe'), '/C osql -b -d master -E -S' + SQLQUERY +  ' -Q ' +  '"select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, INSTALL_RESULT);
+          Exec(ExpandConstant('cmd.exe'), '/C osql -b -d master -E -S' + SQLQUERY +  ' -Q ' +  '"select count(*) from sysobjects"', '', SW_HIDE, ewWaitUntilTerminated, INSTALL_RESULT);
           if INSTALL_RESULT = 0 then begin
             Log('Trusted Connection Succeed !!!');
           end
@@ -2259,7 +2497,7 @@ Begin
           end;  
         end;
         Log(Format('Starting MEDE2000 install from %s\MSDE2000',[ExpandConstant('{src}')]));
-        Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\MSDEInstall.bat '+INST_DRIVE+ '"'+ExpandConstant('{src}')+'\MSDE2000" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\MSDEInstall.bat '+INST_DRIVE+ '"'+ExpandConstant('{src}')+'\MSDE2000" "'+SA_PASSWORD+'"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         if DirExists(ExpandConstant('{app}')+'\MSDE_REBOOT_PENDING') then begin
           if UNATTENDED = '0' then begin
             MsgBox('Rebooting', mbInformation, MB_OK);
@@ -2386,7 +2624,7 @@ Begin
       end;
       
       //Make sure the SQL Server engine is running
-      Exec('CMD.EXE','net start MSSQLSERVER','', SW_SHOW, ewWaitUntilIdle, ResultCode);
+      Exec('CMD.EXE','net start MSSQLSERVER','', SW_HIDE, ewWaitUntilIdle, ResultCode);
       if SILENT = false then begin
         try
           progressPage := CreateOutputProgressPage('Progress Stage',' ');
@@ -2456,7 +2694,7 @@ Begin
 
       //OSQL should work now, we will test it now to make sure.
       Log(Format('Making sure that OSQL works %s',[OSQL_PATH]));
-      Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+' -Q "select count(*) from sysobjects"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+' -Q "select count(*) from sysobjects"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       if ResultCode = 0 then begin
         RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler', 'InstallComponents', '');
         RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler', 'UnattendedInstall', '');
@@ -2477,10 +2715,10 @@ Begin
     end
     else begin
       if SQL_INSTANCE = '' then begin
-        Exec('CMD.EXE','net start MSSQLSERVER','', SW_SHOW, ewWaitUntilIdle, ResultCode);
+        Exec('CMD.EXE','net start MSSQLSERVER','', SW_HIDE, ewWaitUntilIdle, ResultCode);
       end
       else begin
-        Exec('CMD.EXE', 'net start MSSQL$'+SQL_INSTANCE,'', SW_SHOW, ewWaitUntilIdle, ResultCode);
+        Exec('CMD.EXE', 'net start MSSQL$'+SQL_INSTANCE,'', SW_HIDE, ewWaitUntilIdle, ResultCode);
       end;
     end;
 
@@ -2523,7 +2761,7 @@ Begin
       end;
       //Check that the RunOnce Key is present and create it if it doesn't
       RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', '{Default}', '');
-      Exec(ExpandConstant('{app}')+'\Driver\DriverInstaller.exe','','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(ExpandConstant('{app}')+'\Driver\DriverInstaller.exe','','', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       Log('Driver Installer return code: ' + inttostr(ResultCode));
       if ResultCode = 1 then begin
         DRIVERCODE:=1;
@@ -2565,7 +2803,7 @@ begin
     //MsgBox('Installing VS C++ 2008 SP1 Redistributables', mbinformation, mb_OK);
   end;
 
-  Exec(ExpandConstant('{app}\MsiQueryProduct.exe'), '{9A25302D-30C0-39D9-BD6F-21E6EC160475}', '', SW_SHOW, ewwaituntilterminated, ResultCode);
+  Exec(ExpandConstant('{app}\MsiQueryProduct.exe'), '{9A25302D-30C0-39D9-BD6F-21E6EC160475}', '', SW_HIDE, ewwaituntilterminated, ResultCode);
 
   if ResultCode = 5 then begin
     Log('INFO: Skipping VS C++ 2008 SP1 runtime - already installed');
@@ -2573,7 +2811,7 @@ begin
   else begin
     //try to install the runtime
     Log('Installing VS C++ SP1 Redistributables');
-    Exec('CMD.exe', '/C ' + ExpandConstant('{app}\vcredist_x86.exe') + ' /q', '', SW_SHOW, ewwaituntilterminated, ResultCode);
+    Exec('CMD.exe', '/C ' + ExpandConstant('{app}\vcredist_x86.exe') + ' /q', '', SW_HIDE, ewwaituntilterminated, ResultCode);
     if ResultCode <> 0 then begin
       if ResultCode <> 3010 then begin
         if SILENT = false then begin
@@ -2652,33 +2890,33 @@ begin
 
   if COMPONENTS = 'B' then begin  
     if FileExists(ExpandConstant('{app}')+'\psrvr4.exe') then begin
-      Exec(ExpandConstant('{app}')+'\scutil.exe', '/STOP psrvr','',SW_SHOW,ewWaitUntilTerminated, ResultCode);
+      Exec(ExpandConstant('{app}')+'\scutil.exe', '/STOP psrvr','',SW_HIDE,ewWaitUntilTerminated, ResultCode);
       if ResultCode <> 0 then begin
         Log('INFO: Could not stop PSRVR (rc='+inttostr(ResultCode) + ')');
       end;
     end;
     if FileExists(ExpandConstant('{app}')+'\bin\psrvr4.exe') then begin
-      Exec(ExpandConstant('{app}')+'\scutil.exe', '/STOP psrvr','',SW_SHOW,ewWaitUntilTerminated, ResultCode);
+      Exec(ExpandConstant('{app}')+'\scutil.exe', '/STOP psrvr','',SW_HIDE,ewWaitUntilTerminated, ResultCode);
       if ResultCode <> 0 then begin
         Log('INFO: Could not stop PSRVR (rc='+inttostr(ResultCode) + ')');
       end
     end
     else begin
       if FileExists(ExpandConstant('{app}')+'\psrvr.exe') then begin
-        Exec(ExpandConstant('{app}')+'\scutil.exe', '/STOP psrvr','',SW_SHOW,ewWaitUntilTerminated, ResultCode);
+        Exec(ExpandConstant('{app}')+'\scutil.exe', '/STOP psrvr','',SW_HIDE,ewWaitUntilTerminated, ResultCode);
         if ResultCode <> 0 then begin
           Log('INFO: Could not stop PSRVR (rc='+inttostr(ResultCode)+')');
         end;
       end;
     end;
     if FileExists(ExpandConstant('{app}')+'\bin\WebHost.exe') then begin
-      Exec(ExpandConstant('{app}')+'\scutil.exe', '/STOP WebHost','',SW_SHOW,ewWaitUntilTerminated, ResultCode);
+      Exec(ExpandConstant('{app}')+'\scutil.exe', '/STOP WebHost','',SW_HIDE,ewWaitUntilTerminated, ResultCode);
       if ResultCode <> 0 then begin
         Log('INFO: Could not stop Enabler Web (rc='+inttostr(ResultCode)+')');
       end;
     end;
     if FileExists(ExpandConstant('{app}')+'\bin\EnbWeb.exe') then begin
-      Exec(ExpandConstant('{app}')+'\scutil.exe', '/STOP psrvr','',SW_SHOW,ewWaitUntilTerminated, ResultCode);
+      Exec(ExpandConstant('{app}')+'\scutil.exe', '/STOP psrvr','',SW_HIDE,ewWaitUntilTerminated, ResultCode);
       if ResultCode <> 0 then begin
         Log('INFO: Could not stop Enabler Web (rc='+inttostr(ResultCode)+')');
       end;
@@ -2694,7 +2932,7 @@ var
   ResultCode:integer;
 begin
   Log('Check for V4 Beta License');
-  if Exec(WizardDirValue+'\ConvertV4BetaLicense.exe', '/c', '',SW_SHOW, ewWaitUntilTerminated, ResultCode) then begin
+  if Exec(WizardDirValue+'\ConvertV4BetaLicense.exe', '/c', '',SW_HIDE, ewWaitUntilTerminated, ResultCode) then begin
     Log('Result code from COnvertV4BetaLicense was '+inttostr(ResultCode));
     if ResultCode = 0 then begin
       Log('v4.0 Beta License converted');
@@ -2717,9 +2955,9 @@ begin
       SETX_PATH:=ExpandConstant('{app}')+'\bin\setx32.exe';
     end;
 
-    Exec(SETX_PATH, ENABLER_ROOT+ ' ' + ExpandCOnstant('{app}')+ ' -M', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(SETX_PATH, ENABLER_LOG+ ' ' + ExpandCOnstant('{app}')+ '\Log -M', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(SETX_PATH, ENABLER_DB_INSTANCE_NAME + ' ' + SQL_INSTANCE + ' -M', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(SETX_PATH, ENABLER_ROOT+ ' ' + ExpandCOnstant('{app}')+ ' -M', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Exec(SETX_PATH, ENABLER_LOG+ ' ' + ExpandCOnstant('{app}')+ '\Log -M', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Exec(SETX_PATH, ENABLER_DB_INSTANCE_NAME + ' ' + SQL_INSTANCE + ' -M', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 
     RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'DatabaseInstanceName', SQL_INSTANCE);
     RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\ENABLER', 'Enabler_Log', ExpandConstant('{app}')+'Log');
@@ -2752,7 +2990,7 @@ procedure installAPIMSI();
 var
   ResultCode:integer;
 begin
-  Exec(ExpandConstant('{sys}\msiexec.exe'), '/quiet /L+* '+ExpandConstant('{app}\log\APIInstall.log')+' /package '+ExpandConstant('{app}\InstallEnablerAPI.msi'), '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{sys}\msiexec.exe'), '/quiet /L+* '+ExpandConstant('{app}\log\APIInstall.log')+' /package '+ExpandConstant('{app}\InstallEnablerAPI.msi'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   if ResultCode <> 0 then begin
     Log('INFO: Could not install enabler API - ERRORLEVEL = ' + inttostr(ResultCode));   
     
@@ -2778,10 +3016,10 @@ var
 Begin
   if COMPONENTS = 'B' then begin
     //Environment and Registry variables
-    Exec(SETX_PATH,  'ENABLER_SERVER' +ENV_COMPUTERNAME+ ' -M', '', SW_SHOW, ewwaituntilterminated, ResultCode);
-    Exec(SETX_PATH, 'ENABLER_WEB' +ExpandConstant('{app}\www')+ ' -M', '', SW_SHOW, ewwaituntilterminated, ResultCode);
-    Exec(SETX_PATH, 'ENABLER_BIN' +ExpandConstant('{app}\bin')+ ' -M', '', SW_SHOW, ewwaituntilterminated, ResultCode);
-    Exec(SETX_PATH, 'ENABLER_DB' +DBDIR+ ' -M', '', SW_SHOW, ewwaituntilterminated, ResultCode);
+    Exec(SETX_PATH,  'ENABLER_SERVER' +ENV_COMPUTERNAME+ ' -M', '', SW_HIDE, ewwaituntilterminated, ResultCode);
+    Exec(SETX_PATH, 'ENABLER_WEB' +ExpandConstant('{app}\www')+ ' -M', '', SW_HIDE, ewwaituntilterminated, ResultCode);
+    Exec(SETX_PATH, 'ENABLER_BIN' +ExpandConstant('{app}\bin')+ ' -M', '', SW_HIDE, ewwaituntilterminated, ResultCode);
+    Exec(SETX_PATH, 'ENABLER_DB' +DBDIR+ ' -M', '', SW_HIDE, ewwaituntilterminated, ResultCode);
 
 
     RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler', 'Bin', ExpandConstant('{app}\bin'));
@@ -2793,13 +3031,13 @@ Begin
     if FileExists(ExpandCOnstant('{app}\nightly70.bat')) then begin
       deleteFile(ExpandCOnstant('{app}\nightly70.bat'));
       //Remove any schedule entry for the nightly backup (just in case the server software was previous installed)
-      Exec(ExpandCOnstant('{app}\atutil.exe'), '/d \Enalber\nightly','',SW_SHOW,ewwaituntilterminated,ResultCode);
+      Exec(ExpandCOnstant('{app}\atutil.exe'), '/d \Enalber\nightly','',SW_HIDE,ewwaituntilterminated,ResultCode);
     end;
 
     if FileExists(ExpandCOnstant('{app}\nightly.bat'))then begin
       deleteFile(ExpandCOnstant('{app}\nightly.bat'));
       //Remove any schedule entry for the nightly backup (just in case the server software was previous installed)
-      Exec(ExpandCOnstant('{app}\atutil.exe'), '/d '+ExpandConstant('{app}\Enalber\nightly'),'',SW_SHOW,ewwaituntilterminated,ResultCode);
+      Exec(ExpandCOnstant('{app}\atutil.exe'), '/d '+ExpandConstant('{app}\Enalber\nightly'),'',SW_HIDE,ewwaituntilterminated,ResultCode);
     end;
 
     DeleteFile(ExpandCOnstant('{app}\Install.exe'));
@@ -2824,12 +3062,12 @@ Begin
     deletefile(ExpandCOnstant('{app}\bin\WebData.dll'));
 
     if fileexists(ExpandCOnstant('{app}\bin\webhost.exe')) then begin
-      Exec(ExpandCOnstant('{app}\bin\webhost.exe'), '/uninstall','',SW_SHOW,ewwaituntilterminated,ResultCode);
+      Exec(ExpandCOnstant('{app}\bin\webhost.exe'), '/uninstall','',SW_HIDE,ewwaituntilterminated,ResultCode);
     end;
 
     if fileexists(ExpandCOnstant('{app}\bin\enbweb.exe')) then begin
-      Exec(ExpandCOnstant('{app}\bin\enbweb.exe'), '/stop','',SW_SHOW,ewwaituntilterminated,ResultCode);
-      Exec(ExpandCOnstant('{app}\bin\enbweb.exe'), '/uninstall','',SW_SHOW,ewwaituntilterminated,ResultCode);
+      Exec(ExpandCOnstant('{app}\bin\enbweb.exe'), '/stop','',SW_HIDE,ewwaituntilterminated,ResultCode);
+      Exec(ExpandCOnstant('{app}\bin\enbweb.exe'), '/uninstall','',SW_HIDE,ewwaituntilterminated,ResultCode);
     end;
 
     //Insert line "DefaultPort="%ENBWEB_PORT%"" into text file %MAINDIR%\bin\EnbWeb.exe.config.
@@ -2854,21 +3092,21 @@ Begin
     if OPERATING_SYSTEM >= '6' then begin
       Log('Updating Windows Advanced Firewall Rules');
       // New Advanced Firewall (Vista and later) - need to delete previous rules to avoid duplicates.
-      Exec('netsh', 'advfirewall firewall delete rule name="Enabler Web Server" program='+ExpandConstant('{app}\bin\enbweb.exe'),'', SW_SHOW,ewwaituntilterminated,ResultCode);
+      Exec('netsh', 'advfirewall firewall delete rule name="Enabler Web Server" program='+ExpandConstant('{app}\bin\enbweb.exe'),'', SW_HIDE,ewwaituntilterminated,ResultCode);
       Log('Removed old Firewall rule for Web Server '+inttostr(ResultCOde));
-      Exec('netsh', 'advfirewall firewall delete rule name="Enabler Pump Server" program='+ExpandConstant('{app}\bin\psrvr4.exe'),'', SW_SHOW,ewwaituntilterminated,ResultCode);
+      Exec('netsh', 'advfirewall firewall delete rule name="Enabler Pump Server" program='+ExpandConstant('{app}\bin\psrvr4.exe'),'', SW_HIDE,ewwaituntilterminated,ResultCode);
       Log('Removed old Firewall rule for Pump Server '+inttostr(ResultCOde));
-      Exec('netsh', 'advfirewall firewall add rule name="Enabler Web Server" dir=in action=allow program='+ExpandConstant('{app}\bin\enbweb.exe')+ ' enable=yes','', SW_SHOW,ewwaituntilterminated,ResultCode);
+      Exec('netsh', 'advfirewall firewall add rule name="Enabler Web Server" dir=in action=allow program='+ExpandConstant('{app}\bin\enbweb.exe')+ ' enable=yes','', SW_HIDE,ewwaituntilterminated,ResultCode);
       Log('Added Firewall rule for Web Server '+inttostr(ResultCOde));
-      Exec('netsh', 'advfirewall firewall add rule name="Enabler Pump Server" dir=in action=allow program='+ExpandConstant('{app}\bin\psrvr4.exe')+ ' enable=yes','', SW_SHOW,ewwaituntilterminated,ResultCode);
+      Exec('netsh', 'advfirewall firewall add rule name="Enabler Pump Server" dir=in action=allow program='+ExpandConstant('{app}\bin\psrvr4.exe')+ ' enable=yes','', SW_HIDE,ewwaituntilterminated,ResultCode);
       Log('Added Firewall rule for Pump Server '+inttostr(ResultCOde));
     end
     else begin
       //windows XP style firewall
       Log('Updating Windows Firewall Rules');
-      Exec('netsh', 'firewall set allowedprogram program='+ExpandConstant('{app}\bin\enbweb.exe')+ ' name="Enabler Web Server" mode=enable', '', SW_SHOW, ewwaituntilterminated, resultcode);
+      Exec('netsh', 'firewall set allowedprogram program='+ExpandConstant('{app}\bin\enbweb.exe')+ ' name="Enabler Web Server" mode=enable', '', SW_HIDE, ewwaituntilterminated, resultcode);
       Log('Added Firewall rule for Web Server '+inttostr(ResultCOde));
-      Exec('netsh', 'firewall set allowedprogram program='+ExpandConstant('{app}\bin\psrvr4.exe')+ ' name="Enabler Pump Server" mode=enable', '', SW_SHOW, ewwaituntilterminated, resultcode);
+      Exec('netsh', 'firewall set allowedprogram program='+ExpandConstant('{app}\bin\psrvr4.exe')+ ' name="Enabler Pump Server" mode=enable', '', SW_HIDE, ewwaituntilterminated, resultcode);
       Log('Added Firewall rule for Pump Server '+inttostr(ResultCOde));
     end;
 
@@ -2876,7 +3114,7 @@ Begin
     deletefile(ExpandConstant('{app}\www\Welcome.aspx'));
   End
   else begin
-    Exec(SETX_PATH, ENABLER_SERVER + ' ' + SERVER_NAME + ' -M', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(SETX_PATH, ENABLER_SERVER + ' ' + SERVER_NAME + ' -M', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','ServerName', SERVER_NAME);
   end;
 
@@ -2930,11 +3168,11 @@ Begin
   end
   else begin
     if FileExists(ExpandConstant('{app}')+'\ITLMPPSim.dll') then begin
-      Exec('rsgsvr32.exe', '/u /s '+ExpandConstant('{app}')+'\ITLMPPSim.dll', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec('rsgsvr32.exe', '/u /s '+ExpandConstant('{app}')+'\ITLMPPSim.dll', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       DeleteFile(ExpandConstant('{app}')+'ITLMPPSim.dll');
     end;
     if FileExists(ExpandConstant('{app}')+'\bin\ITLMPPSim.dll') then begin
-      Exec('rsgsvr32.exe', '/u /s '+ExpandConstant('{app}')+'\bin\ITLMPPSim.dll', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec('rsgsvr32.exe', '/u /s '+ExpandConstant('{app}')+'\bin\ITLMPPSim.dll', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       DeleteFile(ExpandConstant('{app}')+'\bin\ITLMPPSim.dll');
     end;
     if FileExists(ExpandConstant('{app}')+'\MPPSim.exe') then begin
@@ -3083,11 +3321,11 @@ begin
       ExtractTemporaryFile('InnovaHxReg.exe');
       FileCopy(ExpandConstant('{tmp}\InnovaHxReg.exe'), ExpandConstant('{app}\SDK\Doc\VisualStudio\InnovaHxReg.exe'),false);
       if ((OS=64) and (strtoint(OPERATING_SYSTEM) >= 6)) then begin
-        Exec('C:\WINDOWS\Sysnative\CMD.EXE /c ' + ExpandConstant('{app}')+'\SDK\Doc\VisualStudio\registerhelp2.bat', '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode)
+        Exec('C:\WINDOWS\Sysnative\CMD.EXE /c ' + ExpandConstant('{app}')+'\SDK\Doc\VisualStudio\registerhelp2.bat', '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
         Log('Execute path: C:\WINDOWS\Sysnative\CMD.EXE /c ' + ExpandConstant('{app}')+'\SDK\Doc\VisualStudio\unregisterhelp2.bat')
       end
       else begin
-        Exec('CMD.EXE /c ' + ExpandConstant('{app}')+'\SDK\Doc\VisualStudio\registerhelp2.bat', '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        Exec('CMD.EXE /c ' + ExpandConstant('{app}')+'\SDK\Doc\VisualStudio\registerhelp2.bat', '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         Log('Execute path: C:\WINDOWS\Sysnative\CMD.EXE /c ' + ExpandConstant('{app}')+'\SDK\Doc\VisualStudio\unregisterhelp2.bat'); 
       end;
 
@@ -3137,7 +3375,7 @@ begin
 
   if COMPONENTS = 'A' then begin
   //Client Install to Enabler (Desktop or Embedded)
-    Exec(SETX_PATH, ENABLER_SERVER + ' ' + SERVER_NAME + ' -M', '', SW_SHOW, ewWaitUntilTerminated, ResultCode)
+    Exec(SETX_PATH, ENABLER_SERVER + ' ' + SERVER_NAME + ' -M', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
   end;
 
   //Always install ActiveX client utility - most useful for client installs.
@@ -3206,7 +3444,7 @@ var
   SERVER:String;  
   progressPage: TOutputProgressWizardPage;
 Begin
-  Exec('net.exe', 'localgroup /add EnablerAdministrators', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec('net.exe', 'localgroup /add EnablerAdministrators', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   if SILENT = false then begin
     try
       progressPage := CreateOutputProgressPage('Progress Stage','The Enabler');
@@ -3216,33 +3454,33 @@ Begin
       progressPage.Hide;
     end;
   end;
-  Exec(ExpandConstant('{app}\CreateRegKeyEvent.bat'), '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=directoriesonly ' + ExpandConstant('{app}')+'\log /grant='+ BUILTIN_USERS_GROUP+ '=CRWD /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=filesonly ' + ExpandConstant('{app}')+'\log\*.* /grant='+ BUILTIN_USERS_GROUP+ '=CRWD /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}\CreateRegKeyEvent.bat'), '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=directoriesonly ' + ExpandConstant('{app}')+'\log /grant='+ BUILTIN_USERS_GROUP+ '=CRWD /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=filesonly ' + ExpandConstant('{app}')+'\log\*.* /grant='+ BUILTIN_USERS_GROUP+ '=CRWD /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 
   LOGTIME := GetDateTimeString('dd/mm/yyyy hh:nn:ss', '-', ':');
   Log(Format('Start of setting permissions %s', [LOGTIME]));
 
   if COMPONENTS = 'B' then begin
-    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\enbkick.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\vsql.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\fcman.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + OSQL_PATH +' /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + OSQL_PATH +' /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/service psrvr4 /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\enbkick.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\vsql.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + ExpandConstant('{app}')+'\fcman.exe /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + OSQL_PATH +' /grant='+ BUILTIN_USERS_GROUP+ '= /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file ' + OSQL_PATH +' /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/service psrvr4 /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   End;
 
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{sys}')+'\eventvwr.msc /grant='+BUILTIN_USERS_GROUP+'= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{sys}')+'\config\Enabler.evt /grant='+BUILTIN_USERS_GROUP+'= /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\log /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\log\*.* /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{sys}')+'\eventvwr.msc /grant='+BUILTIN_USERS_GROUP+'= /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{sys}')+'\config\Enabler.evt /grant='+BUILTIN_USERS_GROUP+'= /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\log /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\log\*.* /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
      
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\ /grant=EnablerAdministrators=F', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{app}')+' /grant=EnablerAdministrators=F', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /subdirectories=directoriesonly '+ExpandConstant('{app}')+'\ /grant=EnablerAdministrators=F', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', ' /file'+ExpandConstant('{app}')+' /grant=EnablerAdministrators=F', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=filesonly'+ExpandConstant('{app}')+'\*.* /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file'+ExpandConstant('{sys}')+'%\eventvwr.msc /grant=EnablerAdministrators=E /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file'+ExpandConstant('{sys}')+'\config\Enabler.evt /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/subdirectories=filesonly'+ExpandConstant('{app}')+'\*.* /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file'+ExpandConstant('{sys}')+'%\eventvwr.msc /grant=EnablerAdministrators=E /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{app}') + '\bin\subinacl.exe', '/file'+ExpandConstant('{sys}')+'\config\Enabler.evt /grant=EnablerAdministrators=F /pathexclude=C:\*.*', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 
   LOGTIME2 := GetDateTimeString('dd/mm/yyyy hh:nn:ss', '-', ':');
   Log(Format('End of setting permissions %s', [LOGTIME2]));
@@ -3273,8 +3511,8 @@ Begin
         progressPage.Hide;
       end;
     end;
-    Exec(ExpandConstant('{app}') + '\bin\psrvr4.exe', '/service', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec(ExpandConstant('{app}') + '\bin\enbweb.exe', '/install', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\psrvr4.exe', '/service', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}') + '\bin\enbweb.exe', '/install', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     Log('Update Services Start timout setting');
     RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control', 'ServicesPipeTimeout', '180000');
     if SILENT = false then begin
@@ -3293,12 +3531,12 @@ Begin
     If SQL_INSTANCE = '' then begin
       Log('Confirming MSSQLSERVER service is running');
       //check service MSSQLSERVER
-      Exec('CMD.EXE','sc query MSSQLSERVER','', SW_SHOW, ewWaitUntilIdle, ResultCode)
+      Exec('CMD.EXE','sc query MSSQLSERVER','', SW_HIDE, ewWaitUntilIdle, ResultCode)
     end
     else begin
       Log('Confirming MSSQL$'+SQL_INSTANCE+' service is running');
       //check service MSSQL$%SQL_INSTANCE%
-      Exec('CMD.EXE','sc query MSSQL$'+SQL_INSTANCE,'', SW_SHOW, ewWaitUntilIdle, ResultCode)
+      Exec('CMD.EXE','sc query MSSQL$'+SQL_INSTANCE,'', SW_HIDE, ewWaitUntilIdle, ResultCode)
     end;
     (*Log(Format('SQLServer Status: %s', [SQLSERVER_STARTED]));
     if pos('Running',SQLSERVER_STARTED)<>0 then begin
@@ -3317,15 +3555,15 @@ Begin
     
     // Setup ODBC Data source and Windows users, info for event logs 
     if SQL_INSTANCE = '' then begin
-      Exec(ExpandConstant('{app}') + '\bin\odbcnfg.exe', '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(ExpandConstant('{app}') + '\bin\odbcnfg.exe', '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       if OS = 64 then begin
-        Exec(ExpandConstant('{app}') + '\bin\odbcnfg64.exe', '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        Exec(ExpandConstant('{app}') + '\bin\odbcnfg64.exe', '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       end;
     end
     else begin
-      Exec(ExpandConstant('{app}') + '\bin\odbcnfg.exe', '/i '+SQL_INSTANCE, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(ExpandConstant('{app}') + '\bin\odbcnfg.exe', '/i '+SQL_INSTANCE, '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       if OS = 64 then begin
-        Exec(ExpandConstant('{app}') + '\bin\odbcnfg.exe', '/i ' + SQL_INSTANCE, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        Exec(ExpandConstant('{app}') + '\bin\odbcnfg.exe', '/i ' + SQL_INSTANCE, '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       end;
     end;
 
@@ -3341,7 +3579,7 @@ Begin
         end;
       end;
       Log('A pre upgrade backup will be performed (Nightly.bat)');
-      Exec('cmd.exe', '/C '+ExpandConstant('{app}\Nightly.bat')+ ' ' + SQLQUERY, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec('cmd.exe', '/C '+ExpandConstant('{app}\Nightly.bat')+ ' ' + SQLQUERY, '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       if SILENT = false then begin
         try
           progressPage := CreateOutputProgressPage('Progress Stage','The Enabler');
@@ -3358,7 +3596,7 @@ Begin
     Log('DB DIR is'+DBDIR);
     Log(Format('Passing %s to DBInstall',[OSQL_PATH]));
     // We're supposed to be able to run BAT files directly, but it doesn't seem to work on WinNT
-    Exec('CMD.EXE','/C '+ExpandConstant('{app}')+ '\DBInstall.bat "'+DBDIR+'" "'+ExpandConstant('{app}')+'" "'+ExpandConstant('{app}')+'\install.log" "'+OSQL_PATH+'" '+SQLQUERY, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec('CMD.EXE','/C '+ExpandConstant('{app}')+ '\DBInstall.bat "'+DBDIR+'" "'+ExpandConstant('{app}')+'" "'+ExpandConstant('{app}')+'\install.log" "'+OSQL_PATH+'" '+SQLQUERY, '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 
     //We can now check for DBINSTALL_OK and MKUPGRADE_OK files to see if the db install/upgrade worked
     if not fileExists(ExpandConstant('{app}')+'\DBINSTALL_OK') then begin
@@ -3403,7 +3641,7 @@ Begin
           progressPage.Hide;
         end;
       end;  
-      Exec(OSQL_PATH+'\OSQL.EXE','-b -d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{app}')+ '\EnablerDBdoc.sql" -o '+ExpandConstant('{app}')+'\EnablerDBdoc.log', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(OSQL_PATH+'\OSQL.EXE','-b -d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{app}')+ '\EnablerDBdoc.sql" -o '+ExpandConstant('{app}')+'\EnablerDBdoc.log', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     end;
     
     if SILENT = false then begin
@@ -3433,11 +3671,11 @@ Begin
     GiveOSQLPath(ExpandConstant('{app}')+'\PumpUpdate.ini', OSQL_PATH);
     if SQL_INSTANCE = '' then begin
       Log('INFO: Running PumpUpdate for default instance');
-      Exec(ExpandConstant('{app}')+'\PumpUpdate.exe','/S /D /OSQL','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(ExpandConstant('{app}')+'\PumpUpdate.exe','/S /D /OSQL','', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     end
     else begin
       Log(Format('INFO: Running PumpUpdate for named instance %s',[SQL_INSTANCE]));
-      Exec(ExpandConstant('{app}')+'\PumpUpdate.exe','/S /D /OSQL /INSTANCE:'+SQL_INSTANCE,'', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(ExpandConstant('{app}')+'\PumpUpdate.exe','/S /D /OSQL /INSTANCE:'+SQL_INSTANCE,'', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     end;
 
     if SILENT = false then begin
@@ -3468,17 +3706,17 @@ Begin
     //SDK options
     if SDK_OPTIONS = '' then begin
       //delete Sim, MPP driver if SDK option is not selected
-      Exec(OSQL_PATH+'\OSQL.EXE','-d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{app}')+'\UninstallSim.sql" -o '+ ExpandConstant('{app}')+ 'SimInstall.log','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(OSQL_PATH+'\OSQL.EXE','-d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{app}')+'\UninstallSim.sql" -o '+ ExpandConstant('{app}')+ 'SimInstall.log','', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     end
     else begin
       //install Sim, MPP driver if SDK option is selected
-      Exec(OSQL_PATH+'\OSQL.EXE','-d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{app}')+'\IninstallSim.sql" -o '+ ExpandConstant('{app}')+ 'SimInstall.log','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(OSQL_PATH+'\OSQL.EXE','-d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{app}')+'\IninstallSim.sql" -o '+ ExpandConstant('{app}')+ 'SimInstall.log','', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     end;
 
     //===================================================
     //Remove old registry license for v4.0 Beta customers
     //===================================================
-    Exec(ExpandConstant('{app}')+'\ConvertV4BetaLicense.exe','/r','', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec(ExpandConstant('{app}')+'\ConvertV4BetaLicense.exe','/r','', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     if ResultCode = 0 then begin
       Log('v4.0 Beta registry license removed');
     end;
@@ -3488,8 +3726,8 @@ Begin
     if NOSTART = false then begin
       //Start Service psrvr
       //Start Service enbweb
-      Exec('CMD.EXE','net start psrvr','', SW_SHOW, ewWaitUntilIdle, ResultCode);
-      Exec('CMD.EXE','net start enbweb','', SW_SHOW, ewWaitUntilIdle, ResultCode);
+      Exec('CMD.EXE','net start psrvr','', SW_HIDE, ewWaitUntilIdle, ResultCode);
+      Exec('CMD.EXE','net start enbweb','', SW_HIDE, ewWaitUntilIdle, ResultCode);
     end;
 
     // Add some extra entries to the Wise log - so temporary or generated files are removed at uninstall
@@ -3539,7 +3777,7 @@ Begin
     end;
  
     Log('Registering Enabler objects');
-    Exec('rsgsvr32.exe', '/s '+ExpandConstant('{app}')+'\EnbSessionX2.OCX', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec('rsgsvr32.exe', '/s '+ExpandConstant('{app}')+'\EnbSessionX2.OCX', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     if embedded = false then begin
       sleep(2000);
       Log('Configuring DCOM');
@@ -3549,15 +3787,15 @@ Begin
       End;
 
       if SQL_INSTANCE = '' then begin
-        Exec(ExpandConstant('{app}')+'\bin\odbcnfg.exe', '/s '+SERVER_NAME, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        Exec(ExpandConstant('{app}')+'\bin\odbcnfg.exe', '/s '+SERVER_NAME, '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         if OS = 64 then begin
-          Exec(ExpandConstant('{app}')+'\bin\odbcnfg64.exe', '/s '+SERVER_NAME, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);      
+          Exec(ExpandConstant('{app}')+'\bin\odbcnfg64.exe', '/s '+SERVER_NAME, '', SW_HIDE, ewWaitUntilTerminated, ResultCode);      
         End;
       End 
       else begin
-        Exec(ExpandConstant('{app}')+'\bin\odbcnfg.exe', '/s '+SERVER_NAME+ '/i'+ SQL_INSTANCE, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        Exec(ExpandConstant('{app}')+'\bin\odbcnfg.exe', '/s '+SERVER_NAME+ '/i'+ SQL_INSTANCE, '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         if OS = 64 then begin
-          Exec(ExpandConstant('{app}')+'\bin\odbcnfg64.exe', '/s '+SERVER_NAME+ '/i'+ SQL_INSTANCE, '', SW_SHOW, ewWaitUntilTerminated, ResultCode);      
+          Exec(ExpandConstant('{app}')+'\bin\odbcnfg64.exe', '/s '+SERVER_NAME+ '/i'+ SQL_INSTANCE, '', SW_HIDE, ewWaitUntilTerminated, ResultCode);      
         End;
       end;
     End;
@@ -3602,7 +3840,7 @@ begin
     Log('Checking for '+ExpandConstant('{src}')+'ServerHook.sql ');
     if FileExists(ExpandConstant('{src}')+'ServerHook.sql') then begin
       Log('Running '+ExpandConstant('{src}') +'ServerHook.sql (osql '+OSQL_PATH+')');
-      Exec(OSQL_PATH+'OSQL.EXE', '-b -d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{src}')+'ServerHook.sql" -o ' + ExpandConstant('{app}')+'ServerHook.log', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec(OSQL_PATH+'OSQL.EXE', '-b -d EnablerDB -E -S'+SQLQUERY+' -i "'+ExpandConstant('{src}')+'ServerHook.sql" -o ' + ExpandConstant('{app}')+'ServerHook.log', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       Log('Completed ServerHook (return code '+inttostr(ResultCode)+ ')');
     end;
     //check service psrvr
@@ -3633,17 +3871,17 @@ begin
     Log('Fast startup setting is: ' + FAST_STARTUP);
     if FAST_STARTUP <> '0' then begin
       //use powercfg to disable Fast startup. Editing of registry does NOT work for all OS
-      Exec('CMD.EXE', '/C powercfg.exe -H off', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+      Exec('CMD.EXE', '/C powercfg.exe -H off', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       Log('Updating registry setting to disable fast startup');
     end;
 
     //force to disable ALL other sleep settings for all devices
-    Exec('CMD.EXE', '/C powercfg.exe -change -standby-timeout-ac 0', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec('CMD.EXE', '/C powercfg.exe -change -standby-timeout-dc 0', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec('CMD.EXE', '/C powercfg.exe -change -standby-timeout-ac 0', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Exec('CMD.EXE', '/C powercfg.exe -change -standby-timeout-dc 0', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     Log('Update standby TO to 0 to prevent system going to sleep');
 
-    Exec('CMD.EXE', '/C powercfg.exe -change -hibernate-timeout-ac 0', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-    Exec('CMD.EXE', '/C powercfg.exe -change -hibernate-timeout-dc 0', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec('CMD.EXE', '/C powercfg.exe -change -hibernate-timeout-ac 0', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Exec('CMD.EXE', '/C powercfg.exe -change -hibernate-timeout-dc 0', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     Log('Update hibernate TO to 0 to prevent system hibernation');
   end;
 
@@ -3697,18 +3935,18 @@ begin
   //start things the installer asked for
   if DO_START_ACTIONS = 1 then begin
     if pos('A', START_MPP) <> 0 then begin
-      Exec(ExpandConstant('{app}')+'mppsim.exe', '', '', SW_SHOW, ewNoWait, ResultCode);
+      Exec(ExpandConstant('{app}')+'mppsim.exe', '', '', SW_HIDE, ewNoWait, ResultCode);
     end;
     if pos('A', START_PUMP) <> 0 then begin
-      Exec(ExpandConstant('{app}')+'PumpDemoWPF.exe', '', '', SW_SHOW, ewNoWait, ResultCode);
+      Exec(ExpandConstant('{app}')+'PumpDemoWPF.exe', '', '', SW_HIDE, ewNoWait, ResultCode);
     end;
     if pos('A', OPEN_WEB) <> 0 then begin
       if SERVER_NAME = '' then begin
-        Exec('CMD.EXE', '/C start http://localhost:'+ENBWEB_PORT, '', SW_SHOW, ewNoWait, ResultCode);
+        Exec('CMD.EXE', '/C start http://localhost:'+ENBWEB_PORT, '', SW_HIDE, ewNoWait, ResultCode);
       end
       else begin
         //Note that this could be a PC server (port 8081) or EMB (port 80)
-        Exec('CMD.EXE', '/C start http://'+SERVER_NAME+ENBWEB_PORT_STR, '', SW_SHOW, ewNoWait, ResultCode);
+        Exec('CMD.EXE', '/C start http://'+SERVER_NAME+ENBWEB_PORT_STR, '', SW_HIDE, ewNoWait, ResultCode);
       end;
     end;
   end;
@@ -3731,7 +3969,7 @@ procedure OpenBrowser(Url:String);
 var
   ErrorCode:Integer;
 begin
-  ShellExec('open', Url, '','', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+  ShellExec('open', Url, '','', SW_HIDE, ewNoWait, ErrorCode);
 end; 
 
 procedure releaseNotesButtonOnClick(Sender:TObject);
@@ -3974,244 +4212,7 @@ begin
   domainName:= portPage.Values[1];
 end;
 
-//========================================
-//========================================
-//installer-wide functions
-//========================================
-//========================================
 
-//functions for logger
-
-procedure MoveLogFile();
-// Current log file location is the user's temp folder. eg. C:\Users\Jamie\AppData\Local\Temp\Setup Log 2019-08-05 #001.txt
-// The location or file name is not configurable so copy it to a new location with a new name and delete the old file.
-var
-  copyResult, deleteResult: boolean;
-  logFilePathName, logFileName, newFilePathName: string;
-begin
-  logFilePathName := ExpandConstant('{log}');
-  logFileName := appName + ' ' + ExtractFileName(logFilePathName);
-
-  // Set the new location as the directory where the installer .exe is being run from.
-  newFilePathName := ExpandConstant('{src}\') + logFileName;
-
-  // Can't move log file, so copying file to new location and deleting old one.
-  copyResult := FileCopy(logFilePathName, newFilePathName, false);
-  if copyResult = False then
-    Log('Unable to copy log file ' + logFilePathName)
-  else
-    deleteResult := DeleteFile(logFilePathName);
-    if deleteResult = False then
-      Log('Unable to delete log file ' + logFilePathName);
-      FileCopy(logFilePathName, newFilePathName, false);  // Copy log file again to include the 'unable to delete log file' entry.
-end;
- 
-//abort an install
-procedure ExitProcess(exitCode:integer);
-  external 'ExitProcess@kernel32.dll stdcall';
-
-procedure Abort();
-begin
-  moveLogFile();
-  ExitProcess(0);
-end;
-
-
-// Returns true if the installation type is the type passed to the function.
-function IsInstallType(installType: String): Boolean;
-begin
-  if components = installType then 
-    Result := true
-  else
-    Result := false;   
-end;
-
-//returns true if the OS type (32/64-bit) matches the passed parameter
-function isOS(OSNum:integer):boolean;
-begin
-  if OS = OSNum then begin
-    Result:=true;
-  end
-  else begin
-    Result:=false;
-  end;
-end;
-
-//returns true if Windows Version is less than parameter number version
-function isWindowsVersion(checkNum:integer):boolean;
-begin
-  if WINDOWS_BASE_VERSION < checkNum then begin
-    Result:=true;
-  end
-  else begin
-    Result:=False;
-  end;
-end;
-
-
-function isSDK_OPTIONS(checkString: String):boolean;
-begin
-  if pos(checkString,SDK_OPTIONS) <> 0 then begin
-    Result:=true;
-  end
-  else begin
-    Result:=False;
-  end;
-end;
-
-function isSDK_OPTIONSempty():boolean;
-begin
-  if SDK_OPTIONS = '' then begin
-    Result := true;
-  end
-  else begin
-    Result := False;
-  end;
-end;
-
-function isNotSDK_OPTIONSempty():boolean;
-begin
-  if SDK_OPTIONS <> '' then begin
-    Result := true;
-  end
-  else begin
-    Result := False;
-  end;
-end;
-
-function NeedRestart():Boolean;
-begin
-  if RESTART_DECISION then begin
-    Result:=True;
-  end
-  else
-    Result:=False;
-end;
-
-//check which pages to skip/display depending on components selected
-
-function ShouldSkipPage(PageID:Integer):Boolean;
-begin
-  Result:=False;
-
-  if PageID = serverFilesMissingPage.ID then begin
-    if (SQLEXPRESSNAME <> '') or (OSQL_PATH <> '') then begin
-      Result:=true;
-    end;
-  end;
-
-  //pages exclusive to Server install
-  if PageID = SAPasswordPage.ID then begin
-    if (isInstallType('A')) or (OSQL_PATH <> '') then begin
-      Result:=True;
-    end;
-  end;
-  if PageID = portPage.ID then begin
-    if isInstallType('A') then begin
-      Result:=true;
-    end;
-  end;
-
-  //pages exclusive to Client install
-  if PageID = serverNameEntryPage.ID then begin
-    if IsInstallType('B') then begin
-      Result:= True;
-    end;
-  end;
-  if PageID = instanceNamePage.ID then begin
-    if IsInstallType('B') then begin
-      Result:= True;
-    end;
-  end;
-  if PageID = noServerInstalledPage.ID then begin
-    if isInstallType('A') then begin
-      Result:=true;
-    end
-    else if OSQL_PATH <> '' then begin
-      Result:=True;
-    end;
-  end;
-
-  if PageID = serverAlreadyExistsPage.ID then begin
-    if isInstallType('A') then begin
-      Result:=true;
-    end
-    else if OSQL_PATH = '' then begin
-      Result:=True;
-    end;
-  end;
-  
-
-end;
-
-//on pages that require user input, do not let them progress if something is wrong with their input
-
-function NextButtonClick(CurPageID:Integer):Boolean;
-begin
-  Result:=True;
-
-  //if passwords do not match
-  if CurPageID = SAPasswordPage.ID then begin
-    if SAPasswordPage.Edits[0].Text <> SAPasswordPage.Edits[1].Text then begin
-      MsgBox('The passwords do not match. Please re-enter.', mbError, MB_OK);
-      Result := False;
-    end;
-  end;
-
-  //if password field is empty
-  if CurPageID = SAPasswordPage.ID then begin
-    if SAPasswordPage.Edits[0].Text = '' then begin
-      MsgBox('The password field is empty. Please enter a password.', mbError, MB_OK);
-      Result := False;
-    end;
-  end;
-  if CurPageID = SAPasswordPage.ID then begin
-    if SAPasswordPage.Edits[1].Text = '' then begin
-      MsgBox('The re-enter password field is empty. Please re-enter the password to confirm.', mbError, MB_OK);
-      Result := False;
-    end;
-  end;
-
-  //if port number is empty
-  if CurPageID = portPage.ID then begin
-    if portPage.Edits[0].Text = '' then begin
-      MsgBox('The port number field is empty. Please enter a port number. 8081 is the default.', mbError, MB_OK);
-      Result := False;
-    end;
-  end;
-
-  //if domain name is empty
-  if CurPageID = portPage.ID then begin
-    if portPage.Edits[1].Text = '' then begin
-      MsgBox('The domain name is empty. Please enter a domain name. Use your local network domain if you have one, otherwise the default is mydomain.com.', mbError, MB_OK);
-      Result := False;
-    end;
-  end;
-
-  //ready page database backup checkbox
-  if CurPageID = wpReady then begin
-     // is the checkbox checked?
-    if BackupCheckBox.Checked then begin
-      Log('Backup checkbox checked, will backup');
-      PRE_UPGRADE_BACKUP:='A';
-    end
-    else begin
-      // the checkbox is not checked
-      Log('Backup checkbox not checked or there is no existing database, will not backup.');
-      PRE_UPGRADE_BACKUP:='';
-    end;
-  end;
-
-  if CurPageID = pageInstallType.ID then begin
-    if radioClient.checked then begin
-      backupcheckbox.checked:=false;
-      backupcheckbox.Enabled:=false;
-    end
-    else if radioserver.checked then begin
-      backupcheckbox.Enabled:=true;
-    end;
-  end;
-end;
 
 
 //=====================
