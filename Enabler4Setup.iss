@@ -51,6 +51,7 @@ UsePreviousAppDir=no
 OutputBaseFilename=Enabler4Setup
 SetupLogging=yes
 DisableWelcomePage=no
+WizardSmallImageFile=output\branding\logo-web.bmp
 
 [Types]
 Name: "Client"; Description: "Client"
