@@ -1,0 +1,64 @@
+﻿2019-10-07 13:23:02.332   Log opened. (Time zone: UTC+13:00)
+2019-10-07 13:23:02.332   Setup version: Inno Setup version 6.0.2 (u)
+2019-10-07 13:23:02.332   Original Setup EXE: C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe
+2019-10-07 13:23:02.332   Setup command line: /SL5="$10096E,40006066,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$7099A /NOTIFYWND=$C001D0 -Help
+2019-10-07 13:23:02.332   Windows version: 10.0.18362  (NT platform: Yes)
+2019-10-07 13:23:02.332   64-bit Windows: Yes
+2019-10-07 13:23:02.332   Processor architecture: x64
+2019-10-07 13:23:02.332   User privileges: Administrative
+2019-10-07 13:23:02.335   Administrative install mode: Yes
+2019-10-07 13:23:02.335   Install mode root key: HKEY_LOCAL_MACHINE
+2019-10-07 13:23:02.335   64-bit install mode: No
+2019-10-07 13:23:02.338   Created temporary directory: C:\Users\JACOBC~1\AppData\Local\Temp\is-8I9HF.tmp
+2019-10-07 13:23:02.344   -- DLL function import --
+2019-10-07 13:23:02.344   Function name: ExitProcess
+2019-10-07 13:23:02.344   DLL name: kernel32.dll
+2019-10-07 13:23:02.344   Dest DLL name: kernel32.dll
+2019-10-07 13:23:02.344   Importing the DLL function.
+2019-10-07 13:23:02.344   Successfully imported the DLL function. Delay loaded? No
+2019-10-07 13:23:02.345   Initialising variables.
+2019-10-07 13:23:02.450   Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10
+2019-10-07 13:23:02.450   Installing Enabler V4.6.3.6087 on Windows V10.00.18362 64bit (Version 10)
+2019-10-07 13:23:02.450   Option = /SL5="$10096E,40006066,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$7099A /NOTIFYWND=$C001D0 -Help
+2019-10-07 13:23:02.450   User requested usage -H
+2019-10-07 13:23:02.450   WARNING: Install stopped to show usage.
+2019-10-07 13:23:02.451   Message box (OK):
+                          /FULL
+                          Automatically install Enabler Server (and SQL2008 R2 EXPRESS if required). Also installs all applications (see below) and manuals.
+                          
+                          /PASSWORDPARAMETER=<password>
+                          Please provide the SA password if you know there is no SQL Server pre-installed and you want to install the included SQL Server 2008 R2 Express. This password needs to be a strong one.
+                          
+                          /CLIENTNAME=<servername>
+                          Automatically install Enabler Client components only. This will not verify the version of any SQL installations or if there are Named Instances.
+                          
+                          /VERYSILENT
+                          This option selects a completely silent installation (must be the first command-line option).
+                          
+                          /BACKUPDB
+                          Automatically performs a backup of the database before the database is upgraded (using Nightly.bat).
+                          
+                          /INSTANCENAME=<SQL Named Instance>
+                          To install Enabler on an existing SQL Name Instance you need to provide the Instance name using this parameter.
+                          
+                          /MPPSIM
+                          Install The ITL MPP Simulator and driver for test and demo systems.
+                          
+                          /PORT:<port number>
+                          To set the port number that Enabler Web Server should use. Default value is 8081
+                          
+                          /DOMAIN:<domain name>
+                          The security domain used by the Enabler Web Server which client browsers use to store login credentials. Default is mydomain.com.
+                          
+                          /NOSTART
+                          To install Enabler but not start services (PSRVR and ENBWEB). Useful if for installer that do system updates - before starting Enabler.
+                          
+                          EXAMPLE:
+                          
+                          To install The Enabler Server along with a fresh install of the SQL2008 R2 EXPRESS, SA password is required:
+                          
+                          Enabler4Setup.EXE /FULL /BACKUPDB /PASSWORD:<password>
+                          
+                          Note: Windows login of the admin level is required to install/upgrade the Enabler System.  SQL2008 Express will be installed if no SQL server is pre-installed, a strong SA password is required.
+2019-10-07 13:23:18.870   User chose OK.
+2019-10-07 13:23:18.887   Unable to delete log file C:\Users\JACOBC~1\AppData\Local\Temp\Setup Log 2019-10-07 #040.txt
