@@ -108,6 +108,7 @@ Source: "{#SourcePath}\Input\AutoSupport.exe"; DestDir:"{app}";
 //copy readme and release notes files into TEMP folder
 Source: "{#SourcePath}\Input\release.txt"; DestDir:"{tmp}" ;
 
+
 //===================
 //setup environment variables
 //====================
@@ -1524,21 +1525,21 @@ begin
       //If no instance has been passed by the command line 
       if CMD_INSTANCE = false then begin
         //GET LIST OF NAMED INSTANCES
-          //RegQueryMultiStringValue(HKLM, 'SOFTWARE\Microsoft\Microsoft SQL Server', 'InstalledInstances',INSTANCES);
+          //RegQueryMultiStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Microsoft SQL Server', 'InstalledInstances',INSTANCES);
           //Log(INSTANCES);
         //Server SQL settings
-        //RegQueryMultiStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Microsoft SQL Server', 'InstalledInstances',INSTANCES)
+
         //Get temporary filename into INSTANCES
-        INSTANCES := 'temporary.tmp';
-        if (OS=64) and (strtoint(OPERATING_SYSTEM) >= 6) then begin
-          Exec('C:\WINDOWS\Sysnative\CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{tmp}\')+INSTANCES, '', SW_HIDE, ewwaituntilterminated,ResultCode);
-        end
-        else begin
-          Exec('CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{tmp}\')+INSTANCES, '', SW_HIDE, ewwaituntilterminated,ResultCode);
-        end;
+        SaveStringtoFile(ExpandConstant('{app}\temp'), '', False);
+        //if (OS=64) and (strtoint(OPERATING_SYSTEM) >= 6) then begin
+          //Exec('C:\WINDOWS\Sysnative\CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{app}\temp'), '', SW_HIDE, ewwaituntilterminated,ResultCode);
+        //end
+        //else begin
+          Exec('CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{app}\temp.txt'), '', SW_HIDE, ewwaituntilterminated,ResultCode);
+        //end;
 
         if ResultCOde <> 0 then begin
-          Log('Unable to get SQL Instance Name registry key.' + inttostr(ResultCode));
+          Log('Unable to get SQL Instance Name registry key: Error code ' + inttostr(ResultCode));
           INSTANCE_NAME_NEEDED := true;
         end
         else begin
@@ -1546,7 +1547,8 @@ begin
           NAME := '';
           SQL_INSTANCES := '';
 
-          LoadStringFromFile(ExpandConstant('{tmp}\'+INSTANCES), LINE);
+          LoadStringFromFile(ExpandConstant('{app}\temp'), LINE);
+          Log(LINE);
 
           NAME := LINE;
 
@@ -1559,11 +1561,11 @@ begin
               SQLQUERY := PC_NAME+'\'+SQL_INSTANCE;
               INSTANCE_NAME_NEEDED := FALSE;
             end;
-            //Build list of instances names incase they need to be displayed
-            SQL_INSTANCES := NAME+'#13#10';
           end;
+            //Build list of instances names incase they need to be displayed
+          SQL_INSTANCES := NAME+#13#10;
 
-          Log('SQL Instance Names found '+'#13#10'+SQL_INSTANCES);
+          Log('SQL Instance Names found '+#13#10+SQL_INSTANCES);
 
           //Check if we found a known instance, if we haven't do we have a list of instances
           if (INSTANCE_NAME_NEEDED = TRUE) AND (SQL_INSTANCES <> '') then begin
@@ -4311,7 +4313,7 @@ begin
   end;
   //just after
   if CurStep = ssPostInstall then begin
-
+    
     OSQLPathFound();
     InstallServerComponents();
     InstallSqlServer();
