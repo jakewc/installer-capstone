@@ -959,6 +959,12 @@ begin
       Log('Backup checkbox not checked or there is no existing database, will not backup.');
       PRE_UPGRADE_BACKUP:='';
     end;
+    //if no valid server install folders were found
+    if (SQLEXPRESSNAME='') and (COMPONENTS='B') and (OSQL_PATH='') then begin
+      Log('No valid SQL Express installer folders found in the source directory, aborting install.');
+      MsgBox('No valid SQL Express installer folders found in the source directory. Aborting install.', mbinformation, MB_OK);
+      Abort();
+    end;
   end;
 
   if CurPageID = pageInstallType.ID then begin
@@ -1442,11 +1448,11 @@ begin
             else begin
               Log('"ERROR: MSDE not found - cannot install server without SQL (Expected in folder {src}\MSDE2000');
               SQLEXPRESSNAME := '';
-              if UNATTENDED = '0' then begin
-                if COMPONENTS = 'B' then begin
-                  Abort();
-                end;
-              end;
+              //if UNATTENDED = '0' then begin
+                //if COMPONENTS = 'B' then begin
+                  //Abort();
+                //end;
+              //end;
             end;
           end;
         end;
@@ -2610,11 +2616,8 @@ Begin
         RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler', 'Restart', 'True');
         RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'Enabler Install', '"'+ExpandConstant('{src}')+'\Enabler4Setup.exe"');
         Log(Format('%s installed - reboot pending',[SQLEXPRESSFULLNAME]));
-        if MsgBox('Reboot system?', mbConfirmation, MB_YESNO) = IDYES then begin
-          RESTART_DECISION:=TRUE;
-          //EXIT Installation;
-        end;
-        //Abort();
+        MsgBox('There are reboots pending on your system, please restart and try again.', mbinformation, MB_OK);
+        Abort();
       end;
 
       //Error3 - Updates required
@@ -2628,7 +2631,7 @@ Begin
       
       //Error 4 or any other error - Failed Install
       //Make sure the SQL Server was installed
-      if ResultCode <> 0 then begin
+      if (ResultCode <> 0) and (ResultCode <> 1) and (ResultCode <> 2) and (ResultCode <> 3) then begin
         if UNATTENDED = '0' then begin
           MsgBox(SQLEXPRESSFULLNAME+'Install', mbInformation, MB_OK);
         end;
