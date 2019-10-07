@@ -24,6 +24,7 @@ OutputBaseFilename=Enabler4Setup
 SetupLogging=yes
 DisableWelcomePage=no
 //WizardSmallImageFile=output\branding\logo-web.bmp
+//WizardImageFile=output\branding\logo-web.bmp
 
 [Types]
 Name: "Client"; Description: "Client"
@@ -1535,7 +1536,7 @@ begin
           //Exec('C:\WINDOWS\Sysnative\CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{app}\temp'), '', SW_HIDE, ewwaituntilterminated,ResultCode);
         //end
         //else begin
-          Exec('CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{app}\temp.txt'), '', SW_HIDE, ewwaituntilterminated,ResultCode);
+          Exec('CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{app}\temp'), '', SW_HIDE, ewwaituntilterminated,ResultCode);
         //end;
 
         if ResultCOde <> 0 then begin
@@ -1790,23 +1791,18 @@ begin
     Log('Server was chosen');
     //Checking to see if the C: drive is compressed. SQL server doesn't like the EnablerDB files in a compressed location
     if strtoint(OPERATING_SYSTEM) >= 5.1 then begin
-      if ((strtoint(OPERATING_SYSTEM) >= 6) and (OS=64)) then begin
-        Exec('C:\WINDOWS\Sysnative\CMD.EXE', ' /C '+ExpandConstant('{app}')+'\bin\DriveCompressed.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-        INSTALL_RESULT:=ResultCode;
-      end
-      else begin
-        Exec('CMD.EXE', ' /C '+ExpandConstant('{app}')+'\bin\DriveCompressed.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-        INSTALL_RESULT:=ResultCode;
-      end;
-      
-
-      //!!!NOTE: This section is BUGGED. !!!
-      //!! The installer DOES NOT CHECK IF THE DRIVE IS COMPRESSED !!!
+      //if ((strtoint(OPERATING_SYSTEM) >= 6) and (OS=64)) then begin
+        //Exec('C:\WINDOWS\Sysnative\CMD.EXE', '/C '+ExpandConstant('{app}')+'\bin\DriveCompressed.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+        //INSTALL_RESULT:=ResultCode;
+      //end
+      //else begin
+      Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\bin\DriveCompressed.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+      INSTALL_RESULT:=ResultCode;
+      //end;
 
       //A 0 means it is not compressed, 1 is compressed, -1 is an error occured during the application 
-      //Running DriveCompressed.exe on my C: drive by itself returns 0, but innosetup gets 1 for some reason
 
-      (*if INSTALL_RESULT = 1 then begin
+      if INSTALL_RESULT = 1 then begin
         if SILENT = false then begin
           MsgBox('C: drive compressed, which is not supported. Installation exiting.', mbINFORMATION, MB_OK);
         end;
@@ -1818,7 +1814,7 @@ begin
       end
       else begin
         Log('C: drive is not compressed');
-      end;*)
+      end;
     end;
   end
   else begin
@@ -1973,6 +1969,7 @@ var
   dWordValue: Cardinal;
   progressPage: TOutputProgressWizardPage;
   ResultCode: Integer;
+  Version:TWindowsVersion;
 begin
   // Check the versions of .NET installed.
   RegQueryDWordValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v2.0.50727','Install',dWordValue);
@@ -2064,8 +2061,17 @@ begin
     RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce','EnablerInstall',ExpandConstant('{src}')+'\'+OUTPUTBASEFILENAME+'.exe');
 
     Log('Installing .NET 3.5 Framework');
-    Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "'+ExpandConstant('{src}')+'\Win\DotNetFX\3.5\dotNetFx35setup.exe" /Q', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-    
+    GetWindowsVersionEx(Version);
+    WizardForm.StatusLabel.Caption:= 'Installing .NET 3.5 runtimes, this may take a while...';
+    //If windows version is 8 or greater, we can actually just turn this on with Dism
+    //otherwise, run the executable
+    if (Version.major>=6) then begin
+      Exec('Dism', ' /online /enable-feature /featurename:NetFx3 /All', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    end
+    else begin
+      Exec(ExpandConstant('{win}\System32\cmd.exe'), '/C "'+ExpandConstant('{src}')+'\Win\DotNetFX\3.5\dotNetFx35setup.exe" /Q', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    end;
+    Log(inttostr(ResultCode));
     if ResultCode = 3010 then begin
       Log('INFO: .NET 3.5 Framework Already Installed');
     end
@@ -2551,31 +2557,36 @@ Begin
           //=======================
           //SQL2016 Express Install
           //=======================
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2016\'+inttostr(OS)+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2016', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+          WizardForm.StatusLabel.Caption:= 'Installing SQL Express 2016, this will take several minutes...';
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2016\'+inttostr(OS)+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2016', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         end        
         else if SQLEXPRESSNAME = 'SQL2014' then Begin
           //=======================
           //SQL2014 Express Install
           //=======================
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2014\'+inttostr(OS)+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2014', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+          WizardForm.StatusLabel.Caption:= 'Installing SQL Express 2014, this will take several minutes...';
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2014\'+inttostr(OS)+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2014', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         end
         else if SQLEXPRESSNAME = 'SQL2012' then begin
           //=======================
           //SQL2012 Express Install
-          //======================= 
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2012\'+inttostr(OS)+'" " SQL2012'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2012', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+          //=======================
+          WizardForm.StatusLabel.Caption:= 'Installing SQL Express 2012, this will take several minutes...'; 
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2012\'+inttostr(OS)+'" " SQL2012'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'" SQL2012', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         end
         else if SQLEXPRESSNAME = 'SQL2008R2' then begin
           //=======================
           //SQL2008 Express Install
-          //=======================   
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2008R2\'+inttostr(OS)+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+          //=======================
+          WizardForm.StatusLabel.Caption:= 'Installing SQL Express 2008, this will take several minutes...';   
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}')+'\SQL2008R2\'+inttostr(OS)+'" "'+SA_PASSWORD+'" "'+SQL_SYSADMIN_USER+'"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         end
         else begin
           //=======================
           //SQL2005 Express Install
-          //======================= 
-          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}\SQL2005')+'" "'+SA_PASSWORD+'"', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+          //=======================
+          WizardForm.StatusLabel.Caption:= 'Installing SQL Express 2005, this will take several minutes...'; 
+          Exec('CMD.EXE', '/C '+ExpandConstant('{app}')+'\SQLInstall.bat '+ INST_DRIVE + ' "' + ExpandCOnstant('{src}\SQL2005')+'" "'+SA_PASSWORD+'"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         end;
       end;
     
@@ -2981,10 +2992,11 @@ end;
 //happens AFTER install
 
 //!!! This module is BUGGED !!!
-//!!!The installer DOES NOT INSTALL ENABLER API !!!
 
-//Possibly due to the call to MAINDIR\Log\APIInstall.log which is not created by our installer anywhere
+//!!!The installer appears to install the API (it appears in Add or Remove Programs) but returns a failure result code !!!
 //Therefore the Abort(); statement is commented out
+
+//MAINDIR\Log\APIInstall.log is not created by our installer anywhere but I assume this is creating and writing to a log, not reading from it
 
 //the API installer still works fine if run separately
 
@@ -3270,7 +3282,7 @@ begin
           begin
             if FileCopy(SourceFilePath, DestFilePath, False) then
             begin
-              Log(Format('Copied %s to %s', [SourceFilePath, DestFilePath]));
+              //Log(Format('Copied %s to %s', [SourceFilePath, DestFilePath]));
             end
               else
             begin
@@ -3323,11 +3335,11 @@ begin
       ExtractTemporaryFile('InnovaHxReg.exe');
       FileCopy(ExpandConstant('{tmp}\InnovaHxReg.exe'), ExpandConstant('{app}\SDK\Doc\VisualStudio\InnovaHxReg.exe'),false);
       if ((OS=64) and (strtoint(OPERATING_SYSTEM) >= 6)) then begin
-        Exec('C:\WINDOWS\Sysnative\CMD.EXE /c ' + ExpandConstant('{app}')+'\SDK\Doc\VisualStudio\registerhelp2.bat', '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
+        Exec('C:\WINDOWS\Sysnative\CMD.EXE',' /c ' + ExpandConstant('{app}')+'\SDK\Doc\VisualStudio\registerhelp2.bat', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
         Log('Execute path: C:\WINDOWS\Sysnative\CMD.EXE /c ' + ExpandConstant('{app}')+'\SDK\Doc\VisualStudio\unregisterhelp2.bat')
       end
       else begin
-        Exec('CMD.EXE /c ' + ExpandConstant('{app}')+'\SDK\Doc\VisualStudio\registerhelp2.bat', '', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+        Exec('CMD.EXE','/c ' + ExpandConstant('{app}')+'\SDK\Doc\VisualStudio\registerhelp2.bat', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         Log('Execute path: C:\WINDOWS\Sysnative\CMD.EXE /c ' + ExpandConstant('{app}')+'\SDK\Doc\VisualStudio\unregisterhelp2.bat'); 
       end;
 
