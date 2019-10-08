@@ -1118,7 +1118,7 @@ begin
     CMDEND:= CMDUPPER;
 
     //Check for /? or /h or -? or -h  - AT THE START OF THE STRING
-    if pos('-Help', CMDSTART) <> 0 then begin
+    if pos('-H', CMDSTART) <> 0 then begin
       Log('User requested usage -H')
       SHOW_USAGE:= true
     end;
@@ -1126,17 +1126,20 @@ begin
       Log('User requested usage -?')
       SHOW_USAGE:= true
     end;
-    if pos('/Help', CMDSTART) <> 0 then begin
-      Log('User requested usage /H')
-      SHOW_USAGE:= true
-    end;
+
+    //Comment out to avoid the edge case of /H appearing in the user's params in the cmd line
+    //if pos('/H', CMDSTART) <> 0 then begin
+      //Log('User requested usage /H')
+      //SHOW_USAGE:= true
+    //end;
+
     if pos('/?', CMDSTART) <> 0 then begin
       Log('User requested usage /?')
       SHOW_USAGE:= true
     end;
 
     //Silent unattended install
-    if (pos('/S ',CMDUPPER) <> 0) or WizardSilent then begin
+    if WizardSilent then begin
       Log('SILENT install selected')
       UNATTENDED:='1'
       SILENT:=true
@@ -1240,7 +1243,7 @@ begin
 
   if (SHOW_USAGE) then begin
     Log('WARNING: Install stopped to show usage.');    
-    MsgBox('/FULL'#13#10'Automatically install Enabler Server (and SQL2008 R2 EXPRESS if required). Also installs all applications (see below) and manuals.'#13#10#13#10'/PASSWORDPARAMETER=<password>'#13#10'Please provide the SA password if you know there is no SQL Server pre-installed and you want to install the included SQL Server 2008 R2 Express. This password needs to be a strong one.'#13#10#13#10'/CLIENTNAME=<servername>'#13#10'Automatically install Enabler Client components only. This will not verify the version of any SQL installations or if there are Named Instances.'#13#10#13#10'/VERYSILENT'#13#10'This option selects a completely silent installation (must be the first command-line option).'#13#10#13#10'/BACKUPDB'#13#10'Automatically performs a backup of the database before the database is upgraded (using Nightly.bat).'#13#10#13#10'/INSTANCENAME=<SQL Named Instance>'#13#10'To install Enabler on an existing SQL Name Instance you need to provide the Instance name using this parameter.'#13#10#13#10'/MPPSIM'#13#10'Install The ITL MPP Simulator and driver for test and demo systems.'#13#10#13#10'/PORT:<port number>'#13#10'To set the port number that Enabler Web Server should use. Default value is 8081'#13#10#13#10'/DOMAIN:<domain name>'#13#10'The security domain used by the Enabler Web Server which client browsers use to store login credentials. Default is mydomain.com.'#13#10#13#10'/NOSTART'#13#10'To install Enabler but not start services (PSRVR and ENBWEB). Useful if for installer that do system updates - before starting Enabler.'#13#10#13#10'EXAMPLE:'#13#10#13#10'To install The Enabler Server along with a fresh install of the SQL2008 R2 EXPRESS, SA password is required:'#13#10#13#10'Enabler4Setup.EXE /FULL /BACKUPDB /PASSWORDPARAMETER=<password>'#13#10#13#10'Note: Windows login of the admin level is required to install/upgrade the Enabler System.  SQL2008 Express will be installed if no SQL server is pre-installed, a strong SA password is required.',mbinformation, MB_OK);
+    MsgBox('/FULL'#13#10'Automatically install Enabler Server (and SQL2008 R2 EXPRESS if required). Also installs all applications (see below) and manuals.'#13#10#13#10'/PASSWORDPARAMETER=<password>'#13#10'Please provide the SA password if you know there is no SQL Server pre-installed and you want to install the included SQL Server 2008 R2 Express. This password needs to be a strong one.'#13#10#13#10'/CLIENTNAME=<servername>'#13#10'Automatically install Enabler Client components only. This will not verify the version of any SQL installations or if there are Named Instances.'#13#10#13#10'/VERYSILENT'#13#10'This option selects a completely silent installation (must be the first command-line option).'#13#10#13#10'/BACKUPDB'#13#10'Automatically performs a backup of the database before the database is upgraded (using Nightly.bat).'#13#10#13#10'/INSTANCENAME=<SQL Named Instance>'#13#10'To install Enabler on an existing SQL Name Instance you need to provide the Instance name using this parameter.'#13#10#13#10'/MPPSIM'#13#10'Install The ITL MPP Simulator and driver for test and demo systems.'#13#10#13#10'/NOSTART'#13#10'To install Enabler but not start services (PSRVR and ENBWEB). Useful if for installer that do system updates - before starting Enabler.'#13#10#13#10'EXAMPLE:'#13#10#13#10'To install The Enabler Server along with a fresh install of the SQL2008 R2 EXPRESS, SA password is required:'#13#10#13#10'Enabler4Setup.EXE /FULL /BACKUPDB /PASSWORDPARAMETER=<password>'#13#10#13#10'Note: Windows login of the admin level is required to install/upgrade the Enabler System.  SQL2008 Express will be installed if no SQL server is pre-installed, a strong SA password is required.'#13#10#13#10'/PORT, /DOMAIN and /APPS no longer supported.',mbinformation, MB_OK);
     Abort();
   end;
   Log('CMD ' + CMDLINE_LOG)
@@ -1519,129 +1522,7 @@ begin
   end;
 end;
 
-procedure OSQLPathFound();
-var
-  ResultCode:Integer;
-  INSTANCES:string;
-  LINE:ansistring;
-begin
-    if OSQL_PATH <> '' then begin
-    
-      //OSQL has been found, SQL server already installed
 
-      SQL_NEEDED := false; 
-      if SILENT = false then begin
-      //display progress message
-      end;
-
-      //If no instance has been passed by the command line 
-      if CMD_INSTANCE = false then begin
-        //GET LIST OF NAMED INSTANCES
-          //RegQueryMultiStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Microsoft SQL Server', 'InstalledInstances',INSTANCES);
-          //Log(INSTANCES);
-        //Server SQL settings
-
-        //Get temporary filename into INSTANCES
-        SaveStringtoFile(ExpandConstant('{app}\temp'), '', False);
-        //if (OS=64) and (strtoint(OPERATING_SYSTEM) >= 6) then begin
-          //Exec('C:\WINDOWS\Sysnative\CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{app}\temp'), '', SW_HIDE, ewwaituntilterminated,ResultCode);
-        //end
-        //else begin
-        Exec('CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{app}\temp'), '', SW_HIDE, ewwaituntilterminated,ResultCode);
-        //end;
-
-        if ResultCOde <> 0 then begin
-          Log('Unable to get SQL Instance Name registry key: Error code ' + inttostr(ResultCode));
-          INSTANCE_NAME_NEEDED := true;
-        end
-        else begin
-          LINE := '';
-          NAME := '';
-          SQL_INSTANCES := '';
-
-          LoadStringFromFile(ExpandConstant('{app}\temp'), LINE);
-          Log(LINE);
-
-          NAME := LINE;
-
-          if (pos('MSSQLSERVER',NAME) <> 0) and (INSTANCE_NAME_NEEDED = true) then begin
-            INSTANCE_NAME_NEEDED := FALSE;
-          end
-          else begin
-            if (pos('SQLEXPRESS', NAME) <> 0) and (pos('MSSQLSERVER', NAME) <> 0) and (INSTANCE_NAME_NEEDED = true) then begin
-              SQL_INSTANCE := SQLEXPRESS;
-              SQLQUERY := PC_NAME+'\'+SQL_INSTANCE;
-              INSTANCE_NAME_NEEDED := FALSE;
-            end;
-          end;
-            //Build list of instances names incase they need to be displayed
-          SQL_INSTANCES := NAME+#13#10;
-
-          Log('SQL Instance Names found '+#13#10+SQL_INSTANCES);
-
-          //Check if we found a known instance, if we haven't do we have a list of instances
-          if (INSTANCE_NAME_NEEDED = TRUE) AND (SQL_INSTANCES <> '') then begin
-            //We have fouind instance names, if we haven't found a default one we need to display the list
-            INSTANCE_NAME_LIST := TRUE;
-          END;
-        END;
-
-        if SQL_INSTANCES = '' then begin
-          Log('No SQL Instance names found');
-        end;
-
-        //if we found no available instances
-
-        if INSTANCE_NAME_LIST <> TRUE and INSTANCE_NAME_NEEDED = TRUE THEN BEGIN
-        
-          //OSQL DETECT DEFAULT SQL NAMED INSTANCES
-          //Execute the sql to get the verify the instance name of the default instance or the instance name passed by the command line
-
-          Log('Query database to check instance name '+SQLQUERY);
-          Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+ ' -Q "select count(*) from sysobjects"','',SW_HIDE,ewwaituntilterminated, ResultCode);
-
-          if ResultCode <> 0 then begin
-            Log(SQLQUERY+ ' database instance does not exist or the SQL server is not configured correctly the osql query failed.');
-            
-            //try again with a different instance name
-            
-            SQL_INSTANCE := SQLEXPRESS;
-            SQLQUERY := PC_NAME+'\'+SQL_INSTANCE;
-            Log('Query database to check instance name '+SQLQUERY);
-            Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+ ' -Q "select count(*) from sysobjects"','',SW_HIDE,ewwaituntilterminated, ResultCode);
-     
-            if ResultCode <> 0 then begin
-              SQL_INSTANCE := '';
-              Log(SQLQUERY+ ' database instance does not exist or the SQL server is not configured correctly the osql query failed.');
-              INSTANCE_NAME_NEEDED := TRUE;
-            end
-            else begin
-              INSTANCE_NAME_NEEDED := FALSE;
-            end;
-          end
-          else begin
-            INSTANCE_NAME_NEEDED := FALSE;
-          end;
-        end;
-      end;
-
-  //Get available SQL servers for client install
-  //Wise script does not actually do this, it's commented out
-
-
-    //Check if the source media is located in a network drive
-    if SQLEXPRESSNAME <> '' then begin
-      if INST_DRIVE = '\\' then begin
-        //If the installer is being run from a network location (UNC name) then we cannot install SQL2005
-        if UNATTENDED = '0' then begin
-          msgbox('Cannot install '+SQLEXPRESSNAME+'from UNC path',mbinformation,MB_OK);
-        end;
-        Log('Cannot install '+SQLEXPRESSNAME+'from UNC path');
-        Abort();
-      end;
-    end;
-  end;
-end;
 
 
 
@@ -2247,6 +2128,8 @@ end;
 
 //happens BEFORE install
 
+//returns failure result code but appears to actually succeed???
+
 procedure uninstallAPIMSI();
 var
   ResultCode:integer;
@@ -2255,6 +2138,154 @@ begin
     Exec(ExpandConstant('{sys}\msiexec.exe'), '/quiet /L+* '+ExpandConstant('{app}\log\APIInstall.log')+' /uninstall {30876486-DB1A-41CE-95D0-58F1EEA13AE8}', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     if ResultCode <> 0 then begin
       Log('INFO: Could not uninstall existing enabler API - ERRORLEVEL = ' + inttostr(ResultCode));
+    end;
+  end;
+end;
+
+//======================
+//Blank password checks
+//====================== 
+
+//It should be impossible to get to the abort statement, Innosetup checks the password field is not blank
+procedure blankPasswordChecks();
+begin
+  if COMPONENTS = 'B' then begin
+    if SQLEXPRESSNAME <> 'MSDE2000' then begin
+      if (SA_PASSWORD = '') and (OSQL_PATH = '') then begin
+        Log('Blank passwords are not allowed for ' + SQLEXPRESSFULLNAME);
+        if SILENT = false then begin
+          Msgbox('Passwords blank, aborting install', mbinformation, MB_OK);
+        end;
+        Abort();
+      end;
+    end;
+  end;
+end;
+
+//========================
+//SQL Instance Found
+//========================
+
+procedure OSQLPathFound();
+var
+  ResultCode:Integer;
+  INSTANCES:string;
+  LINE:ansistring;
+begin
+    if OSQL_PATH <> '' then begin
+    
+      //OSQL has been found, SQL server already installed
+
+      SQL_NEEDED := false; 
+      if SILENT = false then begin
+      //display progress message
+      end;
+
+      //If no instance has been passed by the command line 
+      if CMD_INSTANCE = false then begin
+        //GET LIST OF NAMED INSTANCES
+          //RegQueryMultiStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Microsoft SQL Server', 'InstalledInstances',INSTANCES);
+          //Log(INSTANCES);
+        //Server SQL settings
+
+        //Get temporary filename into INSTANCES
+        SaveStringtoFile(ExpandConstant('{app}\temp'), '', False);
+        //if (OS=64) and (strtoint(OPERATING_SYSTEM) >= 6) then begin
+          //Exec('C:\WINDOWS\Sysnative\CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{app}\temp'), '', SW_HIDE, ewwaituntilterminated,ResultCode);
+        //end
+        //else begin
+        Exec('CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{app}\temp'), '', SW_HIDE, ewwaituntilterminated,ResultCode);
+        //end;
+
+        if ResultCOde <> 0 then begin
+          Log('Unable to get SQL Instance Name registry key: Error code ' + inttostr(ResultCode));
+          INSTANCE_NAME_NEEDED := true;
+        end
+        else begin
+          LINE := '';
+          NAME := '';
+          SQL_INSTANCES := '';
+
+          LoadStringFromFile(ExpandConstant('{app}\temp'), LINE);
+          Log(LINE);
+
+          NAME := LINE;
+
+          if (pos('MSSQLSERVER',NAME) <> 0) and (INSTANCE_NAME_NEEDED = true) then begin
+            INSTANCE_NAME_NEEDED := FALSE;
+          end
+          else begin
+            if (pos('SQLEXPRESS', NAME) <> 0) and (pos('MSSQLSERVER', NAME) <> 0) and (INSTANCE_NAME_NEEDED = true) then begin
+              SQL_INSTANCE := SQLEXPRESS;
+              SQLQUERY := PC_NAME+'\'+SQL_INSTANCE;
+              INSTANCE_NAME_NEEDED := FALSE;
+            end;
+          end;
+            //Build list of instances names incase they need to be displayed
+          SQL_INSTANCES := NAME+#13#10;
+
+          Log('SQL Instance Names found '+#13#10+SQL_INSTANCES);
+
+          //Check if we found a known instance, if we haven't do we have a list of instances
+          if (INSTANCE_NAME_NEEDED = TRUE) AND (SQL_INSTANCES <> '') then begin
+            //We have fouind instance names, if we haven't found a default one we need to display the list
+            INSTANCE_NAME_LIST := TRUE;
+          END;
+        END;
+
+        if SQL_INSTANCES = '' then begin
+          Log('No SQL Instance names found');
+        end;
+
+        //if we found no available instances
+
+        if INSTANCE_NAME_LIST <> TRUE and INSTANCE_NAME_NEEDED = TRUE THEN BEGIN
+        
+          //OSQL DETECT DEFAULT SQL NAMED INSTANCES
+          //Execute the sql to get the verify the instance name of the default instance or the instance name passed by the command line
+
+          Log('Query database to check instance name '+SQLQUERY);
+          Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+ ' -Q "select count(*) from sysobjects"','',SW_HIDE,ewwaituntilterminated, ResultCode);
+
+          if ResultCode <> 0 then begin
+            Log(SQLQUERY+ ' database instance does not exist or the SQL server is not configured correctly the osql query failed.');
+            
+            //try again with a different instance name
+            
+            SQL_INSTANCE := SQLEXPRESS;
+            SQLQUERY := PC_NAME+'\'+SQL_INSTANCE;
+            Log('Query database to check instance name '+SQLQUERY);
+            Exec(OSQL_PATH+'\OSQL.EXE', '-b -d master -E -S'+SQLQUERY+ ' -Q "select count(*) from sysobjects"','',SW_HIDE,ewwaituntilterminated, ResultCode);
+     
+            if ResultCode <> 0 then begin
+              SQL_INSTANCE := '';
+              Log(SQLQUERY+ ' database instance does not exist or the SQL server is not configured correctly the osql query failed.');
+              INSTANCE_NAME_NEEDED := TRUE;
+            end
+            else begin
+              INSTANCE_NAME_NEEDED := FALSE;
+            end;
+          end
+          else begin
+            INSTANCE_NAME_NEEDED := FALSE;
+          end;
+        end;
+      end;
+
+  //Get available SQL servers for client install
+  //Wise script does not actually do this, it's commented out
+
+
+    //Check if the source media is located in a network drive
+    if SQLEXPRESSNAME <> '' then begin
+      if INST_DRIVE = '\\' then begin
+        //If the installer is being run from a network location (UNC name) then we cannot install SQL2005
+        if UNATTENDED = '0' then begin
+          msgbox('Cannot install '+SQLEXPRESSNAME+'from UNC path',mbinformation,MB_OK);
+        end;
+        Log('Cannot install '+SQLEXPRESSNAME+'from UNC path');
+        Abort();
+      end;
     end;
   end;
 end;
@@ -2453,29 +2484,6 @@ begin
     SQL_INSTANCE := CLIENT_SQL_INSTANCE;
   end;
 end;
-
-
-
-//======================
-//Blank password checks
-//====================== 
-
-//It should be impossible to get to the abort statement, Innosetup checks the password field is not blank
-procedure blankPasswordChecks();
-begin
-  if COMPONENTS = 'B' then begin
-    if SQLEXPRESSNAME <> 'MSDE2000' then begin
-      if (SA_PASSWORD = '') and (OSQL_PATH = '') then begin
-        Log('Blank passwords are not allowed for ' + SQLEXPRESSFULLNAME);
-        if SILENT = false then begin
-          Msgbox('Passwords blank, aborting install', mbinformation, MB_OK);
-        end;
-        Abort();
-      end;
-    end;
-  end;
-end;
-
 
 //=========================================
 //INSTALL SQL SERVER or CHECK SA LOGIN
@@ -3752,7 +3760,7 @@ Begin
       Exec('CMD.EXE','net start enbweb','', SW_HIDE, ewWaitUntilIdle, ResultCode);
     end;
 
-    // Add some extra entries to the Wise log - so temporary or generated files are removed at uninstall
+    // Add some extra entries to the log - so temporary or generated files are removed at uninstall
     Log(format('File Tree: %s\sleep.exe',[ExpandConstant('{app}')]));
     Log(format('File Tree: %s\InstallUtil.InstallLog',[ExpandConstant('{app}')]));
     Log(format('File Tree: %s\Autoupgrade.*',[ExpandConstant('{app}')]));
@@ -3929,10 +3937,10 @@ begin
   //reboot the PC
   if FAST_STARTUP <> '0' then begin
     if SILENT = false then begin
-    Log('Rebooting system to disable fast startup');
-    //reboot system
-    //!!!This should be the ONLY TIME IN THE SCRIPT THAT THIS VARIABLE CAN BE SET TO TRUE
-    RESTART_DECISION:=True;
+      Log('Rebooting system to disable fast startup');
+      //reboot system
+      //!!!This should be the ONLY TIME IN THE SCRIPT THAT THIS VARIABLE CAN BE SET TO TRUE
+      RESTART_DECISION:=True;
     end
     else begin
     Log('Reboot required to disable fast startup');
@@ -4189,7 +4197,7 @@ end;
 
 procedure createServerAlreadyExistsPage();
 begin
-  serverAlreadyExistsPage:=CreateOutputMsgPage(instanceNamePage.ID, 'Use the Microsoft SQL Server already installed?', '', 'Click Next to install the Enabler using your existing Microsoft SQL Database Server. '#13#10#13#10' You have selected an installation including the Enabler Server, which requires an SQL database. '#13#10#13#10' Click Cancel now if you do not want the Enabler to use this Database server. In this case you need to exit the install and remove the existing Database server. After this the Enabler setup will install a new SQL server for you.');
+  serverAlreadyExistsPage:=CreateOutputMsgPage(instanceNamePage.ID, 'Use the Microsoft SQL Server already installed?', '', 'Click Next to install the Enabler using your existing Microsoft SQL Database Server. '#13#10#13#10'You have selected an installation including the Enabler Server, which requires an SQL database. '#13#10#13#10'Click Cancel now if you do not want the Enabler to use this Database server. In this case you need to exit the install and remove the existing Database server. After this the Enabler setup will install a new SQL server for you.');
 end;
 
 //=======================================
