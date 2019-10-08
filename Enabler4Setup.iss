@@ -733,7 +733,12 @@ var
   //Ready Page
   BackupCheckbox:TNewCheckBox;
 
-  //========================================
+  //Instances list page
+  instanceListPage:TWizardPage;
+  instancesList:TNewComboBox;
+  SQLNamePage:TInputQueryWizardPage;
+
+//========================================
 //========================================
 //installer-wide functions
 //========================================
@@ -1542,7 +1547,7 @@ begin
           //Exec('C:\WINDOWS\Sysnative\CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{app}\temp'), '', SW_HIDE, ewwaituntilterminated,ResultCode);
         //end
         //else begin
-          Exec('CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{app}\temp'), '', SW_HIDE, ewwaituntilterminated,ResultCode);
+        Exec('CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{app}\temp'), '', SW_HIDE, ewwaituntilterminated,ResultCode);
         //end;
 
         if ResultCOde <> 0 then begin
@@ -4122,7 +4127,7 @@ begin
   serverNameEntryPage:= CreateInputQueryPage(pageInstallType.ID, 'Enter the Name or IP Address of the Enabler Server System',
   '', 'The Enabler Client you are installing will access an Enabler Server (Enabler Server Desktop or Enabler Embedded) during operation.'#13#10 #13#10'Please enter the name or IP Address of the Enabler Server System this Client should connect to.' #13#10 #13#10'Tick Embedded if the Enabler Server is an Enabler Embedded system.' #13#10 #13#10 'Name can be left blank, but refer to the Enabler documentation on how to change the Enabler Server System Name or IP Address setting later.'); 
   serverNameEntryPage.Add('Enabler Server Name:', False);
-  serverName:=serverNameEntryPage.Values[0];
+  //serverName:=serverNameEntryPage.Values[0];
 
   embeddedCheckBox:=TNewCheckBox.Create(serverNameEntryPage);
   embeddedCheckBox.Parent:=serverNameEntryPage.Surface;
@@ -4143,7 +4148,7 @@ begin
   instanceNamePage:= CreateInputQueryPage(serverNameEntryPage.ID, 'Enabler Server SQL Instance Name',
   '', 'For Enabler installations using a non-default SQL Server instance name, please enter the Instance name below, otherwise leave the field blank and select Next.'); 
   instanceNamePage.Add('Instance Name:', False);
-  instanceName:=instanceNamePage.Values[0];
+  //instanceName:=instanceNamePage.Values[0];
 
   if not CMD_INSTANCE then begin
     CLIENT_SQL_INSTANCE:=SQL_INSTANCE;
@@ -4225,9 +4230,56 @@ begin
   lblPort.WordWrap := True;
   portPage.Values[0] := '8081';
   portPage.Values[1] := 'mydomain.com';
-  portNum:= portPage.Values[0];
-  domainName:= portPage.Values[1];
+  //portNum:= portPage.Values[0];
+  //domainName:= portPage.Values[1];
 end;
+
+//=============================
+//instance list page
+//=============================
+
+//these pages are not called, as this functionality did not get implemented
+//this skeleton may help any future development
+
+
+
+(*procedure instancesListChange(Sender: TObject);
+begin
+  //combo box item selected = sql instance
+end;
+
+procedure createInstanceListPage();
+var
+  DescLabel:Tlabel;
+begin
+  instanceListPage:=createCustomPage(portPage.ID,'Select an SQL Instance Name to install on', 'SQL Instance Name:');
+  instancesList:= TNewComboBox.Create(WizardForm);
+  instanceslist.parent:=instanceListPage.surface;
+  DescLabel := TLabel.Create(WizardForm);
+  DescLabel.Parent := instanceListPage.Surface;
+  DescLabel.Left := 0;
+  DescLabel.Top := 0;
+  DescLabel.Caption := 'SQL Instance Name:';
+  instancesList.Left := 0;
+  instancesList.Top := DescLabel.Top + DescLabel.Height + 6;  
+  InstancesList.Width := 220;
+  InstancesList.Style := csDropDownList;
+
+  //for instance name in list of instance names, begin
+    //instancesList.items.add(instance name)
+  //end
+
+  instancesList.OnChange := @instancesListChange
+end;
+
+//if MSDE 2000 install and cannot retrieve list of instance names:
+
+procedure askForSQLName();
+begin
+  SQLNamePage:= CreateInputQueryPage(instanceListPage.ID, 'Enter the SQL Instance Name',
+  '', 'Enter the SQL Instance name to install Enabler on.'); 
+  instanceNamePage.Add('SQL Instance Name:', False);
+end;*)
 
 
 
@@ -4302,6 +4354,10 @@ begin
   MAINDIR:=ExpandConstant('{app}');
   BACKUP:=MAINDIR+'\BACKUP';
   SA_PASSWORD:=SAPasswordPage.Edits[0].Text;
+  serverName:=serverNameEntryPage.Values[0];
+  instanceName:=instanceNamePage.Values[0];
+  portNum:= portPage.Values[0];
+  domainName:= portPage.Values[1];
   if pos('A',SDK) <> 0 then begin
     SDK_OPTIONS := 'ABC';
   end;

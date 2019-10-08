@@ -1,0 +1,53 @@
+﻿2019-10-08 14:42:00.078   Log opened. (Time zone: UTC+13:00)
+2019-10-08 14:42:00.080   Setup version: Inno Setup version 6.0.2 (u)
+2019-10-08 14:42:00.081   Original Setup EXE: C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe
+2019-10-08 14:42:00.083   Setup command line: /SL5="$8047A,40006066,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$30488 /NOTIFYWND=$8040C /DEBUGWND=$47006F0 
+2019-10-08 14:42:00.085   Windows version: 10.0.18362  (NT platform: Yes)
+2019-10-08 14:42:00.087   64-bit Windows: Yes
+2019-10-08 14:42:00.089   Processor architecture: x64
+2019-10-08 14:42:00.090   User privileges: Administrative
+2019-10-08 14:42:00.094   Administrative install mode: Yes
+2019-10-08 14:42:00.096   Install mode root key: HKEY_LOCAL_MACHINE
+2019-10-08 14:42:00.098   64-bit install mode: No
+2019-10-08 14:42:00.102   Created temporary directory: C:\Users\JACOBC~1\AppData\Local\Temp\is-HOTR3.tmp
+2019-10-08 14:42:00.136   -- DLL function import --
+2019-10-08 14:42:00.139   Function name: ExitProcess
+2019-10-08 14:42:00.141   DLL name: kernel32.dll
+2019-10-08 14:42:00.144   Dest DLL name: kernel32.dll
+2019-10-08 14:42:00.146   Importing the DLL function.
+2019-10-08 14:42:00.148   Successfully imported the DLL function. Delay loaded? No
+2019-10-08 14:42:00.159   Initialising variables.
+2019-10-08 14:42:00.443   Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10
+2019-10-08 14:42:00.451   Installing Enabler V4.6.3.6087 on Windows V10.00.18362 64bit (Version 10)
+2019-10-08 14:42:00.485   Option = /SL5="$8047A,40006066,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$30488 /NOTIFYWND=$8040C /DEBUGWND=$47006F0 
+2019-10-08 14:42:00.564   CMD /SL5="$8047A,40006066,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$30488 /NOTIFYWND=$8040C /DEBUGWND=$47006F0 
+2019-10-08 14:42:00.603   IE Location C:\Program Files\Internet Explorer;
+2019-10-08 14:42:00.621   IE VERSION: 9.11.18362.0
+2019-10-08 14:42:00.647   Installing from C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output drive.
+2019-10-08 14:42:01.204   Windows product type: 1
+2019-10-08 14:42:01.252   Location of OSQL.EXE is C:\Program Files\Microsoft SQL Server\120\Tools\Binn\osql.exe (Initial Checks)
+2019-10-08 14:42:01.329   Checking disk space
+2019-10-08 14:42:01.688   B
+2019-10-08 14:42:03.480   Message box (Yes/No):
+                          The folder:
+                          
+                          C:\Enabler
+                          
+                          already exists. Would you like to install to that folder anyway?
+2019-10-08 14:42:04.284   User chose Yes.
+2019-10-08 14:42:07.216   Message box (Yes/No):
+                          Setup is not complete. If you exit now, the program will not be installed.
+                          
+                          You may run Setup again at another time to complete the installation.
+                          
+                          Exit Setup?
+2019-10-08 14:42:08.261   User chose No.
+2019-10-08 14:42:10.208   Message box (Yes/No):
+                          Setup is not complete. If you exit now, the program will not be installed.
+                          
+                          You may run Setup again at another time to complete the installation.
+                          
+                          Exit Setup?
+2019-10-08 14:42:10.805   User chose Yes.
+2019-10-08 14:42:10.807   Deinitializing Setup.
+2019-10-08 14:42:10.855   Unable to delete log file C:\Users\JACOBC~1\AppData\Local\Temp\Setup Log 2019-10-08 #005.txt
