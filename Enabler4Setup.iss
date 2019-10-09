@@ -922,6 +922,11 @@ begin
     end;
   end;
 
+  //if server selected, no server exists and no server files available
+  if CurPageID = serverFilesMissingPage.ID then begin
+    Abort();
+  end;
+
   //if password field is empty
   if CurPageID = SAPasswordPage.ID then begin
     if SAPasswordPage.Edits[0].Text = '' then begin
@@ -1112,7 +1117,7 @@ begin
     CMDOPTION:= CMDLINEUPPER;
     CMDUPPER:= CMDLINEUPPER;
     //!!! DEBUG ONLY - COMMENT OUT FOR RELEASE !!! MAKES PASSWORD VISIBLE!!!!
-    Log('Option = '+CMDUPPER);
+    //Log('Option = '+CMDUPPER);
     //!!! DEBUG ONLY - COMMENT OUT FOR RELEASE !!!
     CMDSTART:= CMDUPPER;
     CMDEND:= CMDUPPER;
@@ -1235,12 +1240,9 @@ begin
       end;
     end;
   end;
-
-
-  //The old Wise script had functionality here to stop the install to show usage
+ 
   //Innosetup cannot show any wizard pages other than the progress bar (using /SILENT) or nothing at all (/VERYSILENT) during a silent install
-
-
+  
   if (SHOW_USAGE) then begin
     Log('WARNING: Install stopped to show usage.');    
     MsgBox('/FULL'#13#10'Automatically install Enabler Server (and SQL2008 R2 EXPRESS if required). Also installs all applications (see below) and manuals.'#13#10#13#10'/PASSWORDPARAMETER=<password>'#13#10'Please provide the SA password if you know there is no SQL Server pre-installed and you want to install the included SQL Server 2008 R2 Express. This password needs to be a strong one.'#13#10#13#10'/CLIENTNAME=<servername>'#13#10'Automatically install Enabler Client components only. This will not verify the version of any SQL installations or if there are Named Instances.'#13#10#13#10'/VERYSILENT'#13#10'This option selects a completely silent installation (must be the first command-line option).'#13#10#13#10'/BACKUPDB'#13#10'Automatically performs a backup of the database before the database is upgraded (using Nightly.bat).'#13#10#13#10'/INSTANCENAME=<SQL Named Instance>'#13#10'To install Enabler on an existing SQL Name Instance you need to provide the Instance name using this parameter.'#13#10#13#10'/MPPSIM'#13#10'Install The ITL MPP Simulator and driver for test and demo systems.'#13#10#13#10'/NOSTART'#13#10'To install Enabler but not start services (PSRVR and ENBWEB). Useful if for installer that do system updates - before starting Enabler.'#13#10#13#10'EXAMPLE:'#13#10#13#10'To install The Enabler Server along with a fresh install of the SQL2008 R2 EXPRESS, SA password is required:'#13#10#13#10'Enabler4Setup.EXE /FULL /BACKUPDB /PASSWORDPARAMETER=<password>'#13#10#13#10'Note: Windows login of the admin level is required to install/upgrade the Enabler System.  SQL2008 Express will be installed if no SQL server is pre-installed, a strong SA password is required.'#13#10#13#10'/PORT, /DOMAIN and /APPS no longer supported.',mbinformation, MB_OK);
@@ -1456,11 +1458,11 @@ begin
             else begin
               Log('"ERROR: MSDE not found - cannot install server without SQL (Expected in folder {src}\MSDE2000');
               SQLEXPRESSNAME := '';
-              //if UNATTENDED = '0' then begin
-                //if COMPONENTS = 'B' then begin
-                  //Abort();
-                //end;
-              //end;
+              if UNATTENDED = '1' then begin
+                if COMPONENTS = 'B' then begin
+                  Abort();
+                end;
+              end;
             end;
           end;
         end;
@@ -1523,18 +1525,13 @@ begin
 end;
 
 
-
-
-
 //=================================================================
 //Return from a restart
 //=================================================================
 
 //See if we are restarting because of an MSDE or MSI Installer or .NET restart
 
-//!!!!NOTE: THE RESTART KEY IS CREATED IN ANY MODULE WHERE A REBOOT IS NECESSARY
-//!!!!IF THE RESTART KEY EXISTS, IT NEEDS TO BE DELETED BEFORE THE REBOOTED SETUP FINISHES OR INSTALL WILL ALWAYS BE TREATED AS REBOOTED INSTALL
-//!!!!THIS HAPPENS LATER ON IN .NET 3.5 SP1 MODULE
+//If the restart key contains any text when the install exits, the install will pop up the next time the computer starts up
 
 procedure returnFromRestart();
 begin
@@ -1818,7 +1815,6 @@ begin
             end;
             //add registry keys before rebooting
             RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\ITL\Enabler', 'Restart', 'True');
-            //Stop adding this entry to the Log file. This stops this being doing on uninstall.
             //If the RunOnce key is deleted on uninstall and then Enabler is reinstalled the driver will fail its install
             //As windows requires the runonce key to be present to install drivers
             RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\Microsoft\Windows\CurrentVersion\RunOnce', 'Enabler Install', ExpandConstant('{src}')+'\Enabler4Setup.exe');
@@ -2006,7 +2002,7 @@ begin
   RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','Restart', RESTART);
   RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\ITL\Enabler','InstanceName', SQL_INSTANCE);
 
-  // Remove the one once key if still present.
+  // Remove the run once key if still present.
   // This happens if 3.5 is installed and doesn't reboot
   // And then the driver install on XP will execute the runonce key causing the install to start again
   RegWriteStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce','EnablerInstall',ExpandConstant('{src}')+'\'+OUTPUTBASEFILENAME+'.exe');
@@ -3276,7 +3272,6 @@ end;
     //Couldn't get the old installer to do this on my PC so I could see what's happening
 
 
-
 //install SDK docs
 
 
@@ -3421,7 +3416,6 @@ begin
   RegQueryStringValue(HKEY_CLASSES_ROOT, '.pdf', '(Default)', PDF);
     if PDF = '' then begin
     Log('There is no current PDF reader - setting up Sumatra PDF')
-    //Edit 5 registry keys
     RegWriteStringValue(HKEY_CLASSES_ROOT, 'ITLPDF.Document', '(Default)', 'ITL PDF Document');
     RegWriteStringValue(HKEY_CLASSES_ROOT, 'ITLPDF.Document\DefaultIcon', '(Default)', ExpandConstant('{app}')+'bin\PDFViewer.exe');
     RegWriteStringValue(HKEY_CLASSES_ROOT, 'ITLPDF.Document\Shell\Open\Command', '(Default)', ExpandConstant('{app}')+'bin\PDFViewer.exe'+ ' %%1');
@@ -3925,21 +3919,17 @@ begin
 
   Log('Install is finished');
   //Add uninstall details to the registry...
-  //NOTE: This registry edit does the setup for Windows Add/Remove Programs, so these will be redundant
-  //for the new install script. Though if you're upgrading and these keys are present they should
-  //probably be removed (after installing the new version you can't uninstall the old one).
   RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\'+APPTITLE, 'Comments', 'Windows-based Forecourt Control by Integration Technologies Limited.');
   RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\'+APPTITLE, 'Publisher', 'Integration Technologies Limited.');
   RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\'+APPTITLE, 'URLInfoAbout', 'https://www.integration.co.nz/support/');
   RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\Microsoft\Windows\CurrentVersion\Uninstall\'+APPTITLE, 'DisplayIcon', ExpandConstant('{app}')+'itl.ico,-0');
 
-  RESTART_DECISION:=false;
+  //RESTART_DECISION:=false;
   //reboot the PC
   if FAST_STARTUP <> '0' then begin
     if SILENT = false then begin
       Log('Rebooting system to disable fast startup');
       //reboot system
-      //!!!This should be the ONLY TIME IN THE SCRIPT THAT THIS VARIABLE CAN BE SET TO TRUE
       RESTART_DECISION:=True;
     end
     else begin
