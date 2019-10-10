@@ -1,0 +1,22 @@
+﻿<Window x:Class="ITL.Enabler.Samples.ReserveDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Reserve pump" Height="231" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <GroupBox Header="Parameters" Name="groupBox_limit" Margin="12,12,12,52">
+            <Canvas Width="230">
+                <Label Canvas.Left="10" Canvas.Top="10" Height="27" Name="label1" Width="109.854">Client Reference</Label>
+                <Label Canvas.Left="10" Canvas.Top="41" Height="27" Name="label2" Width="109.854">Client Activity</Label>
+                <Label Canvas.Left="10" Canvas.Top="68" Height="27" Name="label3" Width="109.854">Clear if zero</Label>
+
+                <TextBox Canvas.Left="120" Canvas.Top="18" Height="19" Name="textBox_cr" Width="101"></TextBox>
+                <TextBox Canvas.Left="120" Canvas.Top="43" Height="19" Name="textBox_ca" Width="101"></TextBox>
+                <CheckBox Canvas.Left="120" Canvas.Top="74" Height="16" Name="checkBox_ClearIfZero" Width="120"></CheckBox>
+            </Canvas>
+        </GroupBox>
+
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,0,10,12" Name="button_cancel" VerticalAlignment="Bottom" Width="75" IsCancel="True">Cancel</Button>
+        <Button Height="23" Margin="122.026,0,0,12" Name="button_ok" VerticalAlignment="Bottom" IsDefault="True" Click="button_ok_Click" HorizontalAlignment="Left" Width="64.974">Reserve</Button>
+    
+    </Grid>
+</Window>

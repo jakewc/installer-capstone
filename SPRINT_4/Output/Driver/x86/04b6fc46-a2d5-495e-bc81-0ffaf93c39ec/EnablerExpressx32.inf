@@ -1,0 +1,62 @@
+; Copyright 2013 Integration Technologies Limited, All Rights Reserved
+;
+; EnablerExpressx32.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class = Enabler Express
+ClassGuid = {7D445832-7A3E-4726-B8D9-8D31BB50D20E}
+Provider = %Provider%
+DriverVer=08/25/2017,17.54.57.899
+CataLogFile = enablerexpressx86.cat 
+DriverPackageType=PlugAndPlay
+DriverPackageDisplayName=%ENABLER2%
+
+[SourceDisksNames]
+1 = "Enabler PCI Installation Disk #1",,,""
+
+[SourceDisksFiles]
+EnablerExpressx32.sys=1 
+
+[DestinationDirs]
+DefaultDestDir=12
+
+[Manufacturer]
+%Manufacturer%=ITLEnabler, NTx86
+
+[ITLEnabler.NTx86]
+; The Vendor ID is 10b5, and the Device ID is 9052, 9051 
+%ENABLER2%=ENABLER2, PCI\VEN_10b5&DEV_9052, PCI\VEN_10b5&DEV_9051
+
+[ENABLER2]
+CopyFiles=@EnablerExpressx32.sys
+
+[ENABLER2.Services]
+AddService=EnablerExpressx32,0x00000002,Enabler2_Service_Inst,Enabler2_EventLog_Inst
+
+[Enabler2_Service_Inst]
+DisplayName    = "Enabler Express"                            
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\EnablerExpressx32.sys       
+
+[Enabler2_EventLog_Inst]
+AddReg = Enabler2_EventLog_AddReg
+ 
+[Enabler2_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\EnablerExpressx32.sys"
+HKR,,TypesSupported,0x00010001,7
+
+[ClassInstall32]
+Addreg=EnablerClassReg
+
+[EnablerClassReg]
+HKR,,,,Forecourt Controllers
+HKR,,Icon,,-5
+
+[Strings]
+Provider="ITL"
+Manufacturer="ITL"
+ENABLER2="Enabler Express"
