@@ -1,0 +1,4138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+ <title>Release Notes</title>
+ <style type="text/css">
+body
+{
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 10pt;
+}
+
+h1
+{
+	padding: 0em;
+	border-bottom: thick solid #005370;
+	font-family: "Lucida Sans Regular", Verdana, Helvetica, sans-serif;
+	font-size: 2.1em;
+	font-weight: bold;
+}
+
+h2
+{
+	padding-top: 1em;
+	border-bottom: thin solid #AFAFAF;
+	font-family: "Lucida Sans Regular", Verdana, Helvetica, sans-serif;
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+h3
+{
+	font-size: 1em;
+	font-weight: bold;
+}
+
+hr
+{
+	border: 0;
+	color: #AFAFAF; /* for ie. */
+	background-color: #AFAFAF;
+}
+
+.spacedlist li {  margin-bottom: 0.5em }
+
+ </style>
+</head>
+<body>
+	<h1>Release Notes</h1>
+
+	<h2>Known Issues</h2>
+	<ul class="spacedlist">
+		<li>After a system has resumed from a Sleep state the Enabler Card driver is unable to resume correctly and requires a pump server restart. (#9067).</li>
+	</ul>
+
+
+<!-- ************************************************************************** -->
+	<h2>Enabler v4.6.3</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Feature Enhancements to the Enabler API.</li>
+		<li>Added support for the ITL Forecourt camera driver.</li>
+		<li>Added Unlocking Deliveries on the Site Monitor page.</li>
+		<li>Includes Pump Update 2019-02-15: Added support for <b>BlueSky LT-B</b> and <b>Eaglestar</b> pump protocols.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Pump Server (Psrvr4.exe) v4.5.1</h3>
+			<ul>
+				<li>Added support for the ITL Forecourt camera driver (EP-2409).</li>
+				<li>Added support for Pump.DisplayText property (EP-3842).</li>
+				<li>Internal Changes (EP-4025).</li>
+			</ul>
+		</li>		
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web (EnbWeb.exe, WebPages.dll, PageResources.dll) v2.0.2</h3>
+					<ul>
+						<li>Fix: Site Monitor can now be displayed on more than one tab in the same browser (EP-3879).</li>
+						<li>Fix: Pressing Enter on the Edit Pump page no longer clicks the add hose button. Add and Delete buttons now function appropriately (EP-3943).</li>
+						<li>Fix: Test Delivery and Drive Off buttons no longer lock a transaction mid-delivery (EP-3990).</li>
+						<li>Fix: Removed rouge 'and' from Legacy Resource strings (PS-453, EP-3908).</li>
+						<li>Updated Pump Totals report to order hoses by pump logical number (PS-453, EP-3908).</li>
+						<li>Added Unlock Deliveries button to the Site Monitor page. Allows locked transactions on a disconnected terminal to be unlocked (ES-1543, EP-3028).</li>
+						<li>Increased the max allowable terminal ID from 999 to 99,999,999 (EP-3969).</li>
+						<li>Internal Changes (EP-3824, EP-3028).</li>
+					</ul>
+				</li>
+				<li><h3>Utilities (Utilities.dll) v1.4.34</h3>
+					<ul>
+						<li>Internal Changes (EP-3824, EP-3670).</li>
+					</ul>
+				</li>
+				<li><h3>Padarn Web Server (OpenNETCF.web.dll) v1.6.16171.6</h3>
+					<ul>
+						<li>Fix: Webpages could not be found due to case sensitivity of Web Root folder (EP-3865).</li>
+					</ul>
+				</li>
+				<li><h3>Padarn Html Library (OpenNETCF.Web.Html.dll) v1.2.2</h3>
+					<ul>
+						<li>Internal Changes (EP-3824, EP-3670).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll, ITL.Enabler.Api_pcl.dll, ITL.Enabler.API.TLB) v1.2.0</h3>
+					<ul>
+						<li>Fix: Prevent unexpected disconnects by increasing thread priority, and fix trace log messages missing details (EP-4018).</li>
+						<li>Add DeliveryID to DeliveryData properties (EP-3944).</li>
+						<li>Add support for Pump.DisplayText property (EP-3842).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler WPF Control (ITL.Enabler.WPFControls.dll) v1.2.0</h3>
+					<ul>
+						<li>Update controls to use Pump.DisplayText property if CaptionText is not set (EP-3842).</li>
+					</ul>
+				</li>
+				<li><h3>EnbPumpX2 ActiveX Control (EnbPumpX2.ocx) v3.41.0</h3>
+					<ul>
+						<li>Update controls to use Pump.DisplayText property if CaptionText is not set (EP-3842).</li>
+					</ul>
+				</li>
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.9.0</h3>
+					<ul>
+						<li>Add support for Pump.DisplayText property (EP-3842).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Java API (enabler-api-1.0.jar) v1.1.0</h3>
+					<ul>
+						<li>Add DeliveryID to DeliveryData properties (EP-3944).</li>
+						<li>Add support for Pump.DisplayText property (EP-3842).</li>
+					</ul>
+				</li>
+				<li><h3>Java Pump Controls (enabler-pmp-ctrl-1.0.jar) v1.1.0</h3>
+					<ul>
+						<li>Fix: Pumps panel appearing over top of Sales panel (EP-3842).</li>
+						<li>Add CaptionText to pump icon and use Pump.DisplayText property if CaptionText is not set (EP-3842).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler REST API (RestData.dll) v2.0.2</h3>
+					<ul>
+						<li>Internal Changes (EP-3824).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>	
+		
+		<li><h3>Utilities</h3>
+			<ul>
+				<li><h3>AutoSupport Utility (AutoSupport.exe) v2.9.1</h3>
+					<ul>
+						<li>Fix: Remove file collection limit (EP-3997).</li>
+						<li>Updated for Windows Desktop OS detection (EP-3911).</li>
+						<li>Internal Changes (EP-3993, PS-444).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>		
+
+		<li><h3>Enabler E firmware (EicMain2.hex) v2.0.29</h3>
+			<ul>
+				<li>Added support for <a href="https://integration.co.nz/privdocs/FAQ-Eaglestar.htm?EnablerContent=PC-V4">Eaglestar</a> pumps with RS-485 comms (EP-3816).</li>
+				<li>Internal update - No functional change (EP-3720). </li>
+			</ul>
+		</li>		
+		
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>ITL MPP Simulator (mppsim.exe) v2.23.0.9</h3>
+					<ul>
+						<li>Fix: Prevent delivery volume exceeding max display volume when price &lt; 1.00 (EP-3985).</li>
+						<li>Internal Changes (ES-2794).</li>
+					</ul>
+				</li>
+				<li><h3>ActiveX Pump Demo (PumpDemo.exe) v3.8.0.2</h3>
+					<ul>
+						<li>Fix: Prevent crash when logging window is enabled and current hose reported is invalid (EP-4048).</li>
+					</ul>
+				</li>
+				<li><h3>.Net WPF Pump Demo (PumpDemoWPF.exe) v1.2.4</h3>
+					<ul>
+						<li>Fix: Exception from last change if pump numbers not starting from 1 or with gaps in pump numbers (EP-3841).</li>
+						<li>Add DeliveryID property to Transaction Details form (EP-3944).</li>
+					</ul>
+				</li>
+				<li><h3>Java Pump Demo (PumpDemo.jar) v1.1.1</h3>
+					<ul>
+						<li>Fix: Pump icons panel appearing over top of the sales window.</li>
+						<li>Add DeliveryID property to Transaction Details form (EP-3944).</li>
+					</ul>
+				</li>
+				<li><h3>Sample COM Application (SampleCom.exe) v1.7.0.0</h3>
+					<ul>
+						<li>Add DeliveryID property to Transaction Details form (EP-3944).</li>
+						<li>Add DisplayText property Pumps form (EP-3842).</li>
+					</ul>
+				</li>
+				<li><h3>Updated Documentation</h3>
+					<ul>
+						<li>Enabler SDK Reference Manual v4.0.41</li>
+						<li>Enabler ActiveX Developers Reference v1.19.0</li>
+						<li>Enabler Web Applications Reference Manual v1.43</li>
+						<li>Enabler Demonstration POS Application Reference Manual v3.0</li>
+						<li>Enabler Site Installation Checklist v2.1</li>
+						<li>Enabler Embedded Getting Started Guide v1.13</li>
+						<li>Enabler Embedded Site Installation Checklist v1.1</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+	</ul>
+	
+<!-- ************************************************************************** -->
+	
+	<h2>Enabler v4.6.2.1</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Various fixes and improvements.</li>
+		
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Remove reboot prompt when running installer in silent mode (ES-2893, EP-3976).</li>
+			</ul>
+		</li>
+		
+		<li><h3>Pump Server (Psrvr4.exe) v4.4.12</h3>
+			<ul>
+				<li>Fix: License error when working with offline card and Clear Vision POS (EP-3887).</li>
+				<li>Fix: Corrected hose number for Prepay Refunds on Nozzle Juggling scenarios for Gilbarco Australia Protocol 2 pumps (ES-2787, EP-3907).</li> 
+				<li>Fix: Correct Windows version is now displayed on the System Status Page (EP-3693).</li>
+				<li>Fix: Restricted products not checked with a preset while Nozzle is calling leaving it to driver or pump to check (EP-3902).</li>
+			</ul>
+		</li>
+		
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>Enabler .Net API (ITL.Enabler.API.dll, ITL.Enabler.API.TLB) v1.1.3.1</h3>
+					<ul>
+						<li>Add DeliveryID to DeliveryData properties (EP-3944).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.6.2</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Feature Enhancements to the Enabler API.</li>
+		<li>Includes Pump Update 2018-10-05: Added Gallagher <b>PULSE</b> pump support for NZ protocol.</li>
+		<li>Various fixes and improvements.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Corrected Windows device driver installation for single language editions of Windows (EP-3868).</li>
+				<li>Removed <i><b>Power Options reconfigured</b></i> dialog at the end of Enabler Installation (EP-3692).</li>
+				<li>Corrected maximum number of hoses for MPPSIM on SDK installs (EP-3852).</li>
+			</ul>
+		</li>
+		
+		<li><h3>Pump Server (Psrvr4.exe) v4.4.9</h3>
+			<ul>
+				<li>Fix: ReservedBy not cleared in XML API on PumpData when a transaction is cleared (EP-3632).</li>
+				<li>Added StrappedTankID to API XML Tank Data (EP-3522).</li>
+				<li>Allow V4 clients to support volume limits for Legacy Preauth (EP-3845).</li>
+				<li>Pumps now add correctly in realtime for .NET API (EP-3841).</li>
+
+			</ul>
+		</li>
+		
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.5.36</h3>
+					<ul>
+						<li>Fix: On the Terminals page, the Pump server was not updated correctly when terminal number was changed (EP-3859).</li>
+					</ul>
+				</li>
+				<li><h3>Data Access (DataAccess.dll) 1.0.23</h3>
+					<ul>
+						<li>Added EventJournalData support for the REST API (EP-3815).</li>
+					</ul>
+				</li>
+				<li><h3>Web Data (WebData.dll) 1.2.5</h3>
+					<ul>
+						<li>Added EventJournalData support for the REST API (EP-3815).</li>
+					</ul>
+				</li>
+				<li><h3>Utilities (Utilities.dll) v1.4.30</h3>
+					<ul>
+						<li>Internal update (EP-3811, EP-3849).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll, ITL.Enabler.Api_pcl.dll) v1.1.3</h3>
+					<ul>
+						<li>Fix: Stop random exceptions when Forecourt object is disposed (EP-3747).</li>
+						<li>Fix: Throw exception if multiple simultaneous calls to Connect or ConnectAsync (EP-3766).</li>
+						<li>Improved API trace logging so individual areas can be selected; added statistics message for Event queue and any slow event handlers (EP-3839).</li>
+						<li>Added Strapped Tank to Tank properties (EP-3522).</li>
+					</ul>
+				</li>
+				<li><h3>REST API (RESTData.dll) v1.2.0</h3>
+					<ul>
+						<li>Added EventJournalData support for the REST API (EP-3815).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Java API (enabler-api-1.0.jar) v1.0.46.0</h3>
+					<ul>
+						<li>Added Strapped Tank to Tank properties (EP-3522).</li>
+					</ul>
+				</li>
+				<li><h3>EnbPumpX2 ActiveX Control (EnbPumpX2.ocx) v3.40.0</h3> 
+					<ul>
+						<li>Updated New Style Preauth Pump icons (EP-3846).</li>
+					</ul>
+				</li>				
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.8.2</h3>
+					<ul>
+						<li>Added registry option <b>GradeOrder</b> to retrieve Grade objects either by Index <b>(default)</b> or by Number (EP-3880).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>Enabler E firmware (EicMain2.hex) v2.0.25</h3>
+			<ul>
+				<li>Fix: Resolved a bug in polling logic that prevented communication with Adonis pumps (EP-3720).</li>	
+				<li>Added support for KwangShin 6-digit pumps (ES-107, EP-3646).</li>
+			</ul>
+		</li>
+		
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>ITLMPPSim (ITLMPPSim.DLL) v2.1.1</h3>
+					<ul>
+						<li>Fix: Preset limits not working with MPPSIM 4/5 hose pump set to 6-digits (EP-3834)</li>
+					</ul>
+				</li>
+				
+				<li><h3>ITL MPP Simulator (mppsim.exe) v2.23.0.7</h3>
+					<ul>
+						<li>Fix: Ensure pumps continuously Auto-run even if the maximum value limit is reached (EP-3804).</li>
+					</ul>
+				</li>
+				<li><h3>.Net WPF Pump Demo (PumpDemoWPF.exe) v1.2.2</h3>
+					<ul>
+						<li>Only display legacy prepay refund MessageBox if prepay generated by current terminal ID (EP-3845).</li>
+						<li>Cloning many pumps is now more stable (EP-3841).</li>
+					</ul>
+				</li>
+				<li><h3>Sample COM Application (SampleCom.exe) v1.6.0.6</h3>
+					<ul>
+						<li>Updated tanks dialog to include Strapped Tank (EP-3522).</li>
+					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler SDK Reference Manual v4.0.39</li>
+						<li>Enabler Data REST API Reference v1.1.5</li>
+						<li>Enabler ActiveX Developers Reference v1.18.0</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+        <li><h3>Documentation</h3>
+			<ul>
+				<li>Installation Instructions v4.6.2 (EP-3692)</li>
+			</ul>
+		</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.6.1</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Various fixes and improvements.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li>
+			<h3>Install</h3>
+			<ul>
+				<li>Updated the installer to return correct installation result under silent mode (EP-3838).</li>
+			</ul>
+		</li>
+		<li><h3>Database</h3>
+			<ul>
+				<li>Additional improvements made to database purging (EP-3837).</li>
+			</ul>
+		</li>
+		<li><h3>Pump Server (Psrvr4.exe) v4.4.6</h3>
+			<ul>
+				<li>Fix: Prevent Prepay refunds to be cleared automatically caused by pumps transitioning from Nozzle lifted to Nozzle returned while authorised (ES-2675, EP-3803).</li>
+				<li>Fix: Prevent hang-up when processing authorisation limits for a pump set-up with eight hoses (EP-3836).</li>
+				<li>Fix: Corrected detection of invalid Enabler Card Neuron ID (ES-2727, EP-3640).</li>
+				<li>Internal Update (EP-3799). </li>
+			</ul>
+		</li>
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>ITL MPP Simulator (mppsim.exe) v2.23.0.7</h3>
+					<ul>
+						<li>Internal update (EP-3804).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.6.0</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Rebuilt software components with Visual Studio 2017.</li>
+		<li>Includes Pump Update 2018-10-05.</li>
+		<li>Added Periods, Hose History and Tank History data to REST API.</li>
+		<li>Various fixes and improvements.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Database</h3>
+			<ul>
+				<li>Improvements made to database purging (EP-3740).</li>
+			</ul>
+		</li>
+
+		<li><h3>Pump Server (Psrvr4.exe) v4.4.3</h3>
+			<ul>
+				<li>Fix: Attendant logging into an offline pump causes pump status to become online (EP-3789).</li>
+				<li>Fix: IFSF Tank probe status showing online after restart when not connected (EP-3730).</li>
+				<li>Microsoft runtime libraries are now statically linked (EP-3688).</li>
+			</ul>
+		</li>
+		
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.5.35</h3>
+					<ul>
+						<li>Fix: System Uptime on Status page now reads correctly when date or time has been changed (EP-3784).</li>
+						<li>Fix: Site Monitor page now loads properly with stacked zero deliveries (EP-3719).</li>
+						<li>Fix: Pump configuration page now displays error message for incorrect Larsen&Toubro MPD pump decimal settings (EP-3752).</li>
+						<li>Internal Update (EP-3676).</li>
+					</ul>
+				</li>
+				<li><h3>Data Access (DataAccess.dll) 1.0.22</h3>
+					<ul>
+						<li>Support for REST API changes (EP-1448).</li>
+					</ul>
+				</li>
+				<li><h3>Web Data (WebData.dll) 1.2.4</h3>
+					<ul>
+						<li>Support for REST API changes (EP-1448).</li>
+					</ul>
+				</li>
+				<li><h3>Utilities (Utilities.dll) v1.4.28</h3>
+					<ul>
+						<li>Internal update (EP-3676, EP-3799).</li>
+					</ul>
+				</li>
+				<li><h3>Language Resources (PageResources.dll) v1.3.11</h3>
+					<ul>
+						<li>Added resource string for system information download (EP-3676).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>Utilities</h3>
+			<ul>
+				<li><h3>Enabler Client Utility (EnbClient.exe) v1.2.0</h3>
+					<ul>
+						<li>Internal update (EP-3691).</li>
+					</ul>
+				</li>
+				<li><h3>EnbKick Utility (EnbKick.exe) v2.2.0</h3>
+					<ul>
+						<li>Internal update (EP-3691).</li>
+					</ul>
+				</li>
+				<li><h3>Schedule Task Utility (atutil.exe)  v1.6.0</h3>
+					<ul>
+						<li>Internal update (EP-3690, EP-3691).</li>
+					</ul>
+				</li>
+				<li><h3>AutoSupport Utility (AutoSupport.exe) v2.8.0</h3>
+					<ul>
+						<li>Internal update (EP-3690).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>REST API (RESTData.dll) v1.1.6</h3>
+					<ul>
+						<li>Added Periods, Hose History and Tank History data to REST API (EP-1448).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll, ITL.Enabler.Api_pcl.dll) v1.1.1</h3>
+					<ul>
+						<li>Fix: Changing config on pump duplicates any stacked transactions for connected clients (EP-3808).</li>
+						<li>Fix: Decimal authorisation limits not working in regions with decimal comma (EP-3812).</li>
+						<li>Internal update (EP-3689, EP-3667).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler WPF Control (ITL.Enabler.WPFControls.dll) v1.1.0</h3>
+					<ul>
+						<li>Assembly version is now the same as the File version (EP-3809).</li>
+						<li>Internal update (EP-3689, EP-3667).</li>
+					</ul>
+				</li>
+				<li><h3>EnbPumpX2 ActiveX Control (EnbPumpX2.ocx) v3.39.0</h3>
+					<ul>
+						<li>Added registry option <b>ShowDialogs</b> to disable all dialogs from control (EP-3769).</li>
+						<li>Internal update (EP-3750).</li>
+					</ul>
+				</li>
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.8.1</h3>
+					<ul>
+						<li>Fix: Changing config on pump duplicates any stacked transactions for connected clients (EP-3808).</li>
+						<li>Added diagnostic dump facility for exceptions (ES-2622).</li>
+						<li>Internal update (EP-3750).</li>
+					</ul>
+				</li>
+				<li><h3>EnbAttendantX ActiveX Control (EnbAttendantX2.OCX) v4.2.0</h3>
+					<ul>
+						<li>Internal update (EP-3750).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Java API (enabler-api-1.0.jar) v1.0.45.0</h3>
+					<ul>
+						<li>Fix: Changing config on pump duplicates any stacked transactions for connected clients (EP-3808).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>ITL MPP Simulator (mppsim.exe) v2.23.0.5</h3>
+					<ul>
+						<li>Internal update (EP-3634).</li>
+					</ul>
+				</li>
+				<li><h3>.Net WPF Pump Demo (PumpDemoWPF.exe) v1.2.0</h3>
+					<ul>
+						<li>Visual Studio 2017 Project File now available (EP-3687).</li>
+						<li>Internal update (EP-3668).</li>
+					</ul>
+				</li>
+				<li><h3>ActiveX Pump Demo (PumpDemo.exe) v3.8.0.1</h3>
+					<ul>
+						<li>Internal update (EP-3668).</li>
+					</ul>
+				</li>
+				<li><h3>Sample COM Application (SampleCom.exe) v1.6.0.5</h3>
+					<ul>
+						<li>Internal update (EP-3668).</li>
+					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler SDK Reference Manual v4.0.38</li>
+						<li>Enabler Data REST API Reference v1.1.4</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+        <li><h3>Documentation</h3>
+			<ul>
+				<li>Enabler Web Applications Reference Manual v1.42</li>
+			</ul>
+		</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.5.5</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Updated .NET API to support secure client terminal connections.</li>
+		<li>Includes Pump Update 2018-07-27.</li>
+		<li>Various fixes and improvements.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Database Name instances with '0' are now correctly listed on installation (EP-3453).</li>
+				<li>Fix: Disable sleep and fast start-up for reliable operation (EP-3325).</li>
+				<li>Fix: Shortcut to Express Update on 64-bit OS now executes 64-bit version of application (EP-3103).</li>
+			</ul>
+		</li>
+
+		<li><h3>Pump Server (Psrvr4.exe) v4.3.22</h3>
+			<ul>
+				<li>Fix: Standalone deliveries now authorised retrospectively (EP-3563).</li>
+				<li>Fix: Set Activity events not being fired (ES-2446).</li>
+				<li>Added support for logging of LON network statistics (EP-3519).</li>
+				<li>Added support for secure API connections (EP-3526).</li>
+			</ul>
+		</li>
+
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web server (EnbWeb.exe) v1.1.5</h3>
+					<ul>
+						<li>Internal update - No functional change (EP-3207).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.5.30</h3>
+					<ul>
+						<li>Fix: Enabler Event Journal Web Logins using Edge are now detailed correctly (EP-3500).</li>
+						<li>Fix: Prevent exception being logged when trying to log in with an invalid username (EP-3508).</li>
+						<li>Fix: Prevent date controls from overlapping on browser (EP-3564).</li>
+						<li>Fix: Site Monitor now displays Pump control buttons if no pump 1 (EP-3682).</li>
+						<li>Applied minor changes to styling (CSS) (EP-3564).</li>
+					</ul>
+				</li>
+				<li><h3>Language Resources (PageResources.dll) v1.3.10</h3>
+					<ul>
+						<li>Internal update.</li>
+					</ul>
+				</li>
+				<li><h3>Utilities (Utilities.dll) v1.4.23</h3>
+					<ul>
+						<li>Internal update.</li>
+					</ul>
+				</li>
+				<li><h3>Padarn Web Server (OPENNETCF.web) v1.6.16171.5</h3>
+					<ul>
+						<li>Updated to support SSL (SecureBlackbox) (EP-3531, EP-3536, EP-2566).</li>
+					</ul>
+				</li>
+				<li><h3>Padarn Html Library (OpenNETCF.Web.Html) v1.2.1</h3>
+					<ul>
+						<li>Extended Hyper-link element to support download.</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll) v1.0.31</h3>
+					<ul>
+						<li>Fix: Pump Server Uptime no longer shows as negative (EP-3679).</li>
+						<li>Updated to support secure connection for Enabler Embedded Services using SSL (EP-3600).</li>
+					</ul>
+				</li>
+
+				<li><h3>Enabler .Net API (ITL.Enabler.Api_pcl.dll) v1.0.31</h3>
+					<ul>
+						<li>Internal update - No functional change (EP-3600).</li>
+					</ul>
+				</li>
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.7.7</h3>
+					<ul>
+						<li>Fix: Reset Nozzle Left Out status when fuel flow is resumed (ES-2497, EP-3645).</li>
+						<li>Fix: Grade objects are now returned by Number for V3 backwards compatibility (ES-2423).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>Enabler E firmware (EicMain2.hex) v2.0.22</h3>
+			<ul>
+				<li>Fix: Not able to get IP address via DHCP if cable disconnected/connected during DHCP request (EP-3523). </li>
+				<li>Fix: Not correctly polling Sanki2005 MPD dispensers (EP-3625).</li>
+				<li>Fix: Correct Idle delay value for Sanki using Gilbarco US emulation (EP-3625).</li>
+				<li>Added support for PDM258 loopback diagnostics (EP-3396). </li>
+				<li>Internal update - No functional change (EP-3420, EP-3587). </li>
+			</ul>
+		</li>
+
+		<li><h3>AutoSupport tool (AutoSupport.exe) v2.7.2</h3>
+		<ul>
+			<li>Support for Windows 10, new log types and locations (EP-3649, PS-373).</li>
+		</ul>
+		</li>
+
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>ITL MPP Simulator (mppsim.exe) v2.23.0.4</h3>
+					<ul>
+						<li>Internal update - No functional change (EP-3513, EP-3517, EP-3637).</li>
+					</ul>
+				</li>
+				<li><h3>.Net WPF Pump Demo (PumpDemoWPF.exe) v1.1.19</h3>
+					<ul>
+						<li>Fix: Legacy Prepay/Preauth features not shown caused by multiple references of the API assembly (EP-3598).</li>
+						<li>Updated to support Secure Client connection via Windows registry setting (EP-2319).</li>
+					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler SDK Reference Manual v4.0.37</li>
+						<li>Enabler Embedded Getting Started Guide v1.12 (EP-2318)</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	    <li><h3>Documentation</h3>
+			<ul>
+				<li>Installation Instructions v4.5.5 (EP-2345)</li>
+				<li>Enabler Web Applications Reference Manual v1.40 (EP-2318)</li>
+			</ul>
+		</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.5.4</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Various fixes and improvements.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Pump Server (Psrvr4.exe) v4.3.17.1</h3>
+			<ul>
+				<li>Fix: Corrected detection of invalid Enabler Card Neuron ID (EP-3640).</li>
+			</ul>
+		</li>
+		
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Reboot when required to complete installation of Visual 2008 C++ redistributables (EP-3639).</li>
+			</ul>
+		</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.5.3</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Enabler .Net API update.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Enabler .Net API (ITL.Enabler.Api.dll, ITL.Enabler.Api_pcl.dll) v1.0.27</h3>
+			<ul>
+				<li>Updated the .NET API for backwards compatibility (EP-3541).</li>
+			</ul>
+		</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.5.2</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>NEW This release adds support for new Enabler Card hardware to be launched in future.</li>
+		<li>SDK improvements.</li>
+		<li>Various fixes.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Database</h3>
+			<ul>
+				<li>Added cards table to support future Enabler Card hardware. </li>
+			</ul>
+		</li>
+
+		<li><h3>Pump Server (Psrvr4.exe) v4.3.17.0</h3>
+			<ul>
+				<li>New: Added support for future Enabler Card hardware. </li>
+				<li>Fix: An exception in shutdown which sometimes caused the API to not connect when restarting and delayed shutdown by up to 4 seconds (EP-3207).</li>
+				<li>Fix: Prevent duplicate deliveries after offline deliveries have been logged on startup (ES-2093).</li>
+				<!-- <li><b>Embedded</b> Fix database disconnect untrapped exception (ES-2103).</li> -->
+				<li>Fix: Prevent reserve to be stuck caused by cancelled transaction on AllStop (ES-2083).</li>
+				<li>Fix: Exception in shutdown with large configurations (EP-3390).</li>
+				<li>Fix: Setting negative grade price no longer disrupts database connection (EP-3447).</li>
+
+			</ul>
+		</li>
+		
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web server (EnbWeb.exe) v1.1.4</h3>
+					<ul>
+						<li>Added support for the Cards page to allow the configuration of future Enabler Card hardware (EP-3207).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.5.23</h3>
+					<ul>
+						<li>Added language string for the Chinese language option (EP-2106).</li>
+						<li>Added Configuration Page for future Enabler Card hardware (EP-3207).</li>
+						<li>Fix: Resolved a problem with the date picker preventing report pages working with French language selected (EP-3352).</li>
+						<li>Fix: Prevented "Format error" exceptions on the login page when system Locale has &quot;,&quot; as a decimal separator (EP-3353).</li>
+						<li>Fix: Corrected the caption text for the Tank Group box on the Site Monitor page - this was previously &quot;Tank Gauge configuration&quot;.</li>
+						<li>Fix: Ensure Extended Ports are numbered in a logical sequence, separately from other Enabler card ports (EP-3485).</li>
+						<li>Fix: Pump Server events no longer show unnecessary appended number in Device Type field  (EP-3447).</li>
+						<li>Fix: Prevent login-guessing attack by disabling autocompletion of password in login page (EP-2566).</li>
+					</ul>
+				</li>
+				<li><h3>Language Resources (PageResources.dll) v1.3.7</h3>
+					<ul>
+						<li>Added resource strings for new Cards web page (EP-3207).</li>
+						<li>Updated Language Option strings so each language is represented as a native string (EP-2106).</li>
+					</ul>
+				</li>
+				<li><h3>Utilities (Utilities.dll) v1.4.17</h3>
+					<ul>
+						<li>Internal update - no functional change (EP-3321).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll, ITL.Enabler.Api_pcl.dll) v1.0.26</h3>
+					<ul>
+						<li>Updated the GaugeAlarmTypes to support more Tank Gauge Alarm types (EP-3360).</li>
+						<li>Changed the EnablerInterface class to return the Enabler Card type and a connection status value (EP-3398).</li>
+						<li>Updated Reference Manual (EP-3447).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Java API (enabler-api-1.0.jar) v1.0.44.0</h3>
+					<ul>
+						<li>Added Hardware Info class, get/set Log Trace Level, and other code changes to bring it more in line with .Net API (EP-3338).</li>
+						<li>Added more Grade.SetPrice exceptions (EP-3447).</li>
+					</ul>
+				</li>
+				<li><h3>Java Pump Controls (enabler-pmp-ctrl-1.0.jar) v1.0</h3>
+					<ul>
+						<li>Fix: Updated to clear the volume and money displayed when a zero transaction is stacked (ES-2315).</li>
+						<li>Minor cosmetic improvements to the sample pump control to more clearly show the status of deliveries via the text color, and the selected pump with different border colors.</li>
+					</ul>
+				</li>
+				<li><h3>EnbPumpX2 ActiveX Control (EnbPumpX2.ocx) v3.38.4</h3>
+					<ul>
+						<li>Updated the bitmap used in "new ITL style" on the close button in the Pump Stack (pop-up) dialog. This new icon is more consistent with symbols on the other buttons (EP-3247).</li>
+					</ul>
+				</li>
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.7.5</h3>
+					<ul>
+						<li>Fix: The values reported by Tank.Volume and Tank.TCVolume properties were swapped - they are now set and updated correctly (EP-3116).</li>
+						<li>Fix: Tank alarms indicated by the Tank.Alarm property were previously indicated one position in the string lower than they should be (EP-3116).</li>
+						<li>Fix: Exception when an invalid password was used (EP-3422).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>ITL MPP Simulator (mppsim.exe) v2.23.0</h3>
+					<ul>
+						<li>Fix: Prevent simulator window opening off-screen with multi-monitor systems (EP-3439).</li>
+						<li>Fix: Improved persistence and operation of 8 digit mode (EP-3502).</li>
+						<li>Internal update - no functional change.</li>
+					</ul>
+				</li>
+				<li><h3>.Net WPF Pump Demo (PumpDemoWPF.exe) v1.1.18</h3>
+					<ul>
+						<li>Fix: No longer fills the password field with previously entered password (ES-2022).</li>
+					</ul>
+				</li>
+				<li><h3>ActiveX Pump Demo (PumpDemo.exe) v3.8.0</h3>
+					<ul>
+						<li>Updated to save Menu settings when the application closes (EP-3328).</li>
+						<li>Added <tt>/clearpumps</tt> parameter to clear prepay/preauth deliveries reserved by a client/terminal that is gone offline (EP-3493). </li>
+					</ul>
+				</li>
+				<li><h3>Java Pump Demo (PumpDemo.jar) v1.1.0</h3>
+					<ul>
+						<li>Fix: Resolved a problem that prevented locking and clearing zero fuel transactions - where no fuel was delivered (ES-2315).</li>
+						<li>Fix: The Attendant Block button did not work because the sample code passed the wrong BlockReason to the Enabler API.</li>
+						<li>Updated to use a consistent font on the Transaction Details page.</li>
+						<li>Added menu item to view Hardware Info (EP-3338).</li>
+						<li>Fix: Null reference error when viewing transactions stack with a Timeout Transaction (EP-3338).</li>
+						<li>Fix: Clear Button shows incorrect message (EP-1854).</li>
+					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Updated Enabler Java API documentation - correcting a number of spelling mistakes and expanding a number of topics (EP-3338).</li>
+						<li>Enabler SDK Reference Manual v4.0.35</li>
+						<li>Enabler ActiveX Developers Reference v1.16.0</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li><h3>Utilities</h3>
+			<ul>
+				<li><h3>Auto Support (AutoSupport.exe) v2.6.1</h3>
+					<ul>
+						<li>Added the Loop # into the ports list (EP-3346).</li>
+					</ul>
+				</li>
+				<li><h3>DriverInstaller (DriverInstaller.exe) v1.0.3</h3>
+					<ul>
+						<li>Updated to pick x86 or x64 driver to install according to OS architecture (EP-3386).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	    <li><h3>Documentation</h3>
+			<ul>
+				<li>Enabler Web Applications Reference Manual v1.38</li>
+				<li>Installation Instructions v4.5.2</li>
+			</ul>
+		</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.5.1</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>New Total Control Systems TCS3000 pump driver.</li>
+		<li>Includes Pump Update 2017-10-27. Refer to PumpUpdate Release Notes for details of the changes.</li>
+		<li>Various fixes and improvements.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Corrected uninstalling sequence for Enabler services (EP-3065).</li>
+				<li>Fix: Corrected Windows device driver installation so that all device drivers applicable to the target platform will be installed (EP-3060).</li>
+				<li>Fix: Updated Express Express Windows device drivers to handle Desktop PCs with PCI Parity in BIOS enabled (EP-2950).</li>
+				<li>Fix: SQL Server 2016 Express now installs correctly on Windows Server 2012 R2 (EP-3029).</li>
+				<li>Improved startup performance of Pump Server by adding an index to fuel transaction table (EP-3079, ES-1823).</li>
+
+			</ul>
+		</li>
+
+		<li><h3>Windows Device Driver (EnablerExpressx64.sys, EnablerExpressx32.sys)  v6.3.9</h3>
+			<ul>
+				<li>Fix: Prevent NMI Parity errors when NMI BIOS Parity setting is enabled and IFSF pumps are connected (EP-2950, EP-3115).</li>
+			</ul>
+		</li>
+
+		<li><h3>Pump Server (Psrvr4.exe) v4.2.2</h3>
+			<ul>
+				<li>Fix: Corrected the initial Tank Gauge reading data sent by the pump server to terminals when they connect (EP-2886).</li>
+				<li>Fix: Added resource string for event journal message indicating UNDEFINED_ERROR Pump state (EP-3003).</li>
+				<li>Fix: Improved the performance of loading uncleared transactions when system restarted (EP-3067, ES-1811).</li>
+				<li>Fix: Handles the TempStop correctly during the Authorising state (EP-3062).</li>
+				<li>Fix: Check an attendant is still logged on before clearing the delivery as an attendant delivery (EP-3076).</li>
+				<li>Fix: Additional fixes applied to prevent client connection errors due to large number of stacked transactions (EP-3107).</li>
+				<li>Fix: A TempStop from an ActiveX client will now block pump to match V3 behavior (EP-2645).</li>
+				<li>Reduced the amount of logging so we can have more days saved (EP-2839).</li>
+			</ul>
+		</li>
+
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.5.9</h3>
+					<ul>
+						<li>Fix: the Site Monitor Tank Levels now indicate Temperature Compensated Product Volume (if available), previously the graph only indicated the Uncompensated Product Volume (EP-2886).</li>
+						<li>Embedded updates - no functional change (EP-591).</li>
+					</ul>
+				</li>
+				<li><h3>Language Resources (PageResources.dll) v1.3.5</h3>
+					<ul>
+						<li>Embedded updates - no functional change (EP-591).</li>
+					</ul>
+				</li>
+				<li><h3>Utilities (Utilities.dll) v1.4.16</h3>
+					<ul>
+						<li>Embedded updates - no functional change (EP-591).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll, ITL.Enabler.Api_pcl.dll) v1.0.23</h3>
+					<ul>
+						<li>Fix: Prevent unexpected OnServerEvent to be fired on connection for Portable libraries (EP-3135).</li>
+						<li>An internal Utility class is now marked as internal so excluded from API documentation (EP-2988).</li>
+					</ul>
+				</li>
+
+				<li><h3>EnbPumpX2 ActiveX Control (EnbPumpX2.ocx) v3.38.3 </h3>
+					<ul>
+						<li>Fix: No longer displays pop-up message when users click the icon twice to authorise a calling pump. As soon as authorisation starts the animation and sound events for CALLING_PSTATE are stopped giving a more responsive UX (ES-1790). </li>
+					</ul>
+				</li>
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.7.2</h3>
+					<ul>
+						<li>Fix: Better handling of states and requests during pump authorisation to prevent unexpected pop-up messages (ES-1790).</li>
+						<li>Fix: Multiple sessions now allowed to be opened in the same application (ES-1836, EP-3077).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler REST API (RestData.dll) v1.1.5</h3>
+					<ul>
+						<li>Added REST API. Disabled by default (EP-3139).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>Auto Support Utility (AutoSupport.exe) v2.5.0</h3>
+			<ul>
+				<li>Changed code that loads registry key settings - no functional changes.</li>
+			</ul>
+		</li>
+
+		<li><h3>ODBC Utility (ODBCnfg.exe and ODBCnfg64.exe) v1.0.4</h3>
+			<ul>
+				<li>Added support for detecting and using SQL Server Native Client 11.0. (SP-163).</li>
+			</ul>
+		</li>
+
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>ITL MPP Simulator (mppsim.exe) v2.22.0.0</h3>
+					<ul>
+						<li>Added new command menu items to automate nozzle lift and hang up for all pumps to speed up some test scenarios.</li> <!-- to help testing of some cases e.g. EP-3075 -->
+					</ul>
+				</li>
+				<li><h3>ITLMPPSim (ITLMPPSim.dll) v2.0.10</h3>
+					<ul>
+						<li>Fix: Resolved a problem that could cause an invalid delivery to be logged if the simulator is disconnected during price setting (EP-3075).</li>
+					</ul>
+				</li>
+				<li><h3>ActiveX Pump Demo (PumpDemo.exe) v3.6.0.2</h3>
+					<ul>
+						<li>Updated the Tanks dialog to show more tank level data, and indicate ATG alarms by number and name in a listbox, and visualise the tank level.</li> <!-- to allow testing for EP-3116 and EP-3117 -->
+						<li>Updated the Tanks dialog to check configuration and ATG data and display warning messages if there is a problem, instead of displaying a pop-up error or drawing an incorrect graphic.</li>
+					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler SDK reference v4.0.33</li>
+						<li>Enabler Embedded Getting Started Guide v1.10</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>Documentation</h3>
+			<ul>
+				<li>Enabler Web Applications Reference Manual v1.37</li>
+			</ul>
+		</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.5.0</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>No Software activation for Express Cards.</li>
+		<li>Support for SQL Server 2014 Express and SQL Server 2016 Express.</li>
+		<li>Windows Device Driver to support Enabler Express V3 cards.</li>
+		<li>Various fixes and improvements.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Corrected Start Menu link link for Wetstock Tank Data on client install (EP-3025).</li>
+				<li>Updated device drivers for Enabler Express V3 card support (EP-2663).</li>
+			</ul>
+		</li>
+		<li><h3>Pump Server (Psrvr4.exe) v4.2.0</h3>
+			<ul>
+				<li>Fix: Power and battery state not initialised on V4 API when client connects (EP-3004).</li>
+				<li>Activation no longer required for Express cards. Activation still needed for Legacy PCI cards or for ClearVision installs (EP-3014).</li>
+
+			</ul>
+		</li>
+
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web server (EnbWeb.exe) v1.1.3</h3>
+					<ul>
+						<li>Activation page menu link no longer displayed for Express cards (EP-3015).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.5.7</h3>
+					<ul>
+						<li>Fix: Changed the message displayed when a user attempts to delete a logged in user (EP-1202).</li>
+						<li>Activation page menu link no longer displayed for Express cards (EP-3015).</li>
+					</ul>
+				</li>
+				<li><h3>Language Resources (PageResources.dll) v1.3.4</h3>
+					<ul>
+						<li>Added the message displayed when a user attempts to delete a logged in user (EP-1202).</li>
+					</ul>
+				</li>
+				<li><h3>Utilities (Utilities.dll) v1.4.18</h3>
+					<ul>
+						<li>Internal update - no functional changes.</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>Utilities</h3>
+			<ul>
+				<li><h3>ExpressUpdate.exe/ExpressUpdatex64.exe v1.2.5</h3>
+					<ul>
+						<li>Fix: Prevent blue screen exception when device driver is not ready on ExpressUpdate startup (EP-2989).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>ITL MPP Simulator (mppsim.exe) v2.21.0.7</h3>
+					<ul>
+						<li>Fix: Corrected transaction value calculation based on selected delivery volume display format (EP-3006, ES-1776).</li>
+						<li>Fix: Resolved a bug that resulted in an invalid pump being displayed in the Options menu (EP-3024).</li>
+					</ul>
+				</li>
+				<li><h3>Sample COM Application (SampleCom.exe) v1.6.0.4</h3>
+					<ul>
+						<li>Fix: Battery states now displayed correctly (EP-3004).</li>
+					</ul>
+				</li>
+
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler ActiveX Developers Reference v1.15.0</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>Documentation</h3>
+			<ul>
+				<li>Installation Instructions v4.5.0</li>
+				<li>Enabler Web Applications Reference Manual v1.36</li>
+			</ul>
+		</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.4.3</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Includes the .NET Portable Class Libraries.</li>
+		<li>Includes Pump Update 2017-04-10 - Refer to PumpUpdate Release Notes for details of the changes.</li>
+		<li>Various fixes and improvements.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Added index to transactions to prevent Pump reinstate timeout issues (ES-1549).</li>
+				<li>Fix: Attendant history not updated if a test/driveroff/offline delivery had been cleared with an attendant assigned to it (ES-1520).</li>
+				<li>Fix: Corrected errors returned by Attendant related stored procedures (sp_update_delivery, sp_reinstate_delivery and sp_att_update_amount).</li>
+				<li>Added 64-bit version of ExpressUpdate.exe (EP-2939).</li>
+			</ul>
+		</li>
+
+		<li><h3>Pump Server (Psrvr4.exe) v4.1.13</h3>
+			<ul>
+				<li>Fix: Pump could be left authorised if a nozzle is returned during authorisation (EP-2703).</li>
+				<li>Fix: Client unable to log on when using blending pumps with large numbers of stacked transactions (ES-1469).</li>
+				<li>Fix: Resolved a memory leak in Reinstate Delivery processing (EP-2714).</li>
+				<li>Fix: Fuel Transactions did not have the correct Attendant ID if the Attendant logged off during the delivery causing an Attendant delivery to appear as a Post-Pay (ES-1568, PS-172).</li>
+				<li>Fix: Internal exception when processing an <tt>AllStop</tt> command after Enabler has started pump Authorisation (ES-1469).</li>
+				<li>Fix: Change to recover from Enabler card driver unloading (EP-2652).</li>
+				<li>Fix: Pump reserved state gets stuck (EP-2714, EP-2854).</li>
+				<li>Fix: Invalid or Corrupted Enabler NeuronID/Service Number now logged and ignored for software activation (EP-2936).</li>
+				<li>Added support for Tag_Disabled on External tags. When Tag Disabled is true the tag can't be used to authorize a pump (EP-2653).</li>
+				<li>Internal changes for processing IFSF blocks (EP-2766).</li>
+				<li>Internal changes applied for IFSF testing (EP-2624).</li>
+			</ul>
+		</li>
+
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.5.6</h3>
+					<ul>
+						<li>Fix: Pump page no longer allows deletion of a Pump with an attendant logged on or with a current/stacked delivery (EP-2681).</li>
+						<li>Fix: Attendant page no longer allows deletion of an Attendant still logged on to a Pump (EP-2698).</li>
+						<li>Fix: Removed unwanted logged exceptions thrown by Site Monitor. Optimizations applied to ensure pump status is shown correctly even with many pumps setup (EP-2656, EP-2786).</li>
+						<li>Fix: Site Configuration page, 'Prepay refund calculation type' options are no longer reversed (EP-2835).</li>
+						<li>Fix: Resolved incorrect Tank connection type displayed on Tanks page (ES-1517). </li>
+						<li>Fix: Date time picker showing wrong year if system using a 2 digit short date format (EP-2920).</li>
+					</ul>
+				</li>
+				<li><h3>Data Access (DataAccess.dll) 1.0.18</h3>
+					<ul>
+						<li>Internal change (EP-2681).</li>
+					</ul>
+				</li>
+				<li><h3>Language Resources (PageResources.dll) v1.3.3</h3>
+					<ul>
+						<li>Added error string to display when attempting to delete an Attendant logged onto a pump (EP-2698).</li>
+					</ul>
+				</li>
+				<li><h3>Utilities (Utilities.dll) v1.4.12</h3>
+					<ul>
+						<li>Embedded updates - no functional changes.</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll, ITL.Enabler.Api_pcl.dll) v1.0.22</h3>
+					<ul>
+						<li>Updates applied for Portable versions. See <b>Enabler\SDK\DotNetPCLAPI</b> for the Portable libraries (ES-1621, EP-2914, EP-2965).</li>
+						<li>New public interfaces added to set and return logging level: <b>GetTraceLevel</b>, <b>SetTraceLevel</b> (EP-2946).</li>
+					</ul>
+				</li>
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.6.11</h3>
+					<ul>
+						<li>Allow Authorising state to show as calling but only if previous state was locked (ES-1475).</li>
+					</ul>
+				</li>
+				<li><h3>EnbAttendantX ActiveX Control (EnbAttendantX2.OCX) v4.1.2</h3>
+					<ul>
+						<li>Updated Block status for V3 backwards compatibility (EP-2651).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>Utilities</h3>
+			<ul>
+				<li><h3>ExpressUpdate.exe/ExpressUpdatex64.exe v1.2.4</h3>
+					<ul>
+						<li>Updated to support V3 Express Cards. 64-bit version ExpressUpdatex64.exe is required for V3 Cards on Windows 64 bit plaforms (EP-2939).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>ITL MPP Simulator (mppsim.exe) v2.21.0.5</h3>
+					<ul>
+						<li>Fix: Resolved a bug that resulted in some incorrect options being displayed in the Options menu (EP-2978).</li>
+						<li>Fix: Flow checkbox now defaults to correct setting based on Automatic Start (EP-2946).</li>
+						<li>Added new AutoRun mode that changes rate of deliveries based on the time of day, and improved the AutoRun setup dialog layout.</li>
+					</ul>
+				</li>
+				<li><h3>ActiveX Pump Demo (PumpDemo.exe) v3.5.0.13</h3>
+					<ul>
+						<li>Clear button can now be used to reset pumps in RESERVED_FOR_PREPAY (EP-2714).</li>
+					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler SDK reference v4.0.32</li>
+						<li>Enabler ActiveX Developers Reference v1.14.1</li>
+						<li>Enabler Data REST API Reference v1.1.3</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>Auto Support Utility (AutoSupport.exe) v2.4.0</h3>
+			<ul>
+				<li>Internal changes - no functional changes.</li>
+			</ul>
+		</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.4.2</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Includes Pump Update 2016-09-30 - Refer to PumpUpdate Release Notes for details of the changes.</li>
+		<li>Various fixes and improvements.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+
+		<li><h3>Pump Server (Psrvr4.exe) v4.1.7</h3>
+			<ul>
+				<li>Fix: Pump with Auto Auth Mode on was not Automatically Authorised when it was unblocked and pump was calling (ES-1381, EP-2625).</li>
+				<li>Fix: Transactions in invalid states are cleared on PSRVR restart (ES-1389, EP-2609).</li>
+				<li>Fix: Test Deliveries and Drive offs are now recorded properly on the Fuel Transaction and Pump Totals report pages (ES-1400, EP-2617).</li>
+				<li>Fix: Deliveries done on pumps in error state are now recorded as offline deliveries (ES-1393, EP-2612).</li>
+				<li>Fix: Offline Deliveries are now cleared by self (EP-2612).</li>
+				<li>Fix: Deliveries cleared by site monitor now record "Cleared By" field correctly (EP-2643).</li>
+			</ul>
+		</li>
+
+		<li><h3>Auto Support Utility (AutoSupport.exe) v2.3.1</h3>
+			<ul>
+				<li>Fixed operation with /T parameter - to select logs from a specific date until now (CA-971).</li>
+			</ul>
+		</li>
+
+		<li><h3>EnbKick (EnbKick.exe) v2.1.3</h3>
+			<ul>
+				<li>Fix: EnbKick changes are now backwards compatible with previous versions of API.</li>
+			</ul>
+		</li>
+
+		<li><h3>API</h3>
+			<ul>
+				</li>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll) v1.0.19</h3>
+					<ul>
+						<li>Fix: Recompiled with updated policy file for backwards compatibility with old applications (EP-2642).</li>
+					</ul>
+				</li>
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.6.10</h3>
+					<ul>
+						<li>Fix: A not available error was given if unblocking an automatically authorised calling pump (ES-1381, EP-2625).</li>
+					</ul>
+					</li>
+				</li>
+				<li><h3>.Net WPF Controls (ITL.Enabler.WPFControls.dll) v1.0.19</h3>
+					<ul>
+						<li>Fix: Recompiled with latest ITL.Enabler.API (EP-2642).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>Install</h3>
+			<ul>
+				<li>Added flag images for France, Italy, Russia, Slovenia (EP-2559).</li>
+			</ul>
+		</li>
+
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web server (EnbWeb.exe) v1.1.2</h3>
+					<ul>
+						<li>Fix: Recompiled with latest ITL.Enabler.API (EP-2642).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.5.2</h3>
+					<ul>
+						<li>Added translation strings for Bahasa (Indonesia), French, Portuguese (Brasil), Russian and Slovenian (EP-2559).</li>
+						<li>Fix: The Save Activation File Button on Activation page is now working as expected (EP-2642).</li>
+					</ul>
+				</li>
+				<li><h3>Language Resources (PageResources.dll) v1.3.2</h3>
+					<ul>
+						<li>Added translation strings for Bahasa (Indonesia), French, Portuguese (Brasil), Russian and Slovenian (EP-2559).</li>
+					</ul>
+				</li>
+				<li><h3>Utilities (Utilities.dll) v1.4.8</h3>
+					<ul>
+						<li>Internal update - no functional changes.</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>ITL MPP Simulator (mppsim.exe) v2.20.0.6</h3>
+					<ul>
+						<li>Fix: hose configuration was not correctly changing from 5 back to 4 (when switching pump types), and the wrong hose's settings were used when restarting the simulator application (EP-2561).</li>
+						<li>Now supports five hose pump configuration (EP-2561).</li>
+					</ul>
+				</li>
+				<li><h3>ITLMPPSim (ITLMPPSim.dll) v2.0.9</h3>
+					<ul>
+						<li>Updated to support 5 Hoses (ES-1280).</li>
+					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler ActiveX Developers Reference v1.14</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>Documentation</h3>
+			<ul>
+				<li>Enabler Web Applications Reference Manual v1.34</li>
+			</ul>
+		</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.4.1</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Site Monitor Web Page now supports basic Pump Forecourt Operations.</li>
+		<li>Added features, optimisations and bug fixes.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Extended Fuel Density fields to work with Franklin Fueling ATG Sites (EP-2511).</li>
+				<li>Added new columns in Attendant_Period_History table to record attendant float amount (EP-2475).</li>
+				<li>Fix: Error in updating Attendant period history (EP-2593).</li>
+			</ul>
+		</li>
+
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web server (EnbWeb.exe) v1.1.1</h3>
+					<ul>
+						<li>Added new columns in Attendant_Period_History table to record attendant float amount (EP-2475).</li>					
+					</ul>
+				</li>
+
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.5.0</h3>
+					<ul>
+						<li>Fix: A 'Format Error' message shows after changing to a region setting using ',' decimal separator (EP-2453).</li>
+						<li>Fix: Drop-down menus now work when using IE/Edge browsers on touchscreen devices (EP-2538).</li>
+						<li>Fix: Error when opening Fuel Transaction and Delivery History pages at the end of month (ES-1292).</li>
+						<li>Fix: Fuel Reconciliation Daily Tank report is now correctly displayed on print (EP-2547).</li>
+						<li>Fix: updated configuration pages to prevent exception messages when browsing configuration of objects that have been deleted (e.g. pump, grade, tank, site mode) (EP-2490).</li>
+						<li>Fix: Pump page now defaults to the correct pump type. Previously the pump configuration page would choose the wrong pump type if Port 1 was 'Not installed' (EP-2578).</li>
+						<li>Fix: When adding a new pump, the next available Polling Address is set when the Port is changed (EP-2578).</li>
+						<li>Updated the Blocking and Blocking Overview pages to support forecourt Attendants (EP-2343).</li>
+						<li>Changed Users page to show "All" for roles with all permissions turned on (EP-1869).</li>
+						<li>Applied changes to styling (CSS) to get more consistent font sizes on Safari and Chrome browsers (EP-2558).</li>
+						<li>Added 'Clone Tag Reader' button to simplify configuration for sites using Tag Readers (EP-2374).</li>
+						<li>Added pump selection and actions to Site Monitor page (EP-2338).</li>
+						<li>Improved styling of the Site Monitor page.</li>
+						<li>Added 'Read Tag Data' button in the Tags Page to fill the 'Tag Data' field using the last presented tag when adding or editing a tag (EP-2390).</li>
+					</ul>
+				</li>
+				<li><h3>Language Resources (PageResources.dll) v1.3.1</h3>
+					<ul>
+						<li>Added multiple resource strings for Tagging and Site Monitor pages.</li>
+					</ul>
+				</li>					
+				<li><h3>Padarn Html Library (OpenNETCF.Web.Html) v1.2.0</h3>
+					<ul>
+						<li>Extended Div, Button, and Hidden elements.</li>
+						<li>Adjusted to use HTML5 Document headers.</li>
+					</ul>
+				</li>
+				
+			</ul>
+		</li>
+
+		<li><h3>Pump Server (Psrvr4.exe) v4.1.5</h3>
+			<ul>
+				<li>Fix: Prepay refund not created if the driver doesn't log a delivery on a legacy prepay (EP-2532).</li>
+				<li>Fix: Resolved a problem with TCP messaging to Enabler client applications that resulted in unnecessary delays. This fix makes API logon/connection and normal operations more responsive (ES-1260).</li>
+				<li>Fix: Updated for backwards compatibility with older API Attendant unblock calls (EP-2580).</li>
+				<li>Fix: Updated tag lookup to work when using a mixture of tag reader equipment. Previously tags would not work correctly on sites using both MPI and Prowalco tag readers (ES-1345).</li> 	
+				<li>Fix: Attendant not updated in transaction if new attendant logs on during a delivery (EP-2593).</li> 				
+				<li>Added support for payment types for attendant deliveries (EP-2475). </li>
+				<li>Added support for legacy delivery abort method by an advanced setting on Pump, USE_ABORT=1. This only works on some pump types (ES-1302).</li>
+			</ul>
+		</li>
+
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll) v1.0.18</h3>
+					<ul>
+						<li>Fix: Resolved a problem with TCP messaging to Pump Server that resulted in unnecessary delays. This fix makes API logon/connection and normal operations more responsive (ES-1260).</li>
+						<li>Added support for payment types for reinstate delivery and clear attendant delivery (EP-2475). </li>
+					</ul>
+				</li>
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.6.8</h3>
+					<ul>		
+						<li>Fix: Resolved a problem with TCP messaging to Pump Server that resulted in unnecessary delays. This fix makes API logon/connection and normal operations more responsive (ES-1260).</li>
+						<li>Fix: Workaround applied to ensure responses are received on Reinstate requests (ES-1269).</li>
+						<li>Added support for payment types for Attendant deliveries (EP-2475).</li> 
+					</ul>
+					</li>
+					<li><h3>EnbPumpX2 ActiveX Control (EnbPumpX2.ocx) v3.38.2 </h3>
+					<ul>
+						<li>Added support for payment types for attendant deliveries (EP-2475). </li>
+					</ul>
+					</li>
+	  				<li><h3>EnbAttendantX2 ActiveX Control (EnbAttendantX2.OCX) v4.1.1.0 </h3>
+	  				<ul> 
+						<li>Internal update - no functional changes.</li>
+						<li>Fix: Ignore unsupported block reasons when set block to an attendant (EP-2651).</li>
+	  				</ul>
+					</li>					
+				<li><h3>Enabler Java API (enabler-api-1.0.jar) v1.0.43.0</h3>
+					<ul>		
+						<li>Fix: Resolved a problem with TCP messaging to Pump Server that resulted in unnecessary delays. This fix makes API logon/connection and normal operations more responsive (ES-1260).</li>
+						<li>Fix: Corrected log time-stamp formatting (no functional change).</li>
+						<li>Fix: Resolved a thread problem caused by login failure (EP-2569).</li> 
+					</ul>
+				</li>				
+			</ul>
+		</li>
+		
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>.Net WPF Pump Demo (PumpDemoWPF.exe) v1.1.17</h3>
+					<ul>
+						<li>Fix: Updated to handle reserve timeout in legacy Prepay and Preauth dialogs.</li>
+						<li>Fix: Closes previous pump transaction stack windows when opening a new one.</li>
+						<li>Fix: Auto clears logging windows to minimize memory use (EP-2577).</li>
+  					</ul>
+				</li>
+				<li><h3>.Net WPF Controls (ITL.Enabler.WPFControls.dll) v1.0.18</h3>
+					<ul>
+						<li>TankControl now displays tank name in Details area when displaying to right or when set to display multiple tanks in one control (EP-1462).</li>
+  					</ul>
+				</li>
+				<li><h3>ITL MPP Simulator (mppsim.exe) v2.20.0.5</h3>
+					<ul>
+						<li>Added Fuel flow option to hang up the nozzle automatically 1 minute after delivery fuel flow is stopped by Enabler.</li>
+					</ul>
+				</li>
+ 				<li><h3>Java Pump Demo (pumpdemo.jar) v1.0.12</h3>
+					<ul>
+						<li>Invoke the logon dialog when a logon request fails.</li>
+					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler SDK reference v4.0.27 (EP-2475).</li>
+						<li>Enabler ActiveX Developers Reference v1.13 (EP-2475).</li>
+					</ul>
+				</li>	
+			</ul>
+		</li>
+		<li><h3>Documentation</h3>
+			<ul>
+				<li>Enabler Web Applications Reference Manual v1.32.</li>
+			</ul>
+		</li>
+	</ul>
+	
+	<!-- ************************************************************************** -->	
+
+	<h2>Enabler v4.4.0</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Attendants and Tag Controllers are now supported.</li>
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+			<ul>
+				<li>Corrected Att_Open_Meter_Volume field name in Attendant_History table (EP-2336).</li>
+			</ul>
+		</li>
+		
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web server (EnbWeb.exe) v1.1.1</h3>
+					<ul>
+						<li>Enabler Embedded platform specific fixes applied (EP-2369).</li>
+					</ul>
+				</li>
+				
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.3.0</h3>
+					<ul>
+						<li>Fix: the price profile page now prevents the active price profile being deleted if it has become active after the configuration page was loaded (EP-2384).</li>
+						<li>Fix: The blocking page now works correctly when browser back button used (EP-1968).</li>
+						<li>Fix: The Save Activation File Button on Activation page is now working as expected (EP-2642).</li>
+						<li>Fix: The Grade Prices page now correctly shows page options and data as expected in I.E and different Languages (EP-2483).</li>
+						<li>Added support for Attendant Configuration (EP-2321).</li>
+						<li>Added Attendant Totals Report (EP-2323).</li>
+						<li>Added support for Tag Controller Configuration (EP-2322).</li>
+						<li>Added support for Attendant Tags (EP-2352).</li>
+						<li>Added support for Attendant blocking on blocking and blocking status pages (EP-2343).</li>
+						<li>Added two new authorise modes in Site Modes page: Attendant Tag and External Tag (EP-2370).</li>
+						<li>Added condition that attendant logon ID must be unique (EP-2364).</li>
+						<li>Internal changes for Activation applied (EP-2508).</li>
+					</ul>
+				</li>
+				<li><h3>Language Resources (PageResources.dll) v1.3.0</h3>
+					<ul>
+						<li>Added resource strings for Attendant pages (EP-2321).</li>
+						<li>Added resource strings for Blocking pages (EP-2343).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>Pump Server (Psrvr4.exe) v4.1.2</h3>
+			<ul>
+				<li>Fix: Ensure transactions/deliveries are now assigned the correct Attendant ID for scenarios wherein an incomplete delivery was initiated by a previously logged on Attendant (EP-2340).</li>
+				<li>Fix: Resource leak on API connection (EP-2376, ES-1125).</li>
+				<li>Fix: If active price profile is not set will find most recent one (EP-2384).</li>
+				<li>Fix: Prevent system from being deactivated while system is running. License is no longer periodically checked if system is already activated on startup (EP-2377).</li>
+				<li>Fix: Enabler now sends authorisation to Pump when an attendant is unblocked (safedrop or manual unblock) after the nozzle is lifted (EP-2459).</li>
+				<li>Fix: Prevent Attendant error when a quick sequence of logon, logoff, ClosePeriod is executed (EP-2383).</li>
+				<li>Added support for new attendant block function (EP-2343).</li>
+				<li>Added support for Tag Controllers (EP-2333).</li>
+				<li>Added support for External Tag Authorisation (EP-2369).</li>
+			</ul>
+		</li>
+
+		<li><h3>Auto Support Utility (AutoSupport.exe) v2.3.0</h3>
+			<ul>
+				<li>Added Attendants and Tag Controllers information into support logs (EP-2325).</li>
+			</ul>
+		</li>	
+		
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.6.4</h3>
+					<ul>		
+						<li>Fix: Hose totals where not updated (ES-1135).</li>
+						<li>Fix: Mapped V4 Attendant block reasons to V3 Block reasons (ES-2497).</li>
+						<li>Added support for Attendant and Vehicle Tag read events (ES-2333).</li>
+					</ul>
+				</li>
+
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll) v1.0.16</h3>
+					<ul>
+						<li>Added new function for attendant object to set block with reasons (EP-2343).</li>
+						<li>Fix: COM Api returning the wrong type for all indexers on collections (EP-2328).
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>.Net WPF Pump Demo (PumpDemoWPF.exe) v1.1.16</h3>
+					<ul>
+						<li>Included image resource files required to compile (no other changes).</li>
+						<li>Updated Attendant dialog to support Closing a Period, Reconcile, Logon and Logoff site (EP-2333).</li>
+  					</ul>
+				</li>
+				<li><h3>ActiveX Pump Demo (PumpDemo.exe) v3.5.0.12</h3>
+					<ul>
+						<li>Attendant Logoff now logs off from a pump. Previously was logging of from the site (EP-2340).</li>
+						<li>Added support to Close and Reconcile an Attendant (EP-2366).</li>
+						<li>Added a trace of hose totals in the Pump Event log (ES-1135).</li>
+						<li>Added tracing of tag read events (EP-2333).</li>
+						<li>Applied code refactoring and testing changes for Terminal IDs (EP-2416).</li>
+						<li>Updated the Copyright in the About box.</li>
+  					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Updated Enabler SDK Reference v4.0.26 (EP-2363, EP-2356).</li>
+						<li>Enabler ActiveX Developers Reference v1.12.0.</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>Documentation</h3>
+			<ul>
+				<li>Enabler Web Applications Reference Manual v1.31.</li>
+			</ul>
+		</li>
+	</ul>
+
+	<!-- ************************************************************************** -->	
+
+	<h2>Enabler v4.3.4</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Windows 10 is now supported.</li>
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Enabler services now reliably start in Windows 10 (EP-2295).</li>
+				<li>Fix: Apple API will only be installed when the SDK option is checked (EP-2316)</li>
+			</ul>
+		</li>
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Host (EnbWeb.exe) v1.0.17</h3></li>
+				<ul>
+					<li>Internal update - no functional changes.</li>
+					<li>Added validation for Tank Gauge max number of tanks and maximum probe number (EP-2247).</li>
+				</ul>
+				<li><h3>Utilities (Utilities.dll) v1.4.4</h3>
+					<ul>
+						<li>Internal update - no functional changes.</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.2.26</h3>
+					<ul>
+						<li>Added validation for Tank Gauge max number of tanks and maximum probe number (EP-2247).</li>
+						<li>Update: Date Picker positions for both Delivery History and Fuel Transaction History page (EP-2238).</li>
+						<li>Fix: The Activation page now works correctly with Windows 10 Edge Browser (EP-2283).</li>
+					</ul>
+				</li>
+				<li><h3>Language Resources (PageResources.dll) v1.2.18</h3>
+					<ul>
+						<li>Added new resource string for maximum tanks assigned to a tank gauge validation (EP-2247).</li>
+						<li>Added new resource string for maximum price level types (EP-2252).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>Pump Server (Psrvr4.exe) v4.0.99</h3>
+			<ul>
+				<li>Fix: Pump server crash on IFSF when resending the last block (ES-973).</li>
+				<li>Fix: Transactions with an invalid state that can block the pump are no longer loaded on start up (ES-1055).</li>
+			</ul>
+		</li>
+		<li><h3>Auto Support Utility (AutoSupport.exe) v2.2.11</h3>
+			<ul>
+				<li>Fix: Resolved issue where the /A parameter (to collect all logs) did not work and resulted in almost no logs being collected (CR318-96).</li>
+				<li>Fix: Resolved issue on some systems where the Enabler logs were collected twice, causing the log collection taking longer than necessary (CR318-96).</li>
+			</ul>
+		</li>
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.6.2</h3>
+					<ul>
+						<li>Fix: Ensure .NET generated wrapper classes are case-compatible with V3 (ES-1005, EP-2311).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Java API (enabler-api-1.0.jar) v1.0.0.EnbBld41</h3>
+					<ul>
+						<li>Added new Authorise Reason External Tag (EP-2418).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>.Net WPF Pump Demo (PumpDemoWPF.exe) v1.1.15</h3>
+					<ul>
+						<li>Fix: Legacy Prepay Authorise now works when the pump is in the calling state, previously the hose would need to be hung-up and lifted again (EP-2259).</li>
+					</ul>
+				</li>
+
+				<li><h3>ActiveX Pump Demo (PumpDemo.exe) v3.5.0.5</h3>
+					<ul>
+						<li>Added option to show new style icons(ES-1055).</li>
+					</ul>
+				</li>
+
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler Embedded Getting Started Guide v1.8 (EP-2202, EP-2276).</li>
+						<li>Enabler ActiveX Developers Reference v1.12.0.</li>
+					</ul>
+				</li>
+
+			</ul>
+		</li>
+		<li><h3>Documentation</h3>
+			<ul>
+				<li>Updated Enabler Web Applications Reference Manual v1.30.</li>
+			</ul>
+		</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.3.3</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.2.24</h3>
+					<ul>
+						<li>Grade Price changes are now logged as journal events (EP-2245).</li>
+					</ul>
+				</li>
+				<li><h3>Utilities Web Pages (Utilities.dll) v1.4.3</h3>
+					<ul>
+						<li>Added new Grade Prices journal event type (EP-2245).</li>
+					</ul>
+				</li>
+				<li><h3>Language Resources (PageResources.dll) v1.2.17</h3>
+					<ul>
+						<li>Added and corrected some Chinese translation strings (EP-1973).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.3.2</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Host (EnbWeb.exe) v1.0.16</h3></li>
+				<ul>
+					<li>Fix: One character Site Names are now allowed (EP-2219, EP-883).</li>
+				</ul>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.2.23</h3>
+					<ul>
+						<li>Fix: Wet Stock Tank pages now defaults to correct view based on Gauge setup (EP-2226).</li>
+						<li>Fix: The width of Reports page (Fuel Transaction History, Delivery History, Pump Total and Tank Total) now will auto-adjusted based on the browser size (minimum is 800px) (EP-2220, EP-2223, EP-1974).</li>
+						<li>Added check box on Pump Totals page to determine whether test deliveries should be included in the Pump Report (EP-2222).</li>
+						<li>Added Hose number field into both Fuel Transactions and Delivery History reports (EP-2225).</li>
+						<li>Updated field name from <b>Time</b> to <b>Completed Time</b> on Delivery History page (EP-2224).</li>
+						<li>For clarity, added Start Date Time filter for Fuel Transaction History and Delivery History Report pages (EP-2221).</li>
+					</ul>
+				</li>
+				<li><h3>Language Resources (PageResources.dll) v1.2.16</h3>
+					<ul>
+						<li>Added new strings for the Report Pages.</li>
+					</ul>
+				</li>
+				<li><h3>Utilities (Utilities.dll) v1.4.1</h3>
+					<ul>
+						<li>Internal update - no functional changes.</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+	<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.3.1</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+		<li>Includes Pump Update 2015-11-10 - Refer to PumpUpdate Release Notes for details of the changes.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Updated database scripts (LOAD.SQL and ENABLER.SQL) to allow larger values for tank water volume to be stored, preventing database updates from disrupting site operation (ES-834).</li>
+				<li>Fix: Not all Pumps had their decimal formats converted when upgrading to V4 (ES-891).</li>
+				<li>Fix: Now adds a link to the V3 ActiveX Developers Reference' (EP-2204).</li>
+				<li>Fix: the installer now checks the file system before running to prevent incorrect file names been copied (EP-2172).</li>
+				<li>Updated to add start menu links for Embedded SDK 'Getting Started Guide', 'Site Installation Checklist' and 'REST API Reference' (EP-2204).</li>
+				<li>No longer install the obsolete 'Enabler Hardware Setup and Installation Manual'.</li>
+			</ul>
+		</li>
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.2.22</h3>
+					<ul>
+						<li>Fix: Ensure page controls are disabled when system is not activated (EP-2093).</li>
+						<li>Fix: Adding a hose to a pump when the grades have no tanks was causing an exception (EP-2159).</li>
+						<li>Fix: To simplify the new Grade Price Profile page, the Schedule Date Time field is now only displayed once a Grade has been selected (EP-2168).</li>
+						<li>Fix: Prevent invalid login errors and User page exception for users/roles created prior to Enabler v4.2.4 (EP-2165)</li>
+						<li>Fix: Tank Totals page no longer reports totals for deleted Tanks (EP-2158).</li>
+						<li>Fix: Prevent a browser refresh to re-activate a Site Mode on the Site Mode pages (EP-2207).</li>
+						<li>Added Grade Code on Grades page (EP-2199). </li>
+					</ul>
+				</li>		
+				<li><h3>Language Resources (PageResources.dll) v1.2.15</h3>
+					<ul>
+						<li>Added new message for when the grades don't have tanks and you are trying to add a hose (EP-2159).</li>
+						<li>Updated Thai language strings with new translations for many strings that were previously English only (EP-2203).</li>
+					</ul>
+				</li>
+				<li><h3>Styling and Images</h3>
+					<ul>
+						<li>Added styling to improve the usability and layout of print output. Content now uses full page width, and omits navigation and other elements not relevant for printed output (EP-2134).</li>
+						<li>Added styling for Save, Cancel, Logoff and Language buttons to make the application appearance more consistent. Also added styling for selection/focus to improve accessibility (EP-2136).</li>
+					</ul>
+				</li>
+				<li><h3>Javascript</h3>
+					<ul>
+						<li>Fix: Corrected hose grade and tank mapping in Pumps page (EP-2139, ES-858).</li>
+					</ul>
+				</li>
+				<li><h3>Padarn Web Server (OPENNETCF) v1.5.15265.0</h3>
+					<ul>
+						<li>Fix: Directory Traversal Attacks are now prevented (EP-2126).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>Pump Server (psrvr4.exe) v4.0.96</h3>
+			<ul>
+				<li>Fix: Prevent Pump Server crash caused by Reserve timeout expiring (EP-2194).</li>
+				<li>Changed the behaviour so that Authorisation and Reserve timeouts will not automatically clear the transaction when the Reserve ClearIfZero flag is false (ES-845).</li>
+			</ul>
+		</li>
+
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.6.0</h3>
+					<ul>
+						<li>Fix: PriceLevels on Delivery objects are now correctly reported (EP-2148, ES-867).</li>
+						<li>Added option to support preserving Pump reserves and Delivery locks after Client application disconnect and log on (ES-892).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Java API (enabler-api-1.0.jar) v1.0.0.EnbBld40</h3>
+					<ul>
+						<li>Fix: FuelTransaction reserved, authorised and completed date times are now correctly reported (ES-845).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li><h3>Utilities</h3>
+		<ul>
+			<li><h3>Backup script (Nightly.bat)</h3>
+				<ul>
+					<li>Fix: <tt>Nightly.bat</tt> and <tt>DBInstall.bat</tt> now can create scheduled task for Windows 8 and above versions (EP-2176).</li>
+				</ul>
+			</li>
+		</ul>
+
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>ActiveX Pump Demo (pumpdemo.exe) v3.5.0.4</h3>
+					<ul>
+						<li>Trace log for Delivery now includes the PriceLevel (EP-2148, ES-867).</li>
+						<li>Pump Reserves and Delivery locks are now preserved after disconnect and log on (ES-892).</li>
+					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Updated Enabler SDK Reference v4.0.24 (ES-845)</li>
+						<li>Updated Enabler ActiveX Developers Reference v1.10.0 (ES-892)</li>
+						<li>Updated Enabler Site Installation Checklist v2.0 (EP-2204)</li>
+						<li>Added Enabler Embedded Getting Started Guide v1.6 (EP-2204)</li>
+						<li>Added Enabler Embedded Site Installation Checklist (EP-2204)</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>Documentation</h3>
+			<ul>
+				<li>Updated Enabler Web Applications Reference Manual v1.28</li>
+			</ul>
+		</li>
+	</ul>
+
+	<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.3.0</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.2.20</h3>
+					<ul>
+						<li>Fix: Optimisation of the Grade Prices page to improve performance (EP-1555).</li>
+						<li>Fix: Blocking Overview now shows hose blocked automatically when Automatic Tank Gauge indicates "Low Alarm" or "Delivery in progress" (EP-1194).</li>
+					</ul>
+				</li>
+				<li><h3>Utilities (Utilities.dll) v1.3.3</h3>
+					<ul>
+						<li>Internal update - no functional changes.</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>Enabler iOS API (EnablerApi.framework) v1.0</h3>
+					<ul>		
+						<li>Added iOS API to support iOS devices.</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Added iOS API documentation v1.0.</li>
+					</ul>
+				</li>
+				<li><h3>iOS Sample Application (Enabler Pump Manager) v1.0.0</h3>
+					<ul>
+						<li>Added iOS project to show the usage of the Enabler iOS API.</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>Documentation</h3>
+			<ul>
+				<li>Enabler Web Applications Reference Manual v1.26</li>
+			</ul>
+		</li>
+	</ul>
+	
+	<!-- ************************************************************************** -->
+	
+	<h2>Enabler v4.2.11</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+
+		<li><h3>Pump Server (psrvr4.exe) v4.0.93</h3>
+			<ul>
+				<li>Fix: Allow Attendants to log off if there is an incomplete current transaction present (ES-805).</li>
+			</ul>
+		</li>
+	</ul>
+
+	<!-- ************************************************************************** -->	
+	
+	<h2>Enabler v4.2.10</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Pump Server (psrvr4.exe) v4.0.92</h3>
+			<ul>
+				<li>Fix: Prevent transactions with zero deliveries from re-appearing. These are now cleared when reloaded (ES-777).</li>
+			</ul>
+		</li>		
+		
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.5.5</h3>
+					<ul>		
+						<li>Fix: Added extra checks on command sequences, reduced and tidied up logging (ES-786).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+
+	</ul>
+
+	<!-- ************************************************************************** -->
+	
+	<h2>Enabler v4.2.9</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Changed Database Stored Procedure processing (LOAD.SQL) to close Report Period totals, previously this processing could timeout on slow systems (EP-2071).</li>
+			</ul>
+		</li>
+		
+		<li><h3>Pump Server (psrvr4.exe) v4.0.91</h3>
+			<ul>
+				<li>No functional change - Internal changes.</li>
+			</ul>
+		</li>
+		
+		<li><h3>API</h3>
+			<ul>
+				<li>
+					<h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.5.4</h3>
+					<ul>		
+						<li>Fix: Prevent runtime error in EnbSessionX2 when disconnecting from Enabler; i.e. during on session logoff (EP-2079).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>ActiveX Pump Demo (pumpdemo.exe) v3.5.0.2</h3>
+					<ul>
+						<li>Rebuild with updated library code - no functional changes.</li>
+					</ul>
+				</li>
+				<li><h3>Java Pump Demo (pumpdemo.jar) v1.0.11</h3>
+					<ul>
+						<li>Added Reinstate and Lock button to Transation detail dialog (EP-2014).</li>
+					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Updated the Enabler SDK Reference v4.0.23 now includes a new section on the XML API (EP-1910).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+	<!-- ************************************************************************** -->
+	
+	<h2>Enabler v4.2.8</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+		<li>Now includes Pump Update 2015-07-01 (See PumpUpdate.htm for details).</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Changed database script so that the Stack Size in Pump Profile is not reset to 2 on install/upgrades (ES-750).</li>
+			</ul>
+		</li>
+		
+		<li><h3>Pump Server (psrvr4.exe) v4.0.90</h3>
+			<ul>
+				<li>Fix: Authorisation now works when nozzle is lifted and a stacked delivery is cleared for a pump with its stack full (EP-1989).</li>
+				<li>Fix: Authorisation now works when nozzle is lifted and an Attendant logs on to the Pump (EP-1441).</li>
+				<li>Fix: AllStop from a V3 client now stops and blocks delivering pumps (EP-1969).</li> 
+				<li>Fix: Reinstates now conditionally allowed even if delivery stack is full. Applicable only when not restricted by the locale's Weights &amp; Measure regulations (EP-2010).</li> 
+				<li>Added more flexibility on setting Client References on Reserve and Authorise (EP-1988).</li> 
+				<li>Added a new Reinstate and Lock api method to allow Transaction to be Reinstated and locked in one call (EP-2014).</li> 
+			</ul>
+		</li>
+		
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.2.18</h3>
+					<ul>
+						<li>Fix: The list of items are sorted by number in: Grades, Grade Prices, Site Modes, Tank Gauge, WetStock Tank Data, WetStock Pump Data, User Roles pages (EP-2004).</li>
+						<li>Changes to resolve a problem on Enabler Embedded - no functional change.</li>
+						<li>Fix: Resolved JavaScript errors on the Pump configuration page (EP-2053, EP-2062, ES-748).</li>
+					</ul>
+				</li>
+				<li><h3>Images</h3>
+					<ul>
+						<li>Added image of Indonesia flag to indicate selected language.</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+	   <li><h3>API</h3>
+			<ul>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll) v1.0.14</h3>
+					<ul>
+						<li>Fix: Prevent command timeouts during a login (EP-2005).</li>
+						<li>Fix: Prevent error 6 when connecting. This may occur when multiple forecourts objects are connecting (EP-1993).</li>
+						<li>Added the new ReinstateAndLock method to Transaction object (EP-2014).</li>
+						<li>Added the new ReinstateAndLock method to COM API Transaction object(EP-2014).</li>
+					</ul>
+				</li>
+				
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.5.3</h3>
+					<ul>		
+		         			<li>Fix: Delivering pumps that were stopped and blocked can now resume delivery when re-authorised from a V3 client (EP-1969).</li>
+						<li>Fix: Increased time out for detection of network errors and now returns error 29 when network error on command (EP-2049).</li>
+						<li>Fix: Prevent deliveries from being cleared twice. This may happen if client disconnects while a delivery is being processed for sale (EP-2056).</li>
+		         			<li>Client references can now be passed on Pump.AuthorisePrepay using the legacy reserved parameter (EP-1988).</li>
+						<li>Added the new ReinsateDeliveryAndLock method on Pump object (EP-2014).</li>
+					</ul>
+				</li>
+				<li><h3>EnbPumpX2 ActiveX Control (EnbPumpX2.ocx) v3.38.1</h3>
+				<ul>
+					<li>Client references can now be passed on Pump.AuthorisePrepay using the legacy reserved parameter (EP-1988).</li>
+					<li>Added the new ReinsateDeliveryAndLock method on Pump object (EP-2014).</li>
+				</ul>
+				</li>
+			</ul>
+		</li>
+
+		<li><h3>SDK</h3>
+			<ul>
+  				<li><h3>WPF Pump Demo (PumpDemoWPF.exe) v1.1.14</h3>
+					<ul>
+						<li>Dialog added for Reserve parameters when pump is reserved (EP-1988).</li>
+						<li>Added Reinstate and Lock button on Transaction dialog(EP-2014).</li>
+					</ul>
+				</li>
+ 				<li><h3>ActiveX Pump Demo (pumpdemo.exe) v3.5.0.1</h3>
+					<ul>
+						<li>Input for Client reference added to Prepay dialog (EP-1988).</li>	
+						<li>Added Reinstate and Lock check box on Reinstate dialog(EP-2014).</li>
+  					</ul>
+				</li>    
+				<li><h3>Sample COM Application (SampleCom.exe) v1.6.0.3</h3>
+					<ul>
+						<li>Added Reinstate and Lock button to Transaction form(EP-2014).</li>
+					</ul>
+				</li>
+				
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler ActiveX Developers Reference v1.9.8 (EP-1988)</li>
+						<li>Enabler SDK Reference v4.0.21 (EP-1988)</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	
+	<!-- ************************************************************************** -->	
+	<h2>Enabler v4.2.7</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		<li><h3>Enabler Web Pages</h3>
+			<ul>
+				<li>Fix: corrected the logic used to get the grade and tank names to display in the Pump Hose configuration screen (EP-1972). Previously incorrect tank and grade names were displayed when unused tanks or grades had been deleted.</li>
+			</ul>
+		</li>
+		<li><h3>Pump Server (psrvr4.exe) v4.0.88</h3>
+			<ul>
+				<li>Fix: If a large number of attendants the API connection would fail (EP-1975).</li>
+				<li>Fix: Single API data request returned the sequenceNumber element as RequestSequenceNumber (EP-1936).</li>
+			</ul>
+		</li>
+		<li><h3>Auto Support Utility (AutoSupport.exe) v2.2.10</h3>
+			<ul>
+				<li>Fix: improved log messages - now clearly indicate registry key name when attempting to read a key that does not exist.</li>
+			</ul>
+		</li>
+	</ul>
+	
+	<!-- ************************************************************************** -->	
+	<h2>Enabler v4.2.6</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Updated Wet Stock Management Start Menu link to Wetstock Tank Data Page (EP-1927).</li>
+				<li>Fix: Correct any duplicate grade or tank numbers in database when upgrading database (EP-1929).</li>
+				<li>Fix: Environment not set correctly on 32bit OS causing nightly backup to fail (EP-1945).</li>
+			</ul>
+		</li>
+		<li><h3>Pump Server (psrvr4.exe) v4.0.87</h3>
+			<ul>
+				<li>Fix: Pump block status now correctly shown in ActiveX Pump Control after Pump Server restarts (EP-1911).</li>
+			</ul>
+		</li>
+		<li><h3>Enabler Web Pages (WebPages.dll) v1.2.17</h3>
+			<ul>
+				<li>Updated maximum range of Attendant Keep Days to 1000 from 99 days (EP-1926).</li>
+				<li>After a successful login,&nbsp; opening the website URL without a page specified will now redirect to the default page (EP-1913). </li>
+			</ul>
+		</li>
+		<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.4.19</h3>
+			<ul>
+				<li>Fix: Prevent exceptions/crashes when duplicate grade numbers are setup in database (EP-1929).</li>
+			</ul>
+		</li>
+
+		<li><h3>Utilities</h3>
+		<ul>
+			<li><h3>Atutil (Atutil.exe) v1.5.0</h3>
+				<ul>
+					<li>Added extra option to purge all scheduled jobs from system (EP-1945).</li>
+				</ul>
+			</li>
+			<li><h3>Backup script (Nightly.bat)</h3>
+				<ul>
+					<li>Fix: Corrected problem where unexpected extra backup scheduled jobs where created. This caused system slow downs and on some cases resulting in backup failure (EP-1945).</li>
+					<li>Fix: Corrected script abort if Enabler environment not set (EP-1945).</li>
+				</ul>
+			</li>
+		</ul>
+		<li><h3>Documentation</h3>
+			<ul>
+				<li>Installation Instructions</li>
+				<li>Enabler Web Applications Reference Manual v1.24</li>
+			</ul>
+		</li>
+	</ul>
+	
+	<!-- ************************************************************************** -->
+	
+	<h2>Enabler v4.2.5</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		<li><h3>Pump Server (psrvr4.exe) v4.0.86</h3>
+			<ul>
+				<li>Fix: Pump block not updating the database (EP-1886).</li>
+				<li>Fix: Removed duplicated GradeData ID in XML messaging (EP-1889).</li>
+				<li>Added activation grace period enhancements requested by our customers (EP-1900).</li>
+			</ul>
+		</li>
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>Sample COM Application (SampleCom.exe) v1.6.0.2</h3>
+					<ul>
+						<li>Grade Price Change Events are now logged (EP-1880).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	
+	<!-- ************************************************************************** -->
+	
+	<h2>Enabler v4.2.4</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Host (EnbWeb.exe) v1.0.14</h3></li>
+				<ul>
+					<li>Internal updates applied for handling invalid activation files (EP-1821).</li>
+				</ul>
+			</ul>
+		</li>
+		<li><h3>Enabler Web Pages (WebPages.dll) v1.2.16</h3>
+			<ul>
+				<li>Fix: Corrected validation for out of range Capacity and Diameter values in Tank Configuration page (EP-1778).</li>
+				<li>Fix: Site Modes page throws exception when Site_ID is different than 1 (EP-1786).</li>
+				<li>Fix: Grade Prices exception when there are more Grade Price Levels than defined Grade Prices in database (EP-809, EP-1786).</li>
+				<li>Fix: Corrected validation for blank spaces in Grades description in Grades page (EP-1679).</li>
+				<li>Fix: Ensure that new Role page displays correctly when clicking the Add New Role button (EP-1862).</li>
+				<li>Updated Activation page to display more clear and informative response messages (EP-1782).</li>
+				<li>Added new Site Mode Change page and the corresponding role access for it (EP-1735).</li>
+				<li>Changed to use cookies for session information if available (EP-1783).</li>
+			</ul>
+		</li>
+		
+		<li><h3>Pump Server (psrvr4.exe) v4.0.85</h3>
+			<ul>
+				<li>Fix: Added check that the totals from pump are not larger than what is supported by database (EP-1809).</li>
+				<li>Fix:  Authorisation timeout wasn't being handled when an invalid hose selected (EP-1815).</li>
+				<li>Fix: Grade allocation limit override is now reset correctly on delivery completion (EP-1822).</li>
+				<li>Added option to generate Offline Deliveries instead of meter forward events. Refer to the value of <b>LOG_OFFLINE</b> on <a href="http://integration.co.nz/FAQ-AdvancedSettings.htm">Advanced Setting page</a> (EP-1805).</li>
+				<li>Added option for legacy V3 Prepay and Preauth to be used via V4 API (EP-1797).</li>
+			</ul>
+		</li>
+		
+		<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.4.18</h3>
+			<ul>
+				<li>Fix: Price level changing via API now works (EP-1792).</li>	
+			</ul>
+		</li>
+		
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Updated purging stored procedure to delete hose deliveries based on start of purge (EP-1791).</li>
+			</ul>
+		</li>
+		
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll) v1.0.13</h3>
+					<ul>
+						<li>Added the option of specifying legacy V3 Prepay and Preauth via Reserve method (EP-1797).</li>
+						<li>Added the <b>ReservedType</b> property to the TransactionHistory object (EP-1797).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Java API (enabler-api-1.0.jar) v1.0.0.EnbBld38</h3>
+					<ul>
+						<li>Added the option of specifying legacy V3 Prepay and Preauth via Reserve method (EP-1797).</li>
+						<li>Added the <b>ReservedType</b> property to the TransactionHistory object (EP-1797).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler WPF Controls (ITL.Enabler.WPFControls.dll) v1.0.17</h3>
+					<ul>
+						<li>Added the display of legacy Prepay and Preauth background images during a legacy transaction (EP-1797).</li>
+						<li>Fix: Pump icon pending price colour changed to grey (EP-1382).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>WPF Pump Demo (PumpDemoWPF.exe) v1.1.12</h3>
+					<ul>
+						<li>Updated to support legacy prepay and preauth functions. This requires Enabler .Net API v1.0.13 and Pump Server v4.0.85 (EP-1820).</li>
+						<li>Updated to recover from a restart of pump server or PumpDsemo WPF closed when doing a prepay (EP-1830, EP-1847, EP-1848).</li>
+					</ul>
+				</li>
+				<li><h3>Java Pump Demo (pumpdemo.jar) v1.0.10</h3>
+					<ul>
+						<li>Updated to support legacy prepay and preauth functions. This requires Pump Server v4.0.85  (EP-1799).</li>
+					</ul>
+				</li>
+				<li><h3>ActiveX Pump Demo (pumpdemo.exe) v3.4.0.4</h3>
+					<ul>
+						<li>Updated to recover from a restart of pump server  when doing a prepay (EP-1830).</li>
+					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler SDK Reference v4.0.20</li>
+					</ul>
+				</li>
+				<li><h3>ITL MPP Simulator (mppsim.exe) v2.20.0.4 </h3>
+					<ul>
+						<li>Fix: Unexpected 100L offline deliveries being logged (EP-1841)</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>Documentation</h3>
+			<ul>
+				<li>Enabler Web Applications Reference Manual v1.23</li>
+			</ul>
+		</li>
+	</ul>
+	
+	<!-- ************************************************************************** -->
+	
+	<h2>Enabler v4.2.3</h2>
+	<h3>Summary</h3>
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3>
+	<ul class="spacedlist">
+
+		<li><h3>Enabler Web Applications</h3>
+		<ul>
+			<li><h3>Enabler Web Host (EnbWeb.exe) v1.0.13</h3></li>
+				<ul>
+					<li>Internal updates applied on the data module relating to tank movements (EP-1770).</li>
+				</ul>
+			<li><h3>Enabler Web Pages (WebPages.dll) v1.2.14</h3>
+				<ul>
+						<li>Fix: Grades page now matches the V3 default post mix ratios for Variable blending grades (EP-1769).</li>
+						<li>Fix: Fuel Reconciliation Tank Delivery page now correctly saves Delivery Note Number.  Also, Delivery Note Number is now shown instead of Original Invoice Number in Tank Delivery summary (EP-1771).</li>
+						<li>Fix: Fuel Reconciliation Approve For Export now works with CV Periods extra column (EP-1776).</li>
+						<li>Fix: Fuel Reconciliation page now show the correct periods to be exported (EP-1785).</li>
+						<li>Fuel Reconciliation Tank Movement pages have the following changes (EP-1775, EP-1770):</li>
+						<ol>
+							<li>Validation of entered Date/Time is within the corresponding period.</li>
+							<li>Volume validation of entered volumes.</li>
+							<li>Numeric validation for the Delivery Note Number field.</li>
+							<li>Test Transfer page allows transfer from the same tank.</li>
+							<li>Tank Delivery page has Calculated variance section.</li>
+						</ol>
+						<li>Fix: Site Monitor / Tank Gauge display to render product level properly even if tank levels are beyond tank capacity (EP-1777).</li>
+						<li>Updated Fuel Reconciliation page to support additional Export Types (see the <tt>Recon_Export_Type</tt> field in the <tt>Global_Settings</tt> table) (EP-1779).</li>
+					</ul>
+			</li>
+		</ul>
+		</li>
+		
+		<li><h3>Pump Server (psrvr4.exe) v4.0.82</h3>
+			<ul>
+				<li>Fix: Attendant initial float required was not always correct on Attendant ActiveX control (EP-1773).</li>
+			</ul>
+		</li>
+		
+		<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.4.17</h3>
+			<ul>
+				<li>Fix: Attendant initial float required was not always correct on Attendant ActiveX control (EP-1773).</li>
+			</ul>
+		</li>
+		
+  		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler Web Applications Reference Manual v1.22</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	
+
+	<!-- ************************************************************************** -->	
+	<h2>Enabler v4.2.2</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: Windows 8 and 8.1 Start menu links are now working (EP-1707).</li>
+				<li>Fix: Pump decimal settings are now migrated correctly from v3 to v4 (EP-1724).</li>
+				<li>Fix: Site profile settings are now migrated correctly from V3 to V4 (EP-1730).</li>
+			</ul>
+		</li>
+		
+		<li><h3>Pump Server (psrvr4.exe) v4.0.81</h3>
+			<ul>
+				<li>Fix: Blended data not being sent to client when a post mix ratio of zero was used (EP-1628).</li>
+				<li>Fix: No longer sends all journal events to clients, only events flagged to display (EP-1660).</li>
+				<li>Fix: Zero transactions could cause a database error in some configurations (EP-1662).</li>
+				<li>Fix: Updated to provide a more graceful end to forecourt operation if time limited software license expires (EP-1753).</li>
+			</ul>
+		</li>
+		
+		
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Host(EnbWeb.exe) v1.0.12</h3>
+					<ul>
+						<li>Various internal updates applied on the activation module.</li>
+					</ul>
+				</li>
+				
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.2.13</h3>
+					<ul>
+						<li>Fix: Blending decimals are now hidden in the Features &amp; Options page when Auto post-mix grade prices is ON (EP-1596).</li>
+						<li>Fix: Setting up blending hoses in Pumps page now works - previously saving a pump setup with a blended hose caused a runtime error (EP-1595).</li>
+						<li>Fix: Grade configuration now only allows base grades to be selected when configuring a blended grade. This prevents runtime errors that occur with an invalid configuration (EP-1615).</li>
+						<li>Fix: Profile Based Price Levels checkbox now correctly shows up in Features &amp; Options page when there are multiple price levels setup (EP-1627).</li>
+						<li>Fix: Fuel Reconciliation Page now checks the Fuel Reconciliation options from the Features &amp; Options page to determine what data entry is required (EP-1625).</li>
+						<li>Fix: Fuel Reconciliation - Opening Stock Level Page : ATG values are now updated only for online tank gauges (EP-1671).</li>
+						<li>Fix: Pump Settings page now checks availability of Tag setting before displaying connection settings (EP-1619). </li>
+						<li>Fix: Wetstock Tank Data and Wetstock Pump Data pages no longer display exceptions when no pumps and tanks are installed (EP-1650).</li>
+						<li>Fix: Improved validation of Fuel Reconciliation Dips page for Opening Stock Levels and Closing Dips (EP-1642).</li>
+						<li>Fix: Fixed error handling of incorrect data entered in Fuel Reconciliation Tank Movements pages (Tank Drops, Tank Losses, Tank Transfers) (EP-1655).</li>
+						<li>Fix: Corrected computation of BookStock data column for Blended hoses in the WetStock Tank Data page (EP-1663).</li>
+						<li>Fix: Report button in Fuel Reconciliation page now always available for approved for export periods (EP-1684).</li>
+						<li>Fix: At fuel Reconciliation page has Tanks Movements, Dips and Pump Meter buttons not being displayed for exported periods (EP-1670).</li>
+						<li>Fix: Features &amp; Options has Tank Drop checkbox renamed Tank Movements as in V3 (EP-1670).</li>
+						<li>Fix: Tank Movements pages has Doc Ref column renamed Original Invoice Number instead (EP-1667).</li>
+						<li>Fix: Removed Data Entry checkbox and save button at Opening stock level, renamed cancel button return (EP-1683).</li>
+						<li>Fix: Corrected computation of Difference column for Tank Totals page (EP-1678).</li>
+						<li>Fix: Database connection errors are now posted in the Windows Event Logs (EP-1692).</li>
+						<li>Fix: Prevent timeout exception on Delivery History page if there are large number of transactions (EP-1734).</li>
+						<li>Fix: Wet Stock Tank Data and Wet Stock Pump Data pages are now accessible for users with Fuel Reconciliation Operation access (EP-1739).</li>
+						<li>Added <b>Manual ATG Sensor</b> in the Dip Type dropdown for the Fuel Reconciliation Tank Dips page (EP-1646).</li>
+						<li>Updated Fuel Reconciliation page to run the old Detailed Fuel Reconciliation Report based on the database configuration (see the <tt>Recon_Report_Format</tt> field in the <tt>Global_Settings</tt> table) (EP-1626).</li>
+						<li>Grade PostMix prices can now be viewed in the Grade Prices and Grade Price Profile Pages even if Auto-PostMix blending is ON (EP-1597).</li>
+						<li>Added client-side (JavaScript) validation of Customer Code (Integrator Code) entered in the Activation page, in order to give users feedback if they incorrectly enter their customer code (EP-1610).</li>
+						<li>Added Spanish and Chinese translations for a number of previously untranslated strings.</li>
+						<li>Updated menu logic so the Activation menu and alerts are only displayed on systems where this is required (EP-1613).</li>
+						<li>Added Cancel buttons to Fuel Reconciliation related pages that were missing (EP-1645).</li>
+						<li>Added new column for <b>Fuel Reconciliation -> Approve For Export</b> page to indicate Export status (EP-1682).</li>
+						<li>Updated CSS stylesheets to conform with updated ITL branding guidelines (EP-1675).</li>
+						<li>Updated Fuel Reconciliation page to show Approve For Export button based on Export Type (see the <tt>Recon_Export_Type</tt> field in the <tt>Global_Settings</tt> table) (EP-1729).</li>
+						<li>Updated Fuel Reconciliation page to send notifications to all clients after exported request has been processed (EP-1729).</li>
+					</ul>
+				</li>
+			</ul>			
+		</li>
+		
+		<li><h3>Enabler Client Utility (EnbClient.exe) v1.1.7.0</h3>
+			<ul>
+				<li>Added warning message for Windows 8 and 8.1, hostname <b>127.0.0.1</b> has problem with the start links (EP-1707).</li>
+			</ul>
+			
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll) v1.0.12</h3>
+					<ul>
+						<li>Fix: Prevent a .NET exception that can happen when a client application disconnects from Pump Server, or when a client connects using incorrect terminal credentials (EP-1629, EP-1632).</li>
+					</ul>
+				</li>
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.4.16</h3>
+					<ul>
+						<li>Fix: Wrong figures were returned for blended deliveries when using GetPostMixSummary (EP-1628).</li>
+						<li>Fix: Clients running under non-Administrator Windows accounts can now connect to remote servers (EP-1740).</li>
+					</ul>
+				</li>
+				<li><h3>EnbPumpX2 ActiveX Control (EnbPumpX2.ocx) v3.37.2</h3>
+					<ul>
+						<li>Updated the icons displayed on the pump pop-up dialogue to suit the newer pump icons added in the previous change. The new visual style can be selected using the <tt>IconStyle</tt> property - refer to the Enabler ActiveX Developers reference for details.</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>VB6 Pump Demo sample v3.4.3</h3>
+					<ul>
+						<li>Now shows blended delivery details in trace window when available (EP-1628).</li>
+  					</ul>
+				</li>   
+				<li><h3>ITL MPP Simulator (mppsim.exe) v2.20.0.2 </h3> <!-- was v2.19.0.0 -->
+					<ul>
+						<li>Fix: no longer permit delivery on a hose with zero prices (EP-1170).</li>
+						<li>Fix: another change to ensure the default operation mode is Console - previously versions defaulted to Automatic mode (to switch from console to standalone) which caused some confusion (ES-221).</li>
+					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler Web Applications Reference Manual v1.21</li>
+						<li>Enabler ActiveX Developers Reference v1.9.6</li>
+					</ul>
+				</li>
+		       		
+			</ul>
+		</li>
+	</ul>		
+	
+	
+	<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.2.1</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">	
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+			<ul>
+				<li>Windows 8.1 / Windows 8 / Windows Server 2012R2 platform supported. Refer to the latest <b>Installation Instructions</b> (EP-1111, EP-1398).</li>
+				<li>SQL 2012 Server Express SP1 installation now included. Refer to the latest <b>Installation Instructions</b> (EP-793).</li>
+				<li>Fix: Now always installs user documentation, previously this was only included for SDK installs (EP-1492).</li>
+				<li>Fix: Changed the logic used to decide when to run tasks at the end of the installation. The previous logic prevented web browser being opened on client installs (EP-1491).</li>
+				<li>Fix: Client install with SDK option checked installs the ITL pump simulator (MPPSIM.exe) (EP-1486).</li>
+			</ul>
+		</li>
+		
+		<li><h3>Pump Server (psrvr4.exe) v4.0.76</h3>
+			<ul>
+				<li>Fix: Better handling of extra deliveries during a Prepay refund (EP-1483).</li>
+				<li>Fix: Corrected a problem where clients couldn't connect if there where large 
+					numbers of stacked Transactions (EP-1511).</li>
+			</ul>
+		</li>
+ 
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Host(EnbWeb.exe) v1.0.11</h3>
+					<ul>
+						<li>Fix: Increased the time it waits for Pump Server after a restart to prevent the display of misleading errors (EP-1406).</li>
+						<li>Fix: Ports page no longer displays unwanted error messages on successful saves or PSRVR restarts (EP-1519).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.2.12</h3>
+					<ul>
+						<!-- Embedded changes not applicable for Desktop V4
+						     <li>Update: Support for Embedded : Modified UPTime field id to SystemUPTime to keep it compatible with Desktop version.</li>
+						<li>Update: Support for Embedded : Added CurrEmbPortProtocolCount member to store count of pump and tank protocols we normally support on the Enabler Embedded port.</li>
+						<li>Update: Support for Embedded : Added a new member TankEventsComboEmb for embedded targets.</li> 
+						-->
+						<li>Update: internal changes for automated testing - no functional changes.</li>
+						<li>Fix: Auto Stacking filed will be hidden when Stacking field set to Use Site Mode Setting for a Pump profile (EP-1455).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>Enabler Client Utility (EnbClient.exe) v1.1.5.0</h3>
+		<ul>
+			<li>Fix: corrected update processing for Start Menu shortcut links to remote servers. Now uses the Enabler Web port number correctly (EP-1592).</li>
+			<li>Updated command-line usage instructions to make them clearer and more specific, and to better document defaults.</li>
+			<li>Added a range of validation checking to ensure the host name and port entered are valid (a URL is not a valid hostname).</li>
+		</ul>
+		
+		<li><h3>API</h3></li>
+			<ul>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll) v1.0.11</h3>
+					<ul>
+						<li>Fix: the API was returning the misleading "Terminal ID in Use" error when connecting, after previously disconnecting from pump server. The API now logs a clear disconnect message and releases the log file to prevent subsequent login failure (EP-1538).</li>
+					</ul>
+				</li>
+				<li><h3>EnbPumpX2 ActiveX Control (EnbPumpX2.ocx) v3.37.1</h3>
+					<ul>
+						<li>Updated with new text colours and bitmaps to provide an optional fresh new appearance. The new visual style can be selected using the <tt>IconStyle</tt> property - refer to the ActiveX reference for details (CA-287).</li>
+					</ul>
+				</li>
+			</ul>
+			
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>VB6 Pump Demo sample v3.4.2</h3>
+					<ul>
+						<li>Fix: resolved a runtime error which happens when a reinstated delivery is cleared from the sale window (EP-1466).</li>
+  					</ul>
+				</li>
+				<li><h3>Sample COM Application (SampleCom.exe) v1.6.0.1</h3>
+					<ul>
+						<li>Fix: Site Profile and Attendants functionality now working (EP-1450, EP-1451).</li>
+					</ul>
+				</li>
+				<li><h3>ITL MPP Simulator (mppsim.exe) v2.19.0.0 </h3>
+					<ul>
+						<li>Added new ITL Logo.</li>
+						<li>Changed default authorisation mode to Console - previously defaulted to Automatic mode (to switch from console to standalone) which caused some confusion (ES-221).</li>
+						<li>Added logic to detect and recover from port removal and reconnection - can improve reliability when using USB/Serial interfaces (ES-221).</li>
+					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler Web Applications Reference Manual v1.17</li>
+						<li>Enabler SDK Reference v4.0.18</li>
+						<li>Enabler ActiveX Developers Reference v1.9.5</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	
+	<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.2.0</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">	
+		<li>First Enabler V4 GA (General Availability) release.</li>
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.2.11</h3>
+					<ul>
+						<li>Update: Australian NMI : SiteSettings page now hides 'Attendant/Monitor Delivery Timeout' and 'Attendant Keep Days' options (EP -1439).</li>
+						<li>Update: Australian NMI : Features & Options page now hides the complete Attendant section when Attendant option has been disabled for the site. (EP -1439).</li>
+						<li>Fix: Pump Profile data now updated when being edited. Also Pump drop down list is now correct based on existing Pump Profiles available (EP-1363).</li>
+						<li>Fix: Site Mode Valid Days have now been correctly mapped (EP-1438).</li>	
+						<li>Fix: Hide Maximum Stacked Size filed when Stacking field is set to Use Site Mode Setting (EP-1423).</li>				
+					</ul>
+				</li>
+				<li><h3>Enabler Web Host (EnbWeb.exe) v1.0.9</h3>
+					<ul>
+						<li>Internal update to license management (EP-1397).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		
+		<li><h3>Pump Server (psrvr4.exe) v4.0.73</h3>
+			<ul>
+				<li>Internal update to license management (EP-1397).</li>
+				<li>Fix: Pump profile Max stack size is now used (EP-1364).</li>
+				<li>Fix: Prevent event messages being overwritten under heavy load. This was causing message exceptions thrown in the client (EP-1437).</li>
+			</ul>
+		</li>
+		
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>Enabler Java API (enabler-api-1.0.jar) v1.0.0.EnbBld37</h3>
+					<ul>
+						<li>Fix: Added Max stack size to API Profiles (EP-1443).</li>
+						<li>Fix: Added result code and removed local check on Reinstate (EP-1389).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll) v1.0.10</h3>
+					<ul>
+						<li>Fix: Added Max stack size to Site and Pump profiles (EP-1364).</li>
+						<li>Fix: Improved management of event message queue under heavy load (EP-1437).</li>
+					</ul>
+				</li>
+		<li><h3>EnbPumpX2 ActiveX Control (EnbPumpX2.ocx) v3.36.3</h3>
+			<ul>
+				<li>Fix: Legacy PumpDemo Set Caption Text button now works (EP-1380).</li>
+			</ul>
+		</li>
+		
+		
+			</ul>
+		</li>
+		
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>Java Pump Demo (pumpdemo.jar) v1.0.8</h3>
+					<ul>
+						<li>Update: Added comment for ForecourtServerPower event to include Battery and Power states.</li>	
+						<li>Update: Enhanced logging to include maximum stack size for current site profile and pump profiles (EP-1443).</li>
+  					</ul>
+				</li>    
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler Web Applications Reference Manual v1.15</li>				
+						<li>Enabler SDK Reference v4.0.17</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.1.20</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">	
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		<li><h3>Pump Server (psrvr4.exe) v4.0.70.0</h3>
+			<ul>
+				<li>Added Chinese language for Pump Server Events (EP-1285).</li>
+				<li>Update: Refinements to Australian Weights &amp; Measures compliance (NMI):
+					<ul>
+						<li>Ensured there is a five (5) second delay after price changes (EP-1250).</li>
+						<li>Verified there are no restrictions on auto-authorization (EP-1251) and configuration of prepay timeouts (EP-1252).</li>
+						<li>Prevent auto-authorisation if system is running on UPS/Battery (EP-1254).</li>
+					</ul>
+				</li>
+				<li>Fix: Prevent exception in System Status Web Page caused by corrupted Enabler Card Firmware (EP-1312).</li>
+				<li>Fix: Removed debug logging of API (EP-1301).</li>
+				<li>Fix: Prevented exception when all hoses removed from Pump (EP-1309).</li>
+				<li>Fix: Now automatically clears Transactions with a completion reason of <tt>StoppedByError</tt>
+					to be backwards compatible with ActiveX clients (EP-1240).</li>
+				<li>Fix: Attendant alerts now fired if attendants have been reloaded with updated alert levels (EP-1302).</li>
+				<li>Fix: Now logs Journal event message when an API Client logs off with a message (EP-1324).</li>
+				<li>Fix: Added extra validation for the transaction reinstate and now returns extra result codes for V4 and V3 clients. (EP-1227).</li>
+			</ul>
+		</li>
+		<li><h3>Install</h3>
+			<ul>
+				<li>Fix: When upgrading from v4.0.0 Beta release it will now transfer license so there is no need to reactivate (ES-1306).</li>
+				<li>Fix: resolved a minor SQL error that occurs when running EnablerDBDoc.sql (EP-1327).</li>
+				<li>Fix: Granting Administrator privilege for all Administrator users before creating the database when first install, in order to 
+					prevent upgrading error when using another administrator user (EP-1326).</li>
+				<li>Fix: Start Menu Web Page short-cuts for client installs now pointing to the correct address links (EP-1354).</li>
+				<li>Fix: Removed debug logging of install parameters (EP-1338).</li>
+				<li>Fix: Resolved a minor error when adding documentation to the Enabler database during an upgrade (EP-1360).</li>
+			</ul>
+		</li>
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li><h3>Enabler Web Pages (WebPages.dll) v1.2.10.0</h3>
+					<ul>
+						<li>Fix: Missing currency sign on "Money meter totals" column on Delivery History Report page (EP-1303).</li>
+						<li>Fix: Site Mode page now is able to display without exception after delete a pump which has pump profile configured (EP-1304).</li>
+						<li>Fix: Port page can now display extended ports with no settings correctly after upgrading from V3 (EP-1307).</li>
+						<li>Fix: Now can add a new pump from the pump page when the SDK option is not selected during the installation (EP-1298).</li>
+						<li>Fix: Exception in Fuel Transaction Reports page when all pumps are deleted (EP-1317).</li>
+						<li>Fix: Exception in Tank Gauge Configuration when deleting tank gauge (EP-1344).</li>
+						<li>Fix: Displaying of deleted tanks in Westock Tank page (EP-1355).</li>
+						<li>Some options which are not permitted in Australia are now automatically hidden for Australian systems (EP-1254):
+							<ul>
+								<li>Automatic stacking, Stack Size, Fallback, Authorise Mode and Attendant options in Site &amp; Pumps Mode pages.</li>
+								<li>Attendant options in the Features &amp; Options page.</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				
+				<li><h3>Enabler Web Server (EnbWeb.exe) v1.0.8.0</h3>
+					<ul>
+						<li>Fix: Exception on Activation Page when the Pump Server is terminated unexpectedly (EP-1346).</li>
+						<li>Pump Server dependent services are now restarted in Ports page (EP-1329).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>Enabler Java API (enabler-api-1.0.jar) v1.0.0.EnbBld35</h3>
+					<ul>
+						<li>Fix: Setting grade price with price level of 2 or more always set price level 1 price (EP-1288).</li>
+						<li>Fix: When used in region with decimal comma, the grade prices were set wrong (EP-1242, ES-101).</li>
+						<li>Fix: Improved handling of unexpected hose events to prevent runtime exceptions (ES-1310).</li>
+						<li>Added a new API result code for 'MESSAGE_NOT_ACKNOWLEDGED' (EP-1337) used to indicate when acknowledgement is not received 
+							for a message sent using the <tt>SendMessage</tt> function was not delivered.</li>
+						<li>Fix: improved handling of unexpected hose events to prevent runtime exceptions (ES-1310).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler .Net API (ITL.Enabler.Api.dll) v1.0.9</h3>
+					<ul>
+						<li>Fix: Improved logging so only 1 log file used per terminal ID and tidied what was logged so it was more relevant (EP-900).</li>
+						<li>Fix: Renamed exception result code for Reinstate from TransactionStateWrongReinstate
+							to InvalidTransactionForReinstate as no longer just checks state. (EP-1227)</li>
+					</ul>
+				</li>
+				<li><h3>Enabler ActiveX Session (EnbSessionX2.dll) v4.4.14</h3>
+					<ul>
+						<li>Fix: Reinstate now returns result codes when a reinstate is not possible (EP-1227).</li>
+						<li>Fix: Reinstate failed with "Item not found" when pumps had been deleted and added (EP-1227).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>Documentation</h3>
+			<ul>
+				<li>Enabler Web Applications Reference Manual v1.13</li>
+				<li>Enabler Demonstration POS Application Reference Manual v2.2</li>
+				<li>Installation Instructions</li>
+			</ul>
+		</li>
+		<li><h3>Utilities</h3>
+			<ul>
+				<li><h3>EnbKick (EnbKick.exe) v2.1.2</h3>
+					<ul>
+						<li>Fix: Was previously logged as an Active Client. Now no longer active (EP-1302).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>WPF Pump Demo (PumpDemoWPF.exe) v1.1.8.0</h3>
+					<ul>
+						<li>Fix: Transaction with Completion Reason of <b>Error</b> can now be moved to the sale window (EP-1362).</li>
+						<li>Fix: The reinstate button in Transaction detail dialog is no longer disabled so error exceptions can be displayed. Displayed the Money total instead of Money in Transaction detail dialog (EP-1227).</li>
+					</ul>
+				</li>
+				<li><h3>Java Pump Demo (pumpdemo.jar) v1.0.6.0</h3>
+					<ul>
+						<li>Fix: Changed dialog types to NORMAL from POPUP as it was rendering them in black on Linux (EP-1260).</li>	
+						<li>Fix: Pump reserve was lost after PSRVR restart (EP-1263).</li>
+						<li>Fix: Now determines the locale to use based on current system locale. Previously used only <b>en_nz</b> locale (EP-1340).</li>
+						<li>Fix: Changed method calls to use the Windows Locale Format category instead of the Display category to get the correct fuel quantity symbol (EP-1340).</li>
+					</ul>
+				</li>
+				<li><h3>Documentation</h3>
+					<ul>
+						<li>Enabler SDK Reference v4.0.16</li>
+						<li>Enabler ActiveX Developers Reference v1.9.4</li>
+						<li>Enabler ActiveX Configuration API reference v1.2.3</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.1.19</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+			<ul>
+				<li>Update: install now has a command-line option (/NOSTART) to install Enabler without starting the PSRVR and ENBWEB services. This is provided for integrator installs where these services are started later (EP-1215).</li>
+				<li>Fix: changed database validation done for pump configuration changes that was incorrectly preventing some database updates when active and deleted pumps have the same logical number. This now correctly validates data ignoring pumps marked as deleted (ES-51).</li>
+				<li>Fix: updated installer to ensure .NET 3.5 SP1 is installed (if required) because it is required for Enabler V4 to work correctly (EP-1146).</li>
+				<li>Fix: changed the default number of backup files from 0 to 1. The previous default was not a valid configuration and prevented saves to other site settings (EP-1255).</li>
+			</ul>
+		</li>
+		<li><h3>Documentation</h3>
+			<ul>
+				<li>Enabler Web Applications Reference Manual v1.11 (previously v1.8)</li>
+			</ul>
+		</li>
+		<li><h3>Pump Server (psrvr4.exe) v4.0.65.0</h3>
+			<ul>
+				<li>Fix: Grade Price update caused a temporary database disconnection (EP-1196).</li>
+				<li>Fix: If a Site Mode was deleted it was no longer possible to switch to some site modes (EP-1182).</li>
+				<li>Fix: Additional fix for ActiveX EnbSessionX2.AllStop feature. Was previously working for first pump only (EP-1017).</li>
+				<li>Fix: Reserved pumps can now be authorised even after Pump Server has restarted (EP-1193).</li>
+				<li>Fix: Now checks length of ClientActivity when updated and returns correct error
+					when SendMessage not received by Client.(EP-1221)</li>
+			</ul>
+		</li>
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li>Enabler Web Pages (WebPages.dll) v1.2.9.0
+					<ul>
+						<li>Fix: Additional update for regions using right to left for currency (EP-1157).</li>
+						<li>Fix: Grade pricing pages now works for currency with ',' as decimal separator (ES-101).</li>				
+						<li>Update: the validation of Site name in Site Setting page is now the same as the Activation page (EP-1199).</li> 
+						<li>Fix: Blocking Page
+							<ul>
+								<li>Can now display scenarios when pump server is offline (EP-1062).</li>
+								<li>Prevent exception when pumps are configured with no hoses (EP-1287). </li>
+								<li>Status is now correctly displayed after saving the blocking status (EP-1291).</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li>Language Resources (PageResources.dll) v1.2.8.0
+					<ul>
+						<li>Added a string for blocking page.</li>
+					</ul>
+				</li>
+				<li>Fix: Site Monitor / Tank Gauge display to render product level correctly ( product level displayed outside box or not displaying under certain circumstances when testing with Tank Simulator) (EP-1186)</li>
+			</ul>
+		</li>
+		<li><h3>Enabler Database Reload Utility (EnbKick.exe) v2.1.1</h3>
+			<ul>
+				<li>Fix: rebuild with new logging library code - no functional changes.</li>
+			</ul>
+		</li>
+		
+		<li><h3>Enabler Client (EnbClient.exe) v1.0.6.0</h3>
+			<ul>
+				<li>Updated to change the Start menu shortcuts to point to the new server when changed (EP-959).</li>
+				<li>Updated to display current server setting (EP-1231).</li>
+			</ul>
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.4.12</h3>
+					<ul>
+						<li>Fix: Additional fix to ensure AllAuth and AllStop behave as they did in Enabler V3 (EP-1017). Specifically an AllAuth will now unblock a pump blocked due to TempStop.</li>
+						<li>Fix: SiteMode changes are now based on ID not index (EP-1182).</li>
+						<li>Fix: Now correctly processes Tank Status events when the automatic tank blocking setting is changed, so the Tank.IsAutoDisable property now reports the correct value (EP-1062).</li>
+						<li>Update: Internal changes to processing of Pump configuration. NOTE: the EnbPumpX2.Description property return the Pump Name because V4 does not have a Pump Description setting (EP-1062).</li>
+					</ul>
+				</li>
+				<li><h3>Java Pump Controls (enabler-pmp-ctrl-1.0.jar) v1.0</h3>
+					<ul>
+						<li>The Pump UI components previously part of pumpdemo.jar, now a separate assembly. These are provided to allow Integrators to update and build the pumpdemo.jar from sources themselves (EP-1066).</li>
+					</ul>
+				</li>
+				<li><h3>.Net API(ITL.Enabler.API.dll) v1.0.8</h3>
+					<ul>
+						<li>Fix: When used in region with decimal comma the grade prices were set wrong (EP-1242, ES-101).</li>
+						<li>Fix: Setting grade price with price level of 2 or more always set price level 1 price (EP-1191).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>SDK</h3>
+			<ul>
+				<li><b>NOTE:</b>Sample source code now synchronised with updates in WPF (C#), COM (VB6), Java and ActiveX (VB6) sample applications (EP-1066, EP-1211).</li>
+				<li><h3>Java Pump Demo (pumpdemo.jar) v1.0.3.0</h3>
+					<ul>
+						<li>Now builds using the new enabler-pmp-ctrl-1.0.jar, to allow Integrators to build pumpdemo.jar from sources themselves (EP-1066).</li>
+					</ul>
+				</li>
+				
+				<li><h3>WPF Pump Demo (PumpDemoWPF.exe) v1.1.5.0</h3>
+					<ul>
+						<li>Fix: no longer removes locks on fuel transactions when connecting, this allows a pump reserve to be retained through a Pump Server restart (EP-1193).</li>
+						<li>Fix: Setting Grade prices was always using a price level of 1 (EP-1191).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Developers SDK Reference v4.0.15</h3>
+					<ul>
+						<li>Now describes more clearly what a Fuel Transaction will show when no fuel is delivered (EP-1177).</li>
+						<li>Added description of the C# Exceptions expected for key .NET API methods in SDK reference (EP-1221).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.1.18</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">	
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+			<ul>
+				<li>Updated install to include EnbClient.exe for Server installs, previously was only included for Client installs, and now installed to <tt>C:\Enabler</tt> directory. This utility can be used to configure the server address/name that ActiveX Client applications connect to.</li>
+			</ul>
+		</li>
+		<li><h3>Enabler Web Applications</h3>
+			<ul>
+				<li>Enabler Web Pages (WebPages.dll) v1.2.7.0
+					<ul>
+						<li>Fix: Events Report page layout improved for consistency and stability, the Hour and Time for &#39;Date and Time&#39; remembers user selection and filters accordingly, &#39;Device Type&#39; column displays the device name correctly (and for device types other than &#39;All Devices&#39;, &#39;Pump&#39; and &#39;Server&#39; only), &#39;Description&#39; text displayed correctly 
+							(EP-470).</li>
+						<li>Update: changed the text for event level filter options in the Events page, to match the event level types in Enabler V4 (Information, Warning, Error and Critical Error).</li>
+						<li>Update: the Pump Advanced Settings is now a multi-line text box to allow easier entry and reading of longer - see
+							Configuration-&gt;Pumps-&gt;Connection Settings (EP-458).</li>
+						<li>Update: the Blocking page has been updated to improve the performance of block and unblock operations, and reduce the impact on pump operation (EP-1062).</li>
+						<li>Fix: corrected the location of the validation (error) message for incorrect port selection in the Tank Gauge configuration screen (EP-599).</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>Pump Server (psrvr4.exe) v4.0.63.0</h3>
+			<ul>
+				<li>Fix: Set Auto Blocking not working correctly via API (EP-1062).</li>
+				<li>Fix: ActiveX EnbSessionX2.AllStop method caused pump to be stopped without allowing resume, for consistency 
+					with Enabler V4 this now Pauses deliveries in progress (where supported by the pump) allowing the delivery to 
+					be resumed (EP-1017).</li>
+			</ul>
+		</li>
+		<li><h3>API</h3>
+			<ul>
+				<li><h3>.NET API (ITL.Enabler.API.dll) v1.0.7</h3>
+					<ul>
+						<li>Fix: resolved an internal compiler warning for .NET releases after 2.0 which caused build failure on VB.NET projects using the API (ES-59).</li>
+						<li>Update: Renamed the Pump.Description property to Pump.Name to be consistent with database and web page (EP-1062).</li>
+						<li>Update: Added a SetAutoBlock method on the Tank object to allow API clients to activate automatic tank blocking based on level data from ATG (EP-1062).</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Java API (enabler-api-1.0.jar) v1.0.0.EnbBld32</h3>
+					<ul>
+						<li>Fix: reduced logging which improves performance.</li>
+						<li>Update: added a new log message for events received from Enabler.</li>
+						<li>Update: the Pump.Name property  has been changed to Pump.Description.</li>
+						<li>Update: now handles events from Pump Server when the Auto Blocking property of a tank is changed (to turn auto blocking on or off).</li>
+						<li>Update: improved parsing of Pump Hose events for consistency with .NET API processing.</li>
+					</ul>
+				</li>
+				<li><h3>EnbPumpX2 ActiveX Control (EnbPumpX2.ocx) v3.36.2</h3>
+					<ul>
+						<li>Fix: now reports the correct Control version string - was previously reporting an old version number.</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><h3>SDK</h3>
+			<ul>
+				<li><h3>WPF Pump Demo (PumpDemoWPF.exe) v1.1.3.0</h3>
+					<ul>
+						<li>Added logging for Tank status events.</li>
+					</ul>
+				</li>
+				<li><h3>Java Pump Demo (pumpdemo.jar) v1.0.2.0</h3>
+					<ul>
+						<li>Fix: Added pump control image resources to build path.</li>
+						<li>Fix: corrected classpath for icon resources.</li>
+						<li>Added logging for Tank status, Fallback and Transaction Unlock events.</li>
+						<li>Fix: no longer display server disconnect message on the main form because this was interfering with other top level windows. The server disconnect message is now displayed on the status bar of the main form.</li>
+						<li>Fix: Changed price level start index from 0 to 1 in order to correctly display Price Level values in 'Grade Pricing and Site Profiles' dialog.</li>
+					</ul>
+				</li>
+				<li><h3>Sample COM Application (SampleCom.exe) v1.3.0.0</h3>
+					<ul>
+						<li>Update: the Pump dialog now shows Name instead of Description.</li>
+						<li>Update: added a button to allow Tank 'auto blocking' to be turned on and off, and event logging when the 'auto block' status changes.</li>
+					</ul>
+				</li>
+				<li><h3>Enabler Developers SDK Reference v4.0.13</h3></li>
+			</ul>
+		</li>
+	</ul>
+	
+	<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.1.17</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+		<ul>
+			<li>A number of utilities used by the installer have been recompiled with no functional changes:
+			<ul>
+				<li>Pump Server Event Filter (EnablerEvent.dll)</li>
+				<li>Enabler Database Reload Utility (EnbKick.exe) v2.1.0</li>
+				<li>Enabler Express Update utility (ExpressUpdate.exe) v1.1.0</li>
+				<li>Enabler PCI Update Utility (PCIUtil.exe) v2.7.0</li>
+				<li>MSI Version Check Utility (MsiQueryProduct.exe)</li>
+				<li>Schedule Task Utility (atutil.exe) v1.4.0</li>
+				<li>Service Control Utility (scutil.exe) v1.1.1</li>
+				<li>Sleep Utility (sleep.exe) v1.1.0</li>
+			</ul>
+		</li>
+		</ul>
+		</li>
+		<li><h3>Enabler Web Applications</h3>
+		<ul>
+			<li>Enabler Web Pages (WebPages.dll) v1.2.7.0
+			<ul>
+				<li>Update: The blocking page now uses the Enabler API to make changes which makes block and unblock operations much faster, and no longer cause a Pump setup reload.</li>
+				<li>Fix: resolved a runtime exception in validation of site mode options (EP-679).</li>
+				<li>Fix: improved the caption used for pump profiles in the site mode page - the new caption is 'Options selected' (EP-682).</li>
+				<li>Fix: added client side validation for postpay and auto-auth options (these options are inter-related) when adding or editing a site or pump mode (EP-842).</li>
+				<li>Fix: grade price halos (upper and lower limits) now work preventing out-of-range prices being entered in the price screens (EP-605).</li>
+				<li>Fix: inconsistent validation of site name (EP-883), now site settings and activation pages reject only a blank name.</li>
+				<li>Fix: maximum hose number messages sometimes displayed when they should not. Now maximum number of hoses is validated by JavaScript, and changes when a different pump type is selected (EP-487).</li>
+				<li>Fix: some configuration pages have drop-down lists that can be edited when they should be read-only (EP-590).</li>
+				<li>Fix: web exception after login that happens on some IE browsers has been resolved (EP-1172, EP-816, ES-48).</li>
+			</ul>
+			</li>
+			<li>Language Resources (PageResources.dll) v1.2.7.0
+			<ul>
+				<li>Added strings for EMB Backup and Period management pages.</li>
+			</ul>
+			</li>
+			<li>Utilities (Utilites.dll) v1.2.7.0
+			<ul>
+				<li>Internal changes for Enabler EMB - no functional change.</li>
+			</ul>
+		</li>
+		</ul>
+		</li>
+		<li><h3>API</h3>
+		<ul>
+			<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.4.9</h3>
+			<ul>
+				<li>Fix: grade delivery timeout was not not indicated as expected, this is now processed correctly (EP-794).</li>
+			</ul>
+			</li>
+			<li><h3>Enabler Java API (enabler-api-1.0.jar) v1.0.0.EnbBld30</h3>
+			<ul>
+				<li>Fix: now updates the blend data after each FuellingProgress event (EP-1020).</li>
+				<li>Fix: added exception handling to prevent runtime errors when a grade has no unit price, or when an offline transaction is created by Pump Server (EP-1023).</li>
+				<li>Fix: resolved runtime exception that occurred when a manual fallback (EMB) was activated.</li>
+				<li>Fix: fuel transaction errors are now set to indicate what happened during the delivery (EP-1022).</li>
+				<li>Fix: time-out logic during logon to ensure correct operation even when the server is busy and slow to respond (EP-1040).</li>
+				<li>Fix: added the previously missing maximum level alarm property to the Tank object (EP-1024).</li>
+				<li>Added code to implement the <tt>Fallback.OnModeChange</tt> event (indicates when Fallback mode turns on and off).</li>
+			</ul>
+		</li>
+		</ul>
+		</li>
+		<li><h3>SDK</h3>
+		<ul>
+			<li><h3>Java Pump Demo (pumpdemo.jar) v1.0.1.0</h3>
+			<ul>
+				<li>Fix: the logon dialog was shown incorrectly and preventing connection to the server in some situations.</li>
+				<li>Fix: now uses <tt>System.Exit()</tt> to ensure a clean shutdown when the program is closed.</li>
+			</ul>
+			
+			</li>
+			
+			<li><h3>Enabler Developers SDK Reference v4.0.12</h3></li>
+		</ul>
+	</li>
+	</ul>
+	
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.1.16</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">	
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		<li><h3>Pump Server (psrvr4.exe) v4.0.60.0</h3>
+		<ul>
+			<li>Fix: a zero initial attendant float was not handled correctly resulting in incorrect float required events being fired (EP-1081).</li>
+		</ul>
+
+		</li>
+
+		<li><h3>API</h3>
+		<ul>
+			<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.4.8</h3>
+			<ul>
+				<li>Fix: a zero initial attendant float was not handled correctly resulting in incorrect float required events being fired (EP-1081).</li>
+			</ul>
+			</li>
+			<li><h3>EnbPumpX2 ActiveX Control (EnbPumpX2.ocx) v3.36.1</h3>
+			<ul>
+				<li>Updated to include the SetCaptionText method.</li>
+			</ul>
+		</li>
+		</ul>
+		</li>
+		<li><h3>SDK</h3>
+		<ul>
+			<li><h3>ActiveX Pump Demo (pumpdemo.exe) v3.4.0.1</h3>
+			<ul>
+				<li>Fix: resolved an intermittent runtime error in the Preauth dialog screen if a preauth delivery was completed without any fuel delivered (EP-1046).</li>
+			</ul>
+		</li>
+		</ul>
+		</li>
+		<li><h3>Auto Support Utility (AutoSupport.exe) v2.2.6</h3>
+		<ul>
+			<li>Changed the way grade name for a hose is identified in the system summary file.</li>
+			<li>Summary file now includes the Tank ID for each Hose.</li>
+		</ul>
+		</li>
+		<li><h3>Documentation</h3>
+		<ul>
+			<li>Enabler Data REST API Reference v1.1.0 (for Enabler EMB clients)</li>
+		</ul>
+	</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.1.15</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">	
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		<li><h3>Pump Server (psrvr4.exe) v4.0.59.0</h3>
+		<ul>
+			<li>Fix: attendant safedrop alert events not fired when expected, these are now always fired after a safedrop is done (EP-1059).</li>
+			<li>Fix: resolved a problem that caused incorrect safedrop values to be saved in the ATTENDANT_SAFEDROP database table (EP-1059).</li>
+			<li>Fix: corrected pump authorise bug introduced in previous release (v4.1.14) which caused deliveries to be associated with Attendants when they shouldn't be (EP-1065).</li>
+			<li>Fix: now returns correct return code ATTENDANT_NOT_LOGGED_ON_RESULT to when attendant is not logged on when attemptint to save an initial float.</li>
+		</ul>
+		</li>
+		<li><h3>API</h3>
+		<ul>
+			<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.4.7</h3>
+			<ul>
+				<li>Fix: corrected processing of sales total amount returned by EnbAttendantX.GetCurrentLevel method - previously this returned a value much higher than the correct amount (EP-1059).</li>
+				<li>Fix: removed debug logging not required for release (EP-953).</li>
+				<li>Fix: the initial float value was not being reset when a new attendant period is opened, resulting in incorrect float and amount values being returned until an initial float is saved.</li>
+			</ul>
+		</li>
+		</ul>
+	</li>
+	</ul>
+
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.1.14</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">	
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+		<ul>
+			<li>Fix: changed the way we uninstall the Enabler API to ensure upgrades are successful even if an API hotfix has previously been installed (EP-1004).</li>
+		</ul>
+		</li>
+		<li><h3>Pump Server (psrvr4.exe) v4.0.58.0</h3>
+		<ul>
+			<li>Fix: attendant property was not set on a delivery authorised manually when an attendant is blocked. Now behaves the same as Enabler V3 (EP-1014).</li>
+		</ul>
+		</li>
+		<li><h3>Enabler Web Applications</h3>
+		<ul>
+			<li>Enabler Web Pages (WebPages.dll) v1.2.6.0
+			<ul>
+				<li>Fix: the Monitor page now shows negative tank gauge volume readings as zero.</li>
+				<li>Fix: Activation by file feature in the Activation page did not work as expected (EP-983).</li>
+				<li>Fix: after successful License Activation, the Activation page no longer displays the full Integrator Code (EP-953).</li>
+			</ul>
+		</li>
+		</ul>
+		</li>
+		<li><h3>API</h3>
+		<ul>
+			<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.4.6</h3>
+			<ul>
+				<li>Fix: resolved a runtime error processing a tank event after a tank configuration had been changed (EP-1047).</li>
+			</ul>
+			</li>
+			<li>
+				<h3>Enabler WPF Controls (ITL.Enabler.WPFControls.dll) v1.0.16.0</h3>
+				<ul>
+					<li>Fix: resolved intermittent runtime exception that sometimes occurred when updating the current transaction details (EP-1000).</li>
+				</ul>
+				</li>
+		</ul>
+		</li>
+		<li><h3>SDK</h3>
+		<ul>
+			<li><h3>WPF Pump Demo (PumpDemoWPF.exe) v1.1.2.0</h3>
+			<ul>
+				<li>Fix: changed the way we access Fuel Transaction (delivery) objects to prevent runtime exception displaying transaction details (EP-872).</li>
+				<li>Added event log messages for fallback status changes.</li>
+			</ul>
+			</li>
+			<li><h3>ActiveX Pump Demo (pumpdemo.exe) v3.4.0.0</h3>
+			<ul>
+				<li>Fix: was allowing a delivery to be added to the 'sale' list more than once (EP-1042).</li>
+			</ul>
+
+			</li>
+
+			<li><h3>ITL MPP Simulator (mppsim.exe) v2.18.0.1 </h3> <!-- was v2.17.0.3 -->
+			<ul>
+				<li>Added menu options to select serial ports upto COM20, and updated to search serial ports upto COM20 at startup to make initial connection easier.</li>
+				<li>Updated to save totalisers for a serial port + pump, to ensure totals are isolated and separately updated on systems running more than one simulator (EP-1013).</li>
+			</ul>
+		</li> 
+		</ul>
+	</li>
+	</ul>
+	
+		
+<!-- ************************************************************************** -->
+
+	<h2>Enabler v4.1.13</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">	
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		<li><h3>Pump Server (psrvr4.exe) v4.0.57.0</h3>
+		<ul>
+			<li>Fix: doing a safe drop resulted in incorrect attendant alert events, and cash amounts returned by EnbAttendantX. Processing has been updated to ensure correct values are now returned (EP-985).</li>
+			<li>Fix: Client Delivery object properties (Type, ClearedBy and ClearedTS) were not updated correctly when a delivery was reinstated or cleared (EP-993).</li>
+			<li>Fix: a pump with an attendant that is blocked (over limit) was not permitted (EP-984). This is now allowed for consistency with Enabler V3.</li>
+		</ul>
+		</li>
+		<li><h3>API</h3>
+		<ul>
+			<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.4.5</h3>
+			<ul>
+				<li>Fix: doing a safe drop resulted in incorrect attendant alert events, and cash amounts returned by EnbAttendantX. Processing has been updated to ensure correct values are now returned (EP-985).</li>
+				<li>Fix: Client Delivery object properties (Type, ClearedBy and ClearedTS) were not updated correctly when a delivery was reinstated or cleared (EP-993).</li>
+			</ul>
+			</li>
+			<li><h3>Enabler .NET API (ITL.Enabler.API.dll) v1.0.6.0</h3>
+			<ul>    
+				<li>Fix: added validation to ensure empty Fuel Transaction is not returned to a client application.</li>
+				<li>Fix: resolved runtime exception that could occur when receiving price level data from the server.</li>
+				<li>Fix: removed logging of Client API credentials and some unnecessary messages (#13163).</li>
+				<li>Improved embedded documentation for some API Result members.</li>
+			</ul>
+			</li>
+			<li><h3>Enabler OLE/COM API (ITL.Enabler.API.tlb) v1.0.6.0</h3>
+			<ul>
+				<li>Fix: resolved logging problem that sometimes caused COM API to fail during connection to server (EP-960).</li>
+			</ul>
+		</li>
+		</ul>
+		</li>
+		<li><h3>SDK</h3>
+		<ul>
+			<li><h3>Sample COM Application (SampleCom.exe) v1.1.0.0</h3>
+			<ul>
+				<li>Fix: resolved a runtime error caused by previous changes in the Enabler V4 API (EP-960).</li>
+			</ul>
+			</li>
+			<li><h3>Java Pump Demo (Pumpdemo.jar) v1.1.0.0</h3>
+			<ul>
+				<li>Fix: unexpected logon failure after previous login failed. Due to duplicate login dialog created, and resources not being freed at application shutdown. (EP-999).</li>
+			</ul>
+			</li>
+			<li>Enabler Developers SDK Reference v4.0.11</li>
+		</ul>
+	</li>
+	</ul>
+
+  <!-- ************************************************************************** -->
+
+	<h2>Enabler v4.1.12</h2> 
+	<h3>Summary</h3> 
+	<ul class="spacedlist">	
+		<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	</ul>
+	<h3>Details of Changes</h3> 
+	<ul class="spacedlist">
+		<li><h3>Install</h3>
+		<ul>
+			<li>Update: the installer no longer adds default Terminal or Attendant for a new install (EP-989). These rows were created by previous V4 installers for testing purposes. Once created, a subsequent upgrade will leave the rows in place.</li>
+		</ul>
+		
+        </li>
+		
+        <li><h3>API</h3>
+        <ul>
+    		<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.4.4</h3>
+	    	<ul>
+		    	<li>Fix: not displaying invalid price status. Resolved problem in processing of price change status (EP-980).</li>
+		    </ul>
+        </li>
+        </ul>
+		
+		</li>
+		
+		<li><h3>Pump Server (psrvr4.exe) v4.0.56.0</h3>
+		<ul>
+			<li>Fix: resolved problem with loading of Extended Port Settings - which sometimes prevented correct operation of drivers using these ports (e.g. Tank Gauge Driver).</li>
+			<li>Fix: resolved a buffer overflow problem when sending data to clients with large number of stacked deliveries (fuel transactions).</li>
+			<li>Fix: cannot authorise pump after having an invalid grade price set - when a valid price is restored authorisation is now correctly permitted (EP-980).</li>
+		</ul>
+		
+		</li>
+		
+		<li><h3>Auto Support Utility (AutoSupport.exe) v2.2.3</h3>
+		<ul>
+			<li>Updated: Enabler Information file now includes the tank ID for each Hose, to aid with issue investigation and diagnosis.</li>
+		</ul>
+		
+		</li>
+		
+		<li><h3>Documentation</h3>
+		<ul>
+			<li>Enabler Data REST API Reference v1.0.0 <b>*NEW*</b> (for Enabler EMB clients)</li>
+			<li>Enabler Demonstration POS Application Reference Manual v2.1</li>
+			<li>Enabler ActiveX Developers Reference v1.9.2 (EP-987)</li>
+		</ul>
+	</li>
+	</ul>
+
+  <!-- ************************************************************************** -->
+
+  <h2>Enabler v4.1.11</h2> 
+  <h3>Summary</h3> 
+  <ul class="spacedlist">	
+	<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	<li>Includes Pump Update 2014-03-21 - Refer to PumpUpdate Release Notes for details of the changes.</li>
+  </ul>
+  <h3>Details of Changes</h3> 
+  <ul class="spacedlist">
+	<li><h3>API</h3>
+	<ul>
+		<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.4.3</h3>
+		<ul>
+			<li>Fix: a runtime exception sometimes occurs if connection to Enabler Server is broken during client connection processing. This has been resolved.</li>
+			<li>Fix: resolved incorrect processing in logon which could result in a OK_RESULT being returned when a logon failed (EP-976).</li>
+			<li>Added a new method to request the status of server software license (EP-963).</li>
+		</ul>
+	</li>
+	</ul>	</li>
+	<li><h3>Pump Server (psrvr4.exe) v4.0.53.0</h3>
+	<ul>
+		<li>Fix: resolved internal error that sometimes occurred during shut down.</li>
+		<li>Fix: resolved a problem preventing correct operation with time-limited license (EP-941).</li>
+	</ul>
+  	</li>
+  	<li><h3>Enabler Web Applications</h3>
+	<ul>
+		<li>Enabler Web Pages (WebPages.dll) v1.2.6.0
+		<ul>
+			<li>Activation page:
+			<ul>	
+				<li>Fix: No longer indicates pump server connection down if a restart is in progress (EP-965).</li>
+				<li>Updated: To protect the privacy of the Integrator (Customer) code, this is now masked instead of showing the full value.</li>
+			</ul>
+		</li>
+		</ul>
+		</li>
+		<li>Enabler Web Server (EnbWeb.exe) v1.0.7.0
+		<ul>
+			<li>Internal improvements to software license activation.</li>
+		</ul>
+	</li>
+	</ul>
+	</li>
+	<li><h3>Enabler Client (EnbClient.exe) v1.0.3.0</h3>
+	<ul>
+		<li>Added to allow easier configuration/selection of the server that a ActiveX client API should connect to. This does not affect V4 API clients since the host is determined in the <tt>Connect</tt> method.</li>
+	</ul>
+  	</li>
+  	<li><h3>Documentation</h3>
+	<ul>
+	  <li>Enabler ActiveX Developers Reference v1.9.1</li>
+	  <li>Enabler Web Applications Reference Manual v1.8 (previously v1.5)</li>
+	</ul>
+  </li>
+  </ul>
+  
+  <!-- ************************************************************************** -->
+
+  <h2>Enabler v4.1.8</h2> 
+  <h3>Summary</h3> 
+  <ul class="spacedlist">	
+	<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+  </ul>
+  <h3>Details of Changes</h3> 
+  <ul class="spacedlist">
+	<li><h3>Install</h3>
+	<ul>
+		<li>Update: the installer now adds Windows Firewall rules to allow remote computers to connect to Enabler Pump Server and Web Servers (with added logging).</li>
+	</ul>
+	
+	</li>
+	
+	<li><h3>API</h3>
+	<ul>
+		<li><h3>Enabler .NET API (ITL.Enabler.API.dll) v1.0.6.0</h3> <!-- was v1.0.0.5 -->
+		<ul>
+			<li>Fix: API login can fail when there are a large number of stacked deliveries. Now resolved to ensure successful login (EP-829).</li>
+		</ul>
+		</li> 
+		<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.4.1</h3>
+		<ul>
+			<li>Fix: a runtime exception sometimes occurs if connection to Enabler Server is broken during client connection processing. This has been resolved.</li>
+			<li>Added a new method to request the status of server software license.</li>
+		</ul>
+	</li>
+	</ul>
+	
+	</li>
+	
+	<li><h3>Pump Server (psrvr4.exe) v4.0.50.0</h3>
+	<ul>
+		<li>Fix: resolved some incorrect server behaviour when all clients are disconnected.</li>
+		<li>Fix: resolved problems with license validation when in time-limited operation.</li>
+		<li>Fix: resolved problems with API messaging that could result in timeout or disconnection errors in exception cases.</li>
+		<li>Fix: better exception handling for API message processor.</li>
+		<li>Updated: maximum number of transactions permitted in fall-back mode is 100 per pump (EP-829).</li>
+		<li>Internal changes to improve software license activation.</li>
+		<li>Added "ServerStartedHook" to run a program on the Server PC when Enabler Pump Server starts (will accept path to executable including spaces).</li>
+		<li>Improved reliability for API connections with changes to buffer sizes, timers and heartbeat logic. Will now send heartbeats to API clients during processing of requests to prevent client disconnects when the server is processing.</li>
+		<li>Simplified pump state logging for consistency between related messages and to reduce the amount of log data.</li>
+	</ul>
+
+  	</li>
+
+  	<li><h3>Enabler Web Applications</h3>
+	<ul>
+		<li>Enabler Web Server (EnbWeb.exe) v1.0.4.0
+		<ul>
+			<li>Internal improvements to software license activation.</li>
+		</ul>
+		</li>
+		<li>Enabler Web Pages (WebPages.dll) v1.2.6.0
+		<ul>
+			<li>Fix: runtime error displayed instead of Status page if Pump Server is not running.</li>
+			<li>Fix: login screen now includes a message if the system is running a time-limited software license (EP-863).</li>
+			<li>Update: improved the alert banner displayed when software activation is required or when Enabler or SQL servers are not available.</li>
+			<li>Internal improvements to software license activation.</li>
+		</ul>
+		</li>
+		<li>Language Resources (PageResources.dll) v1.2.6.0
+		<ul>
+			<li>Fix: added and improved strings for software license activation (EP-863).</li>
+		</ul>
+	</li>
+	</ul>
+	
+	</li>
+	
+	<li><h3>Auto Support Utility (AutoSupport.exe) v2.2.2</h3>
+	<ul>
+		<li>Fix: two different runtime errors that sometimes happen on non-administrator user accounts. For best results we recommend you run AutoSupport as administrator.</li>
+		<li>Update: now reads Unicode database fields correctly and logs them as MBCS.</li>
+		<li>Update: now retrieves more information about tank configuration.</li>
+		<li>Update: improved the logic used to decide which files and data to collected, now retrieves SQL server logs based on version installed.</li>
+	</ul>
+
+  	</li>
+
+  	<li><h3>Documentation</h3>
+	<ul>
+	  <li>Enabler ActiveX Developers Reference v1.9.0</li>
+	</ul>
+</li>
+</ul>
+  
+  <!-- ************************************************************************** -->
+
+  <h2>Enabler v4.1.7</h2> 
+  <h3>Summary</h3> 
+  <ul class="spacedlist">	
+	<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+  </ul>
+  <h3>Details of Changes</h3> 
+  <ul class="spacedlist">
+	<li><h3>Enabler .NET API (ITL.Enabler.API.dll) v1.0.6.0</h3> <!-- was v1.0.0.5 -->
+	<ul>
+	  <li>Fix: changed logging to prevent a runtime error/exception when connecting to the server (EP-867).</li>
+	</ul>
+
+	</li> 
+
+	<li><h3>Pump Server (psrvr4.exe) v4.0.44.0</h3>
+	<ul>
+		<li>Fix: will now connect to Enabler Card Device Driver if loaded after the service starts. This allows software activation to read the Enabler Card ID without restarting (EP-876).</li>
+	</ul>
+
+	</li>
+
+	<li><h3>Enabler Web Applications</h3>
+	<ul>
+		<li>Enabler Web Pages (WebPages.dll) v1.2.5.0 <!-- was v1.2.5 -->
+		<ul>
+			<li>Changed the way alerts are displayed to give them more impact.</li>
+			<li>Added alert message to indicate when a system is in time-limited trial period - due to Enabler Card swap (#13118).</li>
+			<li>Updated: the software activation page now gives more helpful description of what is happening, and more quickly indicates the outcome of a successful activation (#12645, EP-877).</li>
+		</ul>
+		</li> 
+		<li>Language Resources (PageResources.dll) v1.2.2.0 <!-- was v1.2.1 -->
+		<ul>
+			<li>Fix: Added new string for Enabler card firmware version in system status page (EP-479).</li>
+		</ul>
+	</li> 
+	</ul>
+	
+  </li>
+	
+  </ul>
+  
+  <!-- ************************************************************************** -->
+
+  <h2>Enabler v4.1.6</h2> 
+  <h3>Summary</h3> 
+  <ul class="spacedlist">	
+	<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+  </ul>
+  <h3>Details of Changes</h3> 
+  <ul class="spacedlist">
+	<li><h3>Install</h3>
+	<ul>
+		<li>Fix: changed parsing of command-line options to allow client server name to include "-h" in the computer name.</li>
+		<li>Fix: resolved a problem that could occur in logic used to calculate post-mix grade prices where more thane one grade is linked to the same price profile.</li>
+		<li>Fix: increased maximum time-out values allowed (EP-851)</li>
+		<li>Fix: increased the maximum keep days allowed to 1000 days (for deliveries, events and tanker deliveries).</li>
+		<li>Fix: Resolved problem with database updates done after a completed delivery to prevent errors if more than one tank has the same grade (#13228).</li>
+		<li>Fix: changed installation of software simulator to record database updates to a new file rather than overwriting the main database install/update log.</li>
+	</ul>
+	
+	</li>
+	
+	<li><h3>Pump Server (psrvr4.exe) v4.0.43.0</h3>
+	<ul>
+		<li>Fix: no longer load fuel transactions for deleted hoses.</li>
+		<li>Improved logging for diagnosis of Software Activation.</li>
+		<li>Fix: improved interface to Enabler Card to prevent communication being disrupted (EP-819).</li>
+		<li>Fix: resolved checking of software license if date is changed after Enabler card is swapped (EP-719).</li>
+	</ul>
+	
+	</li>
+	
+	<li><h3>Enabler Web Applications</h3>
+	<ul>
+		<li>Padarn Web Server (OPENNETCF) v1.5.13272.0
+		<ul>
+			<li>Fix: resolved problems with unreliable loading of content for pages (CSS, JS or Images) causing a range of symptoms including missing images, layout/styling being incorrect or scripts not running (#13089).</li>
+		</ul>
+		</li>
+		<li>Enabler Web Pages (WebPages.dll) v1.2.5.0 <!-- was v1.2.5 -->
+		<ul>
+			<li>Updated the system status page to include the Enabler Card firmware version.</li>
+		</ul>
+		</li> 
+		<li>Language Resources (PageResources.dll) v1.2.2.0 <!-- was v1.2.1 -->
+		<ul>
+			<li>Fix: Added new string for Enabler card firmware version in system status page (EP-479).</li>
+		</ul>
+	</li> 
+	</ul>
+  </li>
+  </ul>
+
+  <!-- ************************************************************************** -->
+
+  <h2>Enabler v4.1.5</h2> 
+  <h3>Summary</h3> 
+  <ul class="spacedlist">	
+	<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+	<li>Includes Pump Update 2013-12-25 - Refer to PumpUpdate Release Notes for details of the changes.</li>
+  </ul>
+  <h3>Details of Changes</h3> 
+  <ul class="spacedlist">
+	<li><h3>Install</h3>
+	<ul>
+	  <li>Updated to allow SDK to be installed using a command-line option - useful for building development environments or to install debug versions of your application.</li>
+	</ul>
+
+	</li>
+
+	<li><h3>Enabler .NET API (ITL.Enabler.API.dll) v1.0.6.0</h3> <!-- was v1.0.0.5 -->
+	<ul>
+	  <li>Removed async events feature since this is not working correctly.</li>
+	  <li>Fix: improved handling of incoming API event messages to prevent errors from causing a client application to be aborted.</li>
+	  <li>Improved parsing of pump events to improve processing speed.</li>
+	  <li>The Enabler Interface class now includes the firmware version and card serial number.</li>
+	  <li>Fix: resolved problems with installation that resulted in API assembly not being visible to applications.</li>
+	</ul>
+	
+	</li> 
+	
+	<li><h3>SDK</h3>
+	<ul>
+	  <li>Enabler Developers SDK Reference v4.0.10</li>
+	</ul>
+  </li>
+  </ul>
+
+  <!-- ************************************************************************** -->
+
+  <h2>Enabler v4.1.4</h2> 
+  <h3>Summary</h3> 
+  <ul class="spacedlist">	
+	<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+  </ul>
+  <h3>Details of Changes</h3> 
+  <ul class="spacedlist">
+	<li><h3>Install</h3>
+	<ul>
+	  <li>Fix: created new stored procedure that ensures period history tables are initialised without having to close current periods (#11370).</li>
+	  <li>Fix: we now install EnbKick.EXE utility on clients and servers - previously this was only included for server installs.</li>
+	</ul>
+
+	</li>
+
+	<li><h3>Pump Server (psrvr4.exe) v4.0.42.0</h3>
+	<ul>
+	  <li>Fix: no longer fires invalid events when a new Attendant is loaded. This did not cause any functional problems, but could make client startup faster on systems with a large number of Attendants.</li>
+	  <li>Fix: now updates the correct Attendant 'AmountType; for backwards compatibility with Enabler v3 (#13187).</li>
+	</ul>
+	</li>
+	<li><h3>API</h3>
+	<ul>
+	  <li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.3.3</h3>
+	  <ul>
+		<li>Fix: corrected loading of new Attendants after configuration reloads (#13187).</li>
+	  </ul>
+	</li>
+	</ul>
+  </li>
+  </ul>
+  
+  <!-- ************************************************************************** -->
+
+  <h2>Enabler v4.1.3</h2> 
+  <h3>Summary</h3> 
+  <ul class="spacedlist">	
+	<li>Fixes and updates based on feedback on previous Enabler V4 releases.</li>
+  </ul>
+
+  <h3>Details of Changes</h3> 
+  <ul class="spacedlist">
+	<li><h3>Pump Server (psrvr4.exe) v4.0.41.0</h3><!-- was v4.0.40.0 -->
+	<ul>
+	  <li>Fix: updated events fired for Attendant functionality to ensure EnbAttendantX functions work correctly (#13139).</li>
+	</ul>
+
+	</li>
+
+	<li><h3>API</h3>
+	<ul>
+	  <li><h3>AttendantX2 Control (EnbAttendantX2.OCX) v4.1.0.1 </h3>
+	  <ul class="spacedlist"> 
+		<li>Fix: now includes ActiveX control that works with Enabler V4, the previous version incorrectly reported a pump server not connected error (#13139).</li>
+	  </ul>	</li>
+
+	  <li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.3.2</h3>
+	  <ul>
+		<li>Fix: resolved a problem in processing of attendant period totals (#13139).</li>
+		<li>Fix: now correctly updates the AttendantID in Deliveries (#13139), previously the Attendant property of the Delivery was not set correctly.</li>
+		<li>Fix: now correctly validates the AttendantID when doing a pump logoff.</li>
+		<li>Fix: GetBlockStatus now sets the result to OK_RESULT to indicate success.</li>
+	  </ul>
+	</li>
+	</ul>
+
+  </li>
+
+  </ul>
+
+  <!-- ************************************************************************** -->
+
+  <h2>Enabler v4.1.2</h2> 
+  <h3>Summary</h3> 
+  <ul class="spacedlist">	
+	<li>Includes Pump Update 2013-11-20 - Refer to PumpUpdate Release Notes for details of the changes.</li>
+  </ul>
+  <h3>Details of Changes</h3> 
+  <ul class="spacedlist">
+	<li><h3>Install</h3>
+	<ul>
+	  <li>Fix: now creates shortcut links for Enabler Web on silent Client installs (EP-798).</li>
+	  <li>Updated client installations to set the ENABLER_SERVER environment variable and HLKM\Software\ITL\Enabler\ServerName to indicate the network name of the Enabler Server.</li>
+	</ul>
+
+	</li>
+
+	<li><h3>Enabler Web Applications</h3>
+	<ul>
+	  <li>Enabler Web Pages (WebPages.dll) v1.2.5.0 <!-- was v1.2.1 -->
+	  <ul>
+		<li>Fix: Changed the loading of data in the fuel transaction report page to reduce page load time.</li>
+		<li>Fix: corrected web page generation to ensure correct operation on IE8 - previously pages rendered in Chinese did not work (#13110).</li>
+		<li>Fix: Updated grades page to use translated strings for unit of measure, allocation limit, and blending type options (#12771).</li>
+		<li>Fix: the read-only view of Grade details now shows correctly - previously it appeared to be editable (#12770).</li>
+		<li>Fix: resolved an intermittent JavaScript error on the Grade configuration page.</li>
+		<li>Fix: resolved error when saving site features and option settings on some systems.</li>
+		<li>Fix: now uses language resources for some previously untranslated strings in the User configuration, Wet Stock Tank and Pump totals, and the Pump and Tank Total report pages (#13130).</li>
+		<li>Fix: corrected captions used for tank totals report - 'Number' now indicates the count of deliveries (previously 'Quantity'), and 'Quantity' now indicates the amount of fuel (previously 'Volume'). Also corrected formatting of the count columns - these are whole numbers with no decimal places.</li>
+		<li>Updated to improve performance of page generation to reduce page load time.</li>
+		<li>Updated to preload pages to reduce the time to load the first page.</li>
+		<li>Updated to show the contacts page only when the integrator information file is present (<tt>C:\Enabler\integrator\integrator.xml</tt>).</li>
+	  </ul>
+    </li> 
+    </ul>
+
+	</li>
+
+	<li><h3>Enabler WPF Controls (ITL.Enabler.WPFControls.dll) v1.0.15.0</h3>
+	<ul>
+	  <li>Fix: restored background to transparent colour (#13077).</li>
+	  <li>Fix: when no flow timeout, Grade Delivery timeout and nozzle left timeouts occur, the delivery text changes to red (EP-785, EP-786).</li>
+	  <li>Fix: resolved problem preventing scaling of nozzle left out arrow - now using opacity animation instead of moving arrow (#13102).</li>
+	  <li>Updated: now uses a different icon to indicate 'paused' to avoid confusion with 'stopped'.</li>
+	  <li>Updated: now shows reserved with underline of pump number.</li>
+	  <li>Updated: previous Attendant Name display has been changed to a more generic CaptionText. Display is still optional, but text can be set as required by applications.</li>
+	  <li>Updated: now uses a distinctive Pause symbol to indicate pumps paused to visually distinguish when a pump is stopped (and blocked).</li>
+    </ul>
+
+	</li>
+
+	<li><h3>WPF Sample Application (PumpDemoWPF.exe) v1.1.1.0</h3> <!-- was v1.0.0.14 -->
+	<ul>
+	  <li>Updated: now uses WPF Pump control 'CaptionText' to display prepay status - this also uses the API 'ClientActivity' allowing the prepay status to be indicated accross multiple PumpDemoWPF (client) applications.</li>
+	</ul>
+
+	</li> 
+
+	<li><h3>Pump Server (psrvr4.exe) v4.0.40.0</h3><!-- was v4.0.0.34 -->
+	<ul>
+	  <li>Fix: changed processing of running total events to ensure running totals show correctly when a pump reaches the authorised limit (#13101).</li>
+	</ul>
+
+  </li>
+
+  </ul>
+
+  <h2>Enabler v4.1.1</h2> 
+  <h3>Summary</h3> 
+  <ul class="spacedlist">	
+	<li>Fixes and updates based on feedback on Enabler V4.0.0.</li>
+  </ul> 
+  <h3>Details of Changes</h3> 
+  <ul class="spacedlist">
+	<li><h3>Install</h3>
+	<ul>
+	  <li>Fix: corrected the URL in the Start menu link for Enabler Web (#13029).</li>
+	  <li>Fix: corrected the loading of Tank Event Types in the database (#12898).</li>
+	  <li>Fix: we no longer drop the Enabler login (Load.SQL and AfterRestore.SQL) because this causes problems for applications using this login. Systems which expect these logins to be removed need to remove the login and be updated to work without them. These logins are no longer created by the Enabler installer.</li>
+	</ul>
+	</li>
+	<li><h3>Enabler Web Applications</h3>
+	<ul>
+	  <li>Enabler Web Pages (WebPages.dll) v1.2.5.0 <!-- was v1.2.1 -->
+	  <ul>
+		<li>Fix: Resolved some problems with the event filters - they now show the correct device event types when a specific device type is selected (EP-702, #12651).</li>
+	  </ul>
+	</li> 
+	</ul>
+
+	</li>
+
+	<li><h3>WPF Sample Application (PumpDemoWPF.exe) v1.1.0.0</h3> <!-- was v1.0.0.14 -->
+	<ul>
+	  <li>Updated to reflect changes in the WPF Controls.</li>
+	</ul>
+
+	</li> 
+
+	<li><h3>Enabler WPF Controls (ITL.Enabler.WPFControls.dll) v1.0.15</h3> <!-- was v1.0.0.14 -->
+	<ul>
+	  <li>Fix: Corrected the text colour used for grade name after delivery is completed. Was previously using the colour indicating 'locked' (EP-787).</li>
+	  <li>Updated to show delivery text details in red for a delivery not taken (CV-481, EP-785).</li>
+	  <li>Updated to show grade name in red for 'nozzle left out' and more prominent animation (CV-479, EP-786). </li>
+	  <li>Updated to show indicate grade delivery timeout has expired during delivery - red text.</li>
+	</ul>
+	
+  </li> 
+	
+  </ul>
+  
+  <!-- ************************************************************************** -->
+  
+  <h2>Enabler v4.1.0</h2> 
+  <h3>Summary</h3> 
+  <ul class="spacedlist">	
+	<li>Fixes and updates based on feedback on Enabler V4.0.0</li>
+  </ul> 
+  <h3>Details of Changes</h3> 
+  <ul class="spacedlist">
+	<li><h3>Install</h3>
+	<ul>
+	  <li>The generated file AutoUpgrade.bat is now removed after it has been used in the install - to avoid confusion with AutoSupport (#12804).</li>
+	  <li>Installation of ITL MPP Simulator has been separated out - now only added to the database for SDK installs.</li>
+	</ul>
+
+	</li>
+
+	<li><h3>Database</h3>
+	<ul>
+	  <li>Added field to Fuel Transaction table to store the authorisation hose mask.</li>
+	</ul>
+	</li>
+	<li><h3>Auto Support Utility (AutoSupport.exe) v2.2.1</h3> <!-- was v2.1.10 -->
+	<ul>
+	  <li>Changed Registry access to 'read' to improve operation on secured systems.</li>
+	  <li>Added checking and logging when reading Product Registry keys to aid diagnosis when AutoSupport fails.</li>
+	  <li>Fix: corrected processing of System CPU information - not sure if this caused any functional problem.</li>
+	</ul>
+	</li> 
+	<li><h3>Enabler Web Applications</h3>
+	<ul>
+	  <li>Enabler Web Server (EnbWeb.exe) v1.0.4.0
+	  <ul>
+		<li>Internal restructuring of Software Activation to allow for multi-product activation.</li>
+		<li>Requests to Software Activation Server are now done via Port 80 for more reliable transport through firewall and routers.</li>
+		<li>Improved interaction with Pump Server to ensure API connections are restored after restart.</li>
+		<li>Fix: prevented the error shown on Activation page when Pump Server is not running (EP-652).</li>
+	  </ul>
+	  </li>
+	  <li>Enabler Web Pages (WebPages.dll) v1.2.5.0 <!-- was v1.2.1 -->
+	  <ul>
+		<li>Fix: Now supports web browsers on android devices.</li>
+		<li>Linked a number of labels and captions to Internationalised strings (#12531).</li>
+		<li>Fix: System Status page now skips drives that are not available - this ensures fast page loads on systems with removable drives (#12696).</li>
+		<li>Fix: Activation page now shows trial expiry date when in trial mode.</li>
+		<li>Made messages on Software Activation page easier to understand (#12398).</li>
+		<li>Added button to allow saving of activation file.</li>
+		<li>Fix: new grades added now default to a price of 1.0 (#12592, #12528, EP-424, EP-407).</li>
+		<li>Fix: now defaults Oil Company code to blank and blend ratio to 0.0 to resolve problems after upgrade (#10864).</li>
+		<li>Updated Pumps page to allow cloning pumps (as in Enabler V3).</li>
+		<li>Fix: the Post Mix ratio fields are now hidden when not applicable.</li>
+		<li>Fix: scheduled date for price change now displays correctly after region is changed.</li>
+		<li>Fix: added code to prevent pump from being deleted when it has current transactions (EP-630).</li>
+		<li>Fix: updated Site Modes page to prevent saving profiles with Autoauth on, but Postpay off. Also prevented site mode saving when the configuration is incorrect (EP-648).</li>
+		<li>Updated scripts (WetstockTankData.js, GradesScript.js, PumpScripts.js).</li>
+		<li>Fix: in Site Modes page to resolve a problem with validation of the site mode profile number.</li>
+		<li>Fix: corrected operation of Site Mode and Pump based configuration of price levels. These were not activating correctly.</li>
+		<li>Fix: resolved a runtime error in Wet Stock Tank Data page in book stock calculation (#12464).</li>
+		<li>Fix: fuel reconciliation periods not ready for export are now shown in red colour.</li>
+		<li>Fix: formatting of values is now based on the correct culture info.</li>
+	  </ul>
+	  </li> 
+	  <li>Language Resources (PageResources.dll) v1.2.2.0 <!-- was v1.2.1 -->
+	  <ul>
+		<li>Fix: improved message displayed when Pump Server cannot be restarted (EP-505).</li>
+		<li>Updated Chinese Language strings.</li>
+		<li>Updated Spanish Language strings.</li>
+		<li>Reverted Spanish (es-MX) and Russian (ru-RU) from specific sub-languages to neutral - for wider use.</li>
+	  </ul>
+	  </li> 
+	  <li>Library (Utilities.dll) v1.2.3.0 <!-- was 1.2.2 -->
+	  <ul>
+		<li>Internal improvements for Software Activation.</li>
+		<li>Improved logging to improve performance.</li>
+	  </ul>
+	</li> 
+	</ul>
+	
+	</li>
+	
+	<li><h3>EnbPumpX2 ActiveX Control (EnbPumpX2.ocx) v3.36.0</h3>
+	<ul>
+	  <li>Updated Spanish language strings.</li>
+	</ul>
+
+	</li>
+
+	<li><h3>EnbSessionX2 ActiveX Control (EnbSessionX2.ocx) v4.3.0</h3> <!-- was v4.0.0.34 -->
+	<ul>
+	  <li>Updated Chinese language strings.</li>
+	  <li>Updated Spanish language strings.</li>
+	  <li>Fix: added missing Attendant Events.</li>
+	  <li>Fix: changed to correctly handle XML elements with no data.</li>
+	  <li>Fix: resolved cause of exception reading grade name.</li>
+	  <li>Fix: resolved cause of exception that sometimes happens when Pump Server disconnects.</li>
+	</ul>
+	
+	</li> 
+	
+	<li><h3>Enabler .NET API (ITL.Enabler.API.dll) v1.0.0.5</h3>
+	<ul>
+	  <li>Fix: resolved a problem that could cause hang when reloading grades.</li>
+	  <li>Updated to reduce diagnostic logging.</li>
+	  <li>Now uses separate log for each client/terminal connected.</li>
+	  <li>Fix: resolved an exception that sometimes happened when connecting to Pump Server.</li>
+	</ul>
+	
+	</li>
+	
+	<li><h3>Enabler Database Reload Utility (EnbKick.exe) v2.1.0</h3>
+	<ul>
+	  <li>Updated: can now request a reload for Client API terminals configuration.</li>
+	</ul>
+	
+	</li>
+	
+	<li><h3>Enabler WPF Controls (ITL.Enabler.WPFControls.dll) v1.0.0.14</h3>
+	<ul>
+	  <li>Fix: Replaced outer glow effect on delivery text (Grade name, value, volume) with opaque background - the glow effect is not supported on .NET 4 (#12659).</li>
+	  <li>Removed gradient background.</li>
+	</ul>
+		
+	</li> 
+		
+	<li><h3>Pump Server (psrvr4.exe) v4.0.40.0</h3><!-- was v4.0.0.34 -->
+	<ul>
+	  <li>Fix: resolved a problem that could cause API clients to disconnect from a Pump Server installed on a slow computer (EP-732).</li>
+	  <li>Fix: now correctly loads Enabler card driver even if no ports are installed (#12905).</li>
+	  <li>Fix: resolved a loop that could occur when Enabler card is reset (#11304).</li>
+	  <li>Fix: resolved incomplete delivery that could occur when a pump was authorised but no delivery is logged (#11327).</li>
+	  <li>Fix: authorisation of pump calling when Pump Server starts is now allowed (#11185, EP-640).</li>
+	  <li>Fix: resolved problem with grade blocking (EP-499).</li>
+	  <li>Fix: sometimes pump polling was not started for one or more pumps (EP-455). Now pump polling is started correctly.</li>
+	  <li>Fix: corrected formatting of turnover correction event message text.</li>
+	  <li>Fix: corrected the sequence for connecting clients to ensure pumps are reloaded before events are posted. This prevents runtime error which can sometimes occur when a client application connects.</li>
+	  <li>Fix: resolved a problem with price change processing to ensure clients are notified when a price check is no longer pending.</li>
+	  <li>Fix: resolved incorrect logging of price levels in transactions authorised using a specific price level (EP-669).</li>
+	  <li>Fix: corrected authorisation checking to ensure a pump reserved cannot be authorised for a postpay (EP-662).</li>
+	  <li>Fix: added validation to prevent terminal numbers less than 1 from connecting.</li>
+	  <li>Fix: resolved incorrect prepay refund calculation if pump server restarted with pump in 'refund taken' state (EP-642).</li>
+	  <li>Fix: resolved grade reload sequence to ensure grade data events to client applications include correct prices (EP-696).</li>
+	</ul>
+	
+	</li>
+	
+	<li><h3>ODBC Utility (ODBCnfg.exe and ODBCnfg64.exe) v1.0.3.0</h3>
+	<ul>
+	  <li>Fix: Updated 64-bit version to resolve runtime-error during installation on 64-bit versions of Windows (#12959).</li>
+	</ul>
+	
+	</li>
+	
+	<li><h3>SDK</h3>
+	<ul>
+		<li><h3>WPF Sample Application (PumpDemoWPF.exe) v1.0.22.0</h3> <!-- was v1.0.0.14 -->
+		<ul>
+			<li>Fix: Added code to ensure that transactions completed by reaching limit, or by client application stopping fuelling are automatically added to the sale window. Previously the Fuel Transaction dialog was shown for these cases. </li>
+			<li>Fix: When unsold prepay item is in the sale window it was possible to authorise the pump (EP-662). Changed logic to ensure a simple auth cannot be done when a prepay sequence is in progress.</li>
+			<li>Fix: Fuel Transaction dialog did not allow items to be sent to sale when in some situations.</li>
+		</ul>
+		</li> 
+		<li>Enabler Developers SDK Reference v4.0.7</li>
+	</ul>
+	
+  </li>
+	
+  </ul>	
+  
+  <!-- ************************************************************************** -->
+  
+  <h2>Enabler v4.0.0</h2> 
+  <h3>Summary</h3> 
+  <ul class="spacedlist">	
+	<li><b>Multi-platform API</b> for client applications built on XML/TCP transport. So client applications can be built and deployed on non-Windows platforms for the first time. This initial release will include:
+		<ul>
+			<li>.NET Native API (for .NET 2.0+)</li>
+			<li>100% Java API (for Java SE 7 and later)</li>
+			<li>OLE COM based API</li>
+		</ul>	
+	</li>
+	
+	<li><b>Separate GUI controls (with source code)</b> for selected platforms, based on our new API:
+		<ul>
+			<li>Pump Control - now sizeable with more comprehensive indication of pump activity.</li>
+			<li>Tank Control to visualise current tank levels. This displays live data from ATG equipment, or theoretical totals for sites that do not have ATG equipment.</li>
+		</ul>
+	</li>
+	
+	<li><b>Web-based</b> configuration and maintenance functions, allowing fast and reliable remote access. Includes user authentication and the ability to restrict access to features on a per-user basis.</li>
+	<li><b>Sample applications</b> that showcase the new API and UI, and help to get you started quickly.</li>
+	<li><b>Backwards compatibility for the existing ActiveX/COM API</b> with your existing client applications.</li>
+	<li><b>Updated Forecourt Drivers</b> released on 22 Feb 2013.</li>
+  </ul> 
+  
+  <h3>Details of Changes</h3> 
+  <ul class="spacedlist"> 
+		<li><h3>Initial Release (Beta)</h3></li>
+  </ul>
+  
+  <!-- ************************************************************************** -->
+</body>
+</html>
