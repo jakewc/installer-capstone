@@ -1,0 +1,1886 @@
+﻿2019-10-11 12:00:42.819   Log opened. (Time zone: UTC+13:00)
+2019-10-11 12:00:42.822   Setup version: Inno Setup version 6.0.2 (u)
+2019-10-11 12:00:42.824   Original Setup EXE: C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe
+2019-10-11 12:00:42.825   Setup command line: /SL5="$4109B4,40006066,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$24092E /NOTIFYWND=$63064A /DEBUGWND=$1408FE 
+2019-10-11 12:00:42.827   Windows version: 10.0.18362  (NT platform: Yes)
+2019-10-11 12:00:42.828   64-bit Windows: Yes
+2019-10-11 12:00:42.830   Processor architecture: x64
+2019-10-11 12:00:42.834   User privileges: Administrative
+2019-10-11 12:00:42.839   Administrative install mode: Yes
+2019-10-11 12:00:42.841   Install mode root key: HKEY_LOCAL_MACHINE
+2019-10-11 12:00:42.843   64-bit install mode: No
+2019-10-11 12:00:42.847   Created temporary directory: C:\Users\JACOBC~1\AppData\Local\Temp\is-NHRMH.tmp
+2019-10-11 12:00:42.855   -- DLL function import --
+2019-10-11 12:00:42.857   Function name: ExitProcess
+2019-10-11 12:00:42.859   DLL name: kernel32.dll
+2019-10-11 12:00:42.861   Dest DLL name: kernel32.dll
+2019-10-11 12:00:42.863   Importing the DLL function.
+2019-10-11 12:00:42.864   Successfully imported the DLL function. Delay loaded? No
+2019-10-11 12:00:42.871   Initialising variables.
+2019-10-11 12:00:43.061   Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10
+2019-10-11 12:00:43.067   Installing Enabler V4.6.3.6087 on Windows V10.00.18362 64bit (Version 10)
+2019-10-11 12:00:43.165   CMD /SL5="$4109B4,40006066,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$24092E /NOTIFYWND=$63064A /DEBUGWND=$1408FE 
+2019-10-11 12:00:43.200   IE Location C:\Program Files\Internet Explorer;
+2019-10-11 12:00:43.217   IE VERSION: 9.11.18362.0
+2019-10-11 12:00:43.249   Installing from C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output drive.
+2019-10-11 12:00:43.462   Windows product type: 1
+2019-10-11 12:00:43.501   Location of OSQL.EXE is  (Initial Checks)
+2019-10-11 12:00:43.516   SQL2014 folder found, this will be installed.
+2019-10-11 12:00:43.521   SQL server folders parsed, SQL server to install=SQL2014, Architecture=64, Windows version=10.00.18362, OS ver=10
+2019-10-11 12:00:43.534   SQLEXPRESSNAME = SQL2014
+2019-10-11 12:00:43.560   Restarting from previous installation reboot.
+2019-10-11 12:00:43.608   Checking disk space
+2019-10-11 12:00:43.879   B
+2019-10-11 12:00:55.100   Backup checkbox not checked or there is no existing database, will not backup.
+2019-10-11 12:00:55.359   Calling RestartManager's RmGetList.
+2019-10-11 12:00:55.371   RmGetList finished successfully.
+2019-10-11 12:00:55.373   RestartManager found no applications using one of our files.
+2019-10-11 12:00:55.434   SQL2008R2 requires MSI 4.5 and .NET 3.5 SP1 - MSI will be installed and will require a reboot.
+2019-10-11 12:00:55.447   Installing MSI 4.5
+2019-10-11 12:00:55.475   MSI 4.5 already installed
+2019-10-11 12:00:55.533   Found .NET v3.5 runtime
+2019-10-11 12:00:55.601   Check Net 4 install slqexpressname = SQL2014, net 4 installed = 1
+2019-10-11 12:00:55.615   .NET 4 Framework already installed
+2019-10-11 12:00:55.674   Starting the installation process.
+2019-10-11 12:00:55.735   Creating directory: C:\Enabler
+2019-10-11 12:00:55.737   Creating directory: C:\Enabler\Docs
+2019-10-11 12:00:55.742   Creating directory: C:\Enabler\SDK
+2019-10-11 12:00:55.747   Creating directory: C:\Enabler\SDK\Doc
+2019-10-11 12:00:55.749   Creating directory: C:\Enabler\SDK\Doc\VisualStudio
+2019-10-11 12:00:55.755   Creating directory: C:\Enabler\SDK\Samples
+2019-10-11 12:00:55.761   Creating directory: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\(Default)\SDK
+2019-10-11 12:00:55.767   Creating directory: C:\EnablerDB
+2019-10-11 12:00:55.773   Directory for uninstall files: C:\Enabler
+2019-10-11 12:00:55.775   Creating new uninstall log: C:\Enabler\unins000.dat
+2019-10-11 12:00:55.779   -- File entry --
+2019-10-11 12:00:55.782   Dest filename: C:\Enabler\unins000.exe
+2019-10-11 12:00:55.795   Time stamp of our file: 2019-10-11 12:00:42.714
+2019-10-11 12:00:55.797   Installing the file.
+2019-10-11 12:00:55.808   Successfully installed the file.
+2019-10-11 12:00:55.810   -- File entry --
+2019-10-11 12:00:55.816   Dest filename: C:\Enabler\comdlg32.ocx
+2019-10-11 12:00:55.819   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:55.821   Installing the file.
+2019-10-11 12:00:55.832   Successfully installed the file.
+2019-10-11 12:00:55.835   Will register the file (a DLL/OCX) later.
+2019-10-11 12:00:55.837   -- File entry --
+2019-10-11 12:00:55.844   Dest filename: C:\Enabler\comct232.ocx
+2019-10-11 12:00:55.846   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:55.848   Installing the file.
+2019-10-11 12:00:55.861   Successfully installed the file.
+2019-10-11 12:00:55.863   Will register the file (a DLL/OCX) later.
+2019-10-11 12:00:55.866   -- File entry --
+2019-10-11 12:00:55.873   Dest filename: C:\Enabler\comctl32.ocx
+2019-10-11 12:00:55.875   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:55.876   Installing the file.
+2019-10-11 12:00:55.912   Successfully installed the file.
+2019-10-11 12:00:55.915   Will register the file (a DLL/OCX) later.
+2019-10-11 12:00:55.918   -- File entry --
+2019-10-11 12:00:55.925   Dest filename: C:\Enabler\Mscomm32.ocx
+2019-10-11 12:00:55.928   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:55.932   Installing the file.
+2019-10-11 12:00:55.944   Successfully installed the file.
+2019-10-11 12:00:55.947   Will register the file (a DLL/OCX) later.
+2019-10-11 12:00:55.950   -- File entry --
+2019-10-11 12:00:55.957   Dest filename: C:\Enabler\Msflxgrd.ocx
+2019-10-11 12:00:55.960   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:55.962   Installing the file.
+2019-10-11 12:00:55.984   Successfully installed the file.
+2019-10-11 12:00:55.986   Will register the file (a DLL/OCX) later.
+2019-10-11 12:00:55.988   -- File entry --
+2019-10-11 12:00:55.996   Dest filename: C:\Enabler\Msrdc20.ocx
+2019-10-11 12:00:55.998   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.001   Installing the file.
+2019-10-11 12:00:56.017   Successfully installed the file.
+2019-10-11 12:00:56.020   Will register the file (a DLL/OCX) later.
+2019-10-11 12:00:56.023   -- File entry --
+2019-10-11 12:00:56.029   Dest filename: C:\Enabler\Msrdo20.dll
+2019-10-11 12:00:56.031   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.033   Installing the file.
+2019-10-11 12:00:56.058   Successfully installed the file.
+2019-10-11 12:00:56.061   Will register the file (a DLL/OCX) later.
+2019-10-11 12:00:56.063   -- File entry --
+2019-10-11 12:00:56.069   Dest filename: C:\Enabler\Msvcp60.dll
+2019-10-11 12:00:56.071   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.073   Installing the file.
+2019-10-11 12:00:56.093   Successfully installed the file.
+2019-10-11 12:00:56.096   -- File entry --
+2019-10-11 12:00:56.102   Dest filename: C:\Enabler\scutil.exe
+2019-10-11 12:00:56.104   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:56.106   Installing the file.
+2019-10-11 12:00:56.117   Successfully installed the file.
+2019-10-11 12:00:56.120   -- File entry --
+2019-10-11 12:00:56.126   Dest filename: C:\Enabler\EnbSecurityController.exe
+2019-10-11 12:00:56.128   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.130   Installing the file.
+2019-10-11 12:00:56.142   Successfully installed the file.
+2019-10-11 12:00:56.144   -- File entry --
+2019-10-11 12:00:56.152   Dest filename: C:\Enabler\SecurityModule.dll
+2019-10-11 12:00:56.154   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.155   Installing the file.
+2019-10-11 12:00:56.168   Successfully installed the file.
+2019-10-11 12:00:56.170   Will register the file (a DLL/OCX) later.
+2019-10-11 12:00:56.173   -- File entry --
+2019-10-11 12:00:56.179   Dest filename: C:\Enabler\itl.ico
+2019-10-11 12:00:56.181   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:56.183   Installing the file.
+2019-10-11 12:00:56.187   Successfully installed the file.
+2019-10-11 12:00:56.190   -- File entry --
+2019-10-11 12:00:56.199   Dest filename: C:\Enabler\ConvertV4BetaLicense.exe
+2019-10-11 12:00:56.202   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.204   Installing the file.
+2019-10-11 12:00:56.218   Successfully installed the file.
+2019-10-11 12:00:56.221   -- File entry --
+2019-10-11 12:00:56.228   Dest filename: C:\Enabler\EnbSessionX2.ocx
+2019-10-11 12:00:56.230   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.232   Installing the file.
+2019-10-11 12:00:56.367   Successfully installed the file.
+2019-10-11 12:00:56.371   Will register the file (a DLL/OCX) later.
+2019-10-11 12:00:56.374   -- File entry --
+2019-10-11 12:00:56.380   Dest filename: C:\Enabler\EnablerSoundEvents.reg
+2019-10-11 12:00:56.381   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.384   Installing the file.
+2019-10-11 12:00:56.387   Successfully installed the file.
+2019-10-11 12:00:56.389   -- File entry --
+2019-10-11 12:00:56.395   Dest filename: C:\Enabler\EnbAttendantX2.ocx
+2019-10-11 12:00:56.397   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.398   Installing the file.
+2019-10-11 12:00:56.528   Successfully installed the file.
+2019-10-11 12:00:56.530   Will register the file (a DLL/OCX) later.
+2019-10-11 12:00:56.533   -- File entry --
+2019-10-11 12:00:56.539   Dest filename: C:\Enabler\EnbPumpX2.ocx
+2019-10-11 12:00:56.540   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.542   Installing the file.
+2019-10-11 12:00:56.708   Successfully installed the file.
+2019-10-11 12:00:56.711   Will register the file (a DLL/OCX) later.
+2019-10-11 12:00:56.713   -- File entry --
+2019-10-11 12:00:56.719   Dest filename: C:\Enabler\joda-time-LICENSE.txt
+2019-10-11 12:00:56.720   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.722   Installing the file.
+2019-10-11 12:00:56.725   Successfully installed the file.
+2019-10-11 12:00:56.730   -- File entry --
+2019-10-11 12:00:56.738   Dest filename: C:\Enabler\joda-time-NOTICE.txt
+2019-10-11 12:00:56.743   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.747   Installing the file.
+2019-10-11 12:00:56.752   Successfully installed the file.
+2019-10-11 12:00:56.756   -- File entry --
+2019-10-11 12:00:56.762   Dest filename: C:\Enabler\enabler-api-1.0.jar
+2019-10-11 12:00:56.764   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.767   Installing the file.
+2019-10-11 12:00:56.788   Successfully installed the file.
+2019-10-11 12:00:56.793   -- File entry --
+2019-10-11 12:00:56.800   Dest filename: C:\Enabler\joda-time-2.0.jar
+2019-10-11 12:00:56.802   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.804   Installing the file.
+2019-10-11 12:00:56.850   Successfully installed the file.
+2019-10-11 12:00:56.852   -- File entry --
+2019-10-11 12:00:56.857   Dest filename: C:\Enabler\InstallEnablerApi.msi
+2019-10-11 12:00:56.859   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.860   Installing the file.
+2019-10-11 12:00:56.918   Successfully installed the file.
+2019-10-11 12:00:56.920   -- File entry --
+2019-10-11 12:00:56.927   Dest filename: C:\Enabler\ITL.Enabler.WPFControls.dll
+2019-10-11 12:00:56.929   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.931   Installing the file.
+2019-10-11 12:00:56.943   Successfully installed the file.
+2019-10-11 12:00:56.946   -- File entry --
+2019-10-11 12:00:56.953   Dest filename: C:\Enabler\System.Windows.Controls.DataVisualization.Toolkit.dll
+2019-10-11 12:00:56.955   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.957   Installing the file.
+2019-10-11 12:00:56.977   Successfully installed the file.
+2019-10-11 12:00:56.979   -- File entry --
+2019-10-11 12:00:56.986   Dest filename: C:\Enabler\WPFToolkit.dll
+2019-10-11 12:00:56.988   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:56.990   Installing the file.
+2019-10-11 12:00:57.013   Successfully installed the file.
+2019-10-11 12:00:57.015   -- File entry --
+2019-10-11 12:00:57.021   Dest filename: C:\Users\JACOBC~1\AppData\Local\Temp\is-NHRMH.tmp\IsAdmin.exe
+2019-10-11 12:00:57.024   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:57.026   Installing the file.
+2019-10-11 12:00:57.038   Successfully installed the file.
+2019-10-11 12:00:57.040   -- File entry --
+2019-10-11 12:00:57.046   Dest filename: C:\Enabler\AutoSupport.exe
+2019-10-11 12:00:57.048   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:57.051   Installing the file.
+2019-10-11 12:00:57.093   Successfully installed the file.
+2019-10-11 12:00:57.095   -- File entry --
+2019-10-11 12:00:57.102   Dest filename: C:\Users\JACOBC~1\AppData\Local\Temp\is-NHRMH.tmp\release.txt
+2019-10-11 12:00:57.104   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.106   Installing the file.
+2019-10-11 12:00:57.110   Successfully installed the file.
+2019-10-11 12:00:57.113   -- File entry --
+2019-10-11 12:00:57.119   Dest filename: C:\Enabler\bin\setx64.exe
+2019-10-11 12:00:57.122   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.123   Installing the file.
+2019-10-11 12:00:57.125   Creating directory: C:\Enabler\bin
+2019-10-11 12:00:57.135   Successfully installed the file.
+2019-10-11 12:00:57.139   -- File entry --
+2019-10-11 12:00:57.145   Dest filename: C:\Enabler\Release Notes.htm
+2019-10-11 12:00:57.147   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:57.149   Installing the file.
+2019-10-11 12:00:57.161   Successfully installed the file.
+2019-10-11 12:00:57.163   -- File entry --
+2019-10-11 12:00:57.172   Dest filename: C:\Enabler\PumpUpdate.htm
+2019-10-11 12:00:57.173   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.175   Installing the file.
+2019-10-11 12:00:57.184   Successfully installed the file.
+2019-10-11 12:00:57.186   -- File entry --
+2019-10-11 12:00:57.192   Dest filename: C:\Enabler\atutil.exe
+2019-10-11 12:00:57.194   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.196   Installing the file.
+2019-10-11 12:00:57.321   Successfully installed the file.
+2019-10-11 12:00:57.323   -- File entry --
+2019-10-11 12:00:57.329   Dest filename: C:\Enabler\odbcnfg.exe
+2019-10-11 12:00:57.331   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.334   Installing the file.
+2019-10-11 12:00:57.351   Successfully installed the file.
+2019-10-11 12:00:57.353   -- File entry --
+2019-10-11 12:00:57.359   Dest filename: C:\Enabler\odbcnfg64.exe
+2019-10-11 12:00:57.362   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.364   Installing the file.
+2019-10-11 12:00:57.386   Successfully installed the file.
+2019-10-11 12:00:57.390   -- File entry --
+2019-10-11 12:00:57.396   Dest filename: C:\Enabler\EnbKick.exe
+2019-10-11 12:00:57.399   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:57.401   Installing the file.
+2019-10-11 12:00:57.409   Successfully installed the file.
+2019-10-11 12:00:57.411   -- File entry --
+2019-10-11 12:00:57.418   Dest filename: C:\Enabler\bin\DriveCompressed.exe
+2019-10-11 12:00:57.420   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.422   Installing the file.
+2019-10-11 12:00:57.438   Successfully installed the file.
+2019-10-11 12:00:57.440   -- File entry --
+2019-10-11 12:00:57.447   Dest filename: C:\Enabler\enbclient.exe
+2019-10-11 12:00:57.450   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.452   Installing the file.
+2019-10-11 12:00:57.463   Successfully installed the file.
+2019-10-11 12:00:57.465   -- File entry --
+2019-10-11 12:00:57.472   Dest filename: C:\Enabler\Interop.IWshRuntimeLibrary.dll
+2019-10-11 12:00:57.475   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.477   Installing the file.
+2019-10-11 12:00:57.491   Successfully installed the file.
+2019-10-11 12:00:57.493   -- File entry --
+2019-10-11 12:00:57.501   Dest filename: C:\Enabler\MsiQueryProduct.exe
+2019-10-11 12:00:57.503   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:57.505   Installing the file.
+2019-10-11 12:00:57.515   Successfully installed the file.
+2019-10-11 12:00:57.519   -- File entry --
+2019-10-11 12:00:57.526   Dest filename: C:\Enabler\vcredist_x86.exe
+2019-10-11 12:00:57.528   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:57.529   Installing the file.
+2019-10-11 12:00:57.584   Successfully installed the file.
+2019-10-11 12:00:57.588   -- File entry --
+2019-10-11 12:00:57.594   Dest filename: C:\Enabler\bin\subinacl.exe
+2019-10-11 12:00:57.597   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.598   Installing the file.
+2019-10-11 12:00:57.615   Successfully installed the file.
+2019-10-11 12:00:57.620   -- File entry --
+2019-10-11 12:00:57.627   Dest filename: C:\Enabler\InstallSim.sql
+2019-10-11 12:00:57.629   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.631   Installing the file.
+2019-10-11 12:00:57.636   Successfully installed the file.
+2019-10-11 12:00:57.638   -- File entry --
+2019-10-11 12:00:57.644   Dest filename: C:\Enabler\Instances.bat
+2019-10-11 12:00:57.647   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.648   Installing the file.
+2019-10-11 12:00:57.653   Successfully installed the file.
+2019-10-11 12:00:57.656   -- File entry --
+2019-10-11 12:00:57.662   Dest filename: C:\Enabler\DbInstall.bat
+2019-10-11 12:00:57.664   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.666   Installing the file.
+2019-10-11 12:00:57.671   Successfully installed the file.
+2019-10-11 12:00:57.673   -- File entry --
+2019-10-11 12:00:57.679   Dest filename: C:\Enabler\DbUpgrade.bat
+2019-10-11 12:00:57.682   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.684   Installing the file.
+2019-10-11 12:00:57.687   Successfully installed the file.
+2019-10-11 12:00:57.689   -- File entry --
+2019-10-11 12:00:57.695   Dest filename: C:\Enabler\AfterRestore.sql
+2019-10-11 12:00:57.698   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.700   Installing the file.
+2019-10-11 12:00:57.704   Successfully installed the file.
+2019-10-11 12:00:57.706   -- File entry --
+2019-10-11 12:00:57.712   Dest filename: C:\Enabler\attach.sql
+2019-10-11 12:00:57.715   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.717   Installing the file.
+2019-10-11 12:00:57.721   Successfully installed the file.
+2019-10-11 12:00:57.724   -- File entry --
+2019-10-11 12:00:57.731   Dest filename: C:\Enabler\checkdb.sql
+2019-10-11 12:00:57.733   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.735   Installing the file.
+2019-10-11 12:00:57.738   Successfully installed the file.
+2019-10-11 12:00:57.740   -- File entry --
+2019-10-11 12:00:57.747   Dest filename: C:\Enabler\config70.sql
+2019-10-11 12:00:57.749   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.752   Installing the file.
+2019-10-11 12:00:57.756   Successfully installed the file.
+2019-10-11 12:00:57.760   -- File entry --
+2019-10-11 12:00:57.766   Dest filename: C:\Enabler\DefaultData.sql
+2019-10-11 12:00:57.768   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.769   Installing the file.
+2019-10-11 12:00:57.774   Successfully installed the file.
+2019-10-11 12:00:57.776   -- File entry --
+2019-10-11 12:00:57.785   Dest filename: C:\Enabler\enabler.sql
+2019-10-11 12:00:57.788   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.789   Installing the file.
+2019-10-11 12:00:57.797   Successfully installed the file.
+2019-10-11 12:00:57.801   -- File entry --
+2019-10-11 12:00:57.808   Dest filename: C:\Enabler\eic.sql
+2019-10-11 12:00:57.810   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.812   Installing the file.
+2019-10-11 12:00:57.816   Successfully installed the file.
+2019-10-11 12:00:57.820   -- File entry --
+2019-10-11 12:00:57.826   Dest filename: C:\Enabler\Load.sql
+2019-10-11 12:00:57.828   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.830   Installing the file.
+2019-10-11 12:00:57.840   Successfully installed the file.
+2019-10-11 12:00:57.843   -- File entry --
+2019-10-11 12:00:57.850   Dest filename: C:\Enabler\mkUpgrade.sql
+2019-10-11 12:00:57.853   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.855   Installing the file.
+2019-10-11 12:00:57.859   Successfully installed the file.
+2019-10-11 12:00:57.861   -- File entry --
+2019-10-11 12:00:57.868   Dest filename: C:\Enabler\populate.sql
+2019-10-11 12:00:57.870   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.872   Installing the file.
+2019-10-11 12:00:57.876   Successfully installed the file.
+2019-10-11 12:00:57.878   -- File entry --
+2019-10-11 12:00:57.884   Dest filename: C:\Enabler\LOADEnbConfigX.sql
+2019-10-11 12:00:57.887   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.888   Installing the file.
+2019-10-11 12:00:57.892   Successfully installed the file.
+2019-10-11 12:00:57.894   -- File entry --
+2019-10-11 12:00:57.902   Dest filename: C:\Enabler\dbfix.sql
+2019-10-11 12:00:57.904   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.905   Installing the file.
+2019-10-11 12:00:57.909   Successfully installed the file.
+2019-10-11 12:00:57.911   -- File entry --
+2019-10-11 12:00:57.917   Dest filename: C:\Enabler\drop.sql
+2019-10-11 12:00:57.919   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.920   Installing the file.
+2019-10-11 12:00:57.923   Successfully installed the file.
+2019-10-11 12:00:57.926   -- File entry --
+2019-10-11 12:00:57.931   Dest filename: C:\Enabler\nightly.bat
+2019-10-11 12:00:57.934   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.935   Installing the file.
+2019-10-11 12:00:57.938   Successfully installed the file.
+2019-10-11 12:00:57.940   -- File entry --
+2019-10-11 12:00:57.946   Dest filename: C:\Enabler\nightly.sql
+2019-10-11 12:00:57.948   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.950   Installing the file.
+2019-10-11 12:00:57.954   Successfully installed the file.
+2019-10-11 12:00:57.956   -- File entry --
+2019-10-11 12:00:57.962   Dest filename: C:\Enabler\EnablerRestore.bat
+2019-10-11 12:00:57.964   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.966   Installing the file.
+2019-10-11 12:00:57.970   Successfully installed the file.
+2019-10-11 12:00:57.972   -- File entry --
+2019-10-11 12:00:57.978   Dest filename: C:\Enabler\sql70.bat
+2019-10-11 12:00:57.980   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.982   Installing the file.
+2019-10-11 12:00:57.986   Successfully installed the file.
+2019-10-11 12:00:57.988   -- File entry --
+2019-10-11 12:00:57.994   Dest filename: C:\Enabler\ExpressUpdate.exe
+2019-10-11 12:00:57.996   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:57.997   Installing the file.
+2019-10-11 12:00:58.137   Successfully installed the file.
+2019-10-11 12:00:58.139   -- File entry --
+2019-10-11 12:00:58.145   Dest filename: C:\Enabler\ExpressUpdatex64.exe
+2019-10-11 12:00:58.146   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.147   Installing the file.
+2019-10-11 12:00:58.369   Successfully installed the file.
+2019-10-11 12:00:58.375   -- File entry --
+2019-10-11 12:00:58.383   Dest filename: C:\Enabler\PCIUpdate.exe
+2019-10-11 12:00:58.386   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.387   Installing the file.
+2019-10-11 12:00:58.403   Successfully installed the file.
+2019-10-11 12:00:58.407   -- File entry --
+2019-10-11 12:00:58.413   Dest filename: C:\Enabler\bin\psrvr4.exe
+2019-10-11 12:00:58.417   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.419   Installing the file.
+2019-10-11 12:00:58.477   Successfully installed the file.
+2019-10-11 12:00:58.481   -- File entry --
+2019-10-11 12:00:58.487   Dest filename: C:\Enabler\onmains.bat
+2019-10-11 12:00:58.489   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.490   Installing the file.
+2019-10-11 12:00:58.493   Successfully installed the file.
+2019-10-11 12:00:58.497   -- File entry --
+2019-10-11 12:00:58.506   Dest filename: C:\Enabler\onbatt.bat
+2019-10-11 12:00:58.509   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.511   Installing the file.
+2019-10-11 12:00:58.514   Successfully installed the file.
+2019-10-11 12:00:58.516   -- File entry --
+2019-10-11 12:00:58.522   Dest filename: C:\Enabler\Commslst.bat
+2019-10-11 12:00:58.526   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.528   Installing the file.
+2019-10-11 12:00:58.531   Successfully installed the file.
+2019-10-11 12:00:58.535   -- File entry --
+2019-10-11 12:00:58.542   Dest filename: C:\Enabler\commsest.bat
+2019-10-11 12:00:58.544   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.545   Installing the file.
+2019-10-11 12:00:58.549   Successfully installed the file.
+2019-10-11 12:00:58.552   -- File entry --
+2019-10-11 12:00:58.558   Dest filename: C:\Enabler\comlstbt.bat
+2019-10-11 12:00:58.560   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.562   Installing the file.
+2019-10-11 12:00:58.566   Successfully installed the file.
+2019-10-11 12:00:58.568   -- File entry --
+2019-10-11 12:00:58.575   Dest filename: C:\Enabler\battlow.bat
+2019-10-11 12:00:58.577   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.578   Installing the file.
+2019-10-11 12:00:58.582   Successfully installed the file.
+2019-10-11 12:00:58.584   -- File entry --
+2019-10-11 12:00:58.590   Dest filename: C:\Enabler\battgood.bat
+2019-10-11 12:00:58.592   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.594   Installing the file.
+2019-10-11 12:00:58.597   Successfully installed the file.
+2019-10-11 12:00:58.599   -- File entry --
+2019-10-11 12:00:58.606   Dest filename: C:\Enabler\battflat.bat
+2019-10-11 12:00:58.607   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.609   Installing the file.
+2019-10-11 12:00:58.612   Successfully installed the file.
+2019-10-11 12:00:58.614   -- File entry --
+2019-10-11 12:00:58.622   Dest filename: C:\Enabler\EicGX.inf
+2019-10-11 12:00:58.624   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:58.625   Installing the file.
+2019-10-11 12:00:58.628   Successfully installed the file.
+2019-10-11 12:00:58.630   -- File entry --
+2019-10-11 12:00:58.637   Dest filename: C:\Enabler\EicMain2.hex
+2019-10-11 12:00:58.639   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:00:58.640   Installing the file.
+2019-10-11 12:00:58.656   Successfully installed the file.
+2019-10-11 12:00:58.658   -- File entry --
+2019-10-11 12:00:58.664   Dest filename: C:\Enabler\bin\OpenNETCF.SSL.dll
+2019-10-11 12:00:58.666   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.668   Installing the file.
+2019-10-11 12:00:58.692   Successfully installed the file.
+2019-10-11 12:00:58.694   -- File entry --
+2019-10-11 12:00:58.701   Dest filename: C:\Enabler\bin\OpenNETCF.web.dll
+2019-10-11 12:00:58.703   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.705   Installing the file.
+2019-10-11 12:00:58.735   Successfully installed the file.
+2019-10-11 12:00:58.738   -- File entry --
+2019-10-11 12:00:58.745   Dest filename: C:\Enabler\bin\OpenNETCF.web.html.dll
+2019-10-11 12:00:58.747   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.749   Installing the file.
+2019-10-11 12:00:58.762   Successfully installed the file.
+2019-10-11 12:00:58.764   -- File entry --
+2019-10-11 12:00:58.771   Dest filename: C:\Enabler\bin\Utilities.dll
+2019-10-11 12:00:58.773   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.775   Installing the file.
+2019-10-11 12:00:58.788   Successfully installed the file.
+2019-10-11 12:00:58.791   -- File entry --
+2019-10-11 12:00:58.796   Dest filename: C:\Enabler\bin\Newtonsoft.Json.dll
+2019-10-11 12:00:58.798   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.800   Installing the file.
+2019-10-11 12:00:58.822   Successfully installed the file.
+2019-10-11 12:00:58.824   -- File entry --
+2019-10-11 12:00:58.830   Dest filename: C:\Enabler\bin\openssl.exe
+2019-10-11 12:00:58.832   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.835   Installing the file.
+2019-10-11 12:00:58.861   Successfully installed the file.
+2019-10-11 12:00:58.865   -- File entry --
+2019-10-11 12:00:58.872   Dest filename: C:\Enabler\bin\libeay32.dll
+2019-10-11 12:00:58.874   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.875   Installing the file.
+2019-10-11 12:00:58.937   Successfully installed the file.
+2019-10-11 12:00:58.940   -- File entry --
+2019-10-11 12:00:58.946   Dest filename: C:\Enabler\bin\ssleay32.dll
+2019-10-11 12:00:58.948   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.952   Installing the file.
+2019-10-11 12:00:58.972   Successfully installed the file.
+2019-10-11 12:00:58.974   -- File entry --
+2019-10-11 12:00:58.981   Dest filename: C:\Enabler\bin\openssl.cnf
+2019-10-11 12:00:58.985   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:58.986   Installing the file.
+2019-10-11 12:00:58.991   Successfully installed the file.
+2019-10-11 12:00:58.993   -- File entry --
+2019-10-11 12:00:59.000   Dest filename: C:\Enabler\bin\openssl-license.txt
+2019-10-11 12:00:59.003   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.005   Installing the file.
+2019-10-11 12:00:59.010   Successfully installed the file.
+2019-10-11 12:00:59.012   -- File entry --
+2019-10-11 12:00:59.020   Dest filename: C:\Enabler\bin\SecureBlackbox.dll
+2019-10-11 12:00:59.022   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.025   Installing the file.
+2019-10-11 12:00:59.206   Successfully installed the file.
+2019-10-11 12:00:59.209   -- File entry --
+2019-10-11 12:00:59.215   Dest filename: C:\Enabler\bin\SecureBlackbox.SSLCommon.dll
+2019-10-11 12:00:59.219   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.220   Installing the file.
+2019-10-11 12:00:59.231   Successfully installed the file.
+2019-10-11 12:00:59.235   -- File entry --
+2019-10-11 12:00:59.241   Dest filename: C:\Enabler\bin\SecureBlackbox.SSLServer.dll
+2019-10-11 12:00:59.243   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.245   Installing the file.
+2019-10-11 12:00:59.258   Successfully installed the file.
+2019-10-11 12:00:59.261   -- File entry --
+2019-10-11 12:00:59.267   Dest filename: C:\Enabler\bin\SecureBlackbox.Mail.dll
+2019-10-11 12:00:59.269   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.271   Installing the file.
+2019-10-11 12:00:59.282   Successfully installed the file.
+2019-10-11 12:00:59.285   -- File entry --
+2019-10-11 12:00:59.293   Dest filename: C:\Enabler\bin\SecureBlackbox.MIME.dll
+2019-10-11 12:00:59.295   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.296   Installing the file.
+2019-10-11 12:00:59.311   Successfully installed the file.
+2019-10-11 12:00:59.313   -- File entry --
+2019-10-11 12:00:59.320   Dest filename: C:\Enabler\bin\enbweb.exe
+2019-10-11 12:00:59.322   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.324   Installing the file.
+2019-10-11 12:00:59.397   Successfully installed the file.
+2019-10-11 12:00:59.400   -- File entry --
+2019-10-11 12:00:59.406   Dest filename: C:\Enabler\bin\enbweb.exe.config
+2019-10-11 12:00:59.408   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.410   Installing the file.
+2019-10-11 12:00:59.414   Successfully installed the file.
+2019-10-11 12:00:59.416   -- File entry --
+2019-10-11 12:00:59.422   Dest filename: C:\Enabler\www\bin\WebPages.dll
+2019-10-11 12:00:59.424   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.425   Installing the file.
+2019-10-11 12:00:59.427   Creating directory: C:\Enabler\www
+2019-10-11 12:00:59.428   Creating directory: C:\Enabler\www\bin
+2019-10-11 12:00:59.512   Successfully installed the file.
+2019-10-11 12:00:59.532   -- File entry --
+2019-10-11 12:00:59.536   Dest filename: C:\Enabler\bin\RESTData.dll
+2019-10-11 12:00:59.539   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.543   Installing the file.
+2019-10-11 12:00:59.561   Successfully installed the file.
+2019-10-11 12:00:59.563   -- File entry --
+2019-10-11 12:00:59.570   Dest filename: C:\Enabler\bin\PageResources.dll
+2019-10-11 12:00:59.572   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.573   Installing the file.
+2019-10-11 12:00:59.597   Successfully installed the file.
+2019-10-11 12:00:59.600   -- File entry --
+2019-10-11 12:00:59.606   Dest filename: C:\Enabler\bin\es\PageResources.resources.dll
+2019-10-11 12:00:59.609   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.610   Installing the file.
+2019-10-11 12:00:59.612   Creating directory: C:\Enabler\bin\es
+2019-10-11 12:00:59.627   Successfully installed the file.
+2019-10-11 12:00:59.630   -- File entry --
+2019-10-11 12:00:59.636   Dest filename: C:\Enabler\bin\fr\PageResources.resources.dll
+2019-10-11 12:00:59.638   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.639   Installing the file.
+2019-10-11 12:00:59.642   Creating directory: C:\Enabler\bin\fr
+2019-10-11 12:00:59.655   Successfully installed the file.
+2019-10-11 12:00:59.657   -- File entry --
+2019-10-11 12:00:59.663   Dest filename: C:\Enabler\bin\id\PageResources.resources.dll
+2019-10-11 12:00:59.667   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.670   Installing the file.
+2019-10-11 12:00:59.671   Creating directory: C:\Enabler\bin\id
+2019-10-11 12:00:59.682   Successfully installed the file.
+2019-10-11 12:00:59.686   -- File entry --
+2019-10-11 12:00:59.692   Dest filename: C:\Enabler\bin\it-IT\PageResources.resources.dll
+2019-10-11 12:00:59.694   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.696   Installing the file.
+2019-10-11 12:00:59.697   Creating directory: C:\Enabler\bin\it-IT
+2019-10-11 12:00:59.710   Successfully installed the file.
+2019-10-11 12:00:59.712   -- File entry --
+2019-10-11 12:00:59.719   Dest filename: C:\Enabler\bin\pt-BR\PageResources.resources.dll
+2019-10-11 12:00:59.721   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.722   Installing the file.
+2019-10-11 12:00:59.724   Creating directory: C:\Enabler\bin\pt-BR
+2019-10-11 12:00:59.737   Successfully installed the file.
+2019-10-11 12:00:59.740   -- File entry --
+2019-10-11 12:00:59.747   Dest filename: C:\Enabler\bin\ru\PageResources.resources.dll
+2019-10-11 12:00:59.749   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.751   Installing the file.
+2019-10-11 12:00:59.752   Creating directory: C:\Enabler\bin\ru
+2019-10-11 12:00:59.768   Successfully installed the file.
+2019-10-11 12:00:59.771   -- File entry --
+2019-10-11 12:00:59.778   Dest filename: C:\Enabler\bin\sl\PageResources.resources.dll
+2019-10-11 12:00:59.780   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.782   Installing the file.
+2019-10-11 12:00:59.785   Creating directory: C:\Enabler\bin\sl
+2019-10-11 12:00:59.798   Successfully installed the file.
+2019-10-11 12:00:59.801   -- File entry --
+2019-10-11 12:00:59.807   Dest filename: C:\Enabler\bin\th\PageResources.resources.dll
+2019-10-11 12:00:59.809   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.811   Installing the file.
+2019-10-11 12:00:59.813   Creating directory: C:\Enabler\bin\th
+2019-10-11 12:00:59.829   Successfully installed the file.
+2019-10-11 12:00:59.833   -- File entry --
+2019-10-11 12:00:59.839   Dest filename: C:\Enabler\bin\zh-CHS\PageResources.resources.dll
+2019-10-11 12:00:59.841   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.842   Installing the file.
+2019-10-11 12:00:59.844   Creating directory: C:\Enabler\bin\zh-CHS
+2019-10-11 12:00:59.860   Successfully installed the file.
+2019-10-11 12:00:59.864   -- File entry --
+2019-10-11 12:00:59.871   Dest filename: C:\Enabler\www\css\Enabler.css
+2019-10-11 12:00:59.872   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.874   Installing the file.
+2019-10-11 12:00:59.875   Creating directory: C:\Enabler\www\css
+2019-10-11 12:00:59.879   Successfully installed the file.
+2019-10-11 12:00:59.881   -- File entry --
+2019-10-11 12:00:59.888   Dest filename: C:\Enabler\www\css\EnablerPrintReport.css
+2019-10-11 12:00:59.891   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.893   Installing the file.
+2019-10-11 12:00:59.896   Successfully installed the file.
+2019-10-11 12:00:59.903   -- File entry --
+2019-10-11 12:00:59.910   Dest filename: C:\Enabler\www\css\EnablerReport.css
+2019-10-11 12:00:59.911   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.913   Installing the file.
+2019-10-11 12:00:59.916   Successfully installed the file.
+2019-10-11 12:00:59.919   -- File entry --
+2019-10-11 12:00:59.925   Dest filename: C:\Enabler\www\css\EnablerSiteMonitor.css
+2019-10-11 12:00:59.927   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.929   Installing the file.
+2019-10-11 12:00:59.938   Successfully installed the file.
+2019-10-11 12:00:59.940   -- File entry --
+2019-10-11 12:00:59.947   Dest filename: C:\Enabler\www\css\EnablerTable.css
+2019-10-11 12:00:59.949   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.951   Installing the file.
+2019-10-11 12:00:59.955   Successfully installed the file.
+2019-10-11 12:00:59.957   -- File entry --
+2019-10-11 12:00:59.964   Dest filename: C:\Enabler\www\css\Login.css
+2019-10-11 12:00:59.966   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.968   Installing the file.
+2019-10-11 12:00:59.973   Successfully installed the file.
+2019-10-11 12:00:59.975   -- File entry --
+2019-10-11 12:00:59.981   Dest filename: C:\Enabler\www\css\menu.css
+2019-10-11 12:00:59.984   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:00:59.986   Installing the file.
+2019-10-11 12:00:59.990   Successfully installed the file.
+2019-10-11 12:00:59.993   -- File entry --
+2019-10-11 12:01:00.000   Dest filename: C:\Enabler\www\images\bluecircle.png
+2019-10-11 12:01:00.003   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.005   Installing the file.
+2019-10-11 12:01:00.007   Creating directory: C:\Enabler\www\images
+2019-10-11 12:01:00.010   Successfully installed the file.
+2019-10-11 12:01:00.013   -- File entry --
+2019-10-11 12:01:00.020   Dest filename: C:\Enabler\www\images\down.png
+2019-10-11 12:01:00.022   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.024   Installing the file.
+2019-10-11 12:01:00.027   Successfully installed the file.
+2019-10-11 12:01:00.029   -- File entry --
+2019-10-11 12:01:00.037   Dest filename: C:\Enabler\www\images\flag_ar.jpg
+2019-10-11 12:01:00.040   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.042   Installing the file.
+2019-10-11 12:01:00.045   Successfully installed the file.
+2019-10-11 12:01:00.047   -- File entry --
+2019-10-11 12:01:00.055   Dest filename: C:\Enabler\www\images\flag_au.jpg
+2019-10-11 12:01:00.058   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.059   Installing the file.
+2019-10-11 12:01:00.063   Successfully installed the file.
+2019-10-11 12:01:00.065   -- File entry --
+2019-10-11 12:01:00.073   Dest filename: C:\Enabler\www\images\flag_bo.jpg
+2019-10-11 12:01:00.075   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.077   Installing the file.
+2019-10-11 12:01:00.081   Successfully installed the file.
+2019-10-11 12:01:00.083   -- File entry --
+2019-10-11 12:01:00.090   Dest filename: C:\Enabler\www\images\flag_br.jpg
+2019-10-11 12:01:00.092   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.094   Installing the file.
+2019-10-11 12:01:00.097   Successfully installed the file.
+2019-10-11 12:01:00.101   -- File entry --
+2019-10-11 12:01:00.108   Dest filename: C:\Enabler\www\images\flag_ca.jpg
+2019-10-11 12:01:00.110   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.112   Installing the file.
+2019-10-11 12:01:00.116   Successfully installed the file.
+2019-10-11 12:01:00.119   -- File entry --
+2019-10-11 12:01:00.125   Dest filename: C:\Enabler\www\images\flag_cl.jpg
+2019-10-11 12:01:00.127   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.128   Installing the file.
+2019-10-11 12:01:00.131   Successfully installed the file.
+2019-10-11 12:01:00.134   -- File entry --
+2019-10-11 12:01:00.140   Dest filename: C:\Enabler\www\images\flag_cn.jpg
+2019-10-11 12:01:00.142   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.143   Installing the file.
+2019-10-11 12:01:00.147   Successfully installed the file.
+2019-10-11 12:01:00.150   -- File entry --
+2019-10-11 12:01:00.156   Dest filename: C:\Enabler\www\images\flag_el.jpg
+2019-10-11 12:01:00.158   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.159   Installing the file.
+2019-10-11 12:01:00.162   Successfully installed the file.
+2019-10-11 12:01:00.165   -- File entry --
+2019-10-11 12:01:00.173   Dest filename: C:\Enabler\www\images\flag_es.jpg
+2019-10-11 12:01:00.175   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.177   Installing the file.
+2019-10-11 12:01:00.180   Successfully installed the file.
+2019-10-11 12:01:00.183   -- File entry --
+2019-10-11 12:01:00.189   Dest filename: C:\Enabler\www\images\flag_fi.jpg
+2019-10-11 12:01:00.192   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.193   Installing the file.
+2019-10-11 12:01:00.197   Successfully installed the file.
+2019-10-11 12:01:00.199   -- File entry --
+2019-10-11 12:01:00.206   Dest filename: C:\Enabler\www\images\flag_fr.jpg
+2019-10-11 12:01:00.208   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.209   Installing the file.
+2019-10-11 12:01:00.214   Successfully installed the file.
+2019-10-11 12:01:00.216   -- File entry --
+2019-10-11 12:01:00.223   Dest filename: C:\Enabler\www\images\flag_gb.jpg
+2019-10-11 12:01:00.224   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.226   Installing the file.
+2019-10-11 12:01:00.229   Successfully installed the file.
+2019-10-11 12:01:00.231   -- File entry --
+2019-10-11 12:01:00.238   Dest filename: C:\Enabler\www\images\flag_gu.jpg
+2019-10-11 12:01:00.240   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.241   Installing the file.
+2019-10-11 12:01:00.246   Successfully installed the file.
+2019-10-11 12:01:00.248   -- File entry --
+2019-10-11 12:01:00.256   Dest filename: C:\Enabler\www\images\flag_hk.jpg
+2019-10-11 12:01:00.258   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.259   Installing the file.
+2019-10-11 12:01:00.263   Successfully installed the file.
+2019-10-11 12:01:00.266   -- File entry --
+2019-10-11 12:01:00.273   Dest filename: C:\Enabler\www\images\flag_id.jpg
+2019-10-11 12:01:00.276   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.277   Installing the file.
+2019-10-11 12:01:00.281   Successfully installed the file.
+2019-10-11 12:01:00.283   -- File entry --
+2019-10-11 12:01:00.289   Dest filename: C:\Enabler\www\images\flag_in.jpg
+2019-10-11 12:01:00.292   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.294   Installing the file.
+2019-10-11 12:01:00.298   Successfully installed the file.
+2019-10-11 12:01:00.300   -- File entry --
+2019-10-11 12:01:00.306   Dest filename: C:\Enabler\www\images\flag_ir.jpg
+2019-10-11 12:01:00.308   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.310   Installing the file.
+2019-10-11 12:01:00.313   Successfully installed the file.
+2019-10-11 12:01:00.315   -- File entry --
+2019-10-11 12:01:00.322   Dest filename: C:\Enabler\www\images\flag_it.jpg
+2019-10-11 12:01:00.325   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.326   Installing the file.
+2019-10-11 12:01:00.330   Successfully installed the file.
+2019-10-11 12:01:00.332   -- File entry --
+2019-10-11 12:01:00.341   Dest filename: C:\Enabler\www\images\flag_ml.jpg
+2019-10-11 12:01:00.342   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.344   Installing the file.
+2019-10-11 12:01:00.348   Successfully installed the file.
+2019-10-11 12:01:00.350   -- File entry --
+2019-10-11 12:01:00.356   Dest filename: C:\Enabler\www\images\flag_mx.jpg
+2019-10-11 12:01:00.358   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.359   Installing the file.
+2019-10-11 12:01:00.363   Successfully installed the file.
+2019-10-11 12:01:00.365   -- File entry --
+2019-10-11 12:01:00.373   Dest filename: C:\Enabler\www\images\flag_nz.jpg
+2019-10-11 12:01:00.376   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.377   Installing the file.
+2019-10-11 12:01:00.381   Successfully installed the file.
+2019-10-11 12:01:00.385   -- File entry --
+2019-10-11 12:01:00.390   Dest filename: C:\Enabler\www\images\flag_om.jpg
+2019-10-11 12:01:00.394   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.396   Installing the file.
+2019-10-11 12:01:00.401   Successfully installed the file.
+2019-10-11 12:01:00.403   -- File entry --
+2019-10-11 12:01:00.410   Dest filename: C:\Enabler\www\images\flag_pe.jpg
+2019-10-11 12:01:00.412   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.414   Installing the file.
+2019-10-11 12:01:00.419   Successfully installed the file.
+2019-10-11 12:01:00.421   -- File entry --
+2019-10-11 12:01:00.427   Dest filename: C:\Enabler\www\images\flag_ph.jpg
+2019-10-11 12:01:00.429   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.431   Installing the file.
+2019-10-11 12:01:00.435   Successfully installed the file.
+2019-10-11 12:01:00.437   -- File entry --
+2019-10-11 12:01:00.443   Dest filename: C:\Enabler\www\images\flag_pk.jpg
+2019-10-11 12:01:00.446   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.447   Installing the file.
+2019-10-11 12:01:00.451   Successfully installed the file.
+2019-10-11 12:01:00.453   -- File entry --
+2019-10-11 12:01:00.459   Dest filename: C:\Enabler\www\images\flag_ru.jpg
+2019-10-11 12:01:00.460   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.462   Installing the file.
+2019-10-11 12:01:00.466   Successfully installed the file.
+2019-10-11 12:01:00.469   -- File entry --
+2019-10-11 12:01:00.474   Dest filename: C:\Enabler\www\images\flag_si.jpg
+2019-10-11 12:01:00.476   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.478   Installing the file.
+2019-10-11 12:01:00.482   Successfully installed the file.
+2019-10-11 12:01:00.485   -- File entry --
+2019-10-11 12:01:00.490   Dest filename: C:\Enabler\www\images\flag_th.jpg
+2019-10-11 12:01:00.493   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.495   Installing the file.
+2019-10-11 12:01:00.500   Successfully installed the file.
+2019-10-11 12:01:00.502   -- File entry --
+2019-10-11 12:01:00.508   Dest filename: C:\Enabler\www\images\flag_us.jpg
+2019-10-11 12:01:00.511   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.513   Installing the file.
+2019-10-11 12:01:00.517   Successfully installed the file.
+2019-10-11 12:01:00.519   -- File entry --
+2019-10-11 12:01:00.525   Dest filename: C:\Enabler\www\images\flag_za.jpg
+2019-10-11 12:01:00.527   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.529   Installing the file.
+2019-10-11 12:01:00.533   Successfully installed the file.
+2019-10-11 12:01:00.536   -- File entry --
+2019-10-11 12:01:00.542   Dest filename: C:\Enabler\www\images\folder.gif
+2019-10-11 12:01:00.544   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.545   Installing the file.
+2019-10-11 12:01:00.551   Successfully installed the file.
+2019-10-11 12:01:00.554   -- File entry --
+2019-10-11 12:01:00.560   Dest filename: C:\Enabler\www\images\greenarrow.png
+2019-10-11 12:01:00.562   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.563   Installing the file.
+2019-10-11 12:01:00.567   Successfully installed the file.
+2019-10-11 12:01:00.569   -- File entry --
+2019-10-11 12:01:00.575   Dest filename: C:\Enabler\www\images\greentick.png
+2019-10-11 12:01:00.577   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.579   Installing the file.
+2019-10-11 12:01:00.584   Successfully installed the file.
+2019-10-11 12:01:00.587   -- File entry --
+2019-10-11 12:01:00.593   Dest filename: C:\Enabler\www\images\greenticksmall.png
+2019-10-11 12:01:00.595   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.597   Installing the file.
+2019-10-11 12:01:00.606   Successfully installed the file.
+2019-10-11 12:01:00.609   -- File entry --
+2019-10-11 12:01:00.615   Dest filename: C:\Enabler\www\images\incompletesmall.png
+2019-10-11 12:01:00.617   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.619   Installing the file.
+2019-10-11 12:01:00.623   Successfully installed the file.
+2019-10-11 12:01:00.625   -- File entry --
+2019-10-11 12:01:00.631   Dest filename: C:\Enabler\www\images\logo.png
+2019-10-11 12:01:00.634   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.636   Installing the file.
+2019-10-11 12:01:00.639   Successfully installed the file.
+2019-10-11 12:01:00.641   -- File entry --
+2019-10-11 12:01:00.647   Dest filename: C:\Enabler\www\images\pumpx-animate.gif
+2019-10-11 12:01:00.650   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.652   Installing the file.
+2019-10-11 12:01:00.656   Successfully installed the file.
+2019-10-11 12:01:00.658   -- File entry --
+2019-10-11 12:01:00.664   Dest filename: C:\Enabler\www\images\RedCross.png
+2019-10-11 12:01:00.666   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.668   Installing the file.
+2019-10-11 12:01:00.672   Successfully installed the file.
+2019-10-11 12:01:00.674   -- File entry --
+2019-10-11 12:01:00.680   Dest filename: C:\Enabler\www\images\RedCrossSmall.png
+2019-10-11 12:01:00.683   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.685   Installing the file.
+2019-10-11 12:01:00.688   Successfully installed the file.
+2019-10-11 12:01:00.690   -- File entry --
+2019-10-11 12:01:00.696   Dest filename: C:\Enabler\www\images\tools32.png
+2019-10-11 12:01:00.698   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.700   Installing the file.
+2019-10-11 12:01:00.704   Successfully installed the file.
+2019-10-11 12:01:00.706   -- File entry --
+2019-10-11 12:01:00.712   Dest filename: C:\Enabler\www\images\tableft.gif
+2019-10-11 12:01:00.713   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.715   Installing the file.
+2019-10-11 12:01:00.720   Successfully installed the file.
+2019-10-11 12:01:00.722   -- File entry --
+2019-10-11 12:01:00.728   Dest filename: C:\Enabler\www\images\tableft.jpg
+2019-10-11 12:01:00.729   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.731   Installing the file.
+2019-10-11 12:01:00.735   Successfully installed the file.
+2019-10-11 12:01:00.737   -- File entry --
+2019-10-11 12:01:00.742   Dest filename: C:\Enabler\www\images\tableftactive.gif
+2019-10-11 12:01:00.745   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.747   Installing the file.
+2019-10-11 12:01:00.751   Successfully installed the file.
+2019-10-11 12:01:00.753   -- File entry --
+2019-10-11 12:01:00.758   Dest filename: C:\Enabler\www\images\tableftactive.jpg
+2019-10-11 12:01:00.760   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.761   Installing the file.
+2019-10-11 12:01:00.765   Successfully installed the file.
+2019-10-11 12:01:00.768   -- File entry --
+2019-10-11 12:01:00.773   Dest filename: C:\Enabler\www\images\tabright.gif
+2019-10-11 12:01:00.775   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.776   Installing the file.
+2019-10-11 12:01:00.780   Successfully installed the file.
+2019-10-11 12:01:00.782   -- File entry --
+2019-10-11 12:01:00.789   Dest filename: C:\Enabler\www\images\tabright.jpg
+2019-10-11 12:01:00.791   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.792   Installing the file.
+2019-10-11 12:01:00.796   Successfully installed the file.
+2019-10-11 12:01:00.798   -- File entry --
+2019-10-11 12:01:00.807   Dest filename: C:\Enabler\www\images\tabrightactive.gif
+2019-10-11 12:01:00.808   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.810   Installing the file.
+2019-10-11 12:01:00.813   Successfully installed the file.
+2019-10-11 12:01:00.816   -- File entry --
+2019-10-11 12:01:00.822   Dest filename: C:\Enabler\www\images\tabrightactive.jpg
+2019-10-11 12:01:00.824   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.826   Installing the file.
+2019-10-11 12:01:00.830   Successfully installed the file.
+2019-10-11 12:01:00.832   -- File entry --
+2019-10-11 12:01:00.839   Dest filename: C:\Enabler\www\images\text.gif
+2019-10-11 12:01:00.841   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.843   Installing the file.
+2019-10-11 12:01:00.846   Successfully installed the file.
+2019-10-11 12:01:00.849   -- File entry --
+2019-10-11 12:01:00.856   Dest filename: C:\Enabler\www\images\textfolder.gif
+2019-10-11 12:01:00.857   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.859   Installing the file.
+2019-10-11 12:01:00.862   Successfully installed the file.
+2019-10-11 12:01:00.864   -- File entry --
+2019-10-11 12:01:00.872   Dest filename: C:\Enabler\www\images\icons\critical.png
+2019-10-11 12:01:00.875   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.876   Installing the file.
+2019-10-11 12:01:00.878   Creating directory: C:\Enabler\www\images\icons
+2019-10-11 12:01:00.882   Successfully installed the file.
+2019-10-11 12:01:00.886   -- File entry --
+2019-10-11 12:01:00.892   Dest filename: C:\Enabler\www\images\icons\error.png
+2019-10-11 12:01:00.894   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.895   Installing the file.
+2019-10-11 12:01:00.899   Successfully installed the file.
+2019-10-11 12:01:00.904   -- File entry --
+2019-10-11 12:01:00.910   Dest filename: C:\Enabler\www\images\icons\information.png
+2019-10-11 12:01:00.912   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.914   Installing the file.
+2019-10-11 12:01:00.918   Successfully installed the file.
+2019-10-11 12:01:00.920   -- File entry --
+2019-10-11 12:01:00.927   Dest filename: C:\Enabler\www\images\icons\warning.png
+2019-10-11 12:01:00.929   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.930   Installing the file.
+2019-10-11 12:01:00.934   Successfully installed the file.
+2019-10-11 12:01:00.936   -- File entry --
+2019-10-11 12:01:00.942   Dest filename: C:\Enabler\www\images\pump\authed.png
+2019-10-11 12:01:00.944   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.946   Installing the file.
+2019-10-11 12:01:00.948   Creating directory: C:\Enabler\www\images\pump
+2019-10-11 12:01:00.952   Successfully installed the file.
+2019-10-11 12:01:00.954   -- File entry --
+2019-10-11 12:01:00.960   Dest filename: C:\Enabler\www\images\pump\autheddisabled.png
+2019-10-11 12:01:00.962   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.963   Installing the file.
+2019-10-11 12:01:00.966   Successfully installed the file.
+2019-10-11 12:01:00.969   -- File entry --
+2019-10-11 12:01:00.974   Dest filename: C:\Enabler\www\images\pump\calling.png
+2019-10-11 12:01:00.976   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.977   Installing the file.
+2019-10-11 12:01:00.981   Successfully installed the file.
+2019-10-11 12:01:00.983   -- File entry --
+2019-10-11 12:01:00.989   Dest filename: C:\Enabler\www\images\pump\calling1.png
+2019-10-11 12:01:00.991   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:00.992   Installing the file.
+2019-10-11 12:01:00.997   Successfully installed the file.
+2019-10-11 12:01:00.999   -- File entry --
+2019-10-11 12:01:01.006   Dest filename: C:\Enabler\www\images\pump\callingdisabled.png
+2019-10-11 12:01:01.007   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.009   Installing the file.
+2019-10-11 12:01:01.018   Successfully installed the file.
+2019-10-11 12:01:01.020   -- File entry --
+2019-10-11 12:01:01.026   Dest filename: C:\Enabler\www\images\pump\deliveringdisabled.png
+2019-10-11 12:01:01.028   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.029   Installing the file.
+2019-10-11 12:01:01.033   Successfully installed the file.
+2019-10-11 12:01:01.035   -- File entry --
+2019-10-11 12:01:01.041   Dest filename: C:\Enabler\www\images\pump\deliverying.png
+2019-10-11 12:01:01.043   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.044   Installing the file.
+2019-10-11 12:01:01.048   Successfully installed the file.
+2019-10-11 12:01:01.051   -- File entry --
+2019-10-11 12:01:01.058   Dest filename: C:\Enabler\www\images\pump\error.png
+2019-10-11 12:01:01.060   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.061   Installing the file.
+2019-10-11 12:01:01.065   Successfully installed the file.
+2019-10-11 12:01:01.068   -- File entry --
+2019-10-11 12:01:01.074   Dest filename: C:\Enabler\www\images\pump\errordelivery.png
+2019-10-11 12:01:01.076   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.078   Installing the file.
+2019-10-11 12:01:01.081   Successfully installed the file.
+2019-10-11 12:01:01.084   -- File entry --
+2019-10-11 12:01:01.090   Dest filename: C:\Enabler\www\images\pump\invalidprice.png
+2019-10-11 12:01:01.092   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.094   Installing the file.
+2019-10-11 12:01:01.098   Successfully installed the file.
+2019-10-11 12:01:01.101   -- File entry --
+2019-10-11 12:01:01.107   Dest filename: C:\Enabler\www\images\pump\MECHANICAL.png
+2019-10-11 12:01:01.109   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.111   Installing the file.
+2019-10-11 12:01:01.115   Successfully installed the file.
+2019-10-11 12:01:01.118   -- File entry --
+2019-10-11 12:01:01.120   Dest filename: C:\Enabler\www\images\pump\notinstalled.png
+2019-10-11 12:01:01.126   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.128   Installing the file.
+2019-10-11 12:01:01.131   Successfully installed the file.
+2019-10-11 12:01:01.134   -- File entry --
+2019-10-11 12:01:01.140   Dest filename: C:\Enabler\www\images\pump\nozout.png
+2019-10-11 12:01:01.142   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.143   Installing the file.
+2019-10-11 12:01:01.147   Successfully installed the file.
+2019-10-11 12:01:01.150   -- File entry --
+2019-10-11 12:01:01.156   Dest filename: C:\Enabler\www\images\pump\nozzle.png
+2019-10-11 12:01:01.158   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.159   Installing the file.
+2019-10-11 12:01:01.163   Successfully installed the file.
+2019-10-11 12:01:01.166   -- File entry --
+2019-10-11 12:01:01.172   Dest filename: C:\Enabler\www\images\pump\nozzledisabled.png
+2019-10-11 12:01:01.175   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.176   Installing the file.
+2019-10-11 12:01:01.181   Successfully installed the file.
+2019-10-11 12:01:01.184   -- File entry --
+2019-10-11 12:01:01.190   Dest filename: C:\Enabler\www\images\pump\nozzleoutdisabled1.png
+2019-10-11 12:01:01.192   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.194   Installing the file.
+2019-10-11 12:01:01.197   Successfully installed the file.
+2019-10-11 12:01:01.201   -- File entry --
+2019-10-11 12:01:01.207   Dest filename: C:\Enabler\www\images\pump\nozzleoutdisabled2.png
+2019-10-11 12:01:01.209   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.211   Installing the file.
+2019-10-11 12:01:01.216   Successfully installed the file.
+2019-10-11 12:01:01.219   -- File entry --
+2019-10-11 12:01:01.225   Dest filename: C:\Enabler\www\images\pump\PREAUTHAUTH.png
+2019-10-11 12:01:01.227   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.228   Installing the file.
+2019-10-11 12:01:01.233   Successfully installed the file.
+2019-10-11 12:01:01.236   -- File entry --
+2019-10-11 12:01:01.242   Dest filename: C:\Enabler\www\images\pump\preauthautheddisabled.png
+2019-10-11 12:01:01.244   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.245   Installing the file.
+2019-10-11 12:01:01.248   Successfully installed the file.
+2019-10-11 12:01:01.251   -- File entry --
+2019-10-11 12:01:01.257   Dest filename: C:\Enabler\www\images\pump\preauthdel.png
+2019-10-11 12:01:01.258   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.260   Installing the file.
+2019-10-11 12:01:01.264   Successfully installed the file.
+2019-10-11 12:01:01.266   -- File entry --
+2019-10-11 12:01:01.273   Dest filename: C:\Enabler\www\images\pump\preauthDeliveringDisabled.png
+2019-10-11 12:01:01.275   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.277   Installing the file.
+2019-10-11 12:01:01.322   Successfully installed the file.
+2019-10-11 12:01:01.324   -- File entry --
+2019-10-11 12:01:01.331   Dest filename: C:\Enabler\www\images\pump\preauthres.png
+2019-10-11 12:01:01.334   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.336   Installing the file.
+2019-10-11 12:01:01.340   Successfully installed the file.
+2019-10-11 12:01:01.343   -- File entry --
+2019-10-11 12:01:01.351   Dest filename: C:\Enabler\www\images\pump\preauthreserveddisabled.png
+2019-10-11 12:01:01.354   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.356   Installing the file.
+2019-10-11 12:01:01.361   Successfully installed the file.
+2019-10-11 12:01:01.365   -- File entry --
+2019-10-11 12:01:01.374   Dest filename: C:\Enabler\www\images\pump\prepayauth.png
+2019-10-11 12:01:01.377   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.378   Installing the file.
+2019-10-11 12:01:01.383   Successfully installed the file.
+2019-10-11 12:01:01.386   -- File entry --
+2019-10-11 12:01:01.392   Dest filename: C:\Enabler\www\images\pump\prepayautheddisabled.png
+2019-10-11 12:01:01.394   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.396   Installing the file.
+2019-10-11 12:01:01.400   Successfully installed the file.
+2019-10-11 12:01:01.405   -- File entry --
+2019-10-11 12:01:01.414   Dest filename: C:\Enabler\www\images\pump\prepaydel.png
+2019-10-11 12:01:01.416   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.418   Installing the file.
+2019-10-11 12:01:01.424   Successfully installed the file.
+2019-10-11 12:01:01.427   -- File entry --
+2019-10-11 12:01:01.436   Dest filename: C:\Enabler\www\images\pump\prepaydeliveringdisabled.png
+2019-10-11 12:01:01.439   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.441   Installing the file.
+2019-10-11 12:01:01.446   Successfully installed the file.
+2019-10-11 12:01:01.450   -- File entry --
+2019-10-11 12:01:01.458   Dest filename: C:\Enabler\www\images\pump\prepayres.png
+2019-10-11 12:01:01.461   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.464   Installing the file.
+2019-10-11 12:01:01.469   Successfully installed the file.
+2019-10-11 12:01:01.473   -- File entry --
+2019-10-11 12:01:01.481   Dest filename: C:\Enabler\www\images\pump\prepayreserveddisabled.png
+2019-10-11 12:01:01.484   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.487   Installing the file.
+2019-10-11 12:01:01.491   Successfully installed the file.
+2019-10-11 12:01:01.495   -- File entry --
+2019-10-11 12:01:01.504   Dest filename: C:\Enabler\www\images\pump\pricechange.png
+2019-10-11 12:01:01.506   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.508   Installing the file.
+2019-10-11 12:01:01.513   Successfully installed the file.
+2019-10-11 12:01:01.516   -- File entry --
+2019-10-11 12:01:01.523   Dest filename: C:\Enabler\www\images\pump\pumpbusy.png
+2019-10-11 12:01:01.527   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.528   Installing the file.
+2019-10-11 12:01:01.534   Successfully installed the file.
+2019-10-11 12:01:01.537   -- File entry --
+2019-10-11 12:01:01.544   Dest filename: C:\Enabler\www\images\pump\refundlost.png
+2019-10-11 12:01:01.547   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.549   Installing the file.
+2019-10-11 12:01:01.555   Successfully installed the file.
+2019-10-11 12:01:01.559   -- File entry --
+2019-10-11 12:01:01.567   Dest filename: C:\Enabler\www\images\pump\refundlostdisabled.png
+2019-10-11 12:01:01.570   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.573   Installing the file.
+2019-10-11 12:01:01.577   Successfully installed the file.
+2019-10-11 12:01:01.580   -- File entry --
+2019-10-11 12:01:01.589   Dest filename: C:\Enabler\www\images\pump\stopped.png
+2019-10-11 12:01:01.592   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.593   Installing the file.
+2019-10-11 12:01:01.598   Successfully installed the file.
+2019-10-11 12:01:01.601   -- File entry --
+2019-10-11 12:01:01.609   Dest filename: C:\Enabler\www\images\pump\stopped1.png
+2019-10-11 12:01:01.612   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.614   Installing the file.
+2019-10-11 12:01:01.620   Successfully installed the file.
+2019-10-11 12:01:01.623   -- File entry --
+2019-10-11 12:01:01.631   Dest filename: C:\Enabler\www\images\pump\stopped1disabled.png
+2019-10-11 12:01:01.635   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.637   Installing the file.
+2019-10-11 12:01:01.641   Successfully installed the file.
+2019-10-11 12:01:01.644   -- File entry --
+2019-10-11 12:01:01.653   Dest filename: C:\Enabler\www\images\pump\stopped2.png
+2019-10-11 12:01:01.655   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.657   Installing the file.
+2019-10-11 12:01:01.662   Successfully installed the file.
+2019-10-11 12:01:01.665   -- File entry --
+2019-10-11 12:01:01.673   Dest filename: C:\Enabler\www\images\pump\stopped2disabled.png
+2019-10-11 12:01:01.676   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.679   Installing the file.
+2019-10-11 12:01:01.683   Successfully installed the file.
+2019-10-11 12:01:01.686   -- File entry --
+2019-10-11 12:01:01.692   Dest filename: C:\Enabler\www\images\pump\stoppeddisabled.png
+2019-10-11 12:01:01.695   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.696   Installing the file.
+2019-10-11 12:01:01.701   Successfully installed the file.
+2019-10-11 12:01:01.704   -- File entry --
+2019-10-11 12:01:01.710   Dest filename: C:\Enabler\www\images\pump\totalslost.png
+2019-10-11 12:01:01.711   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.712   Installing the file.
+2019-10-11 12:01:01.716   Successfully installed the file.
+2019-10-11 12:01:01.719   -- File entry --
+2019-10-11 12:01:01.724   Dest filename: C:\Enabler\www\images\pump\undefinederror.png
+2019-10-11 12:01:01.727   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.728   Installing the file.
+2019-10-11 12:01:01.737   Successfully installed the file.
+2019-10-11 12:01:01.740   -- File entry --
+2019-10-11 12:01:01.746   Dest filename: C:\Enabler\www\images\tankgauge\capacity.png
+2019-10-11 12:01:01.747   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.749   Installing the file.
+2019-10-11 12:01:01.752   Creating directory: C:\Enabler\www\images\tankgauge
+2019-10-11 12:01:01.755   Successfully installed the file.
+2019-10-11 12:01:01.757   -- File entry --
+2019-10-11 12:01:01.764   Dest filename: C:\Enabler\www\images\tankgauge\ullage.png
+2019-10-11 12:01:01.768   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.770   Installing the file.
+2019-10-11 12:01:01.773   Successfully installed the file.
+2019-10-11 12:01:01.776   -- File entry --
+2019-10-11 12:01:01.782   Dest filename: C:\Enabler\www\images\tankgauge\volume.png
+2019-10-11 12:01:01.785   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.786   Installing the file.
+2019-10-11 12:01:01.791   Successfully installed the file.
+2019-10-11 12:01:01.793   -- File entry --
+2019-10-11 12:01:01.800   Dest filename: C:\Enabler\www\images\tankgauge\water.png
+2019-10-11 12:01:01.802   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.804   Installing the file.
+2019-10-11 12:01:01.807   Successfully installed the file.
+2019-10-11 12:01:01.809   -- File entry --
+2019-10-11 12:01:01.816   Dest filename: C:\Enabler\www\reports\DailyTankReport.xsl
+2019-10-11 12:01:01.818   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.820   Installing the file.
+2019-10-11 12:01:01.821   Creating directory: C:\Enabler\www\reports
+2019-10-11 12:01:01.826   Successfully installed the file.
+2019-10-11 12:01:01.828   -- File entry --
+2019-10-11 12:01:01.835   Dest filename: C:\Enabler\www\scripts\ActivationScripts.js
+2019-10-11 12:01:01.836   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.838   Installing the file.
+2019-10-11 12:01:01.839   Creating directory: C:\Enabler\www\scripts
+2019-10-11 12:01:01.843   Successfully installed the file.
+2019-10-11 12:01:01.846   -- File entry --
+2019-10-11 12:01:01.853   Dest filename: C:\Enabler\www\scripts\AttendantTotalsScripts.js
+2019-10-11 12:01:01.856   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.858   Installing the file.
+2019-10-11 12:01:01.861   Successfully installed the file.
+2019-10-11 12:01:01.864   -- File entry --
+2019-10-11 12:01:01.871   Dest filename: C:\Enabler\www\scripts\BlockingScripts.js
+2019-10-11 12:01:01.873   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.874   Installing the file.
+2019-10-11 12:01:01.880   Successfully installed the file.
+2019-10-11 12:01:01.882   -- File entry --
+2019-10-11 12:01:01.889   Dest filename: C:\Enabler\www\scripts\CommonScripts.js
+2019-10-11 12:01:01.891   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.893   Installing the file.
+2019-10-11 12:01:01.897   Successfully installed the file.
+2019-10-11 12:01:01.900   -- File entry --
+2019-10-11 12:01:01.906   Dest filename: C:\Enabler\www\scripts\datepicker.js
+2019-10-11 12:01:01.908   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.909   Installing the file.
+2019-10-11 12:01:01.913   Successfully installed the file.
+2019-10-11 12:01:01.916   -- File entry --
+2019-10-11 12:01:01.922   Dest filename: C:\Enabler\www\scripts\EventReportScripts.js
+2019-10-11 12:01:01.925   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.926   Installing the file.
+2019-10-11 12:01:01.930   Successfully installed the file.
+2019-10-11 12:01:01.933   -- File entry --
+2019-10-11 12:01:01.939   Dest filename: C:\Enabler\www\scripts\FuelReconDataScripts.js
+2019-10-11 12:01:01.941   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.943   Installing the file.
+2019-10-11 12:01:01.947   Successfully installed the file.
+2019-10-11 12:01:01.949   -- File entry --
+2019-10-11 12:01:01.956   Dest filename: C:\Enabler\www\scripts\FuelReconMeter.js
+2019-10-11 12:01:01.958   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.960   Installing the file.
+2019-10-11 12:01:01.964   Successfully installed the file.
+2019-10-11 12:01:01.966   -- File entry --
+2019-10-11 12:01:01.972   Dest filename: C:\Enabler\www\scripts\FuelTransactionScripts.js
+2019-10-11 12:01:01.974   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.976   Installing the file.
+2019-10-11 12:01:01.980   Successfully installed the file.
+2019-10-11 12:01:01.983   -- File entry --
+2019-10-11 12:01:01.989   Dest filename: C:\Enabler\www\scripts\GradesScripts.js
+2019-10-11 12:01:01.991   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:01.993   Installing the file.
+2019-10-11 12:01:01.996   Successfully installed the file.
+2019-10-11 12:01:02.002   -- File entry --
+2019-10-11 12:01:02.004   Dest filename: C:\Enabler\www\scripts\GridSelector.js
+2019-10-11 12:01:02.006   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.011   Installing the file.
+2019-10-11 12:01:02.015   Successfully installed the file.
+2019-10-11 12:01:02.018   -- File entry --
+2019-10-11 12:01:02.024   Dest filename: C:\Enabler\www\scripts\jquery.js
+2019-10-11 12:01:02.026   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.027   Installing the file.
+2019-10-11 12:01:02.036   Successfully installed the file.
+2019-10-11 12:01:02.038   -- File entry --
+2019-10-11 12:01:02.044   Dest filename: C:\Enabler\www\scripts\PortScripts.js
+2019-10-11 12:01:02.046   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.047   Installing the file.
+2019-10-11 12:01:02.052   Successfully installed the file.
+2019-10-11 12:01:02.054   -- File entry --
+2019-10-11 12:01:02.060   Dest filename: C:\Enabler\www\scripts\PumpScripts.js
+2019-10-11 12:01:02.062   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.063   Installing the file.
+2019-10-11 12:01:02.068   Successfully installed the file.
+2019-10-11 12:01:02.071   -- File entry --
+2019-10-11 12:01:02.076   Dest filename: C:\Enabler\www\scripts\PumpTotalsScripts.js
+2019-10-11 12:01:02.079   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.080   Installing the file.
+2019-10-11 12:01:02.085   Successfully installed the file.
+2019-10-11 12:01:02.087   -- File entry --
+2019-10-11 12:01:02.093   Dest filename: C:\Enabler\www\scripts\SiteConfigurationScripts.js
+2019-10-11 12:01:02.095   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.096   Installing the file.
+2019-10-11 12:01:02.100   Successfully installed the file.
+2019-10-11 12:01:02.102   -- File entry --
+2019-10-11 12:01:02.108   Dest filename: C:\Enabler\www\scripts\SiteModesScripts.js
+2019-10-11 12:01:02.110   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.111   Installing the file.
+2019-10-11 12:01:02.115   Successfully installed the file.
+2019-10-11 12:01:02.117   -- File entry --
+2019-10-11 12:01:02.123   Dest filename: C:\Enabler\www\scripts\sitemonitor.js
+2019-10-11 12:01:02.125   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.127   Installing the file.
+2019-10-11 12:01:02.131   Successfully installed the file.
+2019-10-11 12:01:02.136   -- File entry --
+2019-10-11 12:01:02.142   Dest filename: C:\Enabler\www\scripts\TagControllersScripts.js
+2019-10-11 12:01:02.144   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.145   Installing the file.
+2019-10-11 12:01:02.148   Successfully installed the file.
+2019-10-11 12:01:02.152   -- File entry --
+2019-10-11 12:01:02.157   Dest filename: C:\Enabler\www\scripts\TankGaugeScripts.js
+2019-10-11 12:01:02.159   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.161   Installing the file.
+2019-10-11 12:01:02.165   Successfully installed the file.
+2019-10-11 12:01:02.170   -- File entry --
+2019-10-11 12:01:02.176   Dest filename: C:\Enabler\www\scripts\TankScripts.js
+2019-10-11 12:01:02.177   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.179   Installing the file.
+2019-10-11 12:01:02.182   Successfully installed the file.
+2019-10-11 12:01:02.185   -- File entry --
+2019-10-11 12:01:02.191   Dest filename: C:\Enabler\www\scripts\TankTotalsScripts.js
+2019-10-11 12:01:02.194   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.195   Installing the file.
+2019-10-11 12:01:02.198   Successfully installed the file.
+2019-10-11 12:01:02.200   -- File entry --
+2019-10-11 12:01:02.206   Dest filename: C:\Enabler\www\scripts\TerminalScripts.js
+2019-10-11 12:01:02.208   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.210   Installing the file.
+2019-10-11 12:01:02.213   Successfully installed the file.
+2019-10-11 12:01:02.216   -- File entry --
+2019-10-11 12:01:02.223   Dest filename: C:\Enabler\www\scripts\UsersScripts.js
+2019-10-11 12:01:02.225   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.226   Installing the file.
+2019-10-11 12:01:02.231   Successfully installed the file.
+2019-10-11 12:01:02.233   -- File entry --
+2019-10-11 12:01:02.240   Dest filename: C:\Enabler\www\scripts\WetstockPumpData.js
+2019-10-11 12:01:02.242   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.244   Installing the file.
+2019-10-11 12:01:02.248   Successfully installed the file.
+2019-10-11 12:01:02.251   -- File entry --
+2019-10-11 12:01:02.256   Dest filename: C:\Enabler\www\scripts\WetstockTankData.js
+2019-10-11 12:01:02.258   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.259   Installing the file.
+2019-10-11 12:01:02.263   Successfully installed the file.
+2019-10-11 12:01:02.266   -- File entry --
+2019-10-11 12:01:02.273   Dest filename: C:\Enabler\www\scripts\FuelReconDips.js
+2019-10-11 12:01:02.275   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.277   Installing the file.
+2019-10-11 12:01:02.281   Successfully installed the file.
+2019-10-11 12:01:02.285   -- File entry --
+2019-10-11 12:01:02.288   Dest filename: C:\Enabler\www\scripts\GradePrices.js
+2019-10-11 12:01:02.295   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.297   Installing the file.
+2019-10-11 12:01:02.302   Successfully installed the file.
+2019-10-11 12:01:02.305   -- File entry --
+2019-10-11 12:01:02.312   Dest filename: C:\Enabler\www\scripts\FuelReconMovements.js
+2019-10-11 12:01:02.315   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.318   Installing the file.
+2019-10-11 12:01:02.323   Successfully installed the file.
+2019-10-11 12:01:02.326   -- File entry --
+2019-10-11 12:01:02.334   Dest filename: C:\Enabler\www\scripts\AttendantScripts.js
+2019-10-11 12:01:02.336   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.338   Installing the file.
+2019-10-11 12:01:02.342   Successfully installed the file.
+2019-10-11 12:01:02.344   -- File entry --
+2019-10-11 12:01:02.352   Dest filename: C:\Enabler\www\favicon.ico
+2019-10-11 12:01:02.354   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.356   Installing the file.
+2019-10-11 12:01:02.361   Successfully installed the file.
+2019-10-11 12:01:02.363   -- File entry --
+2019-10-11 12:01:02.370   Dest filename: C:\Enabler\www\Activate.aspx
+2019-10-11 12:01:02.372   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.375   Installing the file.
+2019-10-11 12:01:02.385   Successfully installed the file.
+2019-10-11 12:01:02.388   -- File entry --
+2019-10-11 12:01:02.394   Dest filename: C:\Enabler\www\Attendants.aspx
+2019-10-11 12:01:02.397   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.399   Installing the file.
+2019-10-11 12:01:02.404   Successfully installed the file.
+2019-10-11 12:01:02.407   -- File entry --
+2019-10-11 12:01:02.419   Dest filename: C:\Enabler\www\AttendantTotals.aspx
+2019-10-11 12:01:02.421   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.425   Installing the file.
+2019-10-11 12:01:02.428   Successfully installed the file.
+2019-10-11 12:01:02.431   -- File entry --
+2019-10-11 12:01:02.439   Dest filename: C:\Enabler\www\Blocking.aspx
+2019-10-11 12:01:02.441   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.443   Installing the file.
+2019-10-11 12:01:02.447   Successfully installed the file.
+2019-10-11 12:01:02.450   -- File entry --
+2019-10-11 12:01:02.457   Dest filename: C:\Enabler\www\BlockingStatus.aspx
+2019-10-11 12:01:02.459   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.460   Installing the file.
+2019-10-11 12:01:02.463   Successfully installed the file.
+2019-10-11 12:01:02.465   -- File entry --
+2019-10-11 12:01:02.472   Dest filename: C:\Enabler\www\Cards.aspx
+2019-10-11 12:01:02.474   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.475   Installing the file.
+2019-10-11 12:01:02.478   Successfully installed the file.
+2019-10-11 12:01:02.480   -- File entry --
+2019-10-11 12:01:02.488   Dest filename: C:\Enabler\www\Contacts.aspx
+2019-10-11 12:01:02.490   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.491   Installing the file.
+2019-10-11 12:01:02.496   Successfully installed the file.
+2019-10-11 12:01:02.501   -- File entry --
+2019-10-11 12:01:02.507   Dest filename: C:\Enabler\www\DeliveryHistory.aspx
+2019-10-11 12:01:02.510   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.512   Installing the file.
+2019-10-11 12:01:02.515   Successfully installed the file.
+2019-10-11 12:01:02.518   -- File entry --
+2019-10-11 12:01:02.525   Dest filename: C:\Enabler\www\Events.aspx
+2019-10-11 12:01:02.527   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.529   Installing the file.
+2019-10-11 12:01:02.533   Successfully installed the file.
+2019-10-11 12:01:02.536   -- File entry --
+2019-10-11 12:01:02.542   Dest filename: C:\Enabler\www\Fallback.aspx
+2019-10-11 12:01:02.545   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.546   Installing the file.
+2019-10-11 12:01:02.550   Successfully installed the file.
+2019-10-11 12:01:02.553   -- File entry --
+2019-10-11 12:01:02.559   Dest filename: C:\Enabler\www\FuelReconData.aspx
+2019-10-11 12:01:02.561   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.562   Installing the file.
+2019-10-11 12:01:02.566   Successfully installed the file.
+2019-10-11 12:01:02.569   -- File entry --
+2019-10-11 12:01:02.575   Dest filename: C:\Enabler\www\FuelReconDips.aspx
+2019-10-11 12:01:02.577   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.579   Installing the file.
+2019-10-11 12:01:02.583   Successfully installed the file.
+2019-10-11 12:01:02.586   -- File entry --
+2019-10-11 12:01:02.592   Dest filename: C:\Enabler\www\FuelReconMeters.aspx
+2019-10-11 12:01:02.594   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.596   Installing the file.
+2019-10-11 12:01:02.600   Successfully installed the file.
+2019-10-11 12:01:02.602   -- File entry --
+2019-10-11 12:01:02.608   Dest filename: C:\Enabler\www\FuelReconMovements.aspx
+2019-10-11 12:01:02.610   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.612   Installing the file.
+2019-10-11 12:01:02.615   Successfully installed the file.
+2019-10-11 12:01:02.619   -- File entry --
+2019-10-11 12:01:02.625   Dest filename: C:\Enabler\www\FuelTransactionHistory.aspx
+2019-10-11 12:01:02.627   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.629   Installing the file.
+2019-10-11 12:01:02.632   Successfully installed the file.
+2019-10-11 12:01:02.636   -- File entry --
+2019-10-11 12:01:02.642   Dest filename: C:\Enabler\www\GradePricesScheduled.aspx
+2019-10-11 12:01:02.644   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.645   Installing the file.
+2019-10-11 12:01:02.651   Successfully installed the file.
+2019-10-11 12:01:02.653   -- File entry --
+2019-10-11 12:01:02.659   Dest filename: C:\Enabler\www\GradePrices.aspx
+2019-10-11 12:01:02.660   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.662   Installing the file.
+2019-10-11 12:01:02.665   Successfully installed the file.
+2019-10-11 12:01:02.668   -- File entry --
+2019-10-11 12:01:02.674   Dest filename: C:\Enabler\www\Grades.aspx
+2019-10-11 12:01:02.676   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.677   Installing the file.
+2019-10-11 12:01:02.681   Successfully installed the file.
+2019-10-11 12:01:02.684   -- File entry --
+2019-10-11 12:01:02.690   Dest filename: C:\Enabler\www\Language.aspx
+2019-10-11 12:01:02.692   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.694   Installing the file.
+2019-10-11 12:01:02.702   Successfully installed the file.
+2019-10-11 12:01:02.707   -- File entry --
+2019-10-11 12:01:02.712   Dest filename: C:\Enabler\www\Login.aspx
+2019-10-11 12:01:02.714   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.716   Installing the file.
+2019-10-11 12:01:02.719   Successfully installed the file.
+2019-10-11 12:01:02.721   -- File entry --
+2019-10-11 12:01:02.727   Dest filename: C:\Enabler\www\Logoff.aspx
+2019-10-11 12:01:02.729   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.731   Installing the file.
+2019-10-11 12:01:02.735   Successfully installed the file.
+2019-10-11 12:01:02.737   -- File entry --
+2019-10-11 12:01:02.743   Dest filename: C:\Enabler\www\MonitorState.aspx
+2019-10-11 12:01:02.745   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.747   Installing the file.
+2019-10-11 12:01:02.751   Successfully installed the file.
+2019-10-11 12:01:02.754   -- File entry --
+2019-10-11 12:01:02.759   Dest filename: C:\Enabler\www\Ports.aspx
+2019-10-11 12:01:02.762   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.763   Installing the file.
+2019-10-11 12:01:02.768   Successfully installed the file.
+2019-10-11 12:01:02.771   -- File entry --
+2019-10-11 12:01:02.777   Dest filename: C:\Enabler\www\Pumps.aspx
+2019-10-11 12:01:02.779   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.780   Installing the file.
+2019-10-11 12:01:02.785   Successfully installed the file.
+2019-10-11 12:01:02.789   -- File entry --
+2019-10-11 12:01:02.795   Dest filename: C:\Enabler\www\PumpTotals.aspx
+2019-10-11 12:01:02.797   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.798   Installing the file.
+2019-10-11 12:01:02.803   Successfully installed the file.
+2019-10-11 12:01:02.806   -- File entry --
+2019-10-11 12:01:02.812   Dest filename: C:\Enabler\www\SiteConfiguration.aspx
+2019-10-11 12:01:02.814   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.816   Installing the file.
+2019-10-11 12:01:02.820   Successfully installed the file.
+2019-10-11 12:01:02.823   -- File entry --
+2019-10-11 12:01:02.829   Dest filename: C:\Enabler\www\SiteModes.aspx
+2019-10-11 12:01:02.830   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.832   Installing the file.
+2019-10-11 12:01:02.836   Successfully installed the file.
+2019-10-11 12:01:02.838   -- File entry --
+2019-10-11 12:01:02.844   Dest filename: C:\Enabler\www\SiteModeChange.aspx
+2019-10-11 12:01:02.846   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.848   Installing the file.
+2019-10-11 12:01:02.852   Successfully installed the file.
+2019-10-11 12:01:02.854   -- File entry --
+2019-10-11 12:01:02.860   Dest filename: C:\Enabler\www\SiteMonitor.aspx
+2019-10-11 12:01:02.862   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.864   Installing the file.
+2019-10-11 12:01:02.868   Successfully installed the file.
+2019-10-11 12:01:02.870   -- File entry --
+2019-10-11 12:01:02.876   Dest filename: C:\Enabler\www\SiteSettings.aspx
+2019-10-11 12:01:02.877   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.879   Installing the file.
+2019-10-11 12:01:02.882   Successfully installed the file.
+2019-10-11 12:01:02.885   -- File entry --
+2019-10-11 12:01:02.890   Dest filename: C:\Enabler\www\SystemStatus.aspx
+2019-10-11 12:01:02.891   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.893   Installing the file.
+2019-10-11 12:01:02.896   Successfully installed the file.
+2019-10-11 12:01:02.898   -- File entry --
+2019-10-11 12:01:02.905   Dest filename: C:\Enabler\www\Tags.aspx
+2019-10-11 12:01:02.906   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.908   Installing the file.
+2019-10-11 12:01:02.911   Successfully installed the file.
+2019-10-11 12:01:02.913   -- File entry --
+2019-10-11 12:01:02.919   Dest filename: C:\Enabler\www\TagControllers.aspx
+2019-10-11 12:01:02.921   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.922   Installing the file.
+2019-10-11 12:01:02.926   Successfully installed the file.
+2019-10-11 12:01:02.928   -- File entry --
+2019-10-11 12:01:02.934   Dest filename: C:\Enabler\www\TankGauges.aspx
+2019-10-11 12:01:02.936   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.937   Installing the file.
+2019-10-11 12:01:02.941   Successfully installed the file.
+2019-10-11 12:01:02.943   -- File entry --
+2019-10-11 12:01:02.949   Dest filename: C:\Enabler\www\TankTotals.aspx
+2019-10-11 12:01:02.952   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.953   Installing the file.
+2019-10-11 12:01:02.956   Successfully installed the file.
+2019-10-11 12:01:02.958   -- File entry --
+2019-10-11 12:01:02.964   Dest filename: C:\Enabler\www\Tanks.aspx
+2019-10-11 12:01:02.966   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.968   Installing the file.
+2019-10-11 12:01:02.972   Successfully installed the file.
+2019-10-11 12:01:02.974   -- File entry --
+2019-10-11 12:01:02.979   Dest filename: C:\Enabler\www\Terminals.aspx
+2019-10-11 12:01:02.981   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.983   Installing the file.
+2019-10-11 12:01:02.986   Successfully installed the file.
+2019-10-11 12:01:02.989   -- File entry --
+2019-10-11 12:01:02.994   Dest filename: C:\Enabler\www\Users.aspx
+2019-10-11 12:01:02.997   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:02.998   Installing the file.
+2019-10-11 12:01:03.003   Successfully installed the file.
+2019-10-11 12:01:03.004   -- File entry --
+2019-10-11 12:01:03.010   Dest filename: C:\Enabler\www\wetstockpumpdata.aspx
+2019-10-11 12:01:03.012   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:03.014   Installing the file.
+2019-10-11 12:01:03.018   Successfully installed the file.
+2019-10-11 12:01:03.021   -- File entry --
+2019-10-11 12:01:03.027   Dest filename: C:\Enabler\www\wetstocktankdata.aspx
+2019-10-11 12:01:03.029   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:03.031   Installing the file.
+2019-10-11 12:01:03.035   Successfully installed the file.
+2019-10-11 12:01:03.038   -- File entry --
+2019-10-11 12:01:03.044   Dest filename: C:\Enabler\PumpUpdate.exe
+2019-10-11 12:01:03.046   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:03.047   Installing the file.
+2019-10-11 12:01:04.080   Successfully installed the file.
+2019-10-11 12:01:04.084   -- File entry --
+2019-10-11 12:01:04.091   Dest filename: C:\Enabler\PumpUpdate.ini
+2019-10-11 12:01:04.093   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:04.095   Installing the file.
+2019-10-11 12:01:04.099   Successfully installed the file.
+2019-10-11 12:01:04.103   -- File entry --
+2019-10-11 12:01:04.110   Dest filename: C:\Enabler\bin\EnablerEvent.dll
+2019-10-11 12:01:04.113   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:04.115   Installing the file.
+2019-10-11 12:01:04.124   Successfully installed the file.
+2019-10-11 12:01:04.126   -- File entry --
+2019-10-11 12:01:04.134   Dest filename: C:\Enabler\bin\subinacl.exe
+2019-10-11 12:01:04.136   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:04.138   Dest file exists.
+2019-10-11 12:01:04.140   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:04.141   Version of our file: 5.2.3790.1180
+2019-10-11 12:01:04.175   Version of existing file: 5.2.3790.1180
+2019-10-11 12:01:04.179   Same version. Skipping.
+2019-10-11 12:01:04.182   -- File entry --
+2019-10-11 12:01:04.189   Dest filename: C:\Enabler\CreateRegKeyEvent.bat
+2019-10-11 12:01:04.192   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:01:04.194   Installing the file.
+2019-10-11 12:01:04.199   Successfully installed the file.
+2019-10-11 12:01:04.203   -- File entry --
+2019-10-11 12:01:04.210   Dest filename: C:\Enabler\bin\PDFViewer.exe
+2019-10-11 12:01:04.213   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:01:04.215   Installing the file.
+2019-10-11 12:01:04.386   Successfully installed the file.
+2019-10-11 12:01:04.389   -- File entry --
+2019-10-11 12:01:04.394   Dest filename: C:\Enabler\MPPSim.exe
+2019-10-11 12:01:04.397   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:04.400   Installing the file.
+2019-10-11 12:01:04.421   Successfully installed the file.
+2019-10-11 12:01:04.424   -- File entry --
+2019-10-11 12:01:04.431   Dest filename: C:\Enabler\ITLMPPSim.dll
+2019-10-11 12:01:04.432   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:01:04.435   Installing the file.
+2019-10-11 12:01:04.467   Successfully installed the file.
+2019-10-11 12:01:04.469   Will register the file (a DLL/OCX) later.
+2019-10-11 12:01:04.473   -- File entry --
+2019-10-11 12:01:04.479   Dest filename: C:\Enabler\pumpdemo.exe
+2019-10-11 12:01:04.480   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:04.482   Installing the file.
+2019-10-11 12:01:04.498   Successfully installed the file.
+2019-10-11 12:01:04.503   -- File entry --
+2019-10-11 12:01:04.510   Dest filename: C:\Enabler\PumpDemoWPF.exe
+2019-10-11 12:01:04.514   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:01:04.516   Installing the file.
+2019-10-11 12:01:04.530   Successfully installed the file.
+2019-10-11 12:01:04.535   -- File entry --
+2019-10-11 12:01:04.545   Dest filename: C:\Enabler\SampleCom.exe
+2019-10-11 12:01:04.547   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-11 12:01:04.548   Installing the file.
+2019-10-11 12:01:04.566   Successfully installed the file.
+2019-10-11 12:01:04.569   -- File entry --
+2019-10-11 12:01:04.575   Dest filename: C:\Enabler\pumpdemo.jar
+2019-10-11 12:01:04.577   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:04.579   Installing the file.
+2019-10-11 12:01:04.599   Successfully installed the file.
+2019-10-11 12:01:04.602   -- File entry --
+2019-10-11 12:01:04.609   Dest filename: C:\Enabler\enabler-pmp-ctrl-1.0.jar
+2019-10-11 12:01:04.611   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:04.613   Installing the file.
+2019-10-11 12:01:04.622   Successfully installed the file.
+2019-10-11 12:01:04.625   -- File entry --
+2019-10-11 12:01:04.631   Dest filename: C:\Enabler\forms-1.3.0.jar
+2019-10-11 12:01:04.634   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:04.636   Installing the file.
+2019-10-11 12:01:04.648   Successfully installed the file.
+2019-10-11 12:01:04.651   -- File entry --
+2019-10-11 12:01:04.658   Dest filename: C:\Enabler\glazedlists-1.8.0_java15.jar
+2019-10-11 12:01:04.660   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:04.661   Installing the file.
+2019-10-11 12:01:04.741   Successfully installed the file.
+2019-10-11 12:01:04.745   -- File entry --
+2019-10-11 12:01:04.753   Dest filename: C:\Enabler\icu4j-49_1.jar
+2019-10-11 12:01:04.755   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:04.757   Installing the file.
+2019-10-11 12:01:05.314   Successfully installed the file.
+2019-10-11 12:01:05.320   -- File entry --
+2019-10-11 12:01:05.327   Dest filename: C:\Enabler\miglayout15-swing.jar
+2019-10-11 12:01:05.329   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:05.331   Installing the file.
+2019-10-11 12:01:05.343   Successfully installed the file.
+2019-10-11 12:01:05.346   -- File entry --
+2019-10-11 12:01:05.355   Dest filename: C:\Enabler\SQLInstall.bat
+2019-10-11 12:01:05.359   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:05.361   Installing the file.
+2019-10-11 12:01:05.384   Successfully installed the file.
+2019-10-11 12:01:05.387   -- File entry --
+2019-10-11 12:01:05.396   Dest filename: C:\Enabler\MSDEInstall.bat
+2019-10-11 12:01:05.399   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:05.401   Installing the file.
+2019-10-11 12:01:05.406   Successfully installed the file.
+2019-10-11 12:01:05.409   -- File entry --
+2019-10-11 12:01:05.419   Dest filename: C:\Enabler\bin\enablerinstall.dll
+2019-10-11 12:01:05.422   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-11 12:01:05.424   Installing the file.
+2019-10-11 12:01:05.435   Successfully installed the file.
+2019-10-11 12:01:05.450   Registering 32-bit DLL/OCX: C:\Enabler\comdlg32.ocx
+2019-10-11 12:01:05.460   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\comdlg32.ocx"
+2019-10-11 12:01:05.557   Registration successful.
+2019-10-11 12:01:05.559   Registering 32-bit DLL/OCX: C:\Enabler\comct232.ocx
+2019-10-11 12:01:05.563   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\comct232.ocx"
+2019-10-11 12:01:05.665   Registration successful.
+2019-10-11 12:01:05.668   Registering 32-bit DLL/OCX: C:\Enabler\comctl32.ocx
+2019-10-11 12:01:05.673   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\comctl32.ocx"
+2019-10-11 12:01:05.856   Registration successful.
+2019-10-11 12:01:05.858   Registering 32-bit DLL/OCX: C:\Enabler\Mscomm32.ocx
+2019-10-11 12:01:05.862   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\Mscomm32.ocx"
+2019-10-11 12:01:05.950   Registration successful.
+2019-10-11 12:01:05.952   Registering 32-bit DLL/OCX: C:\Enabler\Msflxgrd.ocx
+2019-10-11 12:01:05.957   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\Msflxgrd.ocx"
+2019-10-11 12:01:06.018   Registration successful.
+2019-10-11 12:01:06.020   Registering 32-bit DLL/OCX: C:\Enabler\Msrdc20.ocx
+2019-10-11 12:01:06.024   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\Msrdc20.ocx"
+2019-10-11 12:01:06.112   Registration successful.
+2019-10-11 12:01:06.114   Registering 32-bit DLL/OCX: C:\Enabler\Msrdo20.dll
+2019-10-11 12:01:06.120   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\Msrdo20.dll"
+2019-10-11 12:01:06.251   Registration successful.
+2019-10-11 12:01:06.254   Registering 32-bit DLL/OCX: C:\Enabler\SecurityModule.dll
+2019-10-11 12:01:06.257   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\SecurityModule.dll"
+2019-10-11 12:01:06.369   Registration successful.
+2019-10-11 12:01:06.370   Registering 32-bit DLL/OCX: C:\Enabler\EnbSessionX2.ocx
+2019-10-11 12:01:06.375   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\EnbSessionX2.ocx"
+2019-10-11 12:01:06.708   Registration successful.
+2019-10-11 12:01:06.711   Registering 32-bit DLL/OCX: C:\Enabler\EnbAttendantX2.ocx
+2019-10-11 12:01:06.714   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\EnbAttendantX2.ocx"
+2019-10-11 12:01:06.842   Registration successful.
+2019-10-11 12:01:06.844   Registering 32-bit DLL/OCX: C:\Enabler\EnbPumpX2.ocx
+2019-10-11 12:01:06.848   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\EnbPumpX2.ocx"
+2019-10-11 12:01:07.137   Registration successful.
+2019-10-11 12:01:07.139   Registering 32-bit DLL/OCX: C:\Enabler\ITLMPPSim.dll
+2019-10-11 12:01:07.143   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\ITLMPPSim.dll"
+2019-10-11 12:01:07.241   Registration successful.
+2019-10-11 12:01:07.244   Saving uninstall information.
+2019-10-11 12:01:07.246   Creating new uninstall key: HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Uninstall\{95EC957B-DB36-4EDD-9C7C-B19F896CC37D}_is1
+2019-10-11 12:01:07.248   Writing uninstall key values.
+2019-10-11 12:01:07.252   Detected previous non administrative install? No
+2019-10-11 12:01:07.254   Detected previous administrative 64-bit install? No
+2019-10-11 12:01:07.264   Installation process succeeded.
+2019-10-11 12:01:07.306   Server was chosen
+2019-10-11 12:01:07.451   C: drive is not compressed
+2019-10-11 12:01:07.556   C
+2019-10-11 12:01:07.575   LAPTOP-SOCF9T0T
+2019-10-11 12:01:07.583   Jacob Copeland
+2019-10-11 12:01:07.591   Assigning system adminstrator privileges to LAPTOP-SOCF9T0T\Jacob Copeland
+2019-10-11 12:01:07.621   Starting SQL2014 install from C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\SQL2014
+2019-10-11 12:05:26.024   Result of SqlInstall 0
+2019-10-11 12:05:26.106   The path to OSQL.EXE for this 64-bit install of SQL Server is: C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\
+2019-10-11 12:05:26.120   OSQL_PATH is currently set to C:\Program Files\Microsoft SQL Server\120\Tools\Binn\
+2019-10-11 12:05:26.128   Processor bit size (e.g. 32/64 bit), the variable OS is 64
+2019-10-11 12:05:26.136   Making sure that OSQL works C:\Program Files\Microsoft SQL Server\120\Tools\Binn\
+2019-10-11 12:05:26.822   OSQL working OK!
+2019-10-11 12:05:26.986   Driver Installer return code: 2
+2019-10-11 12:05:27.150   Installing VS C++ SP1 Redistributables
+2019-10-11 12:05:35.115   Check for V4 Beta License
+2019-10-11 12:05:35.289   Result code from COnvertV4BetaLicense was 1
+2019-10-11 12:05:46.915   Updating Windows Firewall Rules
+2019-10-11 12:05:47.497   Added Firewall rule for Web Server 0
+2019-10-11 12:05:47.766   Added Firewall rule for Pump Server 0
+2019-10-11 12:05:47.776   Group PathC:\ProgramData\Microsoft\Windows\Start Menu\Programs\The Enabler
+2019-10-11 12:05:47.782   Group Directory
+2019-10-11 12:05:47.788   Desktop PathC:\Users\Public\Desktop
+2019-10-11 12:05:47.792   Start Menu Path
+2019-10-11 12:05:48.057   Created C:\Enabler\SDK\Doc
+2019-10-11 12:05:48.068   Created C:\Enabler\SDK\Doc\ActiveX
+2019-10-11 12:05:48.228   Created C:\Enabler\SDK\Doc\Java
+2019-10-11 12:05:48.245   Created C:\Enabler\SDK\Doc\Java\JavaDoc
+2019-10-11 12:05:48.302   Created C:\Enabler\SDK\Doc\Java\JavaDoc\index-files
+2019-10-11 12:05:48.706   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl
+2019-10-11 12:05:48.709   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler
+2019-10-11 12:05:48.712   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api
+2019-10-11 12:05:48.882   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\class-use
+2019-10-11 12:05:50.173   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events
+2019-10-11 12:05:50.176   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\attendant
+2019-10-11 12:05:50.247   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\attendant\class-use
+2019-10-11 12:05:50.376   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\forecourt
+2019-10-11 12:05:50.379   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\forecourt\class-use
+2019-10-11 12:05:50.637   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\grade
+2019-10-11 12:05:50.640   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\grade\class-use
+2019-10-11 12:05:50.781   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\pump
+2019-10-11 12:05:50.784   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\pump\class-use
+2019-10-11 12:05:51.046   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\tank
+2019-10-11 12:05:51.050   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\tank\class-use
+2019-10-11 12:05:51.194   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\types
+2019-10-11 12:05:51.256   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\types\class-use
+2019-10-11 12:05:52.388   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\reasons
+2019-10-11 12:05:52.410   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\reasons\class-use
+2019-10-11 12:05:52.747   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\states
+2019-10-11 12:05:52.751   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\states\class-use
+2019-10-11 12:05:53.351   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\types
+2019-10-11 12:05:53.401   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\types\class-use
+2019-10-11 12:05:53.960   Created C:\Enabler\SDK\Doc\Java\JavaDoc\resources
+2019-10-11 12:05:54.034   Created C:\Enabler\SDK\Doc\VisualStudio
+2019-10-11 12:05:54.037   Created C:\Enabler\SDK\Doc\VisualStudio\200X
+2019-10-11 12:05:54.224   Created C:\Enabler\SDK\Doc\VisualStudio\201X
+2019-10-11 12:05:54.290   Created C:\Enabler\SDK\DotNetPCLAPI
+2019-10-11 12:05:54.294   Created C:\Enabler\SDK\DotNetPCLAPI\Debug
+2019-10-11 12:05:54.344   Created C:\Enabler\SDK\DotNetPCLAPI\Release
+2019-10-11 12:05:54.396   Created C:\Enabler\SDK\Samples
+2019-10-11 12:05:54.400   Created C:\Enabler\SDK\Samples\ActiveX2
+2019-10-11 12:05:54.402   Created C:\Enabler\SDK\Samples\ActiveX2\VB6 Pump Sample
+2019-10-11 12:05:54.798   Created C:\Enabler\SDK\Samples\ActiveX2\VB6 Pump Sample\VBLib
+2019-10-11 12:05:54.868   Created C:\Enabler\SDK\Samples\Apple
+2019-10-11 12:05:54.872   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS
+2019-10-11 12:05:54.875   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj
+2019-10-11 12:05:54.892   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\project.xcworkspace
+2019-10-11 12:05:54.903   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\project.xcworkspace\xcuserdata
+2019-10-11 12:05:54.907   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\project.xcworkspace\xcuserdata\itladmin.xcuserdatad
+2019-10-11 12:05:54.928   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\project.xcworkspace\xcuserdata\itladmin.xcuserdatad\xcdebugger
+2019-10-11 12:05:54.941   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\project.xcworkspace\xcuserdata\raymond.xcuserdatad
+2019-10-11 12:05:54.957   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\xcuserdata
+2019-10-11 12:05:54.962   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\xcuserdata\itladmin.xcuserdatad
+2019-10-11 12:05:54.965   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\xcuserdata\itladmin.xcuserdatad\xcdebugger
+2019-10-11 12:05:54.978   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\xcuserdata\itladmin.xcuserdatad\xcschemes
+2019-10-11 12:05:54.999   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\xcuserdata\raymond.xcuserdatad
+2019-10-11 12:05:55.002   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\xcuserdata\raymond.xcuserdatad\xcdebugger
+2019-10-11 12:05:55.015   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\xcuserdata\raymond.xcuserdatad\xcschemes
+2019-10-11 12:05:55.036   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager
+2019-10-11 12:05:55.064   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Base.lproj
+2019-10-11 12:05:55.105   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\EnablerApi.framework
+2019-10-11 12:05:55.108   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\EnablerApi.framework\en.lproj
+2019-10-11 12:05:55.127   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\EnablerApi.framework\Headers
+2019-10-11 12:05:55.276   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\EnablerApi.framework\Modules
+2019-10-11 12:05:55.286   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\EnablerApi.framework\_CodeSignature
+2019-10-11 12:05:55.316   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets
+2019-10-11 12:05:55.319   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\AppIcon.appiconset
+2019-10-11 12:05:55.350   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\button_auth.imageset
+2019-10-11 12:05:55.363   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\button_block.imageset
+2019-10-11 12:05:55.376   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\button_stop.imageset
+2019-10-11 12:05:55.389   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\button_unblock.imageset
+2019-10-11 12:05:55.402   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\cell_auth.imageset
+2019-10-11 12:05:55.415   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\cell_block.imageset
+2019-10-11 12:05:55.428   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\cell_invalidprice.imageset
+2019-10-11 12:05:55.441   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\cell_pricechange.imageset
+2019-10-11 12:05:55.454   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\cell_pumpbusy.imageset
+2019-10-11 12:05:55.467   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\cell_pumperror.imageset
+2019-10-11 12:05:55.481   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\cell_stop.imageset
+2019-10-11 12:05:55.494   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\LaunchImage.launchimage
+2019-10-11 12:05:55.506   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\logon_logo.imageset
+2019-10-11 12:05:55.520   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\logon_spinner.imageset
+2019-10-11 12:05:55.533   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\logout_out.imageset
+2019-10-11 12:05:55.544   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\sitecontrol_stopall.imageset
+2019-10-11 12:05:55.559   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\sitecontrol_web.imageset
+2019-10-11 12:05:55.572   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\tabitem_forecourt.imageset
+2019-10-11 12:05:55.585   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\tabitem_logout.imageset
+2019-10-11 12:05:55.598   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\tabitem_sitecontrol.imageset
+2019-10-11 12:05:55.611   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_auth.imageset
+2019-10-11 12:05:55.624   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_blocked.imageset
+2019-10-11 12:05:55.638   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_disconnect.imageset
+2019-10-11 12:05:55.651   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_invalidprice.imageset
+2019-10-11 12:05:55.665   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_pricechange.imageset
+2019-10-11 12:05:55.674   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_pumpbusy.imageset
+2019-10-11 12:05:55.687   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_pumperror.imageset
+2019-10-11 12:05:55.701   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_pumpnozzle.imageset
+2019-10-11 12:05:55.748   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_stack1.imageset
+2019-10-11 12:05:55.767   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_stack2.imageset
+2019-10-11 12:05:55.784   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_stack3.imageset
+2019-10-11 12:05:55.799   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_stack4.imageset
+2019-10-11 12:05:55.817   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_stack5.imageset
+2019-10-11 12:05:55.830   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_stopped.imageset
+2019-10-11 12:05:56.009   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManagerTests
+2019-10-11 12:05:56.052   Created C:\Enabler\SDK\Samples\COM
+2019-10-11 12:05:56.056   Created C:\Enabler\SDK\Samples\COM\VB6 COM Sample
+2019-10-11 12:05:56.366   Created C:\Enabler\SDK\Samples\Java
+2019-10-11 12:05:56.368   Created C:\Enabler\SDK\Samples\Java\pumpdemo
+2019-10-11 12:05:56.371   Created C:\Enabler\SDK\Samples\Java\pumpdemo\dist
+2019-10-11 12:05:57.847   Created C:\Enabler\SDK\Samples\Java\pumpdemo\src
+2019-10-11 12:05:57.851   Created C:\Enabler\SDK\Samples\Java\pumpdemo\src\pumpdemo
+2019-10-11 12:05:57.897   Created C:\Enabler\SDK\Samples\Java\pumpdemo\src\pumpdemo\gradeprofile
+2019-10-11 12:05:57.914   Created C:\Enabler\SDK\Samples\Java\pumpdemo\src\pumpdemo\images
+2019-10-11 12:05:58.009   Created C:\Enabler\SDK\Samples\Java\pumpdemo\src\pumpdemo\sale
+2019-10-11 12:05:58.068   Created C:\Enabler\SDK\Samples\Java\pumpdemo\src\pumpdemo\stack
+2019-10-11 12:05:58.120   Created C:\Enabler\SDK\Samples\NET
+2019-10-11 12:05:58.123   Created C:\Enabler\SDK\Samples\NET\CS WPF Pump Sample
+2019-10-11 12:05:58.273   Created C:\Enabler\SDK\Samples\NET\CS WPF Pump Sample\Images
+2019-10-11 12:05:58.476   Created C:\Enabler\SDK\Samples\NET\CS WPF Pump Sample\Properties
+2019-10-11 12:05:58.764   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample
+2019-10-11 12:05:58.768   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX
+2019-10-11 12:05:58.770   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX
+2019-10-11 12:05:58.833   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android
+2019-10-11 12:05:58.837   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Assets
+2019-10-11 12:05:58.864   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Properties
+2019-10-11 12:05:58.895   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Resources
+2019-10-11 12:05:58.905   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Resources\drawable
+2019-10-11 12:05:58.936   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Resources\drawable-hdpi
+2019-10-11 12:05:58.943   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Resources\drawable-xhdpi
+2019-10-11 12:05:58.950   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Resources\drawable-xxhdpi
+2019-10-11 12:05:58.955   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Resources\layout
+2019-10-11 12:05:58.980   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Resources\values
+2019-10-11 12:05:58.990   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.iOS
+2019-10-11 12:05:59.040   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.iOS\Properties
+2019-10-11 12:05:59.063   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.iOS\Resources
+2019-10-11 12:05:59.146   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.UWP
+2019-10-11 12:05:59.170   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.UWP\Assets
+2019-10-11 12:05:59.432   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.UWP\Properties
+2019-10-11 12:05:59.496   Extracting temporary file: C:\Users\JACOBC~1\AppData\Local\Temp\is-NHRMH.tmp\InnovaHxReg.exe
+2019-10-11 12:05:59.630   Execute path: C:\WINDOWS\Sysnative\CMD.EXE /c C:\Enabler\SDK\Doc\VisualStudio\unregisterhelp2.bat
+2019-10-11 12:06:00.335   Start of setting permissions 11-10-2019 12:06:00
+2019-10-11 12:06:01.724   End of setting permissions 11-10-2019 12:06:01
+2019-10-11 12:06:01.753   Installing or Updating EnablerDB
+2019-10-11 12:06:03.923   Update Services Start timout setting
+2019-10-11 12:06:03.961   Confirming MSSQLSERVER service is running
+2019-10-11 12:06:04.020   DB DIR is C:\EnablerDB\
+2019-10-11 12:06:04.029   Passing C:\Program Files\Microsoft SQL Server\120\Tools\Binn\ to DBInstall
+2019-10-11 12:06:11.313   INFO: Putting OSQL path (C:\Program Files\Microsoft SQL Server\120\Tools\Binn\) into PumpUpdate.INI
+2019-10-11 12:06:11.320   INFO: SQL_INSTANCE variable set to 
+2019-10-11 12:06:11.349   INFO: Running PumpUpdate for default instance
+2019-10-11 12:06:27.002   Pump Update install result 0
+2019-10-11 12:06:27.208   File Tree: C:\Enabler\sleep.exe
+2019-10-11 12:06:27.220   File Tree: C:\Enabler\InstallUtil.InstallLog
+2019-10-11 12:06:27.222   File Tree: C:\Enabler\Autoupgrade.*
+2019-10-11 12:06:27.233   File Tree: C:\Enabler\SetVersion.*
+2019-10-11 12:06:27.248   File Tree: C:\Enabler\config70.log
+2019-10-11 12:06:27.255   File Tree: C:\Enabler\DBU*.log
+2019-10-11 12:06:27.267   File Tree: C:\Enabler\DBU*.sql
+2019-10-11 12:06:27.271   File Tree: C:\Enabler\EnablerDBdoc.log
+2019-10-11 12:06:27.281   File Tree: C:\Enabler\PumpUpdate.sql
+2019-10-11 12:06:27.284   File Tree: C:\Enabler\pumpupdate.log
+2019-10-11 12:06:27.292   File Tree: C:\Enabler\WISE_UPDATE.LOG
+2019-10-11 12:06:27.299   File Tree: C:\Enabler\enabler.log
+2019-10-11 12:06:27.306   File Tree: C:\Enabler\load.log
+2019-10-11 12:06:27.313   File Tree: C:\Enabler\*.bat
+2019-10-11 12:06:27.321   File Tree: C:\Enabler\*.oca
+2019-10-11 12:06:27.327   File Tree: C:\Enabler\*.nxe
+2019-10-11 12:06:27.332   File Tree: C:\Enabler\*.nei
+2019-10-11 12:06:27.338   File Tree: C:\Enabler\bin\*.dll
+2019-10-11 12:06:27.343   File Tree: C:\Enabler\*.dll
+2019-10-11 12:06:27.350   File Tree: C:\Enabler\*OK
+2019-10-11 12:06:27.356   File Tree: C:\Enabler\www\Parameters.xml
+2019-10-11 12:06:27.362   File Tree: C:\Enabler\PumpUpdate.log
+2019-10-11 12:06:27.369   File Tree: C:\Enabler\PumpUpdate.sql
+2019-10-11 12:06:27.375   File Tree: C:\Enabler\State\*
+2019-10-11 12:06:27.383   File Tree: C:\Enabler\Driver\*
+2019-10-11 12:06:27.390   File Tree: C:\Enabler\bin\EnbWeb.InstallLog
+2019-10-11 12:06:27.398   Execute path: C:\Enabler\scutil.exe /STOP enbweb
+2019-10-11 12:06:27.405   Execute path: C:\Enabler\scutil.exe /STOP psrvr
+2019-10-11 12:06:27.414   Execute path: C:\Enabler\bin\psrvr4.exe /UNREGSERVER
+2019-10-11 12:06:27.416   Execute path: C:\Enabler\bin\enbweb.exe /uninstall
+2019-10-11 12:06:27.428   Execute path: C:\WINDOWS\system32\msiexec.exe /quiet /L+* C:\Enabler\log\APIInstall.log /uninstall C:\Enabler\InstallEnablerAPI.msi
+2019-10-11 12:06:27.435   EnablerVersion: 4.6.3.6087
+2019-10-11 12:06:27.443   Execute path: C:\WINDOWS\system32\msiexec.exe /quiet /L+* C:\Enabler\log\APIInstall.log /X C:\Enabler\InstallEnablerAPI.msi
+2019-10-11 12:06:27.451   Checking for C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\OutputServerHook.sql 
+2019-10-11 12:06:27.496   Fast startup setting is: 0
+2019-10-11 12:06:27.754   Update standby TO to 0 to prevent system going to sleep
+2019-10-11 12:06:27.988   Update hibernate TO to 0 to prevent system hibernation
+2019-10-11 12:06:27.995   Silent setting is 0
+2019-10-11 12:06:28.003   Install is finished
+2019-10-11 12:06:28.039   Need to restart Windows? No
+2019-10-11 12:06:39.120   -- Run entry --
+2019-10-11 12:06:39.125   Run as: Current user
+2019-10-11 12:06:39.127   Type: Exec
+2019-10-11 12:06:39.128   Filename: C:\Enabler\pumpdemo.exe
+2019-10-11 12:06:43.979   Process exit code: 0
+2019-10-11 12:06:43.982   -- Run entry --
+2019-10-11 12:06:43.985   Run as: Current user
+2019-10-11 12:06:43.990   Type: Exec
+2019-10-11 12:06:43.993   Filename: C:\Enabler\mppsim.exe
+2019-10-11 12:06:52.856   Process exit code: 0
+2019-10-11 12:06:52.859   -- Run entry --
+2019-10-11 12:06:52.865   Run as: Current user
+2019-10-11 12:06:52.869   Type: Exec
+2019-10-11 12:06:52.871   Filename: C:\Enabler\bin\enbweb.exe
+2019-10-11 12:07:02.266   Process exit code: 0
+2019-10-11 12:07:02.277   Deinitializing Setup.
+2019-10-11 12:07:02.337   Unable to delete log file C:\Users\JACOBC~1\AppData\Local\Temp\Setup Log 2019-10-11 #007.txt

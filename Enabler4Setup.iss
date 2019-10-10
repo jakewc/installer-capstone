@@ -2203,6 +2203,11 @@ begin
           SQL_INSTANCES := '';
 
           LoadStringFromFile(ExpandConstant('{app}\temp'), LINE);
+          if (Line = '') then begin
+            MsgBox('Failed to obtain list of SQL instances - code for server upgrade non-functional in this release', mbcriticalerror, MB_OK);
+            Log('Failed to obtain list of SQL instances - code for server upgrade non-functional in this release');
+            Abort();
+          end;
           Log(LINE);
 
           NAME := LINE;
@@ -4372,7 +4377,7 @@ begin
 
 //just before
   if CurStep = ssInstall then begin
-    saveConfig();
+    
     MSIInstaller();
     installNet3Point5();
     installNet4();     
@@ -4382,7 +4387,7 @@ begin
   end;
   //just after
   if CurStep = ssPostInstall then begin
-    
+    saveConfig();
     OSQLPathFound();
     InstallServerComponents();
     InstallSqlServer();

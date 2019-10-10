@@ -4372,7 +4372,7 @@ begin
 
 //just before
   if CurStep = ssInstall then begin
-    saveConfig();
+    
     MSIInstaller();
     installNet3Point5();
     installNet4();     
@@ -4382,7 +4382,7 @@ begin
   end;
   //just after
   if CurStep = ssPostInstall then begin
-    
+    saveConfig();
     OSQLPathFound();
     InstallServerComponents();
     InstallSqlServer();

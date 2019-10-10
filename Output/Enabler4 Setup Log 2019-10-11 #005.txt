@@ -1,0 +1,44 @@
+﻿2019-10-11 11:58:02.950   Log opened. (Time zone: UTC+13:00)
+2019-10-11 11:58:02.950   Setup version: Inno Setup version 6.0.2 (u)
+2019-10-11 11:58:02.950   Original Setup EXE: C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe
+2019-10-11 11:58:02.951   Setup command line: /SL5="$490660,40006066,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$110602 /NOTIFYWND=$49050C 
+2019-10-11 11:58:02.951   Windows version: 10.0.18362  (NT platform: Yes)
+2019-10-11 11:58:02.951   64-bit Windows: Yes
+2019-10-11 11:58:02.951   Processor architecture: x64
+2019-10-11 11:58:02.951   User privileges: Administrative
+2019-10-11 11:58:02.954   Administrative install mode: Yes
+2019-10-11 11:58:02.954   Install mode root key: HKEY_LOCAL_MACHINE
+2019-10-11 11:58:02.954   64-bit install mode: No
+2019-10-11 11:58:02.957   Created temporary directory: C:\Users\JACOBC~1\AppData\Local\Temp\is-4C09U.tmp
+2019-10-11 11:58:02.981   -- DLL function import --
+2019-10-11 11:58:02.981   Function name: ExitProcess
+2019-10-11 11:58:02.981   DLL name: kernel32.dll
+2019-10-11 11:58:02.981   Dest DLL name: kernel32.dll
+2019-10-11 11:58:02.981   Importing the DLL function.
+2019-10-11 11:58:02.981   Successfully imported the DLL function. Delay loaded? No
+2019-10-11 11:58:02.981   Initialising variables.
+2019-10-11 11:58:03.113   Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10
+2019-10-11 11:58:03.113   Installing Enabler V4.6.3.6087 on Windows V10.00.18362 64bit (Version 10)
+2019-10-11 11:58:03.113   CMD /SL5="$490660,40006066,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$110602 /NOTIFYWND=$49050C 
+2019-10-11 11:58:03.122   IE Location C:\Program Files\Internet Explorer;
+2019-10-11 11:58:03.122   IE VERSION: 9.11.18362.0
+2019-10-11 11:58:03.122   Installing from C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output drive.
+2019-10-11 11:58:03.538   Windows product type: 1
+2019-10-11 11:58:03.539   Location of OSQL.EXE is  (Initial Checks)
+2019-10-11 11:58:03.539   SQL2014 folder found, this will be installed.
+2019-10-11 11:58:03.539   SQL server folders parsed, SQL server to install=SQL2014, Architecture=64, Windows version=10.00.18362, OS ver=10
+2019-10-11 11:58:03.539   SQLEXPRESSNAME = SQL2014
+2019-10-11 11:58:03.539   Restarting from previous installation reboot.
+2019-10-11 11:58:03.540   Checking disk space
+2019-10-11 11:58:03.718   A
+2019-10-11 11:58:06.734   B
+2019-10-11 11:58:15.743   Backup checkbox not checked or there is no existing database, will not backup.
+2019-10-11 11:58:15.758   Calling RestartManager's RmGetList.
+2019-10-11 11:58:15.775   RmGetList finished successfully.
+2019-10-11 11:58:15.775   RestartManager found no applications using one of our files.
+2019-10-11 11:58:15.782   Server was chosen
+2019-10-11 11:58:15.856   Message box (OK):
+                          C: drive compressed, which is not supported. Installation exiting.
+2019-10-11 11:58:19.353   User chose OK.
+2019-10-11 11:58:19.353   Result Code = 1, C: drive is compressed, which is not supported
+2019-10-11 11:58:19.370   Unable to delete log file C:\Users\JACOBC~1\AppData\Local\Temp\Setup Log 2019-10-11 #005.txt
