@@ -1,0 +1,731 @@
+﻿2019-10-12 10:27:37.310   Log opened. (Time zone: UTC+13:00)
+2019-10-12 10:27:37.315   Setup version: Inno Setup version 6.0.2 (u)
+2019-10-12 10:27:37.319   Original Setup EXE: C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe
+2019-10-12 10:27:37.323   Setup command line: /SL5="$60C3E,40006066,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$30C46 /NOTIFYWND=$F04A4 /DEBUGWND=$20B46 
+2019-10-12 10:27:37.331   Windows version: 10.0.18362  (NT platform: Yes)
+2019-10-12 10:27:37.335   64-bit Windows: Yes
+2019-10-12 10:27:37.342   Processor architecture: x64
+2019-10-12 10:27:37.349   User privileges: Administrative
+2019-10-12 10:27:37.361   Administrative install mode: Yes
+2019-10-12 10:27:37.365   Install mode root key: HKEY_LOCAL_MACHINE
+2019-10-12 10:27:37.369   64-bit install mode: No
+2019-10-12 10:27:37.385   Created temporary directory: C:\Users\JACOBC~1\AppData\Local\Temp\is-N6IUB.tmp
+2019-10-12 10:27:37.428   -- DLL function import --
+2019-10-12 10:27:37.434   Function name: ExitProcess
+2019-10-12 10:27:37.442   DLL name: kernel32.dll
+2019-10-12 10:27:37.447   Dest DLL name: kernel32.dll
+2019-10-12 10:27:37.453   Importing the DLL function.
+2019-10-12 10:27:37.459   Successfully imported the DLL function. Delay loaded? No
+2019-10-12 10:27:37.476   Initialising variables.
+2019-10-12 10:27:38.304   Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10
+2019-10-12 10:27:38.330   Installing Enabler V4.6.3.6087 on Windows V10.00.18362 64bit (Version 10)
+2019-10-12 10:27:38.730   CMD /SL5="$60C3E,40006066,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output\Enabler4Setup.exe" /SPAWNWND=$30C46 /NOTIFYWND=$F04A4 /DEBUGWND=$20B46 
+2019-10-12 10:27:38.859   IE Location C:\Program Files\Internet Explorer;
+2019-10-12 10:27:38.917   IE VERSION: 9.11.18362.0
+2019-10-12 10:27:39.012   Installing from C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\Output drive.
+2019-10-12 10:27:39.825   Windows product type: 1
+2019-10-12 10:27:39.885   Location of OSQL.EXE is C:\Program Files\Microsoft SQL Server\120\Tools\Binn\osql.exe (Initial Checks)
+2019-10-12 10:27:39.917   Restarting from previous installation reboot.
+2019-10-12 10:27:40.012   Checking disk space
+2019-10-12 10:27:40.727   A
+2019-10-12 10:28:10.135   Message box (Yes/No):
+                          The folder:
+                          
+                          C:\Enabler
+                          
+                          already exists. Would you like to install to that folder anyway?
+2019-10-12 10:28:11.318   User chose Yes.
+2019-10-12 10:28:15.785   B
+2019-10-12 10:28:16.331   A
+2019-10-12 10:28:19.664   B
+2019-10-12 10:28:20.685   A
+2019-10-12 10:28:21.222   B
+2019-10-12 10:28:21.702   A
+2019-10-12 10:29:19.862   Backup checkbox not checked or there is no existing database, will not backup.
+2019-10-12 10:29:20.681   Calling RestartManager's RmGetList.
+2019-10-12 10:29:25.254   RmGetList finished successfully.
+2019-10-12 10:29:25.258   RestartManager found no applications using one of our files.
+2019-10-12 10:29:25.377   Found .NET v3.5 runtime
+2019-10-12 10:29:25.477   Check Net 4 install slqexpressname = , net 4 installed = 1
+2019-10-12 10:29:33.510   Starting the installation process.
+2019-10-12 10:29:33.868   Directory for uninstall files: C:\Enabler
+2019-10-12 10:29:33.897   Will append to existing uninstall log: C:\Enabler\unins000.dat
+2019-10-12 10:29:33.924   -- File entry --
+2019-10-12 10:29:33.942   Dest filename: C:\Enabler\unins000.exe
+2019-10-12 10:29:33.960   Time stamp of our file: 2019-10-12 10:27:37.047
+2019-10-12 10:29:33.982   Dest file exists.
+2019-10-12 10:29:33.994   Time stamp of existing file: 2019-10-12 10:14:33.545
+2019-10-12 10:29:34.015   Version of our file: 51.1052.0.0
+2019-10-12 10:29:34.605   Version of existing file: 51.1052.0.0
+2019-10-12 10:29:34.621   Installing the file.
+2019-10-12 10:29:34.716   Leaving temporary file in place for now.
+2019-10-12 10:29:34.756   -- File entry --
+2019-10-12 10:29:34.782   Dest filename: C:\Enabler\comdlg32.ocx
+2019-10-12 10:29:34.820   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:34.832   Dest file exists.
+2019-10-12 10:29:34.847   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:34.873   Version of our file: 6.0.84.18
+2019-10-12 10:29:34.905   Version of existing file: 6.0.84.18
+2019-10-12 10:29:34.921   Same version. Skipping.
+2019-10-12 10:29:34.941   Will register the file (a DLL/OCX) later.
+2019-10-12 10:29:34.956   -- File entry --
+2019-10-12 10:29:34.987   Dest filename: C:\Enabler\comct232.ocx
+2019-10-12 10:29:35.024   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:35.051   Dest file exists.
+2019-10-12 10:29:35.069   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:35.091   Version of our file: 6.0.80.22
+2019-10-12 10:29:35.201   Version of existing file: 6.0.80.22
+2019-10-12 10:29:35.212   Same version. Skipping.
+2019-10-12 10:29:35.225   Will register the file (a DLL/OCX) later.
+2019-10-12 10:29:35.248   -- File entry --
+2019-10-12 10:29:35.275   Dest filename: C:\Enabler\comctl32.ocx
+2019-10-12 10:29:35.290   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:35.309   Dest file exists.
+2019-10-12 10:29:35.324   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:35.336   Version of our file: 6.0.81.5
+2019-10-12 10:29:35.365   Version of existing file: 6.0.81.5
+2019-10-12 10:29:35.375   Same version. Skipping.
+2019-10-12 10:29:35.384   Will register the file (a DLL/OCX) later.
+2019-10-12 10:29:35.414   -- File entry --
+2019-10-12 10:29:35.432   Dest filename: C:\Enabler\Mscomm32.ocx
+2019-10-12 10:29:35.449   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:35.467   Dest file exists.
+2019-10-12 10:29:35.485   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:35.504   Version of our file: 6.0.81.69
+2019-10-12 10:29:35.621   Version of existing file: 6.0.81.69
+2019-10-12 10:29:35.635   Same version. Skipping.
+2019-10-12 10:29:35.644   Will register the file (a DLL/OCX) later.
+2019-10-12 10:29:35.658   -- File entry --
+2019-10-12 10:29:35.694   Dest filename: C:\Enabler\Msflxgrd.ocx
+2019-10-12 10:29:35.710   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:35.724   Dest file exists.
+2019-10-12 10:29:35.745   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:35.755   Version of our file: 6.0.84.18
+2019-10-12 10:29:35.779   Version of existing file: 6.0.84.18
+2019-10-12 10:29:35.793   Same version. Skipping.
+2019-10-12 10:29:35.809   Will register the file (a DLL/OCX) later.
+2019-10-12 10:29:35.818   -- File entry --
+2019-10-12 10:29:35.841   Dest filename: C:\Enabler\Msrdc20.ocx
+2019-10-12 10:29:35.862   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:35.875   Dest file exists.
+2019-10-12 10:29:35.884   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:35.895   Version of our file: 6.0.84.18
+2019-10-12 10:29:35.918   Version of existing file: 6.0.84.18
+2019-10-12 10:29:35.938   Same version. Skipping.
+2019-10-12 10:29:35.949   Will register the file (a DLL/OCX) later.
+2019-10-12 10:29:35.974   -- File entry --
+2019-10-12 10:29:36.006   Dest filename: C:\Enabler\Msrdo20.dll
+2019-10-12 10:29:36.019   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:36.037   Dest file exists.
+2019-10-12 10:29:36.051   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:36.074   Version of our file: 6.0.88.62
+2019-10-12 10:29:36.095   Version of existing file: 6.0.88.62
+2019-10-12 10:29:36.119   Same version. Skipping.
+2019-10-12 10:29:36.133   Will register the file (a DLL/OCX) later.
+2019-10-12 10:29:36.148   -- File entry --
+2019-10-12 10:29:36.187   Dest filename: C:\Enabler\Msvcp60.dll
+2019-10-12 10:29:36.207   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:36.217   Dest file exists.
+2019-10-12 10:29:36.239   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:36.254   Version of our file: 6.0.8972.0
+2019-10-12 10:29:36.288   Version of existing file: 6.0.8972.0
+2019-10-12 10:29:36.308   Same version. Skipping.
+2019-10-12 10:29:36.325   -- File entry --
+2019-10-12 10:29:36.363   Dest filename: C:\Enabler\EnbSecurityController.exe
+2019-10-12 10:29:36.379   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:36.397   Dest file exists.
+2019-10-12 10:29:36.413   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:36.428   Version of our file: 1.1.4.0
+2019-10-12 10:29:36.448   Version of existing file: 1.1.4.0
+2019-10-12 10:29:36.459   Same version. Skipping.
+2019-10-12 10:29:36.488   -- File entry --
+2019-10-12 10:29:36.534   Dest filename: C:\Enabler\SecurityModule.dll
+2019-10-12 10:29:36.556   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:36.572   Dest file exists.
+2019-10-12 10:29:36.586   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:36.614   Version of our file: 1.0.7.0
+2019-10-12 10:29:36.626   Version of existing file: 1.0.7.0
+2019-10-12 10:29:36.638   Same version. Skipping.
+2019-10-12 10:29:36.647   Will register the file (a DLL/OCX) later.
+2019-10-12 10:29:36.671   -- File entry --
+2019-10-12 10:29:36.706   Dest filename: C:\Enabler\itl.ico
+2019-10-12 10:29:36.732   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:36.744   Dest file exists.
+2019-10-12 10:29:36.754   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:36.765   Version of our file: (none)
+2019-10-12 10:29:36.791   Version of existing file: (none)
+2019-10-12 10:29:36.807   Installing the file.
+2019-10-12 10:29:37.252   Successfully installed the file.
+2019-10-12 10:29:37.271   -- File entry --
+2019-10-12 10:29:37.311   Dest filename: C:\Enabler\ConvertV4BetaLicense.exe
+2019-10-12 10:29:37.324   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:37.349   Dest file exists.
+2019-10-12 10:29:37.364   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:37.381   Version of our file: 1.0.1.0
+2019-10-12 10:29:37.392   Version of existing file: 1.0.1.0
+2019-10-12 10:29:37.407   Same version. Skipping.
+2019-10-12 10:29:37.428   -- File entry --
+2019-10-12 10:29:37.453   Dest filename: C:\Enabler\EnbSessionX2.ocx
+2019-10-12 10:29:37.474   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:37.488   Dest file exists.
+2019-10-12 10:29:37.507   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:37.516   Version of our file: 4.9.0.0
+2019-10-12 10:29:38.156   Version of existing file: 4.9.0.0
+2019-10-12 10:29:38.177   Same version. Skipping.
+2019-10-12 10:29:38.190   Will register the file (a DLL/OCX) later.
+2019-10-12 10:29:38.206   -- File entry --
+2019-10-12 10:29:38.215   Dest filename: C:\Enabler\EnablerSoundEvents.reg
+2019-10-12 10:29:38.251   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:38.269   Dest file exists.
+2019-10-12 10:29:38.278   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:38.291   Version of our file: (none)
+2019-10-12 10:29:38.330   Version of existing file: (none)
+2019-10-12 10:29:38.348   Installing the file.
+2019-10-12 10:29:38.372   Successfully installed the file.
+2019-10-12 10:29:38.389   -- File entry --
+2019-10-12 10:29:38.402   Dest filename: C:\Enabler\EnbAttendantX2.ocx
+2019-10-12 10:29:38.440   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:38.449   Dest file exists.
+2019-10-12 10:29:38.469   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:38.494   Version of our file: 4.2.0.0
+2019-10-12 10:29:38.801   Version of existing file: 4.2.0.0
+2019-10-12 10:29:38.809   Same version. Skipping.
+2019-10-12 10:29:38.818   Will register the file (a DLL/OCX) later.
+2019-10-12 10:29:38.832   -- File entry --
+2019-10-12 10:29:38.859   Dest filename: C:\Enabler\EnbPumpX2.ocx
+2019-10-12 10:29:38.871   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:38.879   Dest file exists.
+2019-10-12 10:29:38.888   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:38.901   Version of our file: 3.41.0.0
+2019-10-12 10:29:39.690   Version of existing file: 3.41.0.0
+2019-10-12 10:29:39.721   Same version. Skipping.
+2019-10-12 10:29:39.751   Will register the file (a DLL/OCX) later.
+2019-10-12 10:29:39.788   -- File entry --
+2019-10-12 10:29:39.835   Dest filename: C:\Enabler\joda-time-LICENSE.txt
+2019-10-12 10:29:39.853   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:39.891   Dest file exists.
+2019-10-12 10:29:39.913   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:39.929   Version of our file: (none)
+2019-10-12 10:29:39.972   Version of existing file: (none)
+2019-10-12 10:29:39.998   Installing the file.
+2019-10-12 10:29:40.024   Successfully installed the file.
+2019-10-12 10:29:40.041   -- File entry --
+2019-10-12 10:29:40.077   Dest filename: C:\Enabler\joda-time-NOTICE.txt
+2019-10-12 10:29:40.092   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:40.110   Dest file exists.
+2019-10-12 10:29:40.129   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:40.154   Version of our file: (none)
+2019-10-12 10:29:40.192   Version of existing file: (none)
+2019-10-12 10:29:40.212   Installing the file.
+2019-10-12 10:29:40.233   Successfully installed the file.
+2019-10-12 10:29:40.252   -- File entry --
+2019-10-12 10:29:40.290   Dest filename: C:\Enabler\enabler-api-1.0.jar
+2019-10-12 10:29:40.305   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:40.319   Dest file exists.
+2019-10-12 10:29:40.330   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:40.349   Version of our file: (none)
+2019-10-12 10:29:41.617   Version of existing file: (none)
+2019-10-12 10:29:41.627   Installing the file.
+2019-10-12 10:29:41.702   Successfully installed the file.
+2019-10-12 10:29:41.724   -- File entry --
+2019-10-12 10:29:41.740   Dest filename: C:\Enabler\joda-time-2.0.jar
+2019-10-12 10:29:41.777   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:41.798   Dest file exists.
+2019-10-12 10:29:41.814   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:41.835   Version of our file: (none)
+2019-10-12 10:29:44.110   Version of existing file: (none)
+2019-10-12 10:29:44.121   Installing the file.
+2019-10-12 10:29:44.271   Successfully installed the file.
+2019-10-12 10:29:44.301   -- File entry --
+2019-10-12 10:29:44.325   Dest filename: C:\Enabler\InstallEnablerApi.msi
+2019-10-12 10:29:44.365   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:44.380   Dest file exists.
+2019-10-12 10:29:44.399   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:44.412   Version of our file: (none)
+2019-10-12 10:29:44.446   Version of existing file: (none)
+2019-10-12 10:29:44.456   Installing the file.
+2019-10-12 10:29:44.644   Successfully installed the file.
+2019-10-12 10:29:44.674   -- File entry --
+2019-10-12 10:29:44.693   Dest filename: C:\Enabler\ITL.Enabler.WPFControls.dll
+2019-10-12 10:29:44.737   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:44.759   Dest file exists.
+2019-10-12 10:29:44.768   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:44.787   Version of our file: 1.2.0.0
+2019-10-12 10:29:44.801   Version of existing file: 1.2.0.0
+2019-10-12 10:29:44.809   Same version. Skipping.
+2019-10-12 10:29:44.828   -- File entry --
+2019-10-12 10:29:44.866   Dest filename: C:\Enabler\System.Windows.Controls.DataVisualization.Toolkit.dll
+2019-10-12 10:29:44.878   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:44.892   Dest file exists.
+2019-10-12 10:29:44.901   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:44.917   Version of our file: 3.5.0.0
+2019-10-12 10:29:44.933   Version of existing file: 3.5.0.0
+2019-10-12 10:29:44.944   Same version. Skipping.
+2019-10-12 10:29:44.958   -- File entry --
+2019-10-12 10:29:45.000   Dest filename: C:\Enabler\WPFToolkit.dll
+2019-10-12 10:29:45.020   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:45.038   Dest file exists.
+2019-10-12 10:29:45.068   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:45.087   Version of our file: 3.5.50211.1
+2019-10-12 10:29:45.109   Version of existing file: 3.5.50211.1
+2019-10-12 10:29:45.126   Same version. Skipping.
+2019-10-12 10:29:45.137   -- File entry --
+2019-10-12 10:29:45.188   Dest filename: C:\Users\JACOBC~1\AppData\Local\Temp\is-N6IUB.tmp\IsAdmin.exe
+2019-10-12 10:29:45.202   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:45.220   Installing the file.
+2019-10-12 10:29:45.269   Successfully installed the file.
+2019-10-12 10:29:45.295   -- File entry --
+2019-10-12 10:29:45.340   Dest filename: C:\Enabler\AutoSupport.exe
+2019-10-12 10:29:45.369   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:45.396   Dest file exists.
+2019-10-12 10:29:45.408   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:45.426   Version of our file: 2.9.1.0
+2019-10-12 10:29:45.437   Version of existing file: 2.9.1.0
+2019-10-12 10:29:45.452   Same version. Skipping.
+2019-10-12 10:29:45.463   -- File entry --
+2019-10-12 10:29:45.514   Dest filename: C:\Users\JACOBC~1\AppData\Local\Temp\is-N6IUB.tmp\release.txt
+2019-10-12 10:29:45.533   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:45.556   Installing the file.
+2019-10-12 10:29:45.580   Successfully installed the file.
+2019-10-12 10:29:45.599   -- File entry --
+2019-10-12 10:29:45.648   Dest filename: C:\Enabler\bin\setx64.exe
+2019-10-12 10:29:45.677   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:45.701   Dest file exists.
+2019-10-12 10:29:45.717   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:45.746   Version of our file: 6.0.6000.16386
+2019-10-12 10:29:45.767   Version of existing file: 6.0.6000.16386
+2019-10-12 10:29:45.788   Same version. Skipping.
+2019-10-12 10:29:45.823   -- File entry --
+2019-10-12 10:29:45.876   Dest filename: C:\Enabler\Release Notes.htm
+2019-10-12 10:29:45.900   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:45.916   Dest file exists.
+2019-10-12 10:29:45.938   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:45.952   Version of our file: (none)
+2019-10-12 10:29:46.020   Version of existing file: (none)
+2019-10-12 10:29:46.040   Installing the file.
+2019-10-12 10:29:46.117   Successfully installed the file.
+2019-10-12 10:29:46.134   -- File entry --
+2019-10-12 10:29:46.192   Dest filename: C:\Enabler\PumpUpdate.htm
+2019-10-12 10:29:46.208   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:46.233   Dest file exists.
+2019-10-12 10:29:46.255   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:46.274   Version of our file: (none)
+2019-10-12 10:29:46.347   Version of existing file: (none)
+2019-10-12 10:29:46.359   Installing the file.
+2019-10-12 10:29:46.410   Successfully installed the file.
+2019-10-12 10:29:46.437   -- File entry --
+2019-10-12 10:29:46.460   Dest filename: C:\Enabler\atutil.exe
+2019-10-12 10:29:46.528   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:46.553   Dest file exists.
+2019-10-12 10:29:46.571   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:46.583   Version of our file: 1.6.0.0
+2019-10-12 10:29:46.599   Version of existing file: 1.6.0.0
+2019-10-12 10:29:46.614   Same version. Skipping.
+2019-10-12 10:29:46.637   -- File entry --
+2019-10-12 10:29:46.675   Dest filename: C:\Enabler\odbcnfg.exe
+2019-10-12 10:29:46.692   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:46.717   Dest file exists.
+2019-10-12 10:29:46.732   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:46.763   Version of our file: 1.0.4.0
+2019-10-12 10:29:46.780   Version of existing file: 1.0.4.0
+2019-10-12 10:29:46.800   Same version. Skipping.
+2019-10-12 10:29:46.826   -- File entry --
+2019-10-12 10:29:46.842   Dest filename: C:\Enabler\odbcnfg64.exe
+2019-10-12 10:29:46.883   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:46.896   Dest file exists.
+2019-10-12 10:29:46.907   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:46.924   Version of our file: 1.0.4.0
+2019-10-12 10:29:46.955   Version of existing file: 1.0.4.0
+2019-10-12 10:29:46.972   Same version. Skipping.
+2019-10-12 10:29:46.999   -- File entry --
+2019-10-12 10:29:47.037   Dest filename: C:\Enabler\EnbKick.exe
+2019-10-12 10:29:47.052   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:47.060   Dest file exists.
+2019-10-12 10:29:47.068   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:47.080   Version of our file: 2.2.0.0
+2019-10-12 10:29:47.092   Version of existing file: 2.2.0.0
+2019-10-12 10:29:47.117   Same version. Skipping.
+2019-10-12 10:29:47.140   -- File entry --
+2019-10-12 10:29:47.151   Dest filename: C:\Enabler\bin\DriveCompressed.exe
+2019-10-12 10:29:47.183   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:47.192   Dest file exists.
+2019-10-12 10:29:47.204   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:47.214   Version of our file: (none)
+2019-10-12 10:29:47.234   Version of existing file: (none)
+2019-10-12 10:29:47.252   Installing the file.
+2019-10-12 10:29:47.306   Successfully installed the file.
+2019-10-12 10:29:47.320   -- File entry --
+2019-10-12 10:29:47.363   Dest filename: C:\Enabler\enbclient.exe
+2019-10-12 10:29:47.373   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:47.396   Dest file exists.
+2019-10-12 10:29:47.414   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:47.431   Version of our file: 1.2.0.0
+2019-10-12 10:29:47.457   Version of existing file: 1.2.0.0
+2019-10-12 10:29:47.479   Same version. Skipping.
+2019-10-12 10:29:47.519   -- File entry --
+2019-10-12 10:29:47.542   Dest filename: C:\Enabler\Interop.IWshRuntimeLibrary.dll
+2019-10-12 10:29:47.576   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:47.584   Dest file exists.
+2019-10-12 10:29:47.607   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:47.633   Version of our file: 1.0.0.0
+2019-10-12 10:29:47.660   Version of existing file: 1.0.0.0
+2019-10-12 10:29:47.673   Same version. Skipping.
+2019-10-12 10:29:47.699   -- File entry --
+2019-10-12 10:29:47.758   Dest filename: C:\Enabler\MsiQueryProduct.exe
+2019-10-12 10:29:47.769   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:47.783   Dest file exists.
+2019-10-12 10:29:47.800   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:47.819   Version of our file: (none)
+2019-10-12 10:29:47.834   Version of existing file: (none)
+2019-10-12 10:29:47.846   Installing the file.
+2019-10-12 10:29:47.896   Successfully installed the file.
+2019-10-12 10:29:47.914   -- File entry --
+2019-10-12 10:29:47.947   Dest filename: C:\Enabler\vcredist_x86.exe
+2019-10-12 10:29:47.957   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:47.964   Dest file exists.
+2019-10-12 10:29:47.975   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:47.991   Version of our file: 9.0.30729.17
+2019-10-12 10:29:48.009   Version of existing file: 9.0.30729.17
+2019-10-12 10:29:48.018   Same version. Skipping.
+2019-10-12 10:29:48.031   -- File entry --
+2019-10-12 10:29:48.072   Dest filename: C:\Enabler\bin\subinacl.exe
+2019-10-12 10:29:48.088   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:48.110   Dest file exists.
+2019-10-12 10:29:48.139   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:48.167   Version of our file: 5.2.3790.1180
+2019-10-12 10:29:48.186   Version of existing file: 5.2.3790.1180
+2019-10-12 10:29:48.196   Same version. Skipping.
+2019-10-12 10:29:48.223   -- File entry --
+2019-10-12 10:29:48.257   Dest filename: C:\Enabler\InstallSim.sql
+2019-10-12 10:29:48.264   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:48.272   Dest file exists.
+2019-10-12 10:29:48.283   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:48.296   Version of our file: (none)
+2019-10-12 10:29:48.329   Version of existing file: (none)
+2019-10-12 10:29:48.340   Installing the file.
+2019-10-12 10:29:48.365   Successfully installed the file.
+2019-10-12 10:29:48.375   -- File entry --
+2019-10-12 10:29:48.397   Dest filename: C:\Enabler\Instances.bat
+2019-10-12 10:29:48.415   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:48.427   Dest file exists.
+2019-10-12 10:29:48.436   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:48.451   Version of our file: (none)
+2019-10-12 10:29:48.498   Version of existing file: (none)
+2019-10-12 10:29:48.510   Installing the file.
+2019-10-12 10:29:48.531   Successfully installed the file.
+2019-10-12 10:29:48.861   -- File entry --
+2019-10-12 10:29:48.885   Dest filename: C:\Enabler\bin\EnablerEvent.dll
+2019-10-12 10:29:48.896   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:48.908   Dest file exists.
+2019-10-12 10:29:48.926   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:48.934   Version of our file: (none)
+2019-10-12 10:29:48.955   Version of existing file: (none)
+2019-10-12 10:29:48.981   Installing the file.
+2019-10-12 10:29:49.022   Successfully installed the file.
+2019-10-12 10:29:49.038   -- File entry --
+2019-10-12 10:29:49.063   Dest filename: C:\Enabler\bin\subinacl.exe
+2019-10-12 10:29:49.075   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:49.094   Dest file exists.
+2019-10-12 10:29:49.110   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:49.126   Version of our file: 5.2.3790.1180
+2019-10-12 10:29:49.136   Version of existing file: 5.2.3790.1180
+2019-10-12 10:29:49.150   Same version. Skipping.
+2019-10-12 10:29:49.183   -- File entry --
+2019-10-12 10:29:49.218   Dest filename: C:\Enabler\CreateRegKeyEvent.bat
+2019-10-12 10:29:49.246   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:49.263   Dest file exists.
+2019-10-12 10:29:49.274   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:49.292   Version of our file: (none)
+2019-10-12 10:29:49.336   Version of existing file: (none)
+2019-10-12 10:29:49.349   Installing the file.
+2019-10-12 10:29:49.374   Successfully installed the file.
+2019-10-12 10:29:49.397   -- File entry --
+2019-10-12 10:29:49.436   Dest filename: C:\Enabler\bin\PDFViewer.exe
+2019-10-12 10:29:49.454   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:49.462   Dest file exists.
+2019-10-12 10:29:49.475   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:49.492   Version of our file: (none)
+2019-10-12 10:29:49.506   Version of existing file: (none)
+2019-10-12 10:29:49.519   Installing the file.
+2019-10-12 10:29:50.046   Successfully installed the file.
+2019-10-12 10:29:50.064   -- File entry --
+2019-10-12 10:29:50.096   Dest filename: C:\Enabler\MPPSim.exe
+2019-10-12 10:29:50.108   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:50.124   Dest file exists.
+2019-10-12 10:29:50.137   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:50.157   Version of our file: 2.23.0.9
+2019-10-12 10:29:50.172   Version of existing file: 2.23.0.9
+2019-10-12 10:29:50.195   Same version. Skipping.
+2019-10-12 10:29:50.220   -- File entry --
+2019-10-12 10:29:50.261   Dest filename: C:\Enabler\pumpdemo.exe
+2019-10-12 10:29:50.275   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:50.291   Dest file exists.
+2019-10-12 10:29:50.303   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:50.322   Version of our file: 3.8.0.2
+2019-10-12 10:29:50.339   Version of existing file: 3.8.0.2
+2019-10-12 10:29:50.352   Same version. Skipping.
+2019-10-12 10:29:50.370   -- File entry --
+2019-10-12 10:29:50.386   Dest filename: C:\Enabler\PumpDemoWPF.exe
+2019-10-12 10:29:50.413   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:50.428   Dest file exists.
+2019-10-12 10:29:50.442   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:50.461   Version of our file: 1.2.4.0
+2019-10-12 10:29:50.477   Version of existing file: 1.2.4.0
+2019-10-12 10:29:50.508   Same version. Skipping.
+2019-10-12 10:29:50.542   -- File entry --
+2019-10-12 10:29:50.585   Dest filename: C:\Enabler\SampleCom.exe
+2019-10-12 10:29:50.603   Time stamp of our file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:50.625   Dest file exists.
+2019-10-12 10:29:50.634   Time stamp of existing file: 2019-08-13 12:18:18.000
+2019-10-12 10:29:50.652   Version of our file: 1.7.0.0
+2019-10-12 10:29:50.676   Version of existing file: 1.7.0.0
+2019-10-12 10:29:50.697   Same version. Skipping.
+2019-10-12 10:29:50.712   -- File entry --
+2019-10-12 10:29:50.749   Dest filename: C:\Enabler\pumpdemo.jar
+2019-10-12 10:29:50.769   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:50.789   Dest file exists.
+2019-10-12 10:29:50.802   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:50.819   Version of our file: (none)
+2019-10-12 10:29:51.979   Version of existing file: (none)
+2019-10-12 10:29:51.990   Installing the file.
+2019-10-12 10:29:52.067   Successfully installed the file.
+2019-10-12 10:29:52.084   -- File entry --
+2019-10-12 10:29:52.115   Dest filename: C:\Enabler\enabler-pmp-ctrl-1.0.jar
+2019-10-12 10:29:52.137   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:52.151   Dest file exists.
+2019-10-12 10:29:52.167   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:52.182   Version of our file: (none)
+2019-10-12 10:29:52.537   Version of existing file: (none)
+2019-10-12 10:29:52.548   Installing the file.
+2019-10-12 10:29:52.582   Successfully installed the file.
+2019-10-12 10:29:52.598   -- File entry --
+2019-10-12 10:29:52.632   Dest filename: C:\Enabler\forms-1.3.0.jar
+2019-10-12 10:29:52.641   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:52.664   Dest file exists.
+2019-10-12 10:29:52.673   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:52.683   Version of our file: (none)
+2019-10-12 10:29:53.259   Version of existing file: (none)
+2019-10-12 10:29:53.266   Installing the file.
+2019-10-12 10:29:53.304   Successfully installed the file.
+2019-10-12 10:29:53.318   -- File entry --
+2019-10-12 10:29:53.339   Dest filename: C:\Enabler\glazedlists-1.8.0_java15.jar
+2019-10-12 10:29:53.351   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:53.361   Dest file exists.
+2019-10-12 10:29:53.374   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:53.391   Version of our file: (none)
+2019-10-12 10:29:53.463   Version of existing file: (none)
+2019-10-12 10:29:53.476   Installing the file.
+2019-10-12 10:29:53.740   Successfully installed the file.
+2019-10-12 10:29:53.768   -- File entry --
+2019-10-12 10:29:53.802   Dest filename: C:\Enabler\icu4j-49_1.jar
+2019-10-12 10:29:53.816   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:53.825   Dest file exists.
+2019-10-12 10:29:53.838   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:53.854   Version of our file: (none)
+2019-10-12 10:29:53.919   Version of existing file: (none)
+2019-10-12 10:29:53.936   Installing the file.
+2019-10-12 10:29:55.997   Successfully installed the file.
+2019-10-12 10:29:56.018   -- File entry --
+2019-10-12 10:29:56.041   Dest filename: C:\Enabler\miglayout15-swing.jar
+2019-10-12 10:29:56.069   Time stamp of our file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:56.090   Dest file exists.
+2019-10-12 10:29:56.101   Time stamp of existing file: 2019-08-13 12:18:20.000
+2019-10-12 10:29:56.111   Version of our file: (none)
+2019-10-12 10:29:56.150   Version of existing file: (none)
+2019-10-12 10:29:56.164   Installing the file.
+2019-10-12 10:29:56.202   Successfully installed the file.
+2019-10-12 10:29:56.273   Registering 32-bit DLL/OCX: C:\Enabler\comdlg32.ocx
+2019-10-12 10:29:56.333   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\comdlg32.ocx"
+2019-10-12 10:29:56.787   Registration successful.
+2019-10-12 10:29:56.801   Registering 32-bit DLL/OCX: C:\Enabler\comct232.ocx
+2019-10-12 10:29:56.830   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\comct232.ocx"
+2019-10-12 10:29:57.058   Registration successful.
+2019-10-12 10:29:57.067   Registering 32-bit DLL/OCX: C:\Enabler\comctl32.ocx
+2019-10-12 10:29:57.092   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\comctl32.ocx"
+2019-10-12 10:29:57.571   Registration successful.
+2019-10-12 10:29:57.586   Registering 32-bit DLL/OCX: C:\Enabler\Mscomm32.ocx
+2019-10-12 10:29:57.619   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\Mscomm32.ocx"
+2019-10-12 10:29:57.829   Registration successful.
+2019-10-12 10:29:57.839   Registering 32-bit DLL/OCX: C:\Enabler\Msflxgrd.ocx
+2019-10-12 10:29:57.878   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\Msflxgrd.ocx"
+2019-10-12 10:29:58.135   Registration successful.
+2019-10-12 10:29:58.152   Registering 32-bit DLL/OCX: C:\Enabler\Msrdc20.ocx
+2019-10-12 10:29:58.192   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\Msrdc20.ocx"
+2019-10-12 10:29:58.392   Registration successful.
+2019-10-12 10:29:58.402   Registering 32-bit DLL/OCX: C:\Enabler\Msrdo20.dll
+2019-10-12 10:29:58.440   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\Msrdo20.dll"
+2019-10-12 10:29:58.687   Registration successful.
+2019-10-12 10:29:58.702   Registering 32-bit DLL/OCX: C:\Enabler\SecurityModule.dll
+2019-10-12 10:29:58.726   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\SecurityModule.dll"
+2019-10-12 10:29:58.943   Registration successful.
+2019-10-12 10:29:58.958   Registering 32-bit DLL/OCX: C:\Enabler\EnbSessionX2.ocx
+2019-10-12 10:29:59.015   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\EnbSessionX2.ocx"
+2019-10-12 10:29:59.407   Registration successful.
+2019-10-12 10:29:59.422   Registering 32-bit DLL/OCX: C:\Enabler\EnbAttendantX2.ocx
+2019-10-12 10:29:59.448   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\EnbAttendantX2.ocx"
+2019-10-12 10:29:59.698   Registration successful.
+2019-10-12 10:29:59.708   Registering 32-bit DLL/OCX: C:\Enabler\EnbPumpX2.ocx
+2019-10-12 10:29:59.733   Spawning 32-bit RegSvr32: "C:\WINDOWS\system32\regsvr32.exe" /s "C:\Enabler\EnbPumpX2.ocx"
+2019-10-12 10:29:59.945   Registration successful.
+2019-10-12 10:29:59.960   Saving uninstall information.
+2019-10-12 10:29:59.973   Renaming uninstaller.
+2019-10-12 10:29:59.998   Deleting uninstall key left over from previous administrative 32-bit install.
+2019-10-12 10:30:00.016   Creating new uninstall key: HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Uninstall\{95EC957B-DB36-4EDD-9C7C-B19F896CC37D}_is1
+2019-10-12 10:30:00.027   Writing uninstall key values.
+2019-10-12 10:30:00.050   Detected previous non administrative install? No
+2019-10-12 10:30:00.070   Detected previous administrative 64-bit install? No
+2019-10-12 10:30:00.106   Installation process succeeded.
+2019-10-12 10:30:00.223   Client was chosen
+2019-10-12 10:30:01.268   Failed to obtain list of SQL instances - code for server upgrade non-functional in this release
+2019-10-12 10:30:01.989   Installing VS C++ SP1 Redistributables
+2019-10-12 10:30:08.629   Check for V4 Beta License
+2019-10-12 10:30:09.317   Result code from COnvertV4BetaLicense was 1
+2019-10-12 10:30:17.402   Group PathC:\ProgramData\Microsoft\Windows\Start Menu\Programs\The Enabler
+2019-10-12 10:30:17.415   Group Directory
+2019-10-12 10:30:17.447   Desktop PathC:\Users\Public\Desktop
+2019-10-12 10:30:17.476   Start Menu Path
+2019-10-12 10:30:19.150   Created C:\Enabler\SDK\Doc
+2019-10-12 10:30:19.207   Created C:\Enabler\SDK\Doc\ActiveX
+2019-10-12 10:30:19.621   Created C:\Enabler\SDK\Doc\Java
+2019-10-12 10:30:19.665   Created C:\Enabler\SDK\Doc\Java\JavaDoc
+2019-10-12 10:30:19.839   Created C:\Enabler\SDK\Doc\Java\JavaDoc\index-files
+2019-10-12 10:30:21.097   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl
+2019-10-12 10:30:21.128   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler
+2019-10-12 10:30:21.144   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api
+2019-10-12 10:30:21.742   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\class-use
+2019-10-12 10:30:26.799   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events
+2019-10-12 10:30:26.822   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\attendant
+2019-10-12 10:30:27.071   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\attendant\class-use
+2019-10-12 10:30:27.491   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\forecourt
+2019-10-12 10:30:27.509   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\forecourt\class-use
+2019-10-12 10:30:28.469   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\grade
+2019-10-12 10:30:28.493   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\grade\class-use
+2019-10-12 10:30:28.934   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\pump
+2019-10-12 10:30:28.956   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\pump\class-use
+2019-10-12 10:30:29.834   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\tank
+2019-10-12 10:30:29.856   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\tank\class-use
+2019-10-12 10:30:30.306   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\types
+2019-10-12 10:30:30.492   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\events\types\class-use
+2019-10-12 10:30:34.081   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\reasons
+2019-10-12 10:30:34.152   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\reasons\class-use
+2019-10-12 10:30:35.319   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\states
+2019-10-12 10:30:35.337   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\states\class-use
+2019-10-12 10:30:37.244   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\types
+2019-10-12 10:30:37.359   Created C:\Enabler\SDK\Doc\Java\JavaDoc\itl\enabler\api\types\class-use
+2019-10-12 10:30:39.004   Created C:\Enabler\SDK\Doc\Java\JavaDoc\resources
+2019-10-12 10:30:39.216   Created C:\Enabler\SDK\Doc\VisualStudio
+2019-10-12 10:30:39.239   Created C:\Enabler\SDK\Doc\VisualStudio\200X
+2019-10-12 10:30:39.795   Created C:\Enabler\SDK\Doc\VisualStudio\201X
+2019-10-12 10:30:39.944   Created C:\Enabler\SDK\DotNetPCLAPI
+2019-10-12 10:30:39.956   Created C:\Enabler\SDK\DotNetPCLAPI\Debug
+2019-10-12 10:30:40.161   Created C:\Enabler\SDK\DotNetPCLAPI\Release
+2019-10-12 10:30:40.337   Created C:\Enabler\SDK\Samples
+2019-10-12 10:30:40.359   Created C:\Enabler\SDK\Samples\ActiveX2
+2019-10-12 10:30:40.383   Created C:\Enabler\SDK\Samples\ActiveX2\VB6 Pump Sample
+2019-10-12 10:30:41.462   Created C:\Enabler\SDK\Samples\ActiveX2\VB6 Pump Sample\VBLib
+2019-10-12 10:30:41.684   Created C:\Enabler\SDK\Samples\Apple
+2019-10-12 10:30:41.703   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS
+2019-10-12 10:30:41.712   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj
+2019-10-12 10:30:41.761   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\project.xcworkspace
+2019-10-12 10:30:41.793   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\project.xcworkspace\xcuserdata
+2019-10-12 10:30:41.814   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\project.xcworkspace\xcuserdata\itladmin.xcuserdatad
+2019-10-12 10:30:41.867   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\project.xcworkspace\xcuserdata\itladmin.xcuserdatad\xcdebugger
+2019-10-12 10:30:41.911   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\project.xcworkspace\xcuserdata\raymond.xcuserdatad
+2019-10-12 10:30:41.978   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\xcuserdata
+2019-10-12 10:30:41.994   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\xcuserdata\itladmin.xcuserdatad
+2019-10-12 10:30:42.007   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\xcuserdata\itladmin.xcuserdatad\xcdebugger
+2019-10-12 10:30:42.040   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\xcuserdata\itladmin.xcuserdatad\xcschemes
+2019-10-12 10:30:42.101   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\xcuserdata\raymond.xcuserdatad
+2019-10-12 10:30:42.114   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\xcuserdata\raymond.xcuserdatad\xcdebugger
+2019-10-12 10:30:42.145   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\Enabler Pump Manager.xcodeproj\xcuserdata\raymond.xcuserdatad\xcschemes
+2019-10-12 10:30:42.206   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager
+2019-10-12 10:30:42.277   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Base.lproj
+2019-10-12 10:30:42.378   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\EnablerApi.framework
+2019-10-12 10:30:42.389   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\EnablerApi.framework\en.lproj
+2019-10-12 10:30:42.450   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\EnablerApi.framework\Headers
+2019-10-12 10:30:42.891   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\EnablerApi.framework\Modules
+2019-10-12 10:30:42.926   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\EnablerApi.framework\_CodeSignature
+2019-10-12 10:30:43.075   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets
+2019-10-12 10:30:43.088   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\AppIcon.appiconset
+2019-10-12 10:30:43.205   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\button_auth.imageset
+2019-10-12 10:30:43.255   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\button_block.imageset
+2019-10-12 10:30:43.323   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\button_stop.imageset
+2019-10-12 10:30:43.368   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\button_unblock.imageset
+2019-10-12 10:30:43.417   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\cell_auth.imageset
+2019-10-12 10:30:43.471   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\cell_block.imageset
+2019-10-12 10:30:43.518   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\cell_invalidprice.imageset
+2019-10-12 10:30:43.570   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\cell_pricechange.imageset
+2019-10-12 10:30:43.620   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\cell_pumpbusy.imageset
+2019-10-12 10:30:43.679   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\cell_pumperror.imageset
+2019-10-12 10:30:43.727   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\cell_stop.imageset
+2019-10-12 10:30:43.780   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\LaunchImage.launchimage
+2019-10-12 10:30:43.823   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\logon_logo.imageset
+2019-10-12 10:30:43.881   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\logon_spinner.imageset
+2019-10-12 10:30:43.922   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\logout_out.imageset
+2019-10-12 10:30:43.975   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\sitecontrol_stopall.imageset
+2019-10-12 10:30:44.042   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\sitecontrol_web.imageset
+2019-10-12 10:30:44.103   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\tabitem_forecourt.imageset
+2019-10-12 10:30:44.161   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\tabitem_logout.imageset
+2019-10-12 10:30:44.211   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\tabitem_sitecontrol.imageset
+2019-10-12 10:30:44.259   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_auth.imageset
+2019-10-12 10:30:44.326   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_blocked.imageset
+2019-10-12 10:30:44.374   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_disconnect.imageset
+2019-10-12 10:30:44.419   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_invalidprice.imageset
+2019-10-12 10:30:44.473   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_pricechange.imageset
+2019-10-12 10:30:44.508   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_pumpbusy.imageset
+2019-10-12 10:30:44.552   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_pumperror.imageset
+2019-10-12 10:30:44.589   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_pumpnozzle.imageset
+2019-10-12 10:30:44.679   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_stack1.imageset
+2019-10-12 10:30:44.742   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_stack2.imageset
+2019-10-12 10:30:44.812   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_stack3.imageset
+2019-10-12 10:30:44.860   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_stack4.imageset
+2019-10-12 10:30:44.914   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_stack5.imageset
+2019-10-12 10:30:44.963   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManager\Images.xcassets\widget_stopped.imageset
+2019-10-12 10:30:45.512   Created C:\Enabler\SDK\Samples\Apple\PumpmanageriOS\PumpManagerTests
+2019-10-12 10:30:45.619   Created C:\Enabler\SDK\Samples\COM
+2019-10-12 10:30:45.645   Created C:\Enabler\SDK\Samples\COM\VB6 COM Sample
+2019-10-12 10:30:46.685   Created C:\Enabler\SDK\Samples\Java
+2019-10-12 10:30:46.702   Created C:\Enabler\SDK\Samples\Java\pumpdemo
+2019-10-12 10:30:46.720   Created C:\Enabler\SDK\Samples\Java\pumpdemo\dist
+2019-10-12 10:30:51.477   Created C:\Enabler\SDK\Samples\Java\pumpdemo\src
+2019-10-12 10:30:51.494   Created C:\Enabler\SDK\Samples\Java\pumpdemo\src\pumpdemo
+2019-10-12 10:30:51.612   Created C:\Enabler\SDK\Samples\Java\pumpdemo\src\pumpdemo\gradeprofile
+2019-10-12 10:30:51.675   Created C:\Enabler\SDK\Samples\Java\pumpdemo\src\pumpdemo\images
+2019-10-12 10:30:51.929   Created C:\Enabler\SDK\Samples\Java\pumpdemo\src\pumpdemo\sale
+2019-10-12 10:30:52.075   Created C:\Enabler\SDK\Samples\Java\pumpdemo\src\pumpdemo\stack
+2019-10-12 10:30:52.232   Created C:\Enabler\SDK\Samples\NET
+2019-10-12 10:30:52.251   Created C:\Enabler\SDK\Samples\NET\CS WPF Pump Sample
+2019-10-12 10:30:52.664   Created C:\Enabler\SDK\Samples\NET\CS WPF Pump Sample\Images
+2019-10-12 10:30:53.163   Created C:\Enabler\SDK\Samples\NET\CS WPF Pump Sample\Properties
+2019-10-12 10:30:54.073   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample
+2019-10-12 10:30:54.088   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX
+2019-10-12 10:30:54.104   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX
+2019-10-12 10:30:54.292   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android
+2019-10-12 10:30:54.308   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Assets
+2019-10-12 10:30:54.385   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Properties
+2019-10-12 10:30:54.489   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Resources
+2019-10-12 10:30:54.528   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Resources\drawable
+2019-10-12 10:30:54.640   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Resources\drawable-hdpi
+2019-10-12 10:30:54.672   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Resources\drawable-xhdpi
+2019-10-12 10:30:54.695   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Resources\drawable-xxhdpi
+2019-10-12 10:30:54.725   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Resources\layout
+2019-10-12 10:30:54.799   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.Android\Resources\values
+2019-10-12 10:30:54.851   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.iOS
+2019-10-12 10:30:55.026   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.iOS\Properties
+2019-10-12 10:30:55.101   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.iOS\Resources
+2019-10-12 10:30:55.389   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.UWP
+2019-10-12 10:30:55.459   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.UWP\Assets
+2019-10-12 10:30:56.394   Created C:\Enabler\SDK\Samples\NET\VS2015 CS Portable API Pump Sample\PumpManagerX\PumpManagerX.UWP\Properties
+2019-10-12 10:30:56.594   Extracting temporary file: C:\Users\JACOBC~1\AppData\Local\Temp\is-N6IUB.tmp\InnovaHxReg.exe
+2019-10-12 10:30:57.022   Execute path: C:\WINDOWS\Sysnative\CMD.EXE /c C:\Enabler\SDK\Doc\VisualStudio\unregisterhelp2.bat
+2019-10-12 10:30:59.611   Start of setting permissions 12-10-2019 10:30:59
+2019-10-12 10:31:05.194   End of setting permissions 12-10-2019 10:31:05
+2019-10-12 10:31:05.480   Registering Enabler objects
+2019-10-12 10:31:05.699   Execute path: C:\WINDOWS\system32\msiexec.exe /quiet /L+* C:\Enabler\log\APIInstall.log /uninstall C:\Enabler\InstallEnablerAPI.msi
+2019-10-12 10:31:05.738   EnablerVersion: 4.6.3.6087
+2019-10-12 10:31:05.798   Execute path: C:\WINDOWS\system32\msiexec.exe /quiet /L+* C:\Enabler\log\APIInstall.log /X C:\Enabler\InstallEnablerAPI.msi
+2019-10-12 10:31:05.938   Silent setting is 0
+2019-10-12 10:31:05.966   Install is finished
+2019-10-12 10:31:06.156   Need to restart Windows? No
+2019-10-12 10:31:34.040   Deinitializing Setup.
+2019-10-12 10:31:34.156   Unable to delete log file C:\Users\JACOBC~1\AppData\Local\Temp\Setup Log 2019-10-12 #009.txt

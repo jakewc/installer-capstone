@@ -2204,11 +2204,11 @@ begin
 
           LoadStringFromFile(ExpandConstant('{app}\temp'), LINE);
           if (Line = '') then begin
-            MsgBox('Failed to obtain list of SQL instances - code for server upgrade non-functional in this release', mbcriticalerror, MB_OK);
+            //MsgBox('Failed to obtain list of SQL instances - code for server upgrade non-functional in this release', mbcriticalerror, MB_OK);
             Log('Failed to obtain list of SQL instances - code for server upgrade non-functional in this release');
-            Abort();
+            //Abort();
           end;
-          Log(LINE);
+          //Log(LINE);
 
           NAME := LINE;
 
@@ -2225,7 +2225,7 @@ begin
             //Build list of instances names incase they need to be displayed
           SQL_INSTANCES := NAME+#13#10;
 
-          Log('SQL Instance Names found '+#13#10+SQL_INSTANCES);
+          //Log('SQL Instance Names found '+#13#10+SQL_INSTANCES);
 
           //Check if we found a known instance, if we haven't do we have a list of instances
           if (INSTANCE_NAME_NEEDED = TRUE) AND (SQL_INSTANCES <> '') then begin
