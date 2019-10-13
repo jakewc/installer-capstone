@@ -1,9 +1,0 @@
-Enabler V4.1
-
-1) If you are upgrading from an Enabler version prior to V3.4x, we suggest you remove the previous installation using Add/Remove Programs before installing this software.
-
-2) The installation will now automatically install the SQL Server Express Edition when installing on systems without an SQL Server installed.
-
-3) Check for newer pump drivers on our website http://www.integration.co.nz/
-
-4) Where possible we have documented known issues in the Release Notes document.

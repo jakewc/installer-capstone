@@ -1,6 +1,0 @@
-framework module EnablerApi {
-  umbrella header "EnablerApi.h"
-
-  export *
-  module * { export * }
-}

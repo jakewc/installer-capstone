@@ -1,1 +1,0 @@
-\enabler\enbkick -rl 12 1 0 

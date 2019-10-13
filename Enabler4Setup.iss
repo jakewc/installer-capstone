@@ -1755,8 +1755,7 @@ begin
         end;
 
         if SILENT = false then begin
-          //TODO - progress messages??
-          //Display Progress message "Installing MSI 4.5 Installer" 
+          WizardForm.StatusLabel.Caption:= 'Installing MSI 4.5...'; 
         end;
         Log('Installing MSI 4.5');
         
@@ -1909,15 +1908,6 @@ begin
       Abort();
     end;
 
-    if SILENT = False then begin
-      try
-        progressPage := CreateOutputProgressPage('Progress Stage','Installing .Net 3.5'#13#10#13#10'This may take a couple of minutes. Please wait...');
-        progressPage.SetProgress(0, 0);
-        progressPage.Show;
-      finally
-        progressPage.Hide;
-      end;
-    end;
 
     // On Windows Server 2008 the runtime has to be installed using the server manager tool, so if we get here we can't continue.
     WIN2008_SERVER := 0;
@@ -2034,13 +2024,7 @@ begin
       end;
 
       if SILENT = False then begin
-        try
-          progressPage := CreateOutputProgressPage('Progress Stage','Installing .Net 4 Framework.'#13#10#13#10'This may take a couple of minutes. Please wait...');
-          progressPage.SetProgress(0, 0);
-          progressPage.Show;
-        finally
-          progressPage.Hide;
-        end;
+        WizardForm.StatusLabel.Caption:= 'Installing .NET 4 runtimes, this may take a while...';
       end;
 
       //  .Net 4 install will fail if windows update is running so stop doing install - Error 80240016
@@ -2094,6 +2078,7 @@ begin
     if SQL_NEEDED = true then begin
       if SQLEXPRESSNAME = 'SQL2012' then begin
         if OPERATING_SYSTEM = '6' then begin
+          WizardForm.StatusLabel.Caption:= 'Checking service pack install...';
           RegQueryStringValue(HKEY_LOCAL_MACHINE, 'Software\Microsoft\Windows NT\CurrentVersion', 'CSDBuildNumber', VISTASP);
           Log('Vista build number is ' + VISTASP);
           // NOTE: 6.0 = Windows Vista or Windows Server 2008 1171
@@ -2131,6 +2116,7 @@ var
   ResultCode:integer;
 begin
   if (FileExists(ExpandConstant('{app}\InstallEnablerAPI.msi'))) then begin
+    WizardForm.StatusLabel.Caption:= 'Uninstalling previous Enabler API install if it exists...';
     Exec(ExpandConstant('{sys}\msiexec.exe'), '/quiet /L+* '+ExpandConstant('{app}\log\APIInstall.log')+' /uninstall {30876486-DB1A-41CE-95D0-58F1EEA13AE8}', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     if ResultCode <> 0 then begin
       Log('INFO: Could not uninstall existing enabler API - ERRORLEVEL = ' + inttostr(ResultCode));
@@ -2185,6 +2171,7 @@ begin
         //Server SQL settings
 
         //Get temporary filename into INSTANCES
+        WizardForm.StatusLabel.Caption:= 'Getting list of named instances...';
         SaveStringtoFile(ExpandConstant('{app}\temp'), '', False);
         //if (OS=64) and (strtoint(OPERATING_SYSTEM) >= 6) then begin
           //Exec('C:\WINDOWS\Sysnative\CMD.EXE', '/C '+ ExpandConstant('{app}\Instances.bat') + ' ' + ExpandConstant('{app}\temp'), '', SW_HIDE, ewwaituntilterminated,ResultCode);
@@ -2203,7 +2190,12 @@ begin
           SQL_INSTANCES := '';
 
           LoadStringFromFile(ExpandConstant('{app}\temp'), LINE);
-          Log(LINE);
+          if (Line = '') then begin
+            //MsgBox('Failed to obtain list of SQL instances - code for server upgrade non-functional in this release', mbcriticalerror, MB_OK);
+            Log('Failed to obtain list of SQL instances - code for server upgrade non-functional in this release');
+            //Abort();
+          end;
+          //Log(LINE);
 
           NAME := LINE;
 
@@ -2220,7 +2212,7 @@ begin
             //Build list of instances names incase they need to be displayed
           SQL_INSTANCES := NAME+#13#10;
 
-          Log('SQL Instance Names found '+#13#10+SQL_INSTANCES);
+          //Log('SQL Instance Names found '+#13#10+SQL_INSTANCES);
 
           //Check if we found a known instance, if we haven't do we have a list of instances
           if (INSTANCE_NAME_NEEDED = TRUE) AND (SQL_INSTANCES <> '') then begin
@@ -2442,6 +2434,7 @@ begin
       end;
       Log('SQLQUERY = ' + SQLQUERY);
 
+       WizardForm.StatusLabel.Caption:= 'Determining pre-installed SQL instance...';
        //TRUSTED CONNECTION
        TRUSTED_CONNECTION := 1;
        Log('About to query sysobjects ' + OSQL_PATH + ' with Trusted Connection');
@@ -2825,7 +2818,7 @@ var
   ResultCode:integer;
 begin
   if SILENT = false then begin
-    //MsgBox('Installing VS C++ 2008 SP1 Redistributables', mbinformation, mb_OK);
+    WizardForm.StatusLabel.Caption:= 'Installing C++ Redistributables, this may take a while...';
   end;
 
   Exec(ExpandConstant('{app}\MsiQueryProduct.exe'), '{9A25302D-30C0-39D9-BD6F-21E6EC160475}', '', SW_HIDE, ewwaituntilterminated, ResultCode);
@@ -2913,7 +2906,8 @@ begin
   //end;
 
 
-  if COMPONENTS = 'B' then begin  
+  if COMPONENTS = 'B' then begin
+  WizardForm.StatusLabel.Caption:= 'Attempting to stop Enabler services...';  
     if FileExists(ExpandConstant('{app}')+'\psrvr4.exe') then begin
       Exec(ExpandConstant('{app}')+'\scutil.exe', '/STOP psrvr','',SW_HIDE,ewWaitUntilTerminated, ResultCode);
       if ResultCode <> 0 then begin
@@ -3016,6 +3010,7 @@ procedure installAPIMSI();
 var
   ResultCode:integer;
 begin
+  WizardForm.StatusLabel.Caption:= 'Installing new Enabler API...';
   Exec(ExpandConstant('{sys}\msiexec.exe'), '/quiet /L+* '+ExpandConstant('{app}\log\APIInstall.log')+' /package '+ExpandConstant('{app}\InstallEnablerAPI.msi'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   if ResultCode <> 0 then begin
     Log('INFO: Could not install enabler API - ERRORLEVEL = ' + inttostr(ResultCode));   
@@ -3041,6 +3036,7 @@ var
   ResultCode: Integer;
 Begin
   if COMPONENTS = 'B' then begin
+    WizardForm.StatusLabel.Caption:= 'Installing server files...';
     //Environment and Registry variables
     Exec(SETX_PATH,  'ENABLER_SERVER' +ENV_COMPUTERNAME+ ' -M', '', SW_HIDE, ewwaituntilterminated, ResultCode);
     Exec(SETX_PATH, 'ENABLER_WEB' +ExpandConstant('{app}\www')+ ' -M', '', SW_HIDE, ewwaituntilterminated, ResultCode);
@@ -3254,6 +3250,7 @@ End;
 
 procedure basicPDFFiles();
 begin
+  WizardForm.StatusLabel.Caption:= 'Installing user documentation...';
   if FileExists(ExpandConstant('{src}')+'\Documentation\ENABLER Demonstration POS Application Reference Manual.pdf') then begin
     FileCopy(ExpandConstant('{src}')+'\Documentation\ENABLER Demonstration POS Application Reference Manual.pdf', WizardDirValue+'\Docs\ENABLER Demonstration POS Application Reference Manual.pdf', False)
   end
@@ -3330,6 +3327,7 @@ var
   PDF:String;
   MICROSOFT_HELP:String;
 begin
+  WizardForm.StatusLabel.Caption:= 'Installing SDK documentation, this may take a while...';
   //install SDK documentation
   if pos('C',SDK_OPTIONS) <> 0 then begin
   //remove old SDK documentation
@@ -3468,6 +3466,7 @@ var
   SERVER:String;  
   progressPage: TOutputProgressWizardPage;
 Begin
+  WizardForm.StatusLabel.Caption:= 'Setting up access permissions, this may take a while...';
   Exec('net.exe', 'localgroup /add EnablerAdministrators', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   if SILENT = false then begin
     try
@@ -3886,6 +3885,7 @@ procedure decideReboot();
 var
   ResultCode:integer;
 begin
+  WizardForm.StatusLabel.Caption:= 'Finalizing install...';
   //Only change setting for server
   if COMPONENTS = 'B' then begin
     //SERVER INSTALL
