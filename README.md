@@ -3,7 +3,7 @@ Repository for Group 12 2019 Software Engineering Capstone Project ITL Enabler I
 
 Link to .zip needed to run the installer: https://drive.google.com/file/d/1_bLWxOZkv2fC6xdcRaLI1mrn1ac1NgHI/view?usp=sharing
 
-Link to .zip needed to compile and run the installer:
+Link to .zip needed to compile and run the installer: https://drive.google.com/file/d/1Tx50CfyHWGXELfkc0WkzQxjMn8lS-rzp/view?usp=sharing
 
 
 
