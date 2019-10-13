@@ -1,0 +1,47 @@
+Windows Registry Editor Version 5.00
+
+
+[HKEY_CURRENT_USER\AppEvents\EventLabels\ENB_Authorise]
+@="Enabler - Delivery Starting"
+
+[HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\ENB_Authorise]
+
+[HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\ENB_Authorise\.current]
+@=""
+
+
+[HKEY_CURRENT_USER\AppEvents\EventLabels\ENB_Calling]
+@="Enabler - Calling"
+
+[HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\ENB_Calling]
+
+[HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\ENB_Calling\.current]
+@="ding.wav"
+
+
+[HKEY_CURRENT_USER\AppEvents\EventLabels\ENB_DeliveryComplete]
+@="Enabler - Delivery Complete"
+
+[HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\ENB_DeliveryComplete]
+
+[HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\ENB_DeliveryComplete\.current]
+@=""
+
+
+[HKEY_CURRENT_USER\AppEvents\EventLabels\ENB_NozzleLeftOut]
+@="Enabler - Nozzle Left Out"
+
+[HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\ENB_NozzleLeftOut]
+
+[HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\ENB_NozzleLeftOut\.current]
+@=""
+
+
+[HKEY_CURRENT_USER\AppEvents\EventLabels\ENB_DeliveryNotTaken]
+@="Enabler - Delivery Not Taken"
+
+[HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\ENB_DeliveryNotTaken]
+
+[HKEY_CURRENT_USER\AppEvents\Schemes\Apps\.Default\ENB_DeliveryNotTaken\.current]
+@=""
+

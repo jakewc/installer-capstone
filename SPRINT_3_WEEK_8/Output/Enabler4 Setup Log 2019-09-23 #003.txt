@@ -1,0 +1,37 @@
+﻿2019-09-23 17:57:02.858   Log opened. (Time zone: UTC+12:00)
+2019-09-23 17:57:02.858   Setup version: Inno Setup version 6.0.2 (u)
+2019-09-23 17:57:02.858   Original Setup EXE: C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\SPRINT_3_WEEK_8\Output\Enabler4Setup.exe
+2019-09-23 17:57:02.858   Setup command line: /SL5="$101AA,14015169,721408,C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\SPRINT_3_WEEK_8\Output\Enabler4Setup.exe" 
+2019-09-23 17:57:02.858   Windows version: 10.0.18362  (NT platform: Yes)
+2019-09-23 17:57:02.858   64-bit Windows: Yes
+2019-09-23 17:57:02.859   Processor architecture: x64
+2019-09-23 17:57:02.859   User privileges: Administrative
+2019-09-23 17:57:02.874   Administrative install mode: Yes
+2019-09-23 17:57:02.874   Install mode root key: HKEY_LOCAL_MACHINE
+2019-09-23 17:57:02.874   64-bit install mode: No
+2019-09-23 17:57:02.879   Created temporary directory: C:\Users\JACOBC~1\AppData\Local\Temp\is-7KED6.tmp
+2019-09-23 17:57:02.915   -- DLL function import --
+2019-09-23 17:57:02.915   Function name: ExitProcess
+2019-09-23 17:57:02.915   DLL name: kernel32.dll
+2019-09-23 17:57:02.915   Dest DLL name: kernel32.dll
+2019-09-23 17:57:02.915   Importing the DLL function.
+2019-09-23 17:57:02.915   Successfully imported the DLL function. Delay loaded? No
+2019-09-23 17:57:02.915   Initialising variables.
+2019-09-23 17:57:04.289   Running on Windows 10/Windows Server 2016, set OPERATING SYSTEM = 10
+2019-09-23 17:57:04.290   Installing Enabler V4.6.3.6087 on Windows V10.00.18362 64bit (Version 10)
+2019-09-23 17:57:04.290   CMD 
+2019-09-23 17:57:04.302   IE Location C:\Program Files\Internet Explorer;
+2019-09-23 17:57:04.302   IE VERSION: 9.11.18362.0
+2019-09-23 17:57:04.304   Installing from C:\Users\Jacob Copeland\Documents\GitHub\installer-capstone\SPRINT_3_WEEK_8\Output drive.
+2019-09-23 17:57:05.164   Windows product type: 1
+2019-09-23 17:57:05.170   Checking disk space
+2019-09-23 17:57:06.237   A
+2019-09-23 17:57:13.588   Message box (Yes/No):
+                          Setup is not complete. If you exit now, the program will not be installed.
+                          
+                          You may run Setup again at another time to complete the installation.
+                          
+                          Exit Setup?
+2019-09-23 17:57:14.889   User chose Yes.
+2019-09-23 17:57:14.889   Deinitializing Setup.
+2019-09-23 17:57:15.023   Unable to delete log file C:\Users\JACOBC~1\AppData\Local\Temp\Setup Log 2019-09-23 #003.txt
