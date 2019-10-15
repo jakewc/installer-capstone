@@ -1,0 +1,1 @@
+This project does not come with a GitHub license - it is a derivative work of proprietary ITL software, and is not to be distrbuted freely anywhere or used for any commercial purpose.
